@@ -886,7 +886,7 @@ body {
 
 /* Touch device fixes - disable hover effects, use persistent colors on mobile */
 @media (hover: none) {
-  /* Disable hover colors on project cards - colors applied via JS on scroll */
+  /* Disable hover colors on project cards - use border + active fill on mobile */
   .project-card:hover {
     background: inherit;
     color: inherit;
@@ -896,39 +896,42 @@ body {
     color: inherit;
   }
 
-  /* Smooth transition for scroll-triggered color */
-  .project-card {
-    transition: background 0.4s ease, color 0.4s ease;
-  }
+  /* Mobile color classes for project cards - colored borders by default */
+  .project-card.mobile-color-orange { border-color: #ff8d00; }
+  .project-card.mobile-color-orange .project-title { color: #ff8d00; }
 
-  .project-card .project-subtitle {
-    transition: color 0.4s ease;
-  }
+  .project-card.mobile-color-green { border-color: #1db406; }
+  .project-card.mobile-color-green .project-title { color: #1db406; }
 
-  /* Mobile color classes for project cards (applied via JS on scroll) */
-  .project-card.mobile-color-orange.in-view { background: #ff8d00; color: #fff; }
-  .project-card.mobile-color-orange.in-view .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-blue { border-color: #4abbff; }
+  .project-card.mobile-color-blue .project-title { color: #4abbff; }
 
-  .project-card.mobile-color-green.in-view { background: #1db406; color: #fff; }
-  .project-card.mobile-color-green.in-view .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-yellow { border-color: #f0ff00; }
+  .project-card.mobile-color-yellow .project-title { color: #9a9a00; }
 
-  .project-card.mobile-color-blue.in-view { background: #4abbff; color: #fff; }
-  .project-card.mobile-color-blue.in-view .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-red { border-color: #ff432e; }
+  .project-card.mobile-color-red .project-title { color: #ff432e; }
 
-  .project-card.mobile-color-yellow.in-view { background: #f0ff00; color: #000; }
-  .project-card.mobile-color-yellow.in-view .project-subtitle { color: rgba(0,0,0,0.5); }
+  /* Active/tap state - fill with full color */
+  .project-card.mobile-color-orange:active { background: #ff8d00; }
+  .project-card.mobile-color-orange:active .project-title { color: #fff; }
+  .project-card.mobile-color-orange:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-red.in-view { background: #ff432e; color: #fff; }
-  .project-card.mobile-color-red.in-view .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-green:active { background: #1db406; }
+  .project-card.mobile-color-green:active .project-title { color: #fff; }
+  .project-card.mobile-color-green:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  /* Active state - invert to white for feedback */
-  .project-card:active {
-    background: #fff !important;
-    color: #000 !important;
-  }
-  .project-card:active .project-subtitle {
-    color: #999 !important;
-  }
+  .project-card.mobile-color-blue:active { background: #4abbff; }
+  .project-card.mobile-color-blue:active .project-title { color: #fff; }
+  .project-card.mobile-color-blue:active .project-subtitle { color: rgba(255,255,255,0.7); }
+
+  .project-card.mobile-color-yellow:active { background: #f0ff00; }
+  .project-card.mobile-color-yellow:active .project-title { color: #000; }
+  .project-card.mobile-color-yellow:active .project-subtitle { color: rgba(0,0,0,0.5); }
+
+  .project-card.mobile-color-red:active { background: #ff432e; }
+  .project-card.mobile-color-red:active .project-title { color: #fff; }
+  .project-card.mobile-color-red:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
   /* Chips - disable hover, use persistent colors (applied via JS) */
   .chip:hover {
@@ -1234,8 +1237,6 @@ const CHIP_COLORS = ['red', 'yellow', 'blue', 'green', 'orange'];
 // App cards: Red, Green, Blue, Orange (matches desktop hover pattern)
 const APP_COLORS = ['red', 'green', 'blue', 'orange'];
 
-let projectScrollObserver = null;
-
 function isTouchDevice() {
   return window.matchMedia('(hover: none)').matches;
 }
@@ -1243,45 +1244,22 @@ function isTouchDevice() {
 function applyMobileColors() {
   if (!isTouchDevice()) return;
 
-  // Apply colors to preset chips immediately (same order as desktop hover: 1=red, 2=yellow, etc.)
+  // Apply colors to project cards (colored borders, fill on tap)
+  document.querySelectorAll('.project-card').forEach((card, index) => {
+    const color = PROJECT_COLORS[index % 5];
+    card.classList.add(`mobile-color-${color}`);
+  });
+
+  // Apply colors to preset chips (same order as desktop hover: 1=red, 2=yellow, etc.)
   document.querySelectorAll('.chip').forEach((chip, index) => {
     const color = CHIP_COLORS[index % 5];
     chip.classList.add(`mobile-color-${color}`);
   });
 
-  // Apply colors to app cards immediately (same order as desktop hover: 1=red, 2=green, etc.)
+  // Apply colors to app cards (same order as desktop hover: 1=red, 2=green, etc.)
   document.querySelectorAll('.app-card').forEach((card, index) => {
     const color = APP_COLORS[index % 4];
     card.classList.add(`mobile-color-${color}`);
-  });
-}
-
-function setupProjectScrollColors() {
-  if (!isTouchDevice()) return;
-
-  // Clean up previous observer if exists
-  if (projectScrollObserver) {
-    projectScrollObserver.disconnect();
-  }
-
-  // Set up IntersectionObserver for project cards
-  projectScrollObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Add in-view class to trigger color
-        entry.target.classList.add('in-view');
-      }
-    });
-  }, {
-    threshold: 0.3, // Trigger when 30% of card is visible
-    rootMargin: '0px 0px -10% 0px' // Trigger slightly before fully in view
-  });
-
-  // Add color class and observe each project card
-  document.querySelectorAll('.project-card').forEach((card, index) => {
-    const color = PROJECT_COLORS[index % 5];
-    card.classList.add(`mobile-color-${color}`);
-    projectScrollObserver.observe(card);
   });
 }
 
@@ -1520,8 +1498,8 @@ function attachProjectsListeners() {
     });
   });
 
-  // Set up scroll-triggered colors for project cards on mobile
-  setupProjectScrollColors();
+  // Apply mobile colors to project cards
+  applyMobileColors();
 }
 
 // ==================== NAVIGATION ====================
