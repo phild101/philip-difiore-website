@@ -942,21 +942,35 @@ body {
     border-color: #000 !important;
   }
 
-  /* App cards - disable hover, use active */
+  /* App cards - disable hover, use persistent colors (applied via JS) */
   .app-card:hover .app-header {
-    background: #fff;
+    background: inherit;
   }
 
   .app-card:hover .app-header-title {
-    color: #000;
+    color: inherit;
   }
 
-  .app-card:nth-child(4n+1):active .app-header { background: #ff432e; }
-  .app-card:nth-child(4n+2):active .app-header { background: #1db406; }
-  .app-card:nth-child(4n+3):active .app-header { background: #f0ff00; }
-  .app-card:nth-child(4n+4):active .app-header { background: #ff8d00; }
-  .app-card:active .app-header-title { color: #fff; }
-  .app-card:nth-child(4n+3):active .app-header-title { color: #000; }
+  /* Mobile color classes for app cards (applied via JS) */
+  .app-card.mobile-color-red .app-header { background: #ff432e; }
+  .app-card.mobile-color-red .app-header-title { color: #fff; }
+
+  .app-card.mobile-color-green .app-header { background: #1db406; }
+  .app-card.mobile-color-green .app-header-title { color: #fff; }
+
+  .app-card.mobile-color-yellow .app-header { background: #f0ff00; }
+  .app-card.mobile-color-yellow .app-header-title { color: #000; }
+
+  .app-card.mobile-color-orange .app-header { background: #ff8d00; }
+  .app-card.mobile-color-orange .app-header-title { color: #fff; }
+
+  /* Active state - invert to white for feedback */
+  .app-card:active .app-header {
+    background: #fff !important;
+  }
+  .app-card:active .app-header-title {
+    color: #000 !important;
+  }
 
   /* Buttons */
   .go-to-site-btn:hover {
@@ -1209,6 +1223,8 @@ function decodeHTML(html) {
 const PROJECT_COLORS = ['orange', 'green', 'blue', 'yellow', 'red'];
 // Chips: Red, Yellow, Blue, Green, Orange (reverse pattern, matches desktop hover)
 const CHIP_COLORS = ['red', 'yellow', 'blue', 'green', 'orange'];
+// App cards: Red, Green, Yellow, Orange (matches desktop hover pattern)
+const APP_COLORS = ['red', 'green', 'yellow', 'orange'];
 
 function isTouchDevice() {
   return window.matchMedia('(hover: none)').matches;
@@ -1227,6 +1243,12 @@ function applyMobileColors() {
   document.querySelectorAll('.chip').forEach((chip, index) => {
     const color = CHIP_COLORS[index % 5];
     chip.classList.add(`mobile-color-${color}`);
+  });
+
+  // Apply colors to app cards (same order as desktop hover: 1=red, 2=green, etc.)
+  document.querySelectorAll('.app-card').forEach((card, index) => {
+    const color = APP_COLORS[index % 4];
+    card.classList.add(`mobile-color-${color}`);
   });
 }
 
@@ -1345,6 +1367,11 @@ function renderSite() {
   // Attach event listeners
   if (currentView === 'projects') {
     attachProjectsListeners();
+  }
+
+  // Apply mobile colors for apps page
+  if (currentView === 'apps') {
+    applyMobileColors();
   }
 }
 
