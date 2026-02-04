@@ -619,12 +619,9 @@ body {
 <script>
 // ==================== CONFIGURATION ====================
 
-const WP_API = 'https://philipdifiore.com/wp-json/wp/v2';
 const SUPABASE_URL = 'https://gjvvbofpkxuicrpshxun.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqdnZib2Zwa3h1aWNycHNoeHVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzY1NzcsImV4cCI6MjA4NTc1MjU3N30.igGl_64MuqL-0VsLE4NibmMq1hPxnZ_WusRrM043n5M';
 const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/artificial-philip`;
-
-// Categories to include in Projects
-const PROJECTS_CATEGORIES = ['Films', 'Music Videos', 'Live', 'Experiments &amp; Miscellanea'];
 
 // Preset questions for the chat
 const PRESET_QUESTIONS = [
@@ -684,10 +681,9 @@ const CONTACT = {
 
 // ==================== STATE ====================
 
-let categories = [];
-let posts = [];
+let projects = [];
 let currentView = 'landing'; // 'landing', 'projects', 'about', 'apps', 'detail'
-let currentPost = null;
+let currentProject = null;
 let chatMessages = [];
 let chatLoading = false;
 
@@ -695,13 +691,13 @@ const root = document.getElementById('root');
 
 // ==================== API FUNCTIONS ====================
 
-async function fetchCategories() {
-  const res = await fetch(`${WP_API}/categories?per_page=100`);
-  return res.json();
-}
-
-async function fetchPosts() {
-  const res = await fetch(`${WP_API}/posts?_embed&per_page=100`);
+async function fetchProjects() {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=display_order.asc,created_at.desc`, {
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  });
   return res.json();
 }
 
@@ -785,55 +781,10 @@ async function typewriterEffect(fullText) {
 
 // ==================== HELPER FUNCTIONS ====================
 
-function getFeaturedImage(post, size = 'medium') {
-  try {
-    const media = post._embedded?.['wp:featuredmedia']?.[0];
-    if (media) {
-      return media.media_details?.sizes?.[size]?.source_url
-        || media.media_details?.sizes?.medium_large?.source_url
-        || media.source_url;
-    }
-  } catch (e) {}
-  return null;
-}
-
-function getCategoryName(post) {
-  try {
-    return post._embedded?.['wp:term']?.[0]?.[0]?.name || '';
-  } catch (e) {
-    return '';
-  }
-}
-
-function getVimeoId(post) {
-  const content = post.content?.rendered || '';
-  const match = content.match(/vimeo\.com\/(\d+)/);
-  return match ? match[1] : null;
-}
-
-function getCaption(post) {
-  let content = post.content?.rendered || '';
-  content = content.replace(/\[[\w_]+[^\]]*\]/g, '');
-  content = content.replace(/\[\/[\w_]+\]/g, '');
-  content = content.replace(/<p>https?:\/\/vimeo\.com\/\d+<\/p>/g, '');
-  content = content.replace(/<p>\s*<\/p>/g, '');
-  content = content.replace(/<p>&nbsp;<\/p>/g, '');
-  return content.trim();
-}
-
 function decodeHTML(html) {
   const txt = document.createElement('textarea');
   txt.innerHTML = html;
   return txt.value;
-}
-
-function getProjectsPosts() {
-  const projectCategoryIds = categories
-    .filter(cat => PROJECTS_CATEGORIES.includes(cat.name))
-    .map(cat => cat.id);
-  return posts.filter(post =>
-    post.categories.some(catId => projectCategoryIds.includes(catId))
-  );
 }
 
 // ==================== RENDER FUNCTIONS ====================
@@ -955,24 +906,18 @@ function renderSite() {
 }
 
 function renderProjects() {
-  const projectsPosts = getProjectsPosts();
-
-  if (projectsPosts.length === 0) {
+  if (projects.length === 0) {
     return `<div class="loading"><div class="dots"><span></span><span></span><span></span></div></div>`;
   }
 
   return `
     <div class="project-grid">
-      ${projectsPosts.map(post => {
-        const imageUrl = getFeaturedImage(post, 'medium_large');
-        const categoryName = getCategoryName(post);
-        return `
-          <div class="project-card" data-post-id="${post.id}" data-image="${imageUrl || ''}">
-            <div class="project-title">${decodeHTML(post.title.rendered)}</div>
-            <div class="project-subtitle">${categoryName}</div>
-          </div>
-        `;
-      }).join('')}
+      ${projects.map(project => `
+        <div class="project-card" data-project-id="${project.id}" data-image="${project.featured_image || ''}">
+          <div class="project-title">${decodeHTML(project.title)}</div>
+          <div class="project-subtitle">${project.category || ''}</div>
+        </div>
+      `).join('')}
     </div>
   `;
 }
@@ -999,11 +944,7 @@ function renderApps() {
 }
 
 function renderDetail() {
-  if (!currentPost) return '<p>Post not found.</p>';
-
-  const vimeoId = getVimeoId(currentPost);
-  const caption = getCaption(currentPost);
-  const featuredImage = getFeaturedImage(currentPost, 'large');
+  if (!currentProject) return '<p>Project not found.</p>';
 
   return `
     <div class="detail-page">
@@ -1014,18 +955,18 @@ function renderDetail() {
         Back
       </div>
 
-      ${vimeoId ? `
+      ${currentProject.vimeo_id ? `
         <div class="video-container">
-          <iframe src="https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="https://player.vimeo.com/video/${currentProject.vimeo_id}?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
-      ` : featuredImage ? `
+      ` : currentProject.featured_image ? `
         <div class="detail-image">
-          <img src="${featuredImage}" alt="${decodeHTML(currentPost.title.rendered)}" />
+          <img src="${currentProject.featured_image}" alt="${decodeHTML(currentProject.title)}" />
         </div>
       ` : ''}
 
-      <h1 class="detail-title">${decodeHTML(currentPost.title.rendered)}</h1>
-      ${caption ? `<div class="detail-caption">${caption}</div>` : ''}
+      <h1 class="detail-title">${decodeHTML(currentProject.title)}</h1>
+      ${currentProject.content ? `<div class="detail-caption">${currentProject.content}</div>` : ''}
     </div>
   `;
 }
@@ -1063,10 +1004,10 @@ function attachChatListeners() {
 
 function attachProjectsListeners() {
   document.querySelectorAll('.project-card').forEach(card => {
-    const postId = parseInt(card.dataset.postId);
+    const projectId = parseInt(card.dataset.projectId);
 
     card.addEventListener('click', () => {
-      currentPost = posts.find(p => p.id === postId);
+      currentProject = projects.find(p => p.id === projectId);
       currentView = 'detail';
       render();
       window.scrollTo(0, 0);
@@ -1078,7 +1019,7 @@ function attachProjectsListeners() {
 
 function navigateTo(view) {
   currentView = view;
-  currentPost = null;
+  currentProject = null;
   render();
   window.scrollTo(0, 0);
 }
@@ -1098,14 +1039,11 @@ async function init() {
   // Show landing page immediately
   render();
 
-  // Load WordPress data in background
+  // Load projects from Supabase in background
   try {
-    [categories, posts] = await Promise.all([
-      fetchCategories(),
-      fetchPosts()
-    ]);
+    projects = await fetchProjects();
   } catch (error) {
-    console.error('Failed to load data:', error);
+    console.error('Failed to load projects:', error);
   }
 }
 
