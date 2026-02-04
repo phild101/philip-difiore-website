@@ -885,38 +885,62 @@ body {
   }
 }
 
-/* Touch device fixes - disable hover effects, use active states instead */
+/* Touch device fixes - disable hover effects, use persistent colors on mobile */
 @media (hover: none) {
-  /* Disable hover colors on project cards */
+  /* Disable hover colors on project cards - colors applied via JS */
   .project-card:hover {
-    background: #fff;
-    color: #000;
+    background: inherit;
+    color: inherit;
   }
 
   .project-card:hover .project-subtitle {
-    color: #999;
+    color: inherit;
   }
 
-  /* Use active states instead for touch feedback */
-  .project-card:nth-child(5n+1):active { background: #ff8d00; color: #fff; }
-  .project-card:nth-child(5n+2):active { background: #1db406; color: #fff; }
-  .project-card:nth-child(5n+3):active { background: #4abbff; color: #fff; }
-  .project-card:nth-child(5n+4):active { background: #f0ff00; color: #000; }
-  .project-card:nth-child(5n+5):active { background: #ff432e; color: #fff; }
-  .project-card:active .project-subtitle { color: rgba(255,255,255,0.7); }
-  .project-card:nth-child(5n+4):active .project-subtitle { color: rgba(0,0,0,0.5); }
+  /* Mobile color classes for project cards (applied via JS) */
+  .project-card.mobile-color-orange { background: #ff8d00; color: #fff; }
+  .project-card.mobile-color-orange .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  /* Chips - disable hover, use active */
+  .project-card.mobile-color-green { background: #1db406; color: #fff; }
+  .project-card.mobile-color-green .project-subtitle { color: rgba(255,255,255,0.7); }
+
+  .project-card.mobile-color-blue { background: #4abbff; color: #fff; }
+  .project-card.mobile-color-blue .project-subtitle { color: rgba(255,255,255,0.7); }
+
+  .project-card.mobile-color-yellow { background: #f0ff00; color: #000; }
+  .project-card.mobile-color-yellow .project-subtitle { color: rgba(0,0,0,0.5); }
+
+  .project-card.mobile-color-red { background: #ff432e; color: #fff; }
+  .project-card.mobile-color-red .project-subtitle { color: rgba(255,255,255,0.7); }
+
+  /* Active state - invert to white for feedback */
+  .project-card:active {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .project-card:active .project-subtitle {
+    color: #999 !important;
+  }
+
+  /* Chips - disable hover, use persistent colors (applied via JS) */
   .chip:hover {
-    background: #fff;
-    color: #666;
+    background: inherit;
+    color: inherit;
   }
 
-  .chip:nth-child(5n+1):active { background: #ff432e; color: #fff; }
-  .chip:nth-child(5n+2):active { background: #f0ff00; color: #000; }
-  .chip:nth-child(5n+3):active { background: #4abbff; color: #fff; }
-  .chip:nth-child(5n+4):active { background: #1db406; color: #fff; }
-  .chip:nth-child(5n+5):active { background: #ff8d00; color: #fff; }
+  /* Mobile color classes for chips (applied via JS) */
+  .chip.mobile-color-orange { background: #ff8d00; color: #fff; border-color: #ff8d00; }
+  .chip.mobile-color-green { background: #1db406; color: #fff; border-color: #1db406; }
+  .chip.mobile-color-blue { background: #4abbff; color: #fff; border-color: #4abbff; }
+  .chip.mobile-color-yellow { background: #f0ff00; color: #000; border-color: #f0ff00; }
+  .chip.mobile-color-red { background: #ff432e; color: #fff; border-color: #ff432e; }
+
+  /* Active state - invert to white for feedback */
+  .chip:active {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #000 !important;
+  }
 
   /* App cards - disable hover, use active */
   .app-card:hover .app-header {
@@ -1180,6 +1204,33 @@ function decodeHTML(html) {
   return txt.value;
 }
 
+// Mobile color helpers
+const MOBILE_COLORS = ['orange', 'green', 'blue', 'yellow', 'red'];
+
+function isTouchDevice() {
+  return window.matchMedia('(hover: none)').matches;
+}
+
+function getRandomColor() {
+  return MOBILE_COLORS[Math.floor(Math.random() * MOBILE_COLORS.length)];
+}
+
+function applyMobileColors() {
+  if (!isTouchDevice()) return;
+
+  // Apply colors to project cards
+  document.querySelectorAll('.project-card').forEach(card => {
+    const color = getRandomColor();
+    card.classList.add(`mobile-color-${color}`);
+  });
+
+  // Apply colors to preset chips
+  document.querySelectorAll('.chip').forEach(chip => {
+    const color = getRandomColor();
+    chip.classList.add(`mobile-color-${color}`);
+  });
+}
+
 // ==================== RENDER FUNCTIONS ====================
 
 function render() {
@@ -1393,6 +1444,9 @@ function attachChatListeners() {
   // Scroll to bottom of chat
   const chatBox = document.querySelector('.chat-messages');
   if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Apply mobile colors to preset chips
+  applyMobileColors();
 }
 
 function attachProjectsListeners() {
@@ -1406,6 +1460,9 @@ function attachProjectsListeners() {
       window.scrollTo(0, 0);
     });
   });
+
+  // Apply mobile colors to project cards
+  applyMobileColors();
 }
 
 // ==================== NAVIGATION ====================
