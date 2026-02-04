@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Philip Di Fiore</title>
 <link rel="stylesheet" href="https://use.typekit.net/ayz4ezz.css" />
+<link rel="stylesheet" href="https://use.typekit.net/iof8yta.css" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -45,7 +46,7 @@ body {
 }
 
 .site-header.landing {
-  padding: 6rem 3rem 4rem;
+  padding: 6rem 3rem 3rem;
   border-bottom: none;
 }
 
@@ -117,23 +118,27 @@ body {
 
 .content.landing {
   padding: 2rem 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* AI Chat Section */
+/* AI Chat Section - Landing Page */
 .chat-section {
-  max-width: 700px;
+  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .chat-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: #999;
-  text-transform: none;
-  letter-spacing: 0.02em;
+  font-family: 'itc-avant-garde-gothic-pro', var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
   text-align: center;
-  font-style: italic;
 }
 
 .chat-area {
@@ -142,8 +147,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 450px;
+  max-height: 550px;
 }
 
 .chat-messages {
@@ -169,7 +174,7 @@ body {
   color: #000;
   font-weight: 400;
   text-align: right;
-  border-bottom: 1px solid #000;
+  border-bottom: 2px solid #000;
   padding-bottom: 1rem;
 }
 
@@ -178,6 +183,17 @@ body {
   background: none;
   font-style: normal;
   color: #333;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.msg.assistant p {
+  margin-bottom: 1em;
+}
+
+.msg.assistant p:last-child {
+  margin-bottom: 0;
 }
 
 .chat-input-row {
@@ -191,10 +207,10 @@ body {
   flex: 1;
   background: #fff;
   border: none;
-  padding: 1.2rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   color: #000;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 1rem;
   outline: none;
 }
 
@@ -204,11 +220,11 @@ body {
   background: #000;
   border: none;
   border-left: 1px solid #000;
-  padding: 1.2rem 2rem;
+  padding: 1.5rem 2.5rem;
   color: #fff;
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 400;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -219,30 +235,56 @@ body {
 .preset-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
-  margin-top: 1.5rem;
-  border: 1px solid #000;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  justify-content: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .chip {
   background: #fff;
-  border: none;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  padding: 0.8rem 1.2rem;
-  font-size: 0.8rem;
+  border: 1px solid #000;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
   color: #666;
   cursor: pointer;
   transition: all 0.15s;
   font-family: var(--font-body);
-  text-align: left;
-  flex: 1 1 auto;
-  min-width: 45%;
+  text-align: center;
 }
 
-.chip:nth-child(2n) { border-right: none; }
-.chip:nth-last-child(-n+2) { border-bottom: none; }
-.chip:hover { background: #000; color: #fff; }
+/* Color sequence for hover (reverse): Red, Yellow, Blue, Green, Orange */
+.chip:nth-child(5n+1):hover { background: #ff432e; color: #fff; }
+.chip:nth-child(5n+2):hover { background: #f0ff00; color: #000; }
+.chip:nth-child(5n+3):hover { background: #4abbff; color: #fff; }
+.chip:nth-child(5n+4):hover { background: #1db406; color: #fff; }
+.chip:nth-child(5n+5):hover { background: #ff8d00; color: #fff; }
+
+/* Go to Site Button */
+.go-to-site-btn {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 1rem 2.5rem;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border: 1px solid #000;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.go-to-site-btn:hover {
+  background: #fff;
+  color: #000;
+}
 
 /* Loading dots */
 .dots {
@@ -292,12 +334,16 @@ body {
 
 .project-card:nth-child(3n) { border-right: none; }
 
-.project-card:hover {
-  background: #000;
-  color: #fff;
-}
+/* Color sequence for hover: Orange, Green, Blue, Yellow, Red */
+.project-card:nth-child(5n+1):hover { background: #ff8d00; color: #fff; }
+.project-card:nth-child(5n+2):hover { background: #1db406; color: #fff; }
+.project-card:nth-child(5n+3):hover { background: #4abbff; color: #fff; }
+.project-card:nth-child(5n+4):hover { background: #f0ff00; color: #000; }
+.project-card:nth-child(5n+5):hover { background: #ff432e; color: #fff; }
 
-.project-card:hover .project-subtitle { color: #666; }
+.project-card:nth-child(5n+4):hover .project-subtitle { color: #666; }
+.project-card:hover .project-subtitle { color: rgba(255,255,255,0.7); }
+.project-card:nth-child(5n+4):hover .project-subtitle { color: rgba(0,0,0,0.5); }
 
 .project-card .project-title {
   font-family: var(--font-display);
@@ -344,46 +390,63 @@ body {
 }
 
 .about-content p {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.7;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #444;
 }
 
 /* Apps Page */
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border: 1px solid #000;
+  gap: 2rem;
 }
 
 .app-card {
-  background: #fff;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  padding: 0;
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: all 0.15s;
 }
 
-.app-card:nth-child(2n) { border-right: none; }
-.app-card:nth-last-child(-n+2) { border-bottom: none; }
+/* Color sequence for app card hover: Red, Green, Yellow, Orange */
+.app-card:nth-child(4n+1):hover .app-header { background: #ff432e; }
+.app-card:nth-child(4n+2):hover .app-header { background: #1db406; }
+.app-card:nth-child(4n+3):hover .app-header { background: #f0ff00; }
+.app-card:nth-child(4n+3):hover .app-header .app-header-title { color: #000; }
+.app-card:nth-child(4n+4):hover .app-header { background: #ff8d00; }
 
-.app-card:hover { background: #fafafa; }
-
-.app-card img {
+.app-header {
   width: 100%;
   height: 200px;
-  object-fit: cover;
-  border-bottom: 1px solid #000;
-  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #000;
+  transition: background 0.15s;
+}
+
+.app-header-title {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  color: #000;
+  text-align: center;
+  padding: 1rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.app-card:hover .app-header-title {
+  color: #fff;
 }
 
 .app-card-content {
-  padding: 1.5rem;
+  padding: 1rem 0 0 0;
 }
 
 .app-card .app-title {
@@ -431,6 +494,17 @@ body {
   margin-bottom: 2rem;
 }
 
+.detail-image {
+  margin-bottom: 2rem;
+  border: 1px solid #000;
+}
+
+.detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .video-container iframe {
   position: absolute;
   top: 0;
@@ -449,7 +523,8 @@ body {
 }
 
 .detail-caption {
-  font-size: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   line-height: 1.7;
   color: #444;
 }
@@ -462,6 +537,11 @@ body {
   padding: 3rem;
   border-top: 1px solid #000;
   background: #fff;
+}
+
+.site-footer.landing {
+  border-top: none;
+  padding-top: 2rem;
 }
 
 .footer-contact {
@@ -511,20 +591,27 @@ body {
   .project-grid { grid-template-columns: 1fr; }
   .project-card { border-right: none !important; }
   .content { padding: 2rem 1.5rem; }
+  .content.landing { padding: 1rem 1.5rem 3rem; }
   .tab-btn { padding: 0.8rem 1.2rem; font-size: 0.8rem; }
   .tab-nav { flex-wrap: wrap; }
   .hover-image { display: none; }
   .detail-title { font-size: 1.5rem; }
-  .chip { min-width: 100%; border-right: none !important; }
   .chat-area { min-height: 350px; }
+  .chat-label { font-size: 1.5rem; }
+  .preset-chips { max-width: 100%; }
 }
 
 /* Touch device fixes */
 @media (hover: none) {
   .project-card:hover { background: #fff; color: #000; }
   .project-card:hover .project-subtitle { color: #999; }
-  .project-card:active { background: #000; color: #fff; }
-  .project-card:active .project-subtitle { color: #666; }
+  .project-card:nth-child(5n+1):active { background: #ff8d00; color: #fff; }
+  .project-card:nth-child(5n+2):active { background: #1db406; color: #fff; }
+  .project-card:nth-child(5n+3):active { background: #4abbff; color: #fff; }
+  .project-card:nth-child(5n+4):active { background: #f0ff00; color: #000; }
+  .project-card:nth-child(5n+5):active { background: #ff432e; color: #fff; }
+  .project-card:active .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card:nth-child(5n+4):active .project-subtitle { color: rgba(0,0,0,0.5); }
   .hover-image { display: none; }
 }
 </style>
@@ -536,16 +623,17 @@ const WP_API = 'https://philipdifiore.com/wp-json/wp/v2';
 const SUPABASE_URL = 'https://gjvvbofpkxuicrpshxun.supabase.co';
 const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/artificial-philip`;
 
-// Categories to merge into Films/Videos
-const FILMS_VIDEOS_CATEGORIES = ['Films', 'Music Videos', 'Live'];
+// Categories to include in Projects
+const PROJECTS_CATEGORIES = ['Films', 'Music Videos', 'Live', 'Experiments &amp; Miscellanea'];
 
 // Preset questions for the chat
 const PRESET_QUESTIONS = [
   "Tell me about yourself",
-  "Tell me about your films and videos",
-  "Who/What are your influences?",
-  "What are you interested in?",
-  "You make apps too?"
+  "Tell me about your films",
+  "Who are your influences?",
+  "What interests you?",
+  "You make apps too?",
+  "What's your creative process?"
 ];
 
 // Apps data
@@ -559,7 +647,7 @@ const APPS = [
   },
   {
     id: 'ideamachine',
-    title: 'Idea Machine',
+    title: 'The Idea Machine',
     desc: 'Capture ideas and build them into reality. A tool for developing creative concepts.',
     image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&h=400&fit=crop',
     url: 'https://ideamachineapp.com'
@@ -598,7 +686,7 @@ const CONTACT = {
 
 let categories = [];
 let posts = [];
-let currentView = 'home'; // 'home', 'films', 'about', 'apps', 'detail'
+let currentView = 'landing'; // 'landing', 'projects', 'about', 'apps', 'detail'
 let currentPost = null;
 let chatMessages = [];
 let chatLoading = false;
@@ -618,7 +706,8 @@ async function fetchPosts() {
 }
 
 async function sendChatMessage(userMessage) {
-  chatMessages.push({ role: 'user', content: userMessage });
+  // Clear previous messages and start fresh each time
+  chatMessages = [{ role: 'user', content: userMessage }];
   chatLoading = true;
   render();
 
@@ -635,23 +724,63 @@ async function sendChatMessage(userMessage) {
       throw new Error(data.error);
     }
 
-    chatMessages.push({ role: 'assistant', content: data.response });
+    // Start typewriter effect
+    chatLoading = false;
+    chatMessages = [{ role: 'assistant', content: '', typing: true }];
+    render();
+
+    await typewriterEffect(data.response);
+
   } catch (error) {
     console.error('Chat error:', error);
-    chatMessages.push({
+    chatLoading = false;
+    chatMessages = [{
       role: 'assistant',
       content: "Sorry, I'm having trouble connecting right now. Please try again in a moment."
-    });
+    }];
+    render();
+  }
+}
+
+async function typewriterEffect(fullText) {
+  // Convert paragraph breaks to HTML - split on double newlines or after sentences that end a thought
+  const formattedText = fullText
+    .replace(/\n\n/g, '</p><p>')  // Double newlines become paragraph breaks
+    .replace(/\n/g, '<br>')        // Single newlines become line breaks
+    .replace(/^/, '<p>')           // Start with paragraph
+    .replace(/$/, '</p>');         // End with paragraph
+
+  const chars = formattedText.split('');
+  let currentText = '';
+  const speed = 15; // milliseconds per character
+
+  for (let i = 0; i < chars.length; i++) {
+    currentText += chars[i];
+    chatMessages = [{ role: 'assistant', content: currentText, typing: i < chars.length - 1 }];
+
+    // Update just the message content without full re-render for performance
+    const msgElement = document.querySelector('.chat-messages .msg.assistant');
+    if (msgElement) {
+      msgElement.innerHTML = currentText;
+    }
+
+    // Skip delay for HTML tags
+    if (chars[i] === '<') {
+      // Fast-forward through the tag
+      while (i < chars.length - 1 && chars[i] !== '>') {
+        i++;
+        currentText += chars[i];
+      }
+      if (msgElement) {
+        msgElement.innerHTML = currentText;
+      }
+    } else {
+      await new Promise(resolve => setTimeout(resolve, speed));
+    }
   }
 
-  chatLoading = false;
-  render();
-
-  // Scroll to bottom of chat
-  setTimeout(() => {
-    const chatBox = document.querySelector('.chat-messages');
-    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-  }, 50);
+  // Final render to ensure state is synced
+  chatMessages = [{ role: 'assistant', content: formattedText, typing: false }];
 }
 
 // ==================== HELPER FUNCTIONS ====================
@@ -698,28 +827,83 @@ function decodeHTML(html) {
   return txt.value;
 }
 
-function getFilmsVideosPosts() {
-  const filmCategoryIds = categories
-    .filter(cat => FILMS_VIDEOS_CATEGORIES.includes(cat.name))
+function getProjectsPosts() {
+  const projectCategoryIds = categories
+    .filter(cat => PROJECTS_CATEGORIES.includes(cat.name))
     .map(cat => cat.id);
   return posts.filter(post =>
-    post.categories.some(catId => filmCategoryIds.includes(catId))
+    post.categories.some(catId => projectCategoryIds.includes(catId))
   );
 }
 
 // ==================== RENDER FUNCTIONS ====================
 
 function render() {
+  if (currentView === 'landing') {
+    renderLanding();
+  } else {
+    renderSite();
+  }
+}
+
+function renderLanding() {
+  root.innerHTML = `
+    <div class="site-wrap">
+      <header class="site-header landing">
+        <h1 class="site-title">Philip Di Fiore</h1>
+        <span class="site-subtitle">director · filmmaker · photographer</span>
+      </header>
+
+      <main class="content landing">
+        <div class="chat-section">
+          <div class="chat-label">Artificial Phil</div>
+
+          <div class="chat-area">
+            <div class="chat-messages">
+              ${chatMessages.map(msg => `
+                <div class="msg ${msg.role}">${msg.content}</div>
+              `).join('')}
+              ${chatLoading ? `
+                <div class="msg assistant"><div class="dots"><span></span><span></span><span></span></div></div>
+              ` : ''}
+            </div>
+            <div class="chat-input-row">
+              <input type="text" class="chat-input" placeholder="Ask me anything..." id="chatInput" />
+              <button class="send-btn" id="sendBtn" ${chatLoading ? 'disabled' : ''}>Send</button>
+            </div>
+          </div>
+
+          <div class="preset-chips">
+            ${PRESET_QUESTIONS.map(q => `
+              <button class="chip" data-question="${q.replace(/'/g, '&#39;')}" onclick="askPreset(this.dataset.question)">${q}</button>
+            `).join('')}
+          </div>
+
+          <div style="text-align: center;">
+            <button class="go-to-site-btn" onclick="navigateTo('projects')">Go to Site</button>
+          </div>
+        </div>
+      </main>
+
+      <footer class="site-footer landing">
+        <div class="footer-contact">
+          <a href="${CONTACT.instagram}" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>
+        </div>
+        <div class="footer-copyright">&copy; ${new Date().getFullYear()} Philip Di Fiore</div>
+      </footer>
+    </div>
+  `;
+
+  attachChatListeners();
+}
+
+function renderSite() {
   let content = '';
-  let headerClass = '';
-  let contentClass = '';
 
   switch (currentView) {
-    case 'home':
-      content = renderHome();
-      headerClass = 'landing';
-      contentClass = 'landing';
-      break;
     case 'about':
       content = renderAbout();
       break;
@@ -729,26 +913,25 @@ function render() {
     case 'detail':
       content = renderDetail();
       break;
-    case 'films':
+    case 'projects':
     default:
-      content = renderFilms();
+      content = renderProjects();
   }
 
   root.innerHTML = `
     <div class="site-wrap">
-      <header class="site-header ${headerClass}">
-        <h1 class="site-title" onclick="navigateTo('home')">Philip Di Fiore</h1>
+      <header class="site-header">
+        <h1 class="site-title" onclick="navigateTo('landing')">Philip Di Fiore</h1>
         <span class="site-subtitle">director · filmmaker · photographer</span>
       </header>
 
       <nav class="tab-nav">
-        <button class="tab-btn ${currentView === 'home' ? 'active' : ''}" onclick="navigateTo('home')">Home</button>
-        <button class="tab-btn ${currentView === 'films' || currentView === 'detail' ? 'active' : ''}" onclick="navigateTo('films')">Films/Videos</button>
+        <button class="tab-btn ${currentView === 'projects' || currentView === 'detail' ? 'active' : ''}" onclick="navigateTo('projects')">Projects</button>
         <button class="tab-btn ${currentView === 'about' ? 'active' : ''}" onclick="navigateTo('about')">About</button>
         <button class="tab-btn ${currentView === 'apps' ? 'active' : ''}" onclick="navigateTo('apps')">Apps</button>
       </nav>
 
-      <main class="content ${contentClass}">
+      <main class="content">
         ${content}
       </main>
 
@@ -763,59 +946,24 @@ function render() {
       </footer>
     </div>
 
-    <img class="hover-image" src="" alt="" />
-  `;
+      `;
 
   // Attach event listeners
-  if (currentView === 'home') {
-    attachChatListeners();
-  } else if (currentView === 'films') {
-    attachFilmsListeners();
+  if (currentView === 'projects') {
+    attachProjectsListeners();
   }
 }
 
-function renderHome() {
-  return `
-    <div class="chat-section">
-      <div class="chat-label">Chat with Artificial Philip</div>
+function renderProjects() {
+  const projectsPosts = getProjectsPosts();
 
-      <div class="chat-area">
-        <div class="chat-messages">
-          ${chatMessages.length === 0 ? `
-            <div class="msg assistant">Hey! I'm an AI version of Philip. Ask me anything about my films, creative process, apps, or influences. What would you like to know?</div>
-          ` : ''}
-          ${chatMessages.map(msg => `
-            <div class="msg ${msg.role}">${msg.content}</div>
-          `).join('')}
-          ${chatLoading ? `
-            <div class="msg assistant"><div class="dots"><span></span><span></span><span></span></div></div>
-          ` : ''}
-        </div>
-        <div class="chat-input-row">
-          <input type="text" class="chat-input" placeholder="Ask me anything..." id="chatInput" />
-          <button class="send-btn" id="sendBtn" ${chatLoading ? 'disabled' : ''}>Send</button>
-        </div>
-      </div>
-
-      <div class="preset-chips">
-        ${PRESET_QUESTIONS.map(q => `
-          <button class="chip" onclick="askPreset('${q}')">${q}</button>
-        `).join('')}
-      </div>
-    </div>
-  `;
-}
-
-function renderFilms() {
-  const filmsPosts = getFilmsVideosPosts();
-
-  if (filmsPosts.length === 0) {
+  if (projectsPosts.length === 0) {
     return `<div class="loading"><div class="dots"><span></span><span></span><span></span></div></div>`;
   }
 
   return `
     <div class="project-grid">
-      ${filmsPosts.map(post => {
+      ${projectsPosts.map(post => {
         const imageUrl = getFeaturedImage(post, 'medium_large');
         const categoryName = getCategoryName(post);
         return `
@@ -838,9 +986,10 @@ function renderApps() {
     <div class="apps-grid">
       ${APPS.map(app => `
         <a href="${app.url}" target="_blank" class="app-card">
-          <img src="${app.image}" alt="${app.title}" />
+          <div class="app-header">
+            <div class="app-header-title">${app.title}</div>
+          </div>
           <div class="app-card-content">
-            <div class="app-title">${app.title}</div>
             <div class="app-desc">${app.desc}</div>
           </div>
         </a>
@@ -854,10 +1003,11 @@ function renderDetail() {
 
   const vimeoId = getVimeoId(currentPost);
   const caption = getCaption(currentPost);
+  const featuredImage = getFeaturedImage(currentPost, 'large');
 
   return `
     <div class="detail-page">
-      <div class="detail-back" onclick="navigateTo('films')">
+      <div class="detail-back" onclick="navigateTo('projects')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
@@ -867,6 +1017,10 @@ function renderDetail() {
       ${vimeoId ? `
         <div class="video-container">
           <iframe src="https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      ` : featuredImage ? `
+        <div class="detail-image">
+          <img src="${featuredImage}" alt="${decodeHTML(currentPost.title.rendered)}" />
         </div>
       ` : ''}
 
@@ -907,12 +1061,9 @@ function attachChatListeners() {
   if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function attachFilmsListeners() {
-  const hoverImage = document.querySelector('.hover-image');
-
+function attachProjectsListeners() {
   document.querySelectorAll('.project-card').forEach(card => {
     const postId = parseInt(card.dataset.postId);
-    const imageUrl = card.dataset.image;
 
     card.addEventListener('click', () => {
       currentPost = posts.find(p => p.id === postId);
@@ -920,29 +1071,6 @@ function attachFilmsListeners() {
       render();
       window.scrollTo(0, 0);
     });
-
-    if (imageUrl) {
-      card.addEventListener('mouseenter', () => {
-        hoverImage.src = imageUrl;
-        hoverImage.classList.add('visible');
-      });
-
-      card.addEventListener('mousemove', (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
-        let left = x + 20;
-        if (left + 320 > window.innerWidth) left = x - 320;
-        let top = y - 100;
-        if (top < 10) top = 10;
-        if (top + 400 > window.innerHeight) top = window.innerHeight - 410;
-        hoverImage.style.left = left + 'px';
-        hoverImage.style.top = top + 'px';
-      });
-
-      card.addEventListener('mouseleave', () => {
-        hoverImage.classList.remove('visible');
-      });
-    }
   });
 }
 
@@ -967,28 +1095,17 @@ window.askPreset = askPreset;
 // ==================== INITIALIZE ====================
 
 async function init() {
-  root.innerHTML = `
-    <div class="site-wrap">
-      <header class="site-header landing">
-        <h1 class="site-title">Philip Di Fiore</h1>
-        <span class="site-subtitle">director · filmmaker · photographer</span>
-      </header>
-      <main class="content">
-        <div class="loading"><div class="dots"><span></span><span></span><span></span></div></div>
-      </main>
-    </div>
-  `;
+  // Show landing page immediately
+  render();
 
+  // Load WordPress data in background
   try {
     [categories, posts] = await Promise.all([
       fetchCategories(),
       fetchPosts()
     ]);
-    render();
   } catch (error) {
     console.error('Failed to load data:', error);
-    // Still render the page - chat can work without WordPress data
-    render();
   }
 }
 
