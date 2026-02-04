@@ -410,11 +410,10 @@ body {
   display: block;
 }
 
-/* Color sequence for app card hover: Red, Green, Yellow, Orange */
+/* Color sequence for app card hover: Red, Green, Blue, Orange */
 .app-card:nth-child(4n+1):hover .app-header { background: #ff432e; }
 .app-card:nth-child(4n+2):hover .app-header { background: #1db406; }
-.app-card:nth-child(4n+3):hover .app-header { background: #f0ff00; }
-.app-card:nth-child(4n+3):hover .app-header .app-header-title { color: #000; }
+.app-card:nth-child(4n+3):hover .app-header { background: #4abbff; }
 .app-card:nth-child(4n+4):hover .app-header { background: #ff8d00; }
 
 .app-header {
@@ -958,8 +957,8 @@ body {
   .app-card.mobile-color-green .app-header { background: #1db406; }
   .app-card.mobile-color-green .app-header-title { color: #fff; }
 
-  .app-card.mobile-color-yellow .app-header { background: #f0ff00; }
-  .app-card.mobile-color-yellow .app-header-title { color: #000; }
+  .app-card.mobile-color-blue .app-header { background: #4abbff; }
+  .app-card.mobile-color-blue .app-header-title { color: #fff; }
 
   .app-card.mobile-color-orange .app-header { background: #ff8d00; }
   .app-card.mobile-color-orange .app-header-title { color: #fff; }
@@ -1223,8 +1222,8 @@ function decodeHTML(html) {
 const PROJECT_COLORS = ['orange', 'green', 'blue', 'yellow', 'red'];
 // Chips: Red, Yellow, Blue, Green, Orange (reverse pattern, matches desktop hover)
 const CHIP_COLORS = ['red', 'yellow', 'blue', 'green', 'orange'];
-// App cards: Red, Green, Yellow, Orange (matches desktop hover pattern)
-const APP_COLORS = ['red', 'green', 'yellow', 'orange'];
+// App cards: Red, Green, Blue, Orange (matches desktop hover pattern)
+const APP_COLORS = ['red', 'green', 'blue', 'orange'];
 
 function isTouchDevice() {
   return window.matchMedia('(hover: none)').matches;
