@@ -896,41 +896,33 @@ body {
     color: inherit;
   }
 
-  /* Mobile color classes for project cards - colored borders by default */
+  /* Mobile color classes for project cards - colored borders only */
   .project-card.mobile-color-orange { border-color: #ff8d00; }
-  .project-card.mobile-color-orange .project-title { color: #ff8d00; }
-
   .project-card.mobile-color-green { border-color: #1db406; }
-  .project-card.mobile-color-green .project-title { color: #1db406; }
-
   .project-card.mobile-color-blue { border-color: #4abbff; }
-  .project-card.mobile-color-blue .project-title { color: #4abbff; }
-
   .project-card.mobile-color-yellow { border-color: #f0ff00; }
-  .project-card.mobile-color-yellow .project-title { color: #9a9a00; }
-
   .project-card.mobile-color-red { border-color: #ff432e; }
-  .project-card.mobile-color-red .project-title { color: #ff432e; }
+
+  /* Disable tap delay for instant response */
+  .project-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 
   /* Active/tap state - fill with full color */
-  .project-card.mobile-color-orange:active { background: #ff8d00; }
-  .project-card.mobile-color-orange:active .project-title { color: #fff; }
+  .project-card.mobile-color-orange:active { background: #ff8d00; color: #fff; }
   .project-card.mobile-color-orange:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-green:active { background: #1db406; }
-  .project-card.mobile-color-green:active .project-title { color: #fff; }
+  .project-card.mobile-color-green:active { background: #1db406; color: #fff; }
   .project-card.mobile-color-green:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-blue:active { background: #4abbff; }
-  .project-card.mobile-color-blue:active .project-title { color: #fff; }
+  .project-card.mobile-color-blue:active { background: #4abbff; color: #fff; }
   .project-card.mobile-color-blue:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-yellow:active { background: #f0ff00; }
-  .project-card.mobile-color-yellow:active .project-title { color: #000; }
+  .project-card.mobile-color-yellow:active { background: #f0ff00; color: #000; }
   .project-card.mobile-color-yellow:active .project-subtitle { color: rgba(0,0,0,0.5); }
 
-  .project-card.mobile-color-red:active { background: #ff432e; }
-  .project-card.mobile-color-red:active .project-title { color: #fff; }
+  .project-card.mobile-color-red:active { background: #ff432e; color: #fff; }
   .project-card.mobile-color-red:active .project-subtitle { color: rgba(255,255,255,0.7); }
 
   /* Chips - disable hover, use persistent colors (applied via JS) */
