@@ -1205,28 +1205,27 @@ function decodeHTML(html) {
 }
 
 // Mobile color helpers
-const MOBILE_COLORS = ['orange', 'green', 'blue', 'yellow', 'red'];
+// Project cards: Orange, Green, Blue, Yellow, Red (matches desktop hover pattern)
+const PROJECT_COLORS = ['orange', 'green', 'blue', 'yellow', 'red'];
+// Chips: Red, Yellow, Blue, Green, Orange (reverse pattern, matches desktop hover)
+const CHIP_COLORS = ['red', 'yellow', 'blue', 'green', 'orange'];
 
 function isTouchDevice() {
   return window.matchMedia('(hover: none)').matches;
 }
 
-function getRandomColor() {
-  return MOBILE_COLORS[Math.floor(Math.random() * MOBILE_COLORS.length)];
-}
-
 function applyMobileColors() {
   if (!isTouchDevice()) return;
 
-  // Apply colors to project cards
-  document.querySelectorAll('.project-card').forEach(card => {
-    const color = getRandomColor();
+  // Apply colors to project cards (same order as desktop hover: 1=orange, 2=green, etc.)
+  document.querySelectorAll('.project-card').forEach((card, index) => {
+    const color = PROJECT_COLORS[index % 5];
     card.classList.add(`mobile-color-${color}`);
   });
 
-  // Apply colors to preset chips
-  document.querySelectorAll('.chip').forEach(chip => {
-    const color = getRandomColor();
+  // Apply colors to preset chips (same order as desktop hover: 1=red, 2=yellow, etc.)
+  document.querySelectorAll('.chip').forEach((chip, index) => {
+    const color = CHIP_COLORS[index % 5];
     chip.classList.add(`mobile-color-${color}`);
   });
 }
