@@ -575,36 +575,329 @@ body {
   color: #999;
 }
 
-/* Responsive */
+/* ==================== RESPONSIVE / MOBILE ==================== */
+
+/* Tablet breakpoint (900px and below) */
 @media (max-width: 900px) {
-  .project-grid { grid-template-columns: repeat(2, 1fr); }
-  .project-card:nth-child(3n) { border-right: 1px solid #000; }
-  .project-card:nth-child(2n) { border-right: none; }
-  .apps-grid { grid-template-columns: 1fr; }
-  .app-card { border-right: none !important; }
+  /* Header */
+  .site-header {
+    padding: 3rem 2rem 2rem;
+  }
+
+  .site-header.landing {
+    padding: 4rem 2rem 2rem;
+  }
+
+  .site-title {
+    font-size: 4rem;
+  }
+
+  /* Projects Grid - 2 columns on tablet */
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-card:nth-child(3n) {
+    border-right: 1px solid #000;
+  }
+
+  .project-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  /* Apps Grid - single column on tablet */
+  .apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-card {
+    border-right: none !important;
+  }
+
+  .app-header {
+    height: 180px;
+  }
+
+  .app-header-title {
+    font-size: 2.5rem;
+  }
+
+  /* Content area */
+  .content {
+    padding: 3rem 2rem;
+  }
+
+  /* Chat area */
+  .chat-area {
+    min-height: 400px;
+    max-height: 500px;
+  }
 }
 
+/* Mobile breakpoint (600px and below) */
 @media (max-width: 600px) {
-  .site-header { padding: 3rem 1.5rem 2rem; }
-  .site-header.landing { padding: 4rem 1.5rem 2rem; }
-  .site-title { font-size: 2.8rem; }
-  .project-grid { grid-template-columns: 1fr; }
-  .project-card { border-right: none !important; }
-  .content { padding: 2rem 1.5rem; }
-  .content.landing { padding: 1rem 1.5rem 3rem; }
-  .tab-btn { padding: 0.8rem 1.2rem; font-size: 0.8rem; }
-  .tab-nav { flex-wrap: wrap; }
-  .hover-image { display: none; }
-  .detail-title { font-size: 1.5rem; }
-  .chat-area { min-height: 350px; }
-  .chat-label { font-size: 1.5rem; }
-  .preset-chips { max-width: 100%; }
+  /* Header - Mobile */
+  .site-header {
+    padding: 2.5rem 1.25rem 1.5rem;
+  }
+
+  .site-header.landing {
+    padding: 3rem 1.25rem 1.5rem;
+  }
+
+  .site-title {
+    font-size: 2.2rem;
+    letter-spacing: -0.04em;
+  }
+
+  .site-subtitle {
+    font-size: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  /* Navigation - Mobile */
+  .tab-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tab-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Content - Mobile */
+  .content {
+    padding: 1.5rem 1.25rem 2rem;
+  }
+
+  .content.landing {
+    padding: 1rem 1.25rem 2rem;
+  }
+
+  /* Chat Section - Mobile */
+  .chat-section {
+    width: 100%;
+  }
+
+  .chat-label {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-area {
+    min-height: 320px;
+    max-height: 400px;
+  }
+
+  .chat-messages {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .msg {
+    max-width: 95%;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .msg.user {
+    padding-bottom: 0.75rem;
+  }
+
+  .msg.assistant {
+    font-size: 0.82rem;
+  }
+
+  .chat-input-row {
+    flex-direction: column;
+  }
+
+  .chat-input {
+    padding: 1rem 1.25rem;
+    font-size: 1rem; /* Prevents iOS zoom on focus */
+    border-bottom: 1px solid #000;
+  }
+
+  .send-btn {
+    padding: 1rem 1.5rem;
+    border-left: none;
+    font-size: 0.85rem;
+  }
+
+  /* Preset Chips - Mobile */
+  .preset-chips {
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    max-width: 100%;
+  }
+
+  .chip {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.7rem;
+  }
+
+  /* Go to Site Button - Mobile */
+  .go-to-site-btn {
+    margin-top: 2rem;
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Projects Grid - Single column on mobile */
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    border-right: none !important;
+    min-height: 100px;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .project-card .project-title {
+    font-size: 1rem;
+  }
+
+  .project-card .project-subtitle {
+    font-size: 0.75rem;
+  }
+
+  /* Detail Page - Mobile */
+  .detail-page {
+    max-width: 100%;
+  }
+
+  .detail-back {
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-caption {
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .video-container {
+    margin-bottom: 1.5rem;
+  }
+
+  /* About Page - Mobile */
+  .about-content {
+    max-width: 100%;
+  }
+
+  .about-content p {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Apps Page - Mobile */
+  .apps-grid {
+    gap: 1.5rem;
+  }
+
+  .app-header {
+    height: 140px;
+  }
+
+  .app-header-title {
+    font-size: 2rem;
+    padding: 0.75rem;
+  }
+
+  .app-card-content {
+    padding: 0.75rem 0 0 0;
+  }
+
+  .app-card .app-desc {
+    font-size: 0.8rem;
+  }
+
+  /* Footer - Mobile */
+  .site-footer {
+    padding: 2rem 1.25rem;
+  }
+
+  .site-footer.landing {
+    padding-top: 1.5rem;
+  }
+
+  .footer-contact {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-contact a {
+    font-size: 0.85rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.65rem;
+  }
+
+  /* Hide hover image on mobile */
+  .hover-image {
+    display: none;
+  }
 }
 
-/* Touch device fixes */
+/* Small mobile breakpoint (380px and below) */
+@media (max-width: 380px) {
+  .site-title {
+    font-size: 1.8rem;
+  }
+
+  .chat-label {
+    font-size: 1.1rem;
+  }
+
+  .chip {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.65rem;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .app-header-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* Touch device fixes - disable hover effects, use active states instead */
 @media (hover: none) {
-  .project-card:hover { background: #fff; color: #000; }
-  .project-card:hover .project-subtitle { color: #999; }
+  /* Disable hover colors on project cards */
+  .project-card:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  .project-card:hover .project-subtitle {
+    color: #999;
+  }
+
+  /* Use active states instead for touch feedback */
   .project-card:nth-child(5n+1):active { background: #ff8d00; color: #fff; }
   .project-card:nth-child(5n+2):active { background: #1db406; color: #fff; }
   .project-card:nth-child(5n+3):active { background: #4abbff; color: #fff; }
@@ -612,7 +905,107 @@ body {
   .project-card:nth-child(5n+5):active { background: #ff432e; color: #fff; }
   .project-card:active .project-subtitle { color: rgba(255,255,255,0.7); }
   .project-card:nth-child(5n+4):active .project-subtitle { color: rgba(0,0,0,0.5); }
-  .hover-image { display: none; }
+
+  /* Chips - disable hover, use active */
+  .chip:hover {
+    background: #fff;
+    color: #666;
+  }
+
+  .chip:nth-child(5n+1):active { background: #ff432e; color: #fff; }
+  .chip:nth-child(5n+2):active { background: #f0ff00; color: #000; }
+  .chip:nth-child(5n+3):active { background: #4abbff; color: #fff; }
+  .chip:nth-child(5n+4):active { background: #1db406; color: #fff; }
+  .chip:nth-child(5n+5):active { background: #ff8d00; color: #fff; }
+
+  /* App cards - disable hover, use active */
+  .app-card:hover .app-header {
+    background: #fff;
+  }
+
+  .app-card:hover .app-header-title {
+    color: #000;
+  }
+
+  .app-card:nth-child(4n+1):active .app-header { background: #ff432e; }
+  .app-card:nth-child(4n+2):active .app-header { background: #1db406; }
+  .app-card:nth-child(4n+3):active .app-header { background: #f0ff00; }
+  .app-card:nth-child(4n+4):active .app-header { background: #ff8d00; }
+  .app-card:active .app-header-title { color: #fff; }
+  .app-card:nth-child(4n+3):active .app-header-title { color: #000; }
+
+  /* Buttons */
+  .go-to-site-btn:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  .go-to-site-btn:active {
+    background: #fff;
+    color: #000;
+  }
+
+  .send-btn:hover {
+    background: #000;
+  }
+
+  .send-btn:active {
+    background: #333;
+  }
+
+  /* Hide hover image */
+  .hover-image {
+    display: none;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Prevent iOS zoom on input focus */
+  .chat-input {
+    font-size: 16px;
+  }
+
+  /* Fix for iOS momentum scrolling */
+  .chat-messages {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Fix for safe area (notch) */
+  .site-wrap {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .site-footer {
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 600px) {
+    .site-footer {
+      padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 900px) and (orientation: landscape) {
+  .site-header {
+    padding: 1.5rem 2rem 1rem;
+  }
+
+  .site-header.landing {
+    padding: 2rem 2rem 1rem;
+  }
+
+  .chat-area {
+    min-height: 250px;
+    max-height: 300px;
+  }
+
+  .go-to-site-btn {
+    margin-top: 1.5rem;
+  }
 }
 </style>
 
