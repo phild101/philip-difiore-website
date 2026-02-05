@@ -376,16 +376,17 @@ body {
 .project-preview {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: #fafafa;
   padding: 2rem;
   position: relative;
+  overflow-y: auto;
 }
 
 .project-preview-image {
   max-width: 100%;
-  max-height: 100%;
+  height: auto;
   object-fit: contain;
   border: 1px solid #000;
   opacity: 0;
