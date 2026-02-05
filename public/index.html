@@ -622,7 +622,7 @@ body {
 @keyframes monolithRise {
   0% {
     opacity: 0;
-    transform: rotateX(90deg) translateY(20px);
+    transform: translateY(100px);
     filter: brightness(0);
   }
   30% {
@@ -631,7 +631,7 @@ body {
   }
   100% {
     opacity: 1;
-    transform: rotateX(0deg) translateY(0);
+    transform: translateY(0);
     filter: brightness(1);
   }
 }
@@ -640,13 +640,8 @@ body {
   display: inline-block;
 }
 
-.site-title.monolith {
-  perspective: 1000px;
-}
-
 .site-title.monolith .letter {
   opacity: 0;
-  transform-origin: bottom center;
 }
 
 .site-title .letter.rise {
