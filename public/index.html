@@ -151,6 +151,17 @@ body {
   min-height: 0;
 }
 
+.chat-label-prefix {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  display: block;
+}
+
 .chat-label {
   font-family: 'itc-avant-garde-gothic-pro', var(--font-display);
   font-size: 2rem;
@@ -1334,6 +1345,7 @@ function renderLanding() {
 
       <main class="content landing">
         <div class="chat-section">
+          <span class="chat-label-prefix">chat with</span>
           <div class="chat-label">Artificial Phil</div>
 
           <div class="chat-area">
