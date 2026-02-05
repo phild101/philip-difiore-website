@@ -618,6 +618,41 @@ body {
   color: #999;
 }
 
+/* Falling Letters Animation */
+@keyframes fallIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) rotate(var(--rotation));
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(10px) rotate(calc(var(--rotation) * -0.3));
+  }
+  80% {
+    transform: translateY(-5px) rotate(calc(var(--rotation) * 0.1));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.site-title .letter {
+  display: inline-block;
+  opacity: 0;
+  animation: fallIn 0.6s ease-out forwards;
+}
+
+.site-subtitle.animate {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* ==================== RESPONSIVE / MOBILE ==================== */
 
 /* Tablet breakpoint (900px and below) */
@@ -1339,6 +1374,7 @@ function renderLanding() {
   `;
 
   attachChatListeners();
+  animateFallingLetters();
 }
 
 function renderSite() {
@@ -1400,6 +1436,9 @@ function renderSite() {
   if (currentView === 'apps') {
     attachAppsListeners();
   }
+
+  // Animate falling letters
+  animateFallingLetters();
 }
 
 function renderProjects() {
@@ -1624,6 +1663,37 @@ function attachAppsListeners() {
         card.classList.add('tapped');
       }, { passive: true });
     });
+  }
+}
+
+// ==================== ANIMATIONS ====================
+
+function animateFallingLetters() {
+  const title = document.querySelector('.site-title');
+  const subtitle = document.querySelector('.site-subtitle');
+
+  if (!title) return;
+
+  const text = title.textContent;
+  title.innerHTML = '';
+
+  // Split into letters, preserving space
+  text.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'letter';
+    span.textContent = char === ' ' ? '\u00A0' : char;
+    // Random rotation between -30 and 30 degrees
+    span.style.setProperty('--rotation', `${(Math.random() - 0.5) * 60}deg`);
+    // Staggered delay
+    span.style.animationDelay = `${i * 0.04}s`;
+    title.appendChild(span);
+  });
+
+  // Fade in subtitle after letters finish
+  if (subtitle) {
+    const totalDelay = text.length * 0.04 + 0.3;
+    subtitle.classList.add('animate');
+    subtitle.style.animationDelay = `${totalDelay}s`;
   }
 }
 
