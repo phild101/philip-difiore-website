@@ -252,7 +252,7 @@ body {
 .send-btn:hover { background: #333; }
 .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* Preset Question Chips - inside chat box */
+/* Preset Question Chips - inside chat box (desktop) */
 .preset-chips {
   display: flex;
   flex-wrap: wrap;
@@ -261,6 +261,15 @@ body {
   justify-content: flex-start;
   border-top: 1px solid #000;
   background: #fff;
+}
+
+/* Preset Question Chips - outside chat box (mobile only) */
+.preset-chips-mobile {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  justify-content: center;
 }
 
 .chip {
@@ -792,12 +801,37 @@ body {
     font-size: 0.7rem;
   }
 
-  /* Go to Site Button - Mobile */
+  /* Go to Site Button - Mobile (stacked under Send) */
   .go-to-site-btn {
     padding: 1rem 1.5rem;
     font-size: 0.85rem;
     border-left: none;
     border-top: 1px solid #000;
+    width: 100%;
+  }
+
+  /* Mobile Landing - remove locked layout, allow scroll */
+  .site-wrap.landing-wrap {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  /* Mobile Landing - sticky header only */
+  .site-header.landing {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* Mobile - hide preset chips inside chat box */
+  .chat-area .preset-chips {
+    display: none;
+  }
+
+  /* Mobile - show preset chips outside chat box */
+  .preset-chips-mobile {
+    display: flex;
   }
 
   /* Projects - Single column on mobile (50% smaller cards) */
@@ -1322,6 +1356,13 @@ function renderLanding() {
               <button class="send-btn" id="sendBtn" ${chatLoading ? 'disabled' : ''}>Send</button>
               <button class="go-to-site-btn" id="goToSiteBtn" onclick="navigateTo('projects')">Go to Site</button>
             </div>
+          </div>
+
+          <!-- Preset chips outside chat box for mobile -->
+          <div class="preset-chips-mobile">
+            ${PRESET_QUESTIONS.map(q => `
+              <button class="chip" data-question="${q.replace(/'/g, '&#39;')}" onclick="askPreset(this.dataset.question)">${q}</button>
+            `).join('')}
           </div>
         </div>
       </main>
