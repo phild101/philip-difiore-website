@@ -37,15 +37,20 @@ body {
   flex-direction: column;
 }
 
+/* Sticky Header Wrapper */
+.sticky-header-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+}
+
 /* Header */
 .site-header {
   padding: 4rem 3rem 3rem;
   text-align: center;
   background: #fff;
   border-bottom: 1px solid #000;
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
 .site-header.landing {
@@ -84,9 +89,6 @@ body {
   padding: 0;
   border-bottom: 1px solid #000;
   background: #fff;
-  position: sticky;
-  top: 186px; /* Height of header */
-  z-index: 99;
 }
 
 .tab-btn {
@@ -1352,16 +1354,18 @@ function renderSite() {
 
   root.innerHTML = `
     <div class="site-wrap">
-      <header class="site-header">
-        <h1 class="site-title" onclick="navigateTo('landing')">Philip Di Fiore</h1>
-        <span class="site-subtitle">director · filmmaker · photographer</span>
-      </header>
+      <div class="sticky-header-wrap">
+        <header class="site-header">
+          <h1 class="site-title" onclick="navigateTo('landing')">Philip Di Fiore</h1>
+          <span class="site-subtitle">director · filmmaker · photographer</span>
+        </header>
 
-      <nav class="tab-nav">
-        <button class="tab-btn ${currentView === 'projects' || currentView === 'detail' ? 'active' : ''}" onclick="navigateTo('projects')">Projects</button>
-        <button class="tab-btn ${currentView === 'about' ? 'active' : ''}" onclick="navigateTo('about')">About</button>
-        <button class="tab-btn ${currentView === 'apps' ? 'active' : ''}" onclick="navigateTo('apps')">Apps</button>
-      </nav>
+        <nav class="tab-nav">
+          <button class="tab-btn ${currentView === 'projects' || currentView === 'detail' ? 'active' : ''}" onclick="navigateTo('projects')">Projects</button>
+          <button class="tab-btn ${currentView === 'about' ? 'active' : ''}" onclick="navigateTo('about')">About</button>
+          <button class="tab-btn ${currentView === 'apps' ? 'active' : ''}" onclick="navigateTo('apps')">Apps</button>
+        </nav>
+      </div>
 
       <main class="content">
         ${content}
