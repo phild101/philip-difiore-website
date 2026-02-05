@@ -618,18 +618,15 @@ body {
   color: #999;
 }
 
-/* Falling Letters Animation */
+/* Falling Elements Animation */
 @keyframes fallIn {
   0% {
     opacity: 0;
-    transform: translateY(-100px) rotate(var(--rotation));
+    transform: translateY(-200px) rotate(var(--rotation, 0deg));
   }
-  60% {
+  70% {
     opacity: 1;
-    transform: translateY(10px) rotate(calc(var(--rotation) * -0.3));
-  }
-  80% {
-    transform: translateY(-5px) rotate(calc(var(--rotation) * 0.1));
+    transform: translateY(8px) rotate(0deg);
   }
   100% {
     opacity: 1;
@@ -637,20 +634,15 @@ body {
   }
 }
 
+.fall-in {
+  opacity: 0;
+  animation: fallIn 0.35s ease-out forwards;
+}
+
 .site-title .letter {
   display: inline-block;
   opacity: 0;
-  animation: fallIn 0.6s ease-out forwards;
-}
-
-.site-subtitle.animate {
-  opacity: 0;
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  animation: fallIn 0.35s ease-out forwards;
 }
 
 /* ==================== RESPONSIVE / MOBILE ==================== */
@@ -1671,29 +1663,72 @@ function attachAppsListeners() {
 function animateFallingLetters() {
   const title = document.querySelector('.site-title');
   const subtitle = document.querySelector('.site-subtitle');
+  const nav = document.querySelector('.tab-nav');
+  const content = document.querySelector('.content');
+  const footer = document.querySelector('.site-footer');
+  const chatLabel = document.querySelector('.chat-label');
+  const chatArea = document.querySelector('.chat-area');
 
   if (!title) return;
 
+  let delay = 0;
+  const letterDelay = 0.02; // Fast stagger for letters
+  const elementDelay = 0.08; // Delay between major elements
+
+  // Animate title letters
   const text = title.textContent;
   title.innerHTML = '';
 
-  // Split into letters, preserving space
   text.split('').forEach((char, i) => {
     const span = document.createElement('span');
     span.className = 'letter';
     span.textContent = char === ' ' ? '\u00A0' : char;
-    // Random rotation between -30 and 30 degrees
-    span.style.setProperty('--rotation', `${(Math.random() - 0.5) * 60}deg`);
-    // Staggered delay
-    span.style.animationDelay = `${i * 0.04}s`;
+    span.style.setProperty('--rotation', `${(Math.random() - 0.5) * 40}deg`);
+    span.style.animationDelay = `${i * letterDelay}s`;
     title.appendChild(span);
   });
 
-  // Fade in subtitle after letters finish
+  delay = text.length * letterDelay;
+
+  // Animate subtitle
   if (subtitle) {
-    const totalDelay = text.length * 0.04 + 0.3;
-    subtitle.classList.add('animate');
-    subtitle.style.animationDelay = `${totalDelay}s`;
+    subtitle.classList.add('fall-in');
+    subtitle.style.animationDelay = `${delay}s`;
+    delay += elementDelay;
+  }
+
+  // Animate nav (on non-landing pages)
+  if (nav) {
+    nav.classList.add('fall-in');
+    nav.style.animationDelay = `${delay}s`;
+    delay += elementDelay;
+  }
+
+  // Animate chat label (landing page)
+  if (chatLabel) {
+    chatLabel.classList.add('fall-in');
+    chatLabel.style.animationDelay = `${delay}s`;
+    delay += elementDelay;
+  }
+
+  // Animate chat area (landing page)
+  if (chatArea) {
+    chatArea.classList.add('fall-in');
+    chatArea.style.animationDelay = `${delay}s`;
+    delay += elementDelay;
+  }
+
+  // Animate content (non-landing pages)
+  if (content && !content.classList.contains('landing')) {
+    content.classList.add('fall-in');
+    content.style.animationDelay = `${delay}s`;
+    delay += elementDelay;
+  }
+
+  // Animate footer
+  if (footer) {
+    footer.classList.add('fall-in');
+    footer.style.animationDelay = `${delay}s`;
   }
 }
 
