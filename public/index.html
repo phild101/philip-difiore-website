@@ -243,16 +243,15 @@ body {
 .send-btn:hover { background: #333; }
 .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* Preset Question Chips */
+/* Preset Question Chips - inside chat box */
 .preset-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 2rem;
-  justify-content: center;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  justify-content: flex-start;
+  border-top: 1px solid #000;
+  background: #fff;
 }
 
 .chip {
@@ -1303,17 +1302,16 @@ function renderLanding() {
                 <div class="msg assistant"><div class="dots"><span></span><span></span><span></span></div></div>
               ` : ''}
             </div>
+            <div class="preset-chips">
+              ${PRESET_QUESTIONS.map(q => `
+                <button class="chip" data-question="${q.replace(/'/g, '&#39;')}" onclick="askPreset(this.dataset.question)">${q}</button>
+              `).join('')}
+            </div>
             <div class="chat-input-row">
               <input type="text" class="chat-input" placeholder="Ask me anything..." id="chatInput" />
               <button class="send-btn" id="sendBtn" ${chatLoading ? 'disabled' : ''}>Send</button>
               <button class="go-to-site-btn" id="goToSiteBtn" onclick="navigateTo('projects')">Go to Site</button>
             </div>
-          </div>
-
-          <div class="preset-chips">
-            ${PRESET_QUESTIONS.map(q => `
-              <button class="chip" data-question="${q.replace(/'/g, '&#39;')}" onclick="askPreset(this.dataset.question)">${q}</button>
-            `).join('')}
           </div>
         </div>
       </main>
