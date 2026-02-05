@@ -56,6 +56,10 @@ body {
 .site-header.landing {
   padding: 6rem 3rem 3rem;
   border-bottom: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
 }
 
 .site-title {
@@ -270,20 +274,19 @@ body {
 .chip:nth-child(5n+4):hover { background: #1db406; color: #fff; }
 .chip:nth-child(5n+5):hover { background: #ff8d00; color: #fff; }
 
-/* Go to Site Button */
+/* Go to Site Button - inline with Send button */
 .go-to-site-btn {
-  display: inline-block;
-  margin-top: 2.5rem;
-  padding: 1rem 2.5rem;
-  background: #000;
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  background: #fff;
+  color: #000;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
   text-decoration: none;
-  border: 1px solid #000;
+  border: none;
+  border-left: 1px solid #000;
+  padding: 1.5rem 2.5rem;
   cursor: pointer;
   transition: all 0.15s;
   text-align: center;
@@ -782,11 +785,10 @@ body {
 
   /* Go to Site Button - Mobile */
   .go-to-site-btn {
-    margin-top: 2rem;
-    padding: 0.9rem 2rem;
-    font-size: 0.8rem;
-    width: 100%;
-    max-width: 280px;
+    padding: 1rem 1.5rem;
+    font-size: 0.85rem;
+    border-left: none;
+    border-top: 1px solid #000;
   }
 
   /* Projects - Single column on mobile (50% smaller cards) */
@@ -1304,6 +1306,7 @@ function renderLanding() {
             <div class="chat-input-row">
               <input type="text" class="chat-input" placeholder="Ask me anything..." id="chatInput" />
               <button class="send-btn" id="sendBtn" ${chatLoading ? 'disabled' : ''}>Send</button>
+              <button class="go-to-site-btn" id="goToSiteBtn" onclick="navigateTo('projects')">Go to Site</button>
             </div>
           </div>
 
@@ -1311,10 +1314,6 @@ function renderLanding() {
             ${PRESET_QUESTIONS.map(q => `
               <button class="chip" data-question="${q.replace(/'/g, '&#39;')}" onclick="askPreset(this.dataset.question)">${q}</button>
             `).join('')}
-          </div>
-
-          <div style="text-align: center;">
-            <button class="go-to-site-btn" onclick="navigateTo('projects')">Go to Site</button>
           </div>
         </div>
       </main>
@@ -1495,6 +1494,29 @@ function attachChatListeners() {
   // Scroll to bottom of chat
   const chatBox = document.querySelector('.chat-messages');
   if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Randomize hover color for Go to Site button
+  const goToSiteBtn = document.getElementById('goToSiteBtn');
+  if (goToSiteBtn) {
+    const colors = [
+      { bg: '#ff8d00', text: '#fff' },  // orange
+      { bg: '#1db406', text: '#fff' },  // green
+      { bg: '#4abbff', text: '#fff' },  // blue
+      { bg: '#f0ff00', text: '#000' },  // yellow
+      { bg: '#ff432e', text: '#fff' }   // red
+    ];
+
+    goToSiteBtn.addEventListener('mouseenter', () => {
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      goToSiteBtn.style.backgroundColor = randomColor.bg;
+      goToSiteBtn.style.color = randomColor.text;
+    });
+
+    goToSiteBtn.addEventListener('mouseleave', () => {
+      goToSiteBtn.style.backgroundColor = '#fff';
+      goToSiteBtn.style.color = '#000';
+    });
+  }
 
   // Apply mobile color classes to chips (but not tapped - they start white)
   const allChips = document.querySelectorAll('.chip');
