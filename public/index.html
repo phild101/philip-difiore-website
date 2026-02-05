@@ -183,8 +183,8 @@ body {
   min-height: 0;
 }
 
-/* Artificial Phil Avatar */
-.chat-avatar-container {
+/* Montage Animation Container */
+.chat-montage-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,18 +196,26 @@ body {
     #1db406 50%, #1db406 75%,
     #4abbff 75%, #4abbff 100%
   );
+  position: relative;
+  overflow: hidden;
 }
 
-.chat-avatar {
+.chat-montage-container.hidden {
+  display: none;
+}
+
+.montage-image {
+  position: absolute;
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: 100%;
   object-fit: contain;
+  opacity: 0;
 }
 
-.chat-avatar-container.hidden {
-  display: none;
+.montage-image.active {
+  opacity: 1;
 }
 
 .chat-messages {
@@ -1380,8 +1388,7 @@ function renderLanding() {
           <div class="chat-label">Artificial Phil</div>
 
           <div class="chat-area">
-            <div class="chat-avatar-container ${chatMessages.length > 0 ? 'hidden' : ''}">
-              <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/artificial-phil.jpg" alt="Artificial Phil" class="chat-avatar" />
+            <div class="chat-montage-container ${chatMessages.length > 0 ? 'hidden' : ''}" id="montageContainer">
             </div>
             <div class="chat-messages ${chatMessages.length === 0 ? 'hidden' : ''}">
               ${chatMessages.map(msg => `
@@ -1425,6 +1432,85 @@ function renderLanding() {
   `;
 
   attachChatListeners();
+
+  // Start montage animation if no messages yet
+  if (chatMessages.length === 0) {
+    startMontageAnimation();
+  }
+}
+
+// Project rollover images for montage
+const MONTAGE_IMAGES = [
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/buffhuntphilweb2-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangerweb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/inthecity-v2.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/oldfriend-v2.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/rdgldgrn-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/RivalsSchoolsWeb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/elliegoulding3-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/savemylife3-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/RecordingParty_jamesrichardson2-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/classactress5-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/manman6-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/diiv10-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/antibalas3-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ifyoucallweb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/GameGetsOldfWeb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnedthehardway-v2.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/runninweb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/warmspellweb-835x1024.jpg',
+  'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/spacecampweb-835x1024.jpg'
+];
+
+let montageInterval = null;
+
+function startMontageAnimation() {
+  const container = document.getElementById('montageContainer');
+  if (!container) return;
+
+  // Create image elements
+  MONTAGE_IMAGES.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'montage-image';
+    img.dataset.index = i;
+    container.appendChild(img);
+  });
+
+  const images = container.querySelectorAll('.montage-image');
+  const totalImages = images.length;
+  const totalCycles = 5;
+  const totalFrames = totalImages * totalCycles;
+  let currentFrame = 0;
+
+  // Show first image
+  images[0].classList.add('active');
+
+  // Rapid fire: ~50ms per image (insanely fast)
+  montageInterval = setInterval(() => {
+    // Hide current
+    images[currentFrame % totalImages].classList.remove('active');
+
+    currentFrame++;
+
+    if (currentFrame >= totalFrames) {
+      // Animation complete - show last image and stop
+      clearInterval(montageInterval);
+      montageInterval = null;
+      images[totalImages - 1].classList.add('active');
+      return;
+    }
+
+    // Show next
+    images[currentFrame % totalImages].classList.add('active');
+  }, 50);
+}
+
+function stopMontageAnimation() {
+  if (montageInterval) {
+    clearInterval(montageInterval);
+    montageInterval = null;
+  }
 }
 
 function renderSite() {
