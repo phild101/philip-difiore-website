@@ -375,9 +375,7 @@ body {
 /* Large Image Preview Area */
 .project-preview {
   flex: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  display: block;
   background: #fafafa;
   padding: 2rem;
   position: relative;
@@ -385,9 +383,8 @@ body {
 }
 
 .project-preview-image {
-  max-width: 100%;
+  width: 100%;
   height: auto;
-  object-fit: contain;
   border: 1px solid #000;
   opacity: 0;
   transition: opacity 0.2s ease;
