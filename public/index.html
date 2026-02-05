@@ -37,6 +37,12 @@ body {
   flex-direction: column;
 }
 
+.site-wrap.landing-wrap {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 /* Sticky Header Wrapper */
 .sticky-header-wrap {
   position: sticky;
@@ -54,11 +60,8 @@ body {
 }
 
 .site-header.landing {
-  padding: 6rem 3rem 3rem;
+  padding: 3rem 3rem 2rem;
   border-bottom: none;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   background: #fff;
 }
 
@@ -129,10 +132,12 @@ body {
 }
 
 .content.landing {
-  padding: 2rem 3rem 4rem;
+  padding: 1rem 3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+  overflow: hidden;
 }
 
 /* AI Chat Section - Landing Page */
@@ -140,6 +145,10 @@ body {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .chat-label {
@@ -159,8 +168,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 450px;
-  max-height: 550px;
+  flex: 1;
+  min-height: 0;
 }
 
 .chat-messages {
@@ -574,7 +583,8 @@ body {
 
 .site-footer.landing {
   border-top: none;
-  padding-top: 2rem;
+  padding: 1rem 3rem;
+  flex-shrink: 0;
 }
 
 .footer-contact {
@@ -1283,7 +1293,7 @@ function render() {
 
 function renderLanding() {
   root.innerHTML = `
-    <div class="site-wrap">
+    <div class="site-wrap landing-wrap">
       <header class="site-header landing">
         <h1 class="site-title">Philip Di Fiore</h1>
         <span class="site-subtitle">director · filmmaker · photographer</span>
