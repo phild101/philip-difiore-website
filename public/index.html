@@ -918,25 +918,24 @@ body {
   .project-card.mobile-color-red.tapped { background: #ff432e; color: #fff; }
   .project-card.mobile-color-red.tapped .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  /* Chips - disable hover, use persistent colors (applied via JS) */
+  /* Chips - disable hover on touch devices, start white, fill with color on tap */
   .chip:hover {
     background: inherit;
     color: inherit;
   }
 
-  /* Mobile color classes for chips (applied via JS) */
-  .chip.mobile-color-orange { background: #ff8d00; color: #fff; border-color: #ff8d00; }
-  .chip.mobile-color-green { background: #1db406; color: #fff; border-color: #1db406; }
-  .chip.mobile-color-blue { background: #4abbff; color: #fff; border-color: #4abbff; }
-  .chip.mobile-color-yellow { background: #f0ff00; color: #000; border-color: #f0ff00; }
-  .chip.mobile-color-red { background: #ff432e; color: #fff; border-color: #ff432e; }
-
-  /* Active state - invert to white for feedback */
-  .chip:active {
-    background: #fff !important;
-    color: #000 !important;
-    border-color: #000 !important;
+  /* Disable tap delay for instant response */
+  .chip {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  /* Tapped state - fill with color (managed via JS, stays lit until another chip is tapped) */
+  .chip.mobile-color-orange.tapped { background: #ff8d00; color: #fff; border-color: #ff8d00; }
+  .chip.mobile-color-green.tapped { background: #1db406; color: #fff; border-color: #1db406; }
+  .chip.mobile-color-blue.tapped { background: #4abbff; color: #fff; border-color: #4abbff; }
+  .chip.mobile-color-yellow.tapped { background: #f0ff00; color: #000; border-color: #f0ff00; }
+  .chip.mobile-color-red.tapped { background: #ff432e; color: #fff; border-color: #ff432e; }
 
   /* App cards - disable hover, use persistent colors (applied via JS) */
   .app-card:hover .app-header {
@@ -1235,11 +1234,8 @@ function applyMobileColors() {
     card.classList.add(`mobile-color-${color}`);
   });
 
-  // Apply colors to preset chips (same order as desktop hover: 1=red, 2=yellow, etc.)
-  document.querySelectorAll('.chip').forEach((chip, index) => {
-    const color = CHIP_COLORS[index % 5];
-    chip.classList.add(`mobile-color-${color}`);
-  });
+  // Note: Chips are handled separately in attachChatListeners() with touch handlers
+  // They start white and fill with color only when tapped
 
   // Apply colors to app cards (same order as desktop hover: 1=red, 2=green, etc.)
   document.querySelectorAll('.app-card').forEach((card, index) => {
@@ -1467,7 +1463,24 @@ function attachChatListeners() {
   const chatBox = document.querySelector('.chat-messages');
   if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
 
-  // Apply mobile colors to preset chips
+  // Apply mobile color classes to chips (but not tapped - they start white)
+  const allChips = document.querySelectorAll('.chip');
+  if (isTouchDevice()) {
+    allChips.forEach((chip, index) => {
+      const color = CHIP_COLORS[index % 5];
+      chip.classList.add(`mobile-color-${color}`);
+
+      // Touch handlers for color feedback - chip stays lit until another is tapped
+      chip.addEventListener('touchstart', (e) => {
+        // Remove tapped class from all chips first
+        allChips.forEach(c => c.classList.remove('tapped'));
+        // Add tapped class to this chip
+        chip.classList.add('tapped');
+      }, { passive: true });
+    });
+  }
+
+  // Apply mobile colors to other elements (app cards, project cards)
   applyMobileColors();
 }
 
