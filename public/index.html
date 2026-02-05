@@ -1241,7 +1241,7 @@ const root = document.getElementById('root');
 // ==================== API FUNCTIONS ====================
 
 async function fetchProjects() {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=display_order.asc,created_at.desc`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&hidden=neq.true&order=display_order.asc,created_at.desc`, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
