@@ -380,7 +380,7 @@ body {
   40% { opacity: 1; }
 }
 
-/* Project Layout - Desktop: Left column list + Right image preview */
+/* Project Layout - Desktop: Left list + Center preview + Right list */
 .project-layout {
   display: flex;
   gap: 0;
@@ -389,11 +389,18 @@ body {
 }
 
 .project-list {
-  width: 320px;
+  width: 280px;
   flex-shrink: 0;
-  border-right: 1px solid #000;
   overflow-y: auto;
   max-height: 700px;
+}
+
+.project-list-left {
+  border-right: 1px solid #000;
+}
+
+.project-list-right {
+  border-left: 1px solid #000;
 }
 
 .project-card {
@@ -1492,10 +1499,15 @@ function renderProjects() {
     return `<div class="loading"><div class="dots"><span></span><span></span><span></span></div></div>`;
   }
 
+  // Split projects in half
+  const half = Math.ceil(projects.length / 2);
+  const leftProjects = projects.slice(0, half);
+  const rightProjects = projects.slice(half);
+
   return `
     <div class="project-layout">
-      <div class="project-list">
-        ${projects.map(project => `
+      <div class="project-list project-list-left">
+        ${leftProjects.map(project => `
           <div class="project-card" data-project-id="${project.id}" data-image="${project.featured_image || ''}">
             <div class="project-title">${decodeHTML(project.title)}</div>
             <div class="project-subtitle">${project.category || ''}</div>
@@ -1504,6 +1516,14 @@ function renderProjects() {
       </div>
       <div class="project-preview">
         <img class="project-preview-image" src="" alt="" />
+      </div>
+      <div class="project-list project-list-right">
+        ${rightProjects.map(project => `
+          <div class="project-card" data-project-id="${project.id}" data-image="${project.featured_image || ''}">
+            <div class="project-title">${decodeHTML(project.title)}</div>
+            <div class="project-subtitle">${project.category || ''}</div>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;
