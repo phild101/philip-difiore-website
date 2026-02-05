@@ -938,7 +938,7 @@ body {
   .chip.mobile-color-yellow.tapped { background: #f0ff00; color: #000; border-color: #f0ff00; }
   .chip.mobile-color-red.tapped { background: #ff432e; color: #fff; border-color: #ff432e; }
 
-  /* App cards - disable hover, use persistent colors (applied via JS) */
+  /* App cards - disable hover on touch devices, start white, fill with color on tap */
   .app-card:hover .app-header {
     background: inherit;
   }
@@ -947,26 +947,24 @@ body {
     color: inherit;
   }
 
-  /* Mobile color classes for app cards (applied via JS) */
-  .app-card.mobile-color-red .app-header { background: #ff432e; }
-  .app-card.mobile-color-red .app-header-title { color: #fff; }
-
-  .app-card.mobile-color-green .app-header { background: #1db406; }
-  .app-card.mobile-color-green .app-header-title { color: #fff; }
-
-  .app-card.mobile-color-blue .app-header { background: #4abbff; }
-  .app-card.mobile-color-blue .app-header-title { color: #fff; }
-
-  .app-card.mobile-color-orange .app-header { background: #ff8d00; }
-  .app-card.mobile-color-orange .app-header-title { color: #fff; }
-
-  /* Active state - invert to white for feedback */
-  .app-card:active .app-header {
-    background: #fff !important;
+  /* Disable tap delay for instant response */
+  .app-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
-  .app-card:active .app-header-title {
-    color: #000 !important;
-  }
+
+  /* Tapped state - fill with color (managed via JS, stays lit until another app card is tapped) */
+  .app-card.mobile-color-red.tapped .app-header { background: #ff432e; }
+  .app-card.mobile-color-red.tapped .app-header-title { color: #fff; }
+
+  .app-card.mobile-color-green.tapped .app-header { background: #1db406; }
+  .app-card.mobile-color-green.tapped .app-header-title { color: #fff; }
+
+  .app-card.mobile-color-blue.tapped .app-header { background: #4abbff; }
+  .app-card.mobile-color-blue.tapped .app-header-title { color: #fff; }
+
+  .app-card.mobile-color-orange.tapped .app-header { background: #ff8d00; }
+  .app-card.mobile-color-orange.tapped .app-header-title { color: #fff; }
 
   /* Buttons */
   .go-to-site-btn:hover {
@@ -1229,7 +1227,7 @@ function isTouchDevice() {
 function applyMobileColors() {
   if (!isTouchDevice()) return;
 
-  // Apply colors to project cards (colored borders, fill on tap)
+  // Apply colors to project cards (fill on tap)
   document.querySelectorAll('.project-card').forEach((card, index) => {
     const color = PROJECT_COLORS[index % 5];
     card.classList.add(`mobile-color-${color}`);
@@ -1238,11 +1236,8 @@ function applyMobileColors() {
   // Note: Chips are handled separately in attachChatListeners() with touch handlers
   // They start white and fill with color only when tapped
 
-  // Apply colors to app cards (same order as desktop hover: 1=red, 2=green, etc.)
-  document.querySelectorAll('.app-card').forEach((card, index) => {
-    const color = APP_COLORS[index % 4];
-    card.classList.add(`mobile-color-${color}`);
-  });
+  // Note: App cards are handled separately in attachAppsListeners() with touch handlers
+  // They start white and fill with color only when tapped
 }
 
 // ==================== RENDER FUNCTIONS ====================
@@ -1362,9 +1357,9 @@ function renderSite() {
     attachProjectsListeners();
   }
 
-  // Apply mobile colors for apps page
+  // Apply mobile colors and listeners for apps page
   if (currentView === 'apps') {
-    applyMobileColors();
+    attachAppsListeners();
   }
 }
 
@@ -1523,6 +1518,26 @@ function attachProjectsListeners() {
 
   // Apply mobile colors to project cards
   applyMobileColors();
+}
+
+function attachAppsListeners() {
+  const allAppCards = document.querySelectorAll('.app-card');
+
+  if (isTouchDevice()) {
+    allAppCards.forEach((card, index) => {
+      // Add mobile color class
+      const color = APP_COLORS[index % 4];
+      card.classList.add(`mobile-color-${color}`);
+
+      // Touch handlers for color feedback - card stays lit until another is tapped
+      card.addEventListener('touchstart', (e) => {
+        // Remove tapped class from all app cards first
+        allAppCards.forEach(c => c.classList.remove('tapped'));
+        // Add tapped class to this card
+        card.classList.add('tapped');
+      }, { passive: true });
+    });
+  }
 }
 
 // ==================== NAVIGATION ====================
