@@ -618,31 +618,32 @@ body {
   color: #999;
 }
 
-/* Falling Elements Animation */
-@keyframes fallIn {
+/* Typewriter Pound Animation - Desktop Landing Only */
+@keyframes poundIn {
   0% {
     opacity: 0;
-    transform: translateY(-200px) rotate(var(--rotation, 0deg));
+    transform: scale(2.5);
   }
-  70% {
+  50% {
     opacity: 1;
-    transform: translateY(8px) rotate(0deg);
+    transform: scale(0.95);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) rotate(0deg);
+    transform: scale(1);
   }
-}
-
-.fall-in {
-  opacity: 0;
-  animation: fallIn 0.35s ease-out forwards;
 }
 
 .site-title .letter {
   display: inline-block;
+}
+
+.site-title.typewriter .letter {
   opacity: 0;
-  animation: fallIn 0.35s ease-out forwards;
+}
+
+.site-title .letter.pound {
+  animation: poundIn 0.1s ease-out forwards;
 }
 
 /* ==================== RESPONSIVE / MOBILE ==================== */
@@ -1366,7 +1367,7 @@ function renderLanding() {
   `;
 
   attachChatListeners();
-  animateFallingLetters();
+  animateTypewriter();
 }
 
 function renderSite() {
@@ -1428,9 +1429,6 @@ function renderSite() {
   if (currentView === 'apps') {
     attachAppsListeners();
   }
-
-  // Animate falling letters
-  animateFallingLetters();
 }
 
 function renderProjects() {
@@ -1660,76 +1658,40 @@ function attachAppsListeners() {
 
 // ==================== ANIMATIONS ====================
 
-function animateFallingLetters() {
-  const title = document.querySelector('.site-title');
-  const subtitle = document.querySelector('.site-subtitle');
-  const nav = document.querySelector('.tab-nav');
-  const content = document.querySelector('.content');
-  const footer = document.querySelector('.site-footer');
-  const chatLabel = document.querySelector('.chat-label');
-  const chatArea = document.querySelector('.chat-area');
+function animateTypewriter() {
+  // Only on desktop (width > 900px) and landing page
+  if (window.innerWidth <= 900) return;
 
+  const isLanding = document.querySelector('.site-header.landing');
+  if (!isLanding) return;
+
+  const title = document.querySelector('.site-title');
   if (!title) return;
 
-  let delay = 0;
-  const letterDelay = 0.02; // Fast stagger for letters
-  const elementDelay = 0.08; // Delay between major elements
-
-  // Animate title letters
   const text = title.textContent;
   title.innerHTML = '';
+  title.classList.add('typewriter');
 
-  text.split('').forEach((char, i) => {
+  // Create letter spans
+  const letters = [];
+  text.split('').forEach((char) => {
     const span = document.createElement('span');
     span.className = 'letter';
     span.textContent = char === ' ' ? '\u00A0' : char;
-    span.style.setProperty('--rotation', `${(Math.random() - 0.5) * 40}deg`);
-    span.style.animationDelay = `${i * letterDelay}s`;
     title.appendChild(span);
+    letters.push(span);
   });
 
-  delay = text.length * letterDelay;
-
-  // Animate subtitle
-  if (subtitle) {
-    subtitle.classList.add('fall-in');
-    subtitle.style.animationDelay = `${delay}s`;
-    delay += elementDelay;
-  }
-
-  // Animate nav (on non-landing pages)
-  if (nav) {
-    nav.classList.add('fall-in');
-    nav.style.animationDelay = `${delay}s`;
-    delay += elementDelay;
-  }
-
-  // Animate chat label (landing page)
-  if (chatLabel) {
-    chatLabel.classList.add('fall-in');
-    chatLabel.style.animationDelay = `${delay}s`;
-    delay += elementDelay;
-  }
-
-  // Animate chat area (landing page)
-  if (chatArea) {
-    chatArea.classList.add('fall-in');
-    chatArea.style.animationDelay = `${delay}s`;
-    delay += elementDelay;
-  }
-
-  // Animate content (non-landing pages)
-  if (content && !content.classList.contains('landing')) {
-    content.classList.add('fall-in');
-    content.style.animationDelay = `${delay}s`;
-    delay += elementDelay;
-  }
-
-  // Animate footer
-  if (footer) {
-    footer.classList.add('fall-in');
-    footer.style.animationDelay = `${delay}s`;
-  }
+  // Pound each letter one by one
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < letters.length) {
+      letters[i].classList.add('pound');
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 70); // 70ms between each letter pound
 }
 
 // ==================== NAVIGATION ====================
