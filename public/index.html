@@ -618,19 +618,21 @@ body {
   color: #999;
 }
 
-/* Typewriter Pound Animation - Desktop Landing Only */
-@keyframes poundIn {
+/* 2001 Monolith Rise Animation - Desktop Landing Only */
+@keyframes monolithRise {
   0% {
     opacity: 0;
-    transform: scale(2.5);
+    transform: rotateX(90deg) translateY(20px);
+    filter: brightness(0);
   }
-  50% {
+  30% {
     opacity: 1;
-    transform: scale(0.95);
+    filter: brightness(0.3);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: rotateX(0deg) translateY(0);
+    filter: brightness(1);
   }
 }
 
@@ -638,12 +640,17 @@ body {
   display: inline-block;
 }
 
-.site-title.typewriter .letter {
-  opacity: 0;
+.site-title.monolith {
+  perspective: 1000px;
 }
 
-.site-title .letter.pound {
-  animation: poundIn 0.1s ease-out forwards;
+.site-title.monolith .letter {
+  opacity: 0;
+  transform-origin: bottom center;
+}
+
+.site-title .letter.rise {
+  animation: monolithRise 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 /* ==================== RESPONSIVE / MOBILE ==================== */
@@ -1367,7 +1374,7 @@ function renderLanding() {
   `;
 
   attachChatListeners();
-  animateTypewriter();
+  animateMonolith();
 }
 
 function renderSite() {
@@ -1658,7 +1665,7 @@ function attachAppsListeners() {
 
 // ==================== ANIMATIONS ====================
 
-function animateTypewriter() {
+function animateMonolith() {
   // Only on desktop (width > 900px) and landing page
   if (window.innerWidth <= 900) return;
 
@@ -1670,7 +1677,7 @@ function animateTypewriter() {
 
   const text = title.textContent;
   title.innerHTML = '';
-  title.classList.add('typewriter');
+  title.classList.add('monolith');
 
   // Create letter spans
   const letters = [];
@@ -1682,16 +1689,16 @@ function animateTypewriter() {
     letters.push(span);
   });
 
-  // Pound each letter one by one
+  // Rise each letter one by one, slowly and dramatically
   let i = 0;
   const interval = setInterval(() => {
     if (i < letters.length) {
-      letters[i].classList.add('pound');
+      letters[i].classList.add('rise');
       i++;
     } else {
       clearInterval(interval);
     }
-  }, 70); // 70ms between each letter pound
+  }, 180); // 180ms between each letter for dramatic pacing
 }
 
 // ==================== NAVIGATION ====================
