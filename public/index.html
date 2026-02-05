@@ -886,7 +886,7 @@ body {
 
 /* Touch device fixes - disable hover effects, use persistent colors on mobile */
 @media (hover: none) {
-  /* Disable hover colors on project cards - use border + active fill on mobile */
+  /* Disable hover colors on project cards on mobile */
   .project-card:hover {
     background: inherit;
     color: inherit;
@@ -896,34 +896,27 @@ body {
     color: inherit;
   }
 
-  /* Mobile color classes for project cards - colored borders only */
-  .project-card.mobile-color-orange { border-color: #ff8d00; }
-  .project-card.mobile-color-green { border-color: #1db406; }
-  .project-card.mobile-color-blue { border-color: #4abbff; }
-  .project-card.mobile-color-yellow { border-color: #f0ff00; }
-  .project-card.mobile-color-red { border-color: #ff432e; }
-
   /* Disable tap delay for instant response */
   .project-card {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Active/tap state - fill with full color */
-  .project-card.mobile-color-orange:active { background: #ff8d00; color: #fff; }
-  .project-card.mobile-color-orange:active .project-subtitle { color: rgba(255,255,255,0.7); }
+  /* Active/tap state - fill with full color (uses .tapped class via JS for better control) */
+  .project-card.mobile-color-orange.tapped { background: #ff8d00; color: #fff; }
+  .project-card.mobile-color-orange.tapped .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-green:active { background: #1db406; color: #fff; }
-  .project-card.mobile-color-green:active .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-green.tapped { background: #1db406; color: #fff; }
+  .project-card.mobile-color-green.tapped .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-blue:active { background: #4abbff; color: #fff; }
-  .project-card.mobile-color-blue:active .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-blue.tapped { background: #4abbff; color: #fff; }
+  .project-card.mobile-color-blue.tapped .project-subtitle { color: rgba(255,255,255,0.7); }
 
-  .project-card.mobile-color-yellow:active { background: #f0ff00; color: #000; }
-  .project-card.mobile-color-yellow:active .project-subtitle { color: rgba(0,0,0,0.5); }
+  .project-card.mobile-color-yellow.tapped { background: #f0ff00; color: #000; }
+  .project-card.mobile-color-yellow.tapped .project-subtitle { color: rgba(0,0,0,0.5); }
 
-  .project-card.mobile-color-red:active { background: #ff432e; color: #fff; }
-  .project-card.mobile-color-red:active .project-subtitle { color: rgba(255,255,255,0.7); }
+  .project-card.mobile-color-red.tapped { background: #ff432e; color: #fff; }
+  .project-card.mobile-color-red.tapped .project-subtitle { color: rgba(255,255,255,0.7); }
 
   /* Chips - disable hover, use persistent colors (applied via JS) */
   .chip:hover {
@@ -1479,15 +1472,39 @@ function attachChatListeners() {
 }
 
 function attachProjectsListeners() {
-  document.querySelectorAll('.project-card').forEach(card => {
+  const allCards = document.querySelectorAll('.project-card');
+
+  allCards.forEach(card => {
     const projectId = parseInt(card.dataset.projectId);
 
+    // Click handler for navigation
     card.addEventListener('click', () => {
       currentProject = projects.find(p => p.id === projectId);
       currentView = 'detail';
       render();
       window.scrollTo(0, 0);
     });
+
+    // Touch handlers for color feedback on mobile
+    if (isTouchDevice()) {
+      card.addEventListener('touchstart', (e) => {
+        // Remove tapped class from all cards first
+        allCards.forEach(c => c.classList.remove('tapped'));
+        // Add tapped class to this card
+        card.classList.add('tapped');
+      }, { passive: true });
+
+      card.addEventListener('touchend', () => {
+        // Keep tapped briefly for visual feedback before navigation
+        setTimeout(() => {
+          card.classList.remove('tapped');
+        }, 150);
+      }, { passive: true });
+
+      card.addEventListener('touchcancel', () => {
+        card.classList.remove('tapped');
+      }, { passive: true });
+    }
   });
 
   // Apply mobile colors to project cards
