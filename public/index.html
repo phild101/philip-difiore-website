@@ -152,27 +152,7 @@ body {
   min-height: 0;
 }
 
-.chat-label-prefix {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: #666;
-  text-transform: none;
-  letter-spacing: 0;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  display: block;
-}
-
-.chat-label {
-  font-family: 'itc-avant-garde-gothic-pro', var(--font-display);
-  font-size: 2rem;
-  font-weight: normal;
-  color: #000;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
+/* chat-label-prefix and chat-label styles are now inside .chat-landing-overlay */
 
 .chat-area {
   background: #fff;
@@ -184,30 +164,39 @@ body {
   min-height: 0;
 }
 
-/* Artificial Phil Avatar */
-.chat-avatar-container {
+/* Chat landing overlay */
+.chat-landing-overlay {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex: 1;
   min-height: 0;
-  background: linear-gradient(to right,
-    #ff432e 0%, #ff432e 25%,
-    #ff8d00 25%, #ff8d00 50%,
-    #1db406 50%, #1db406 75%,
-    #4abbff 75%, #4abbff 100%
-  );
 }
 
-.chat-avatar {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 100%;
-  object-fit: contain;
+.chat-landing-overlay .chat-label-prefix {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: #fff;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  display: block;
 }
 
-.chat-avatar-container.hidden {
+.chat-landing-overlay .chat-label {
+  font-family: 'itc-avant-garde-gothic-pro', var(--font-display);
+  font-size: 2rem;
+  font-weight: normal;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.chat-landing-overlay.hidden {
   display: none;
 }
 
@@ -834,9 +823,9 @@ body {
     width: 100%;
   }
 
-  .chat-label {
+  .chat-landing-overlay .chat-label {
     font-size: 1.3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 
   .chat-area {
@@ -1031,7 +1020,7 @@ body {
     font-size: 1.8rem;
   }
 
-  .chat-label {
+  .chat-landing-overlay .chat-label {
     font-size: 1.1rem;
   }
 
@@ -1426,12 +1415,10 @@ function renderLanding() {
 
       <main class="content landing">
         <div class="chat-section">
-          <span class="chat-label-prefix">chat with</span>
-          <div class="chat-label">A.I. Phil</div>
-
           <div class="chat-area">
-            <div class="chat-avatar-container ${chatMessages.length > 0 ? 'hidden' : ''}">
-              <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/artificial-phil.jpg" alt="Artificial Phil" class="chat-avatar" />
+            <div class="chat-landing-overlay ${chatMessages.length > 0 ? 'hidden' : ''}">
+              <span class="chat-label-prefix">chat with</span>
+              <div class="chat-label">A.I. Phil</div>
             </div>
             <div class="chat-messages ${chatMessages.length === 0 ? 'hidden' : ''}">
               ${chatMessages.map(msg => `
@@ -1473,6 +1460,10 @@ function renderLanding() {
       </footer>
     </div>
   `;
+
+  // Apply random color to chat landing overlay
+  const overlay = document.querySelector('.chat-landing-overlay');
+  if (overlay) overlay.style.backgroundColor = chatOverlayColor;
 
   attachChatListeners();
 }
@@ -1807,6 +1798,10 @@ window.askPreset = askPreset;
 window.goToProject = goToProject;
 
 // ==================== INITIALIZE ====================
+
+// Random chat overlay color (excluding yellow)
+const CHAT_COLORS = ['#ff432e', '#ff8d00', '#1db406', '#4abbff'];
+const chatOverlayColor = CHAT_COLORS[Math.floor(Math.random() * CHAT_COLORS.length)];
 
 async function init() {
   // Show landing page immediately
