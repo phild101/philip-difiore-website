@@ -1717,7 +1717,7 @@ function attachProjectsListeners() {
           previewImage.src = imageUrl;
           previewImage.alt = card.querySelector('.project-title').textContent;
           // Per-project image positioning (default: center)
-          const imagePositions = { 14: 'top' }; // Sharon Jones "If You Call"
+          const imagePositions = { 14: 'center top' }; // Sharon Jones "If You Call"
           previewImage.style.objectPosition = imagePositions[projectId] || 'center';
           previewImage.classList.add('visible');
           if (layout) layout.classList.add('image-active');
