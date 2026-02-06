@@ -472,6 +472,15 @@ body {
   font-style: italic;
 }
 
+/* When rollover image is showing, turn all project text white */
+.project-layout.image-active .project-card .project-title {
+  color: #fff;
+}
+
+.project-layout.image-active .project-card .project-subtitle {
+  color: rgba(255,255,255,0.7);
+}
+
 /* Large Image Preview Area */
 .project-preview {
   flex: 1;
@@ -1700,17 +1709,20 @@ function attachProjectsListeners() {
 
     // Desktop: hover to show image in preview area
     if (!isTouchDevice() && previewImage) {
+      const layout = document.querySelector('.project-layout');
       card.addEventListener('mouseenter', () => {
         if (imageUrl) {
           previewImage.src = imageUrl;
           previewImage.alt = card.querySelector('.project-title').textContent;
           previewImage.classList.add('visible');
+          if (layout) layout.classList.add('image-active');
           if (previewPlaceholder) previewPlaceholder.style.display = 'none';
         }
       });
 
       card.addEventListener('mouseleave', () => {
         previewImage.classList.remove('visible');
+        if (layout) layout.classList.remove('image-active');
         if (previewPlaceholder) previewPlaceholder.style.display = 'block';
       });
     }
