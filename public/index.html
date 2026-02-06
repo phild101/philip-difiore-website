@@ -1716,9 +1716,6 @@ function attachProjectsListeners() {
         if (imageUrl) {
           previewImage.src = imageUrl;
           previewImage.alt = card.querySelector('.project-title').textContent;
-          // Anchor portrait images to top to eliminate white gap
-          const topAlignIds = [1,2,3,6,11,12,13,14,15,17,18,19];
-          previewImage.style.objectPosition = topAlignIds.includes(projectId) ? 'center top' : 'center';
           previewImage.classList.add('visible');
           if (layout) layout.classList.add('image-active');
           if (previewPlaceholder) previewPlaceholder.style.display = 'none';
