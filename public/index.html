@@ -397,6 +397,9 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #ccc transparent;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .project-list::-webkit-scrollbar {
@@ -425,7 +428,7 @@ body {
 }
 
 .project-card {
-  background: #fff;
+  background: transparent;
   border-bottom: 1px solid #000;
   padding: 0.85rem 1rem;
   cursor: pointer;
@@ -470,22 +473,39 @@ body {
   font-style: italic;
 }
 
+/* When rollover image is showing, turn all project text white with subtle shadow */
+.project-layout.image-active .project-card .project-title {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.project-layout.image-active .project-card .project-subtitle {
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
 /* Large Image Preview Area */
 .project-preview {
   flex: 1;
   display: block;
-  background: #fafafa;
-  padding: 2rem;
-  position: relative;
-  overflow-y: auto;
+  background: transparent;
+  padding: 0;
+  position: static;
+  overflow: hidden;
 }
 
 .project-preview-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  border: 1px solid #000;
+  height: 100%;
+  object-fit: cover;
+  border: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .project-preview-image.visible {
@@ -1692,17 +1712,20 @@ function attachProjectsListeners() {
 
     // Desktop: hover to show image in preview area
     if (!isTouchDevice() && previewImage) {
+      const layout = document.querySelector('.project-layout');
       card.addEventListener('mouseenter', () => {
         if (imageUrl) {
           previewImage.src = imageUrl;
           previewImage.alt = card.querySelector('.project-title').textContent;
           previewImage.classList.add('visible');
+          if (layout) layout.classList.add('image-active');
           if (previewPlaceholder) previewPlaceholder.style.display = 'none';
         }
       });
 
       card.addEventListener('mouseleave', () => {
         previewImage.classList.remove('visible');
+        if (layout) layout.classList.remove('image-active');
         if (previewPlaceholder) previewPlaceholder.style.display = 'block';
       });
     }
