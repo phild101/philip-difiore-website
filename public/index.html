@@ -387,12 +387,35 @@ body {
   border: 1px solid #000;
   height: calc(100vh - 220px);
   min-height: 400px;
+  position: relative;
 }
 
 .project-list {
   width: 280px;
   flex-shrink: 0;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+}
+
+.project-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.project-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 .project-list-left {
@@ -454,17 +477,23 @@ body {
   flex: 1;
   display: block;
   background: #fafafa;
-  padding: 2rem;
-  position: relative;
-  overflow-y: auto;
+  padding: 0;
+  position: static;
+  overflow: hidden;
 }
 
 .project-preview-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  border: 1px solid #000;
+  height: 100%;
+  object-fit: cover;
+  border: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .project-preview-image.visible {
