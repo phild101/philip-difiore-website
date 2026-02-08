@@ -575,6 +575,19 @@ body {
   color: #fff;
 }
 
+.app-header-has-image {
+  height: auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.app-header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .app-card-content {
   padding: 1rem 0 0 0;
 }
@@ -750,6 +763,10 @@ body {
 
   .app-header {
     height: 180px;
+  }
+
+  .app-header-has-image {
+    height: auto;
   }
 
   .app-header-title {
@@ -970,6 +987,10 @@ body {
 
   .app-header {
     height: 140px;
+  }
+
+  .app-header-has-image {
+    height: auto;
   }
 
   .app-header-title {
@@ -1219,6 +1240,7 @@ const APPS = [
     title: 'Wolves in the Piano',
     desc: 'Chat with 94 creative masters about their process. Features AI conversations with artists, writers, and filmmakers.',
     image: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&h=400&fit=crop',
+    headerImage: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/wolvesimage.png',
     url: 'https://wolvesinthepiano.com'
   },
   {
@@ -1226,6 +1248,7 @@ const APPS = [
     title: 'The Idea Machine',
     desc: 'Capture ideas and build them into reality. A tool for developing creative concepts.',
     image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&h=400&fit=crop',
+    headerImage: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/theideamachine-illustration.jpg',
     url: 'https://ideamachineapp.com'
   },
   {
@@ -1572,8 +1595,11 @@ function renderApps() {
     <div class="apps-grid">
       ${APPS.map(app => `
         <a href="${app.url}" target="_blank" class="app-card">
-          <div class="app-header">
-            <div class="app-header-title">${app.title}</div>
+          <div class="app-header${app.headerImage ? ' app-header-has-image' : ''}">
+            ${app.headerImage
+              ? `<img src="${app.headerImage}" alt="${app.title}" class="app-header-img">`
+              : `<div class="app-header-title">${app.title}</div>`
+            }
           </div>
           <div class="app-card-content">
             <div class="app-desc">${app.desc}</div>
