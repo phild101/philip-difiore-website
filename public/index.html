@@ -575,6 +575,43 @@ body {
   color: #fff;
 }
 
+.app-header-has-image {
+  height: auto;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-header-has-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  transition: background 0.15s;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.app-card:nth-child(4n+1):hover .app-header-has-image::after { background: #ff432e; }
+.app-card:nth-child(4n+2):hover .app-header-has-image::after { background: #1db406; }
+.app-card:nth-child(4n+3):hover .app-header-has-image::after { background: #4abbff; }
+.app-card:nth-child(4n+4):hover .app-header-has-image::after { background: #ff8d00; }
+
+.app-header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: filter 0.15s;
+}
+
+.app-card:hover .app-header-img {
+  filter: invert(1);
+}
+
 .app-card-content {
   padding: 1rem 0 0 0;
 }
@@ -750,6 +787,10 @@ body {
 
   .app-header {
     height: 180px;
+  }
+
+  .app-header-has-image {
+    height: auto;
   }
 
   .app-header-title {
@@ -972,6 +1013,10 @@ body {
     height: 140px;
   }
 
+  .app-header-has-image {
+    height: auto;
+  }
+
   .app-header-title {
     font-size: 2rem;
     padding: 0.75rem;
@@ -1101,6 +1146,14 @@ body {
     color: inherit;
   }
 
+  .app-card:hover .app-header-img {
+    filter: none;
+  }
+
+  .app-card:hover .app-header-has-image::after {
+    background: transparent;
+  }
+
   /* Disable tap delay for instant response */
   .app-card {
     touch-action: manipulation;
@@ -1119,6 +1172,12 @@ body {
 
   .app-card.mobile-color-orange.tapped .app-header { background: #ff8d00; }
   .app-card.mobile-color-orange.tapped .app-header-title { color: #fff; }
+
+  .app-card.tapped .app-header-img { filter: invert(1); }
+  .app-card.mobile-color-red.tapped .app-header-has-image::after { background: #ff432e; }
+  .app-card.mobile-color-green.tapped .app-header-has-image::after { background: #1db406; }
+  .app-card.mobile-color-blue.tapped .app-header-has-image::after { background: #4abbff; }
+  .app-card.mobile-color-orange.tapped .app-header-has-image::after { background: #ff8d00; }
 
   /* Buttons */
   .go-to-site-btn:hover {
@@ -1219,6 +1278,7 @@ const APPS = [
     title: 'Wolves in the Piano',
     desc: 'Chat with 94 creative masters about their process. Features AI conversations with artists, writers, and filmmakers.',
     image: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&h=400&fit=crop',
+    headerImage: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/wolvesimage.png',
     url: 'https://wolvesinthepiano.com'
   },
   {
@@ -1226,6 +1286,7 @@ const APPS = [
     title: 'The Idea Machine',
     desc: 'Capture ideas and build them into reality. A tool for developing creative concepts.',
     image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&h=400&fit=crop',
+    headerImage: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/theideamachine-illustration.jpg',
     url: 'https://ideamachineapp.com'
   },
   {
@@ -1572,8 +1633,11 @@ function renderApps() {
     <div class="apps-grid">
       ${APPS.map(app => `
         <a href="${app.url}" target="_blank" class="app-card">
-          <div class="app-header">
-            <div class="app-header-title">${app.title}</div>
+          <div class="app-header${app.headerImage ? ' app-header-has-image' : ''}">
+            ${app.headerImage
+              ? `<img src="${app.headerImage}" alt="${app.title}" class="app-header-img">`
+              : `<div class="app-header-title">${app.title}</div>`
+            }
           </div>
           <div class="app-card-content">
             <div class="app-desc">${app.desc}</div>
