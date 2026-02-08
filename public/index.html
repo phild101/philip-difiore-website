@@ -586,6 +586,11 @@ body {
   height: auto;
   display: block;
   object-fit: contain;
+  transition: filter 0.15s;
+}
+
+.app-card:hover .app-header-img {
+  filter: invert(1);
 }
 
 .app-card-content {
@@ -1140,6 +1145,8 @@ body {
 
   .app-card.mobile-color-orange.tapped .app-header { background: #ff8d00; }
   .app-card.mobile-color-orange.tapped .app-header-title { color: #fff; }
+
+  .app-card.tapped .app-header-img { filter: invert(1); }
 
   /* Buttons */
   .go-to-site-btn:hover {
