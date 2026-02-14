@@ -354,7 +354,7 @@ body:active {
   background-position: center;
   background-repeat: no-repeat;
   /* Monochrome + very subtle cyan tint */
-  filter: grayscale(100%) sepia(8%) hue-rotate(160deg) contrast(1.1) brightness(0.95);
+  filter: grayscale(100%) sepia(13%) hue-rotate(160deg) contrast(1.1) brightness(0.95);
   transition: filter 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
@@ -364,12 +364,12 @@ body:active {
   transform: scale(1.04);
 }
 
-/* App images — inverted for dark aesthetic */
-.artboard-cell[data-type="app"] .cell-bg {
-  filter: grayscale(100%) sepia(8%) hue-rotate(160deg) contrast(1.1) brightness(0.95) invert(1);
+/* App images — inverted for dark aesthetic (Plotter excluded — already dark) */
+.artboard-cell[data-type="app"]:not([data-id="plotter"]) .cell-bg {
+  filter: grayscale(100%) sepia(13%) hue-rotate(160deg) contrast(1.1) brightness(0.95) invert(1);
 }
 
-.artboard-cell[data-type="app"]:hover .cell-bg {
+.artboard-cell[data-type="app"]:not([data-id="plotter"]):hover .cell-bg {
   filter: grayscale(0%) contrast(1.05) brightness(1.05) saturate(1.1) invert(1);
   transform: scale(1.04);
 }
@@ -1101,7 +1101,7 @@ function initArtboard() {
 
   // Column height = number of cells in one column × cell height
   const cellsPerColumn = columns[0].querySelectorAll('.artboard-cell').length;
-  const cellsPerRepeat = Math.round(cellsPerColumn / 3); // We have 3 vertical repeats
+  const cellsPerRepeat = Math.round(cellsPerColumn / 2);
   const columnHeight = cellsPerRepeat * cellH; // Height of one repeat section
   const totalColumnWidth = numCols * cellW; // Width of one full set of columns
 
@@ -1289,12 +1289,12 @@ function initArtboard() {
       cx += strideX; tx += strideX;
     }
 
-    // ---- Infinite Y wrap: per-column ----
+    // ---- Infinite Y wrap: per-column (2 vertical repeats) ----
     for (let c = 0; c < numCols; c++) {
-      if (colCurrentY[c] > strideY * 0.5) {
+      if (colCurrentY[c] > 0) {
         colCurrentY[c] -= strideY;
         colTargetY[c] -= strideY;
-      } else if (colCurrentY[c] < -strideY * 1.5) {
+      } else if (colCurrentY[c] < -strideY) {
         colCurrentY[c] += strideY;
         colTargetY[c] += strideY;
       }
@@ -1427,38 +1427,111 @@ function renderArtboard() {
     </div>
   `;
 
-  // Shuffle function (Fisher-Yates) with seed for consistency
-  function shuffleArray(arr, seed) {
-    const a = [...arr];
+  // Seeded PRNG (deterministic shuffle)
+  function makeRng(seed) {
     let s = seed;
-    function rand() { s = (s * 16807 + 0) % 2147483647; return (s - 1) / 2147483646; }
+    return function() { s = (s * 16807 + 0) % 2147483647; return (s - 1) / 2147483646; };
+  }
+
+  function shuffleArray(arr, rng) {
+    const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(rand() * (i + 1));
+      const j = Math.floor(rng() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
   }
 
-  // Calculate rows per column — enough to fill 3x vertical screen
-  const rowsPerColumn = Math.max(Math.ceil(allItems.length / cols), 5);
+  // Grid placement strategy: build a 2D grid (cols × rows) where no item
+  // appears within a rectangular neighborhood of itself. Specifically, for
+  // any cell at (col, row), the same item must not appear in any cell
+  // within ±2 columns and ±2 rows. This accounts for parallax drift
+  // (max ~0.7 cells between col 0 and col 4 within a viewport).
+  const n = allItems.length;
+  const rowsPerColumn = n;
+  const EXCL = 2;
 
-  // Build column strips: 3 columns wide × 3 tall = 9 column copies per logical column
-  // For infinite scroll we need 3 copies in each direction (X: 3 column sets, Y: 3 row sets per column)
+  function itemKey(item) { return item.type + ':' + item.id; }
+
+  // Build the grid: cols columns × n rows
+  const grid = Array.from({ length: cols }, () => new Array(rowsPerColumn).fill(null));
+
+  // Place items row by row, left to right
+  const masterRng = makeRng(42);
+
+  // Get items that conflict with the neighborhood of (c, r)
+  function getNeighborItems(c, r) {
+    const used = new Set();
+    for (let dc = -EXCL; dc <= EXCL; dc++) {
+      for (let dr = -EXCL; dr <= EXCL; dr++) {
+        if (dc === 0 && dr === 0) continue;
+        const nc = ((c + dc) % cols + cols) % cols;
+        const nr = ((r + dr) % rowsPerColumn + rowsPerColumn) % rowsPerColumn;
+        if (grid[nc][nr] !== null) {
+          used.add(itemKey(grid[nc][nr]));
+        }
+      }
+    }
+    return used;
+  }
+
+  // Fill grid: for each column, place all n items exactly once
+  for (let c = 0; c < cols; c++) {
+    const remaining = shuffleArray([...allItems], makeRng(42 + c * 17));
+    for (let r = 0; r < rowsPerColumn; r++) {
+      const conflicts = getNeighborItems(c, r);
+
+      // Find first non-conflicting item from remaining
+      let bestIdx = -1;
+      for (let i = 0; i < remaining.length; i++) {
+        if (!conflicts.has(itemKey(remaining[i]))) {
+          bestIdx = i;
+          break;
+        }
+      }
+
+      // Fallback: pick the item with maximum distance from its nearest neighbor
+      if (bestIdx === -1) {
+        let maxDist = -1;
+        for (let i = 0; i < remaining.length; i++) {
+          const key = itemKey(remaining[i]);
+          let minDist = Infinity;
+          for (let dc = -EXCL; dc <= EXCL; dc++) {
+            const nc = ((c + dc) % cols + cols) % cols;
+            for (let dr = -EXCL; dr <= EXCL; dr++) {
+              if (dc === 0 && dr === 0) continue;
+              const nr = ((r + dr) % rowsPerColumn + rowsPerColumn) % rowsPerColumn;
+              if (grid[nc][nr] !== null && itemKey(grid[nc][nr]) === key) {
+                const dist = Math.abs(dc) + Math.abs(dr);
+                minDist = Math.min(minDist, dist);
+              }
+            }
+          }
+          if (minDist > maxDist) {
+            maxDist = minDist;
+            bestIdx = i;
+          }
+        }
+      }
+
+      grid[c][r] = remaining[bestIdx];
+      remaining.splice(bestIdx, 1);
+    }
+  }
+
+  // Extract columns from grid
+  const gridColumns = grid;
+
+  // Build column strips: 3 x-repeats × 2 y-repeats for infinite scroll
   const columnHTML = [];
 
   for (let colIdx = 0; colIdx < cols; colIdx++) {
-    // For each X repeat (3 copies for infinite horizontal scroll)
     for (let xRepeat = -1; xRepeat <= 1; xRepeat++) {
-      // Build column content: 3 vertical copies for infinite vertical scroll
+      // 2 vertical copies for infinite Y wrap (reduces DOM from 1035 to 690 cells)
       let cellsHTML = '';
-      for (let yRepeat = -1; yRepeat <= 1; yRepeat++) {
-        // Unique seed per column + yRepeat combo for variety
-        const seed = 42 + colIdx * 13 + (yRepeat + 1) * 97 + (xRepeat + 1) * 31;
-        const shuffled = shuffleArray(allItems, seed);
-        // Take enough items to fill rows
+      for (let yRepeat = 0; yRepeat < 2; yRepeat++) {
         for (let r = 0; r < rowsPerColumn; r++) {
-          const item = shuffled[r % shuffled.length];
-          cellsHTML += makeCellHTML(item);
+          cellsHTML += makeCellHTML(gridColumns[colIdx][r]);
         }
       }
 
