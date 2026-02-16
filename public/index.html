@@ -602,8 +602,8 @@ body:active {
   color: var(--text);
 }
 
-/* ==================== CHAT OVERLAY ==================== */
-.chat-overlay {
+/* ==================== RUMPUS AI OVERLAY ==================== */
+.rumpus-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -615,17 +615,155 @@ body:active {
   display: none;
 }
 
-.chat-overlay.visible {
+.rumpus-overlay.visible {
   display: block;
 }
 
-.chat-inner {
-  max-width: 800px;
+.rumpus-inner {
+  max-width: 900px;
   margin: 0 auto;
   padding: 80px 40px 60px;
+}
+
+.rumpus-inner .detail-back {
+  margin-bottom: 40px;
+}
+
+.rumpus-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.rumpus-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 48px;
+  max-width: 500px;
+}
+
+.rumpus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.rumpus-card {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.rumpus-card:hover {
+  transform: translateY(-3px);
+}
+
+.rumpus-card-img {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.rumpus-card:hover .rumpus-card-img {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.rumpus-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%) contrast(1.0) brightness(0.92) sepia(35%) blur(0.3px);
+  transition: filter 0.5s ease;
+}
+
+.rumpus-card:hover .rumpus-card-bg {
+  filter: grayscale(100%) contrast(1.0) brightness(0.92) sepia(35%) blur(0.3px) invert(1);
+}
+
+.rumpus-card-info {
+  padding: 16px 4px 0;
+}
+
+.rumpus-card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.rumpus-card-desc {
+  font-family: var(--font-body);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .rumpus-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .rumpus-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* ==================== CHAT OVERLAY ==================== */
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-overlay.visible {
+  display: flex;
+}
+
+.chat-inner {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 70vh;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 32px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.15),
+    inset 0 0 12px 2px rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 }
 
 .chat-inner .detail-back {
@@ -643,21 +781,22 @@ body:active {
 
 .chat-header-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.04em;
   color: var(--text);
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .chat-area-dark {
   border: 1px solid var(--border);
+  border-radius: 8px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 400px;
-  max-height: 60vh;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .chat-messages-dark {
@@ -968,12 +1107,11 @@ const APPS = [
 ];
 
 const ABOUT_TEXT = `
-<p>Philip Di Fiore is an award-winning filmmaker known for his cinematic approach to storytelling. He writes, directs and edits most all of his projects.</p>
-<p>Di Fiore's music videos have been described as thrilling, cinematic and beyond the cutting edge. His mind bending narrative videos for <em>In the City</em> and <em>Old Friend</em> were described as "Lynchian" with "a Twilight Zone aura of spine-tingling weirdness". His Sharon Jones and The Dap-Kings music videos were likened to treasures of 1970's street cinema- blaxplotiation classic <em>Across 110th Street</em> and Martin Scorsese's <em>Mean Streets</em>.</p>
-<p>The New York Times hailed his film <em>The Buffalo Hunt</em> as "a striking, poetic look at the Lakota Sioux." The film garnered best documentary and best director awards on the film festival circuit. <em>Stranger: Bernie Worrell on Earth</em>, a film about the keyboard/synth genius of Parliament Funkadelic & Talking Heads featured David Byrne, George Clinton, Mos Def and Bootsy Collins. <em>Stranger</em> premiered at the Slamdance Film Festival and the original 35mm print was selected to become part of the The Academy of Motion Picture Arts and Sciences permanent collection.</p>
-<p>Di Fiore has directed projects for vanguard record labels DFA, Daptone, Fat Possum, Atlantic and Island Records. He also has been commissioned to produce and direct original live music series for Ralph Lauren Denim & Supply, JetBlue, Spotify, and Brooklyn Bowl. His work has premiered on Vevo, Pitchfork, Noisey, The Fader, IFC, Stereogum, Rolling Stone, Funny or Die, VH1, and MTV, RAI (Italy), and Arte (France/Germany).</p>
-<p>In 2010, Di Fiore founded <em>The Rumpus Room</em> in Brooklyn, NY- a 4000 square foot recording and film studio. <em>The Rumpus Room</em> served as a creative production hub and gathering place for musicians, filmmakers, actors and animators from NYC and around the world. It was an essential part of the Brooklyn's creative ecosystem for nearly a decade.</p>
-<p>Di Fiore is currently working on feature length films and has recently created a suite of creative apps.</p>
+<p>Philip Di Fiore is an award-winning filmmaker (writer/director/editor) known for his cinematic approach to storytelling.</p>
+<p>Di Fiore's music videos have been described as thrilling, cinematic and beyond the cutting edge. His mind bending videos for <a href="#" onclick="openProjectById(3);return false"><em>In the City</em></a> and <a href="#" onclick="openProjectById(4);return false"><em>Old Friend</em></a> were described as "Lynchian" with "a Twilight Zone aura of spine-tingling weirdness". His Sharon Jones and The Dap-Kings music videos were likened to treasures of 1970's street cinema- blaxplotiation classic <em>Across 110th Street</em> and Martin Scorsese's <em>Mean Streets</em>.</p>
+<p>The New York Times hailed his film <a href="#" onclick="openProjectById(1);return false"><em>The Buffalo Hunt</em></a> as "a striking, poetic look at the Lakota Sioux." His film, <a href="#" onclick="openProjectById(2);return false"><em>Stranger: Bernie Worrell on Earth</em></a>, about the mad keyboard/synth genius of Parliament Funkadelic & Talking Heads featured David Byrne, George Clinton, Mos Def and Bootsy Collins. The 35mm film print of <em>Stranger</em> was selected by The Academy of Motion Picture Arts and Sciences for inclusion in its permanent collection.</p>
+<p>In 2008, Di Fiore founded <a href="#" onclick="openProjectById(9);return false"><em>The Rumpus Room</em></a> in Brooklyn, NY- a 4000 square foot recording and film studio. <em>The Rumpus Room</em> served as a stomping ground for musicians, filmmakers, actors and artists from NYC and around the world. It was an essential part of the Brooklyn creative community for over a decade.</p>
+<p>In 2026, Di Fiore founded <em>Rumpus AI</em>, an AI production studio to further his mission to employ all tools at available for the creation of cinematic stories. For <em>Rumpus AI</em>, Di Fiore has built a suite of AI apps geared to the storytelling and creative community.</p>
 `;
 
 const CONTACT = {
@@ -1344,7 +1482,7 @@ function showDetail() {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M19 12H5M12 19l-7-7 7-7"/>
       </svg>
-      Back to Artboard
+      Back to Cinema Board
     </button>
 
     ${p.vimeo_id ? `
@@ -1369,6 +1507,11 @@ function showAbout() {
   document.querySelector('.about-overlay').classList.add('visible');
 }
 
+function showRumpusAI() {
+  currentView = 'rumpus';
+  document.querySelector('.rumpus-overlay').classList.add('visible');
+}
+
 function showChat() {
   currentView = 'chat';
   chatMessages = [];
@@ -1379,13 +1522,24 @@ function showChat() {
 
 function closeOverlay() {
   currentView = 'artboard';
-  document.querySelectorAll('.detail-overlay, .about-overlay, .chat-overlay').forEach(el => {
+  document.querySelectorAll('.detail-overlay, .about-overlay, .chat-overlay, .rumpus-overlay').forEach(el => {
     el.classList.remove('visible');
   });
   // Clear video iframes to stop playback
   document.querySelectorAll('.detail-overlay iframe').forEach(iframe => {
     iframe.src = '';
   });
+}
+
+function openProjectById(id) {
+  const project = projects.find(p => p.id === id);
+  if (project) {
+    document.querySelectorAll('.about-overlay, .chat-overlay, .rumpus-overlay').forEach(el => {
+      el.classList.remove('visible');
+    });
+    currentProject = project;
+    showDetail();
+  }
 }
 
 // ==================== RENDER ====================
@@ -1551,10 +1705,6 @@ function renderArtboard() {
     <div class="top-bar">
       <div class="top-bar-left">
         <div class="top-bar-section">
-          <div class="top-bar-label">Based in New York.</div>
-          <div class="top-bar-label">Director & Filmmaker.</div>
-        </div>
-        <div class="top-bar-section">
           <div class="top-bar-heading">(Contact)</div>
           <div class="top-bar-label"><a href="${CONTACT.instagram}" target="_blank">Instagram</a></div>
           <div class="top-bar-label"><a href="mailto:${CONTACT.email}">Email</a></div>
@@ -1562,12 +1712,12 @@ function renderArtboard() {
       </div>
 
       <div class="top-bar-bio">
-        Award-winning director and filmmaker. Creates cinematic music videos, documentaries, and immersive digital experiences.
+        AWARD-WINNING FILMMAKER.<br>CREATES CINEMATIC FILMS AND VIDEOS AND MODERN TOOLS FOR STORYTELLING.
       </div>
 
       <div class="nav-buttons">
-        <button class="nav-btn" onclick="showChat()">A.I. Phil</button>
-        <button class="nav-btn" onclick="showAbout()">The Profile</button>
+        <button class="nav-btn" onclick="showAbout()">About</button>
+        <button class="nav-btn" onclick="showRumpusAI()">Rumpus A.I.</button>
       </div>
     </div>
 
@@ -1575,8 +1725,7 @@ function renderArtboard() {
     <div class="bottom-bar">
       <div class="bottom-title" onclick="location.reload()">Philip<br>Di Fiore</div>
       <div class="bottom-hint">
-        Scroll / Drag to explore<br>
-        Click to view project
+        <button class="nav-btn" onclick="showChat()">Chat with A.I. Phil</button>
       </div>
     </div>
 
@@ -1597,10 +1746,37 @@ function renderArtboard() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
-          Back to Artboard
+          Back to Cinema Board
         </button>
-        <h1 class="about-title">The Profile</h1>
+        <h1 class="about-title">About</h1>
         <div class="about-content">${ABOUT_TEXT}</div>
+      </div>
+    </div>
+
+    <!-- Rumpus AI Overlay -->
+    <div class="rumpus-overlay">
+      <div class="rumpus-inner">
+        <button class="detail-back" onclick="closeOverlay()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Cinema Board
+        </button>
+        <h1 class="rumpus-title">Rumpus A.I.</h1>
+        <p class="rumpus-subtitle">A suite of AI-powered tools built for the storytelling and creative community.</p>
+        <div class="rumpus-grid">
+          ${APPS.map(app => `
+            <a href="${app.url}" target="_blank" class="rumpus-card">
+              <div class="rumpus-card-img">
+                <div class="rumpus-card-bg" style="background-image:url('${app.headerImage}')"></div>
+              </div>
+              <div class="rumpus-card-info">
+                <div class="rumpus-card-title">${app.title}</div>
+                <div class="rumpus-card-desc">${app.desc}</div>
+              </div>
+            </a>
+          `).join('')}
+        </div>
       </div>
     </div>
 
@@ -1611,7 +1787,7 @@ function renderArtboard() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
-          Back to Artboard
+          Back to Cinema Board
         </button>
         <div class="chat-header-label">Chat with</div>
         <div class="chat-header-title">A.I. Phil</div>
@@ -1696,6 +1872,8 @@ function askPreset(question) {
 // Expose to global scope
 window.showDetail = showDetail;
 window.showAbout = showAbout;
+window.showRumpusAI = showRumpusAI;
+window.openProjectById = openProjectById;
 window.showChat = showChat;
 window.closeOverlay = closeOverlay;
 window.askPreset = askPreset;
