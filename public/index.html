@@ -339,6 +339,18 @@ body:active {
   opacity: 0.7;
 }
 
+.top-title {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+  color: var(--text);
+  line-height: 0.85;
+  margin-left: auto;
+  text-align: right;
+}
+
 .bottom-hint {
   font-family: var(--font-body);
   font-size: 10px;
@@ -1755,30 +1767,12 @@ function renderArtboard() {
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <div class="top-bar-left">
-        <div class="top-bar-section">
-          <div class="top-bar-heading">(Contact)</div>
-          <div class="top-bar-label"><a href="${CONTACT.instagram}" target="_blank">Instagram</a></div>
-          <div class="top-bar-label"><a href="mailto:${CONTACT.email}">Email</a></div>
-        </div>
-      </div>
-
-      <div class="top-bar-bio">
-        AWARD-WINNING FILMMAKER.<br>CREATES CINEMATIC FILMS AND VIDEOS AND MODERN TOOLS FOR STORYTELLING.
-      </div>
-
-      <div class="nav-buttons">
-        <button class="nav-btn" onclick="showAbout()">About</button>
-        <button class="nav-btn" onclick="showRumpusAI()">Rumpus A.I.</button>
-      </div>
+      <div class="top-title">Films.Videos</div>
     </div>
 
     <!-- Bottom Bar -->
     <div class="bottom-bar">
       <div class="bottom-title" onclick="location.reload()">Philip<br>Di Fiore</div>
-      <div class="bottom-hint">
-        <button class="nav-btn" onclick="showChat()">Chat with A.I. Phil</button>
-      </div>
     </div>
 
     <!-- Artboard — Column strips with per-column parallax -->
