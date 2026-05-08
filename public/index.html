@@ -1545,7 +1545,7 @@ function showDetail() {
 
     ${p.vimeo_id ? `
       <div class="video-container">
-        <iframe src="https://player.vimeo.com/video/${p.vimeo_id}?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://player.vimeo.com/video/${p.vimeo_id}?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
     ` : p.featured_image ? `
       <div class="detail-image">
