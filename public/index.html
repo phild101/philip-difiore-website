@@ -116,6 +116,12 @@ body:active {
   animation: crt-scan 8s linear infinite;
 }
 
+/* Hide CRT scanlines when a project detail is open so the Vimeo player
+   plays at full fidelity (no overlay altering the video). */
+body:has(.detail-overlay.visible) .crt-overlay {
+  display: none;
+}
+
 /* 1. Scanlines — horizontal lines */
 .crt-overlay::before {
   content: '';
