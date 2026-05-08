@@ -1985,10 +1985,28 @@ async function init() {
   // 4. All images cached — render the artboard (images will load instantly from cache)
   renderArtboard();
 
-  // 4b. Deep-link: if URL has ?project=N, open that project after the artboard renders
+  // 4b. Deep-link: open a specific project from URL — supports
+  //   - /films/SLUG (path style, served via Netlify proxy from philipdifiore.com)
+  //   - ?project=N  (numeric query, kept for backward compat)
+  let targetId = null;
   const projectParam = new URLSearchParams(window.location.search).get('project');
   if (projectParam && /^\d+$/.test(projectParam)) {
-    setTimeout(() => openProjectById(parseInt(projectParam, 10)), 100);
+    targetId = parseInt(projectParam, 10);
+  } else {
+    const pathMatch = window.location.pathname.match(/^\/films\/([^/?#]+)/);
+    if (pathMatch) {
+      const SLUG_TO_ID = {
+        'stranger': 2,
+        'inthecity': 3,
+        'oldfriend': 4,
+        'thebuffalohunt': 1,
+        'ilearnedthehardway': 16
+      };
+      targetId = SLUG_TO_ID[pathMatch[1].toLowerCase()] || null;
+    }
+  }
+  if (targetId) {
+    setTimeout(() => openProjectById(targetId), 100);
   }
 
   // 5. Fade out loading screen
