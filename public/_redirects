@@ -1,0 +1,4 @@
+# /films and /films/SLUG → serve the films SPA locally (JS reads location.pathname
+# to open a specific project; matches the slug map in public/films/index.html)
+/films/*    /films/index.html    200
+/films      /films/index.html    200
