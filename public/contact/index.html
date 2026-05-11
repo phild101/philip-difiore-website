@@ -41,7 +41,7 @@
   /* header — matches redesign home */
   header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: baseline;
     padding: 56px 64px 18px;
     border-bottom: 1px solid var(--rule);
@@ -51,8 +51,6 @@
     width: 100%;
     margin: 0 auto;
   }
-  .name { font-size: 13px; color: var(--ink); border-bottom: 0; text-decoration: none; }
-  .name:hover { color: var(--link-h); }
   nav { display: flex; gap: 22px; font-size: 12px; }
   nav a { border-bottom: 0; }
 
@@ -107,8 +105,8 @@
 <body>
 
 <header>
-  <a class="name" href="/">Philip&nbsp;Di&nbsp;Fiore</a>
   <nav>
+    <a href="/#projects">featured projects</a>
     <a href="/films">films.videos</a>
     <a href="/contact">contact</a>
   </nav>
