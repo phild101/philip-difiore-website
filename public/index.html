@@ -51,6 +51,8 @@
   /* Featured Projects: hidden by default; revealed when URL has #projects */
   #projects { display: none; }
   #projects:target { display: block; }
+  /* When projects is shown, hide the bio (replace, don't stack) */
+  body:has(#projects:target) .hero { display: none; }
 
   footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--dim); font-size: 11px; display: flex; justify-content: flex-end; flex-wrap: wrap; }
 
