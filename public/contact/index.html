@@ -42,7 +42,7 @@
   header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: baseline;
     padding: 56px 64px 18px;
     border-bottom: 1px solid var(--rule);
     gap: 18px;
@@ -51,8 +51,8 @@
     width: 100%;
     margin: 0 auto;
   }
-  .logo { display: block; border-bottom: 0; }
-  .logo img { display: block; width: 24px; height: 24px; }
+  .logo { display: block; border-bottom: 0; align-self: flex-end; }
+  .logo img { display: block; width: 48px; height: 48px; }
   nav { display: flex; gap: 22px; font-size: 12px; }
   nav a { border-bottom: 0; }
 
@@ -108,7 +108,7 @@
 
 <header>
   <a class="logo" href="/" aria-label="Home">
-    <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="24" height="24">
+    <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="48" height="48">
   </a>
   <nav>
     <a href="/#projects">featured projects</a>
