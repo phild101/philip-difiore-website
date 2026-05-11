@@ -31,6 +31,7 @@
     --link-h: #c0392b;
   }
   html, body { margin: 0; padding: 0; }
+  html { scroll-padding-top: 150px; }  /* keep target anchors below the sticky header */
   body {
     background: var(--bg); color: var(--ink);
     font-family: 'JetBrains Mono','SF Mono','IBM Plex Mono','Menlo',monospace;
@@ -76,7 +77,7 @@
   .projects {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0 36px;
+    gap: 0 72px;
   }
   .projects .column { display: flex; flex-direction: column; }
   .projects .row {
