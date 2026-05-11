@@ -42,11 +42,13 @@
   a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
   .dim { color: var(--dim); }
 
-  header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; gap: 18px; flex-wrap: wrap; }
-  .name { font-size: 13px; color: var(--ink); border-bottom: 0; text-decoration: none; }
-  .name:hover { color: var(--link-h); }
+  header { display: flex; justify-content: flex-end; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; gap: 18px; flex-wrap: wrap; }
   nav { display: flex; gap: 22px; font-size: 12px; }
   nav a { border-bottom: 0; }
+
+  /* Featured Projects: hidden by default; revealed when URL has #projects */
+  #projects { display: none; }
+  #projects:target { display: block; }
 
   /* hero */
   .hero { margin-bottom: 64px; }
@@ -95,8 +97,8 @@
 <body>
 
 <header>
-  <a class="name" href="/">Philip&nbsp;Di&nbsp;Fiore</a>
   <nav>
+    <a href="#projects">featured projects</a>
     <a href="/films">films.videos</a>
     <a href="/contact">contact</a>
   </nav>
