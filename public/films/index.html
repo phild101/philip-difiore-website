@@ -371,6 +371,186 @@ body:has(.detail-overlay.visible) .crt-overlay {
   line-height: 0.85;
   margin-left: auto;
   text-align: right;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.top-title:hover { opacity: 0.7; }
+
+/* ==================== LIST VIEW (terminal/80s amber) ==================== */
+.list-view-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0a0500;
+  color: #ffb000;
+  z-index: 4500;
+  overflow-y: auto;
+  display: none;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 64px 40px 60px;
+  /* subtle phosphor glow */
+  text-shadow: 0 0 6px rgba(255, 176, 0, 0.15);
+}
+.list-view-overlay.visible { display: block; }
+/* gentle vignette */
+.list-view-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.35) 100%);
+  z-index: 5;
+}
+/* light scanlines — wider gap so text falls between lines, not across them */
+.list-view-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.22) 3px,
+    rgba(0, 0, 0, 0.22) 4px
+  );
+  z-index: 10;
+}
+.list-view-overlay .list-view-inner {
+  position: relative;
+  z-index: 1;
+}
+.list-view-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.list-view-header {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid rgba(255, 176, 0, 0.35);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  text-transform: uppercase;
+}
+.list-view-header .close {
+  cursor: pointer;
+  color: #ffb000;
+  transition: color 0.2s;
+}
+.list-view-header .close:hover { color: #ffd700; }
+.list-view-search {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 176, 0, 0.25);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  cursor: text;
+}
+.list-view-search .prompt {
+  color: rgba(255, 176, 0, 0.8);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: 12px;
+}
+.list-view-search .input-wrap {
+  position: relative;
+  flex: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #ffd700;
+  line-height: 1.4;
+  min-height: 1.4em;
+}
+.list-view-search .display {
+  letter-spacing: 0.02em;
+}
+.list-view-search .cursor {
+  color: #ffb000;
+  display: inline-block;
+  margin-left: 1px;
+  animation: list-cursor-blink 1s steps(2) infinite;
+}
+.list-view-search input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: transparent;
+  caret-color: transparent;
+  cursor: text;
+  padding: 0;
+}
+.list-view-table {
+  display: block;
+}
+.list-view-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 220px 24px;
+  gap: 16px;
+  padding: 6px 8px;
+  cursor: pointer;
+  align-items: baseline;
+}
+.list-view-row.list-view-head {
+  cursor: default;
+  border-bottom: 1px solid rgba(255, 176, 0, 0.35);
+  margin-bottom: 6px;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(255, 176, 0, 0.75);
+}
+.list-view-row:not(.list-view-head):hover {
+  background: rgba(255, 176, 0, 0.1);
+  color: #ffd700;
+}
+.list-view-row:not(.list-view-head):hover .num,
+.list-view-row:not(.list-view-head):hover .category,
+.list-view-row:not(.list-view-head):hover .arrow {
+  color: #ffd700;
+}
+.list-view-row .num { color: rgba(255, 176, 0, 0.5); }
+.list-view-row .title {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.list-view-row .category {
+  color: rgba(255, 176, 0, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.list-view-row .arrow {
+  color: rgba(255, 176, 0, 0.5);
+  text-align: right;
+}
+.list-view-cursor {
+  display: inline-block;
+  margin-top: 28px;
+  font-size: 14px;
+  color: #ffb000;
+  animation: list-cursor-blink 1s steps(2) infinite;
+}
+@keyframes list-cursor-blink { 50% { opacity: 0; } }
+
+/* CRT overlay still renders on top of list view for full 80s vibe.
+   But hide it on detail-overlay (already in CSS above). */
+
+@media (max-width: 700px) {
+  .list-view-overlay { padding: 40px 16px 40px; }
+  .list-view-row { grid-template-columns: 44px 1fr 24px; gap: 12px; }
+  .list-view-row .category { display: none; }
+  .list-view-row.list-view-head .category { display: none; }
 }
 
 .bottom-hint {
@@ -1602,6 +1782,86 @@ function showAbout() {
   document.querySelector('.about-overlay').classList.add('visible');
 }
 
+function toggleListView() {
+  const lv = document.querySelector('.list-view-overlay');
+  if (currentView === 'list') {
+    currentView = 'artboard';
+    lv.classList.remove('visible');
+  } else {
+    currentView = 'list';
+    renderListView();
+    lv.classList.add('visible');
+  }
+}
+
+function renderListView() {
+  const inner = document.getElementById('listViewInner');
+  if (!inner) return;
+  const rows = projects.map((p, i) => `
+    <div class="list-view-row" data-id="${p.id}">
+      <span class="num">${String(i + 1).padStart(3, '0')}</span>
+      <span class="title">${decodeHTML(p.title)}</span>
+      <span class="category">${p.category || ''}</span>
+      <span class="arrow">&gt;</span>
+    </div>
+  `).join('');
+  inner.innerHTML = `
+    <div class="list-view-header">
+      <span>PHILIP DI FIORE / ARCHIVE TERMINAL v1.0</span>
+      <span class="close" onclick="toggleListView()">[ X CLOSE ]</span>
+    </div>
+    <div class="list-view-search" id="listSearch">
+      <span class="prompt">SEARCH &gt;</span>
+      <div class="input-wrap">
+        <span id="searchDisplay" class="display"></span><span class="cursor">█</span>
+        <input type="text" id="listSearchInput" autocomplete="off" spellcheck="false" autocapitalize="off">
+      </div>
+    </div>
+    <div class="list-view-table">
+      <div class="list-view-row list-view-head">
+        <span class="num">NO.</span>
+        <span class="title">TITLE</span>
+        <span class="category">CATEGORY</span>
+        <span class="arrow"></span>
+      </div>
+      ${rows}
+    </div>
+    <div class="list-view-cursor">_</div>
+  `;
+  // Row click → detail
+  inner.querySelectorAll('.list-view-row[data-id]').forEach(row => {
+    row.addEventListener('click', () => {
+      const id = parseInt(row.dataset.id, 10);
+      const proj = projects.find(p => p.id === id);
+      if (proj) {
+        document.querySelector('.list-view-overlay').classList.remove('visible');
+        currentProject = proj;
+        showDetail();
+      }
+    });
+  });
+  // Wire up search filtering
+  const input = document.getElementById('listSearchInput');
+  const display = document.getElementById('searchDisplay');
+  const searchBar = document.getElementById('listSearch');
+  const filterRows = (q) => {
+    const query = q.toLowerCase().trim();
+    inner.querySelectorAll('.list-view-row[data-id]').forEach(row => {
+      if (!query) { row.style.display = ''; return; }
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(query) ? '' : 'none';
+    });
+  };
+  input.addEventListener('input', () => {
+    display.textContent = input.value;
+    filterRows(input.value);
+  });
+  // Clicking anywhere in the search bar focuses the input
+  searchBar.addEventListener('click', () => input.focus());
+  // Auto-focus on open
+  setTimeout(() => input.focus(), 50);
+}
+
 function showRumpusAI() {
   currentView = 'rumpus';
   document.querySelector('.rumpus-overlay').classList.add('visible');
@@ -1810,7 +2070,12 @@ function renderArtboard() {
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <div class="top-title">Archive</div>
+      <div class="top-title" onclick="toggleListView()">Archive</div>
+    </div>
+
+    <!-- List View Overlay (terminal/80s amber) -->
+    <div class="list-view-overlay">
+      <div class="list-view-inner" id="listViewInner"></div>
     </div>
 
     <!-- Bottom Bar -->
@@ -1966,6 +2231,7 @@ window.openProjectById = openProjectById;
 window.showChat = showChat;
 window.closeOverlay = closeOverlay;
 window.askPreset = askPreset;
+window.toggleListView = toggleListView;
 
 // ==================== INITIALIZE ====================
 
