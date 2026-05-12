@@ -710,7 +710,14 @@ const PORTALS = {
 const modalEl = document.querySelector('.portal-modal');
 const backdropEl = document.querySelector('.portal-backdrop');
 
+// Page-flip backdrop colors. Random pick per modal open — no fixed
+// color per keyword.
+const BACKDROP_COLORS = ['#ff432e', '#facc15'];
+
 function openModal(data) {
+  // Pick a random backdrop color each open
+  backdropEl.style.backgroundColor =
+    BACKDROP_COLORS[Math.floor(Math.random() * BACKDROP_COLORS.length)];
   document.getElementById('portal-modal-title').textContent = data.title;
   const img = document.getElementById('portal-modal-img');
   if (data.img) { img.src = data.img; img.style.display = ''; img.alt = data.title; }
