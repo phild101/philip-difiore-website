@@ -20,6 +20,8 @@
 <meta name="twitter:description" content="Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling style.">
 <meta name="twitter:image" content="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-head-shot-og.jpg">
 <meta name="twitter:image:alt" content="Philip Di Fiore">
+<link rel="stylesheet" href="https://use.typekit.net/ayz4ezz.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   :root {
@@ -31,27 +33,277 @@
     --link-h: #c0392b;
   }
   html, body { margin: 0; padding: 0; }
+  html { scroll-padding-top: 185px; }  /* equals bio's natural viewport-y so #projects lands in the same place */
   body {
     background: var(--bg); color: var(--ink);
     font-family: 'JetBrains Mono','SF Mono','IBM Plex Mono','Menlo',monospace;
     font-size: 13px; line-height: 1.7;
     padding: 56px 64px 80px;
-    max-width: 720px; margin: 0 auto;
+    /* Widened from 720 → 840 so the one-line bio fits without shrinking text. */
+    max-width: 840px; margin: 0 auto;
   }
   a { color: var(--link); text-decoration: none; border-bottom: 1px solid var(--ink); }
   a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
   .dim { color: var(--dim); }
 
-  header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; gap: 18px; flex-wrap: wrap; }
-  .name { font-size: 13px; color: var(--ink); border-bottom: 0; text-decoration: none; }
-  .name:hover { color: var(--link-h); }
+  header { display: flex; flex-direction: column; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; gap: 14px; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+  .logo { display: block; border-bottom: 0; line-height: 0; }
+  .logo img { display: block; width: 48px; height: 48px; }
   nav { display: flex; gap: 22px; font-size: 12px; }
   nav a { border-bottom: 0; }
+
+  /* Featured Projects: hidden by default; revealed when URL has #projects */
+  #projects { display: none; }
+  #projects:target { display: block; }
+  /* When projects is shown, hide the bio (replace, don't stack) */
+  body:has(#projects:target) .hero { display: none; }
+
+  footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--dim); font-size: 11px; display: flex; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Software 3.0 portals — clickable keywords that open a contextual panel */
+  .portal {
+    border-bottom: 1px dotted var(--dim);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .portal:hover {
+    color: var(--link-h);
+    border-bottom-color: var(--link-h);
+  }
+
+  /* Typographic keyword list — stays in the page's L/R margins,
+     centered, items reflow up/down as the viewport changes. */
+  .keywords {
+    margin: 40px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 32px;
+  }
+  .keywords .portal {
+    font-family: 'itc-avant-garde-gothic-pro', 'Century Gothic', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #b5b5b5;
+    border-bottom: 0;
+    position: relative;
+    z-index: 0;
+    transform-origin: center;
+    transition: color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+  }
+  .keywords .portal.wide {
+    flex-basis: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+  .keywords .portal:hover {
+    color: var(--link-h);
+    transform: scale(1.06);
+    z-index: 5;
+  }
+  @media (max-width: 640px) {
+    .keywords { gap: 6px 20px; }
+    .keywords .portal { font-size: 16px; }
+  }
+
+  /* ==================== SUN MODE ==================== */
+  /* Bio at center; keywords radiate out like sunrays.
+     Keywords stay horizontal for readability — distributed across
+     three concentric rings + 360° spread. */
+  .hero.sun {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    height: calc(100vh - 100px);
+    min-height: 820px;
+    margin: 0 0 64px;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+  }
+  .hero.sun .sun-bio {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 28ch;
+    text-align: center;
+    z-index: 2;
+    padding: 20px;
+    background: var(--bg);  /* keep bio readable if a keyword ring drifts close */
+  }
+  .hero.sun .sun-bio .lede {
+    margin: 0;
+    max-width: none;
+  }
+  .hero.sun .keywords {
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    pointer-events: none;
+  }
+  .hero.sun .keywords .portal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    pointer-events: auto;
+    transform-origin: center;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--angle, 0deg))
+      translate(var(--r, 240px))
+      rotate(calc(-1 * var(--angle, 0deg)));
+    white-space: nowrap;
+  }
+  .hero.sun .keywords .portal:hover {
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--angle, 0deg))
+      translate(var(--r, 240px))
+      rotate(calc(-1 * var(--angle, 0deg)))
+      scale(1.3);
+    z-index: 5;
+  }
+  @media (max-width: 640px) {
+    .hero.sun { min-height: 720px; }
+    .hero.sun .sun-bio { max-width: 22ch; padding: 14px; }
+  }
+  /* Modal: dark card, red page-flip backdrop, Avant Garde Gothic + DM Sans. */
+  .portal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: #ff432e;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 150;
+  }
+  .portal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .portal-modal {
+    --modal-bg: #0a0a0a;
+    --modal-text: #f3f3f3;
+    --modal-dim: rgba(243, 243, 243, 0.5);
+    --modal-border: rgba(255, 255, 255, 0.12);
+    --modal-font-display: 'itc-avant-garde-gothic-pro', 'Century Gothic', sans-serif;
+    --modal-font-body: 'DM Sans', system-ui, sans-serif;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    width: min(880px, calc(100vw - 48px));
+    height: min(820px, calc(100vh - 48px));
+    background: var(--modal-bg);
+    color: var(--modal-text);
+    border: 1px solid var(--modal-border);
+    padding: 56px 60px 48px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 200;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--modal-font-body);
+  }
+  .portal-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .portal-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    width: 32px; height: 32px;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--modal-dim);
+    background: none;
+    border: 0;
+    font-family: var(--modal-font-body);
+    transition: color 0.3s;
+  }
+  .portal-modal-close:hover { color: var(--modal-text); }
+  .portal-modal img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 460px;
+    object-fit: contain;
+    margin: 0 auto 28px;
+    border: 0;
+    filter: none;
+  }
+  .portal-modal h2 {
+    font-family: var(--modal-font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--modal-text);
+    margin: 0 0 22px;
+  }
+  .portal-modal-body p {
+    font-family: var(--modal-font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 0 16px;
+    color: var(--modal-dim);
+  }
+  .portal-modal-body em { font-style: italic; color: var(--modal-text); }
+  .portal-modal-body strong { font-weight: 600; color: var(--modal-text); }
+  .portal-modal-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-family: var(--modal-font-body);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--modal-text);
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid var(--modal-border);
+    padding: 10px 18px;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    align-self: flex-start;
+  }
+  .portal-modal-cta::after { content: ' →'; }
+  .portal-modal-cta:hover {
+    color: var(--modal-bg);
+    background: var(--modal-text);
+    border-color: var(--modal-text);
+  }
+
+  .mock-banner {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    background: rgba(20,20,20,0.92);
+    color: #fff;
+    font-size: 11px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    z-index: 200;
+    letter-spacing: 0.5px;
+  }
 
   /* hero */
   .hero { margin-bottom: 64px; }
   .hero h1 { font-size: 13px; font-weight: 400; margin: 0 0 10px; }
-  .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 0 14px; max-width: 60ch; }
+  .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 auto 14px; max-width: none; text-align: center; }
   .hero .lede:last-of-type { margin-bottom: 0; }
   .hero .meta { color: var(--dim); margin-top: 12px; }
 
@@ -64,115 +316,481 @@
     display: flex; justify-content: space-between;
   }
 
-  /* featured projects — title (col 1) / source-stacked-over-citation (col 2) */
-  .projects { margin: 0; }
+  /* featured projects — two columns of stacked rows */
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 72px;
+  }
+  .projects .column { display: flex; flex-direction: column; }
   .projects .row {
-    display: grid; grid-template-columns: 180px 1fr;
-    gap: 32px; padding: 22px 0;
+    display: block;
+    padding: 18px 0;
     border-bottom: 1px solid var(--rule);
   }
-  .projects .row:last-child { border-bottom: 0; }
-  .projects .title { font-size: 13px; line-height: 1.65; }
-  .projects .info { display: flex; flex-direction: column; gap: 18px; }
+  .projects .column .row:last-child { border-bottom: 0; }
+  .projects .title { font-size: 13px; line-height: 1.65; margin-bottom: 10px; }
+  .projects .info { display: flex; flex-direction: column; gap: 14px; }
   .projects .entry { display: flex; flex-direction: column; gap: 6px; }
   .projects .src {
     color: var(--dim); font-size: 11px; letter-spacing: 1.5px;
     text-transform: uppercase; line-height: 1.55;
   }
-  .projects .text { font-size: 13px; line-height: 1.7; }
+  .projects .text { font-size: 13px; line-height: 1.65; }
   .projects .featuring { color: var(--dim); font-size: 12px; line-height: 1.55; margin-top: 6px; }
-
-  footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--dim); font-size: 11px; display: flex; justify-content: space-between; flex-wrap: wrap; }
 
   @media (max-width: 640px) {
     body { padding: 28px 22px 60px; }
-    .projects .row { grid-template-columns: 1fr; gap: 6px; padding: 18px 0; }
-    .projects .src { order: 2; }
-    .projects .text { order: 3; }
+    .projects { grid-template-columns: 1fr; gap: 0; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <a class="name" href="/">Philip&nbsp;Di&nbsp;Fiore</a>
+  <a class="logo" href="/" aria-label="Home">
+    <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="48" height="48">
+  </a>
   <nav>
-    <a href="/films">films.videos</a>
+    <a href="/films">archive</a>
     <a href="/contact">contact</a>
   </nav>
 </header>
 
 <section class="hero" id="about">
   <p class="lede">Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling style.</p>
-  <p class="lede">He is the founder of <a href="https://rumpus.ai">Rumpus AI</a>, a production company building creative tools to aid (not replace) humans and unleash imagination.</p>
-</section>
 
-<section id="projects">
-  <div class="label"><span>featured projects</span></div>
-  <div class="projects">
-    <div class="row">
-      <div class="title"><a href="/films/stranger">Stranger: Bernie Worrell on Earth</a></div>
-      <div class="info">
-        <div class="entry">
-          <div class="src">Academy of Motion Picture Arts &amp; Sciences</div>
-          <div class="text">Selected for inclusion in the A.M.P.A.S. permanent collection</div>
-          <div class="featuring">Featuring: David Byrne, George Clinton, Bootsy Collins, Mos Def and Dr. Know</div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="title"><a href="/films/inthecity">In the City</a></div>
-      <div class="info">
-        <div class="entry">
-          <div class="src">Consequence of Sound</div>
-          <div class="text">"Horrifying...Lynchian"</div>
-          <div class="featuring">Featuring: Julia Stiles, Fran Kranz and Michael Cavadias</div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="title"><a href="/films/oldfriend">Old Friend</a></div>
-      <div class="info">
-        <div class="entry">
-          <div class="src">IFC</div>
-          <div class="text">"A dimension of sound, a dimension of sight, a dimension of mind, that would make 'Twilight Zone' creator Rod Serling feel warm all over, but strikes a creepy chord for the rest of us."</div>
-        </div>
-        <div class="entry">
-          <div class="src">Stereogum</div>
-          <div class="text">"…a high-concept, intriguing clip featuring the ruins of an afterparty, a disembodied Peter Sarsgaard and a spooky, vintage cinema aesthetic. It's intense."</div>
-        </div>
-        <div class="featuring">Featuring: Peter Sarsgaard</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="title"><a href="/films/ilearnedthehardway">Sharon Jones &amp; The Dap-Kings</a></div>
-      <div class="info">
-        <div class="entry">
-          <div class="src">IFC.com</div>
-          <div class="text">"…reminiscent of the classics of 70's street cinema Across 110th Street and Martin Scorsese's Mean Streets"</div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="title"><a href="/films/thebuffalohunt">The Buffalo Hunt</a></div>
-      <div class="info">
-        <div class="entry">
-          <div class="src">The New York Times</div>
-          <div class="text">"A striking, poetic look at the Lakota Sioux."</div>
-        </div>
-        <div class="entry">
-          <div class="src">Milan International Film Festival</div>
-          <div class="text">Best Director</div>
-        </div>
-      </div>
-    </div>
+  <!-- Primary keywords -->
+  <div class="keywords">
+    <span class="portal wide" data-key="ampas">Academy of Motion Picture<br>Arts and Sciences</span>
+    <span class="portal" data-key="lynchian">Lynchian</span>
+    <span class="portal" data-key="lakota-sioux">Lakota Sioux</span>
+    <span class="portal" data-key="best-director">Best Director</span>
+    <span class="portal" data-key="twilight-zone">Twilight Zone</span>
+    <span class="portal" data-key="mean-streets">Mean Streets</span>
+    <span class="portal" data-key="vintage-cameras">Vintage cameras</span>
+    <span class="portal" data-key="35mm">35mm</span>
+    <span class="portal" data-key="black-and-white">Black and White</span>
+    <span class="portal" data-key="ai">A.I.</span>
   </div>
 </section>
 
 <footer>
-  <div>philipdifiore.com</div>
-  <div>2026</div>
+  <div>&copy; Rumpus Productions 2026</div>
 </footer>
+
+<!-- Software 3.0 portals (mock) — modal opens on click -->
+<div class="portal-backdrop"></div>
+<aside class="portal-modal" aria-hidden="true">
+  <button class="portal-modal-close" aria-label="Close">✕</button>
+  <img id="portal-modal-img" src="" alt="">
+  <h2 id="portal-modal-title"></h2>
+  <div id="portal-modal-body" class="portal-modal-body"></div>
+  <a id="portal-modal-cta" class="portal-modal-cta" href="#"></a>
+</aside>
+
+<div class="mock-banner">3.0 mock — click any keyword</div>
+
+<script>
+const PORTALS = {
+  'ampas': {
+    title: 'Academy of Motion Picture Arts & Sciences',
+    body: [
+      "The institution behind the Oscars maintains a permanent collection of cinematically significant films. The 35mm film print of <em>Stranger: Bernie Worrell on Earth</em> was selected for inclusion in this prestigious archive."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'lynchian': {
+    title: 'Lynchian',
+    body: [
+      "Critics reach for this word when work holds the dream-logic of David Lynch — uncanny, suburban-strange, intentionally slow. Consequence of Sound used it for Phil's video for Caveman's <em>In the City</em>, calling it \"Horrifying...Lynchian.\"",
+      "The video stars Julia Stiles, Fran Kranz, and Michael Cavadias."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/inthecity1.jpg',
+    cta: {label: 'Watch In the City', href: '/films/inthecity'}
+  },
+  'lakota-sioux': {
+    title: 'Lakota Sioux',
+    body: [
+      "The Native American people of the Northern Plains. Phil's documentary <em>The Buffalo Hunt</em> follows a traditional Lakota buffalo hunt — no interviews, no outside experts. The film lets imagery and act carry the story.",
+      "The New York Times: \"a striking, poetic look at the Lakota Sioux.\""
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/buffalonew3.jpg',
+    cta: {label: 'Watch The Buffalo Hunt', href: '/films/thebuffalohunt'}
+  },
+  'best-director': {
+    title: 'Best Director',
+    body: [
+      "The Milan International Film Festival awarded Phil Best Director for <em>The Buffalo Hunt</em>. The film also won Outstanding Excellence at Documentaries Without Borders and Best Feature Length Documentary at the Prague Film Awards."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/buffalonew3.jpg',
+    cta: {label: 'Watch The Buffalo Hunt', href: '/films/thebuffalohunt'}
+  },
+  'twilight-zone': {
+    title: 'Old Friend',
+    body: [
+      "<strong>IFC</strong><br>\"A dimension of sound, a dimension of sight, a dimension of mind, that would make 'Twilight Zone' creator Rod Serling feel warm all over, but strikes a creepy chord for the rest of us.\"",
+      "<strong>Stereogum</strong><br>\"…a high-concept, intriguing clip featuring the ruins of an afterparty, a disembodied Peter Sarsgaard and a spooky, vintage cinema aesthetic. It's intense.\"",
+      "Featuring: Peter Sarsgaard"
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/oldfriendnew.jpg',
+    cta: {label: 'Watch Old Friend', href: '/films/oldfriend'}
+  },
+  'mean-streets': {
+    title: 'Mean Streets',
+    body: [
+      "Martin Scorsese's 1973 film, often grouped with the canon of 1970s street cinema — alongside <em>Across 110th Street</em>. IFC.com likened Phil's Sharon Jones & The Dap-Kings music videos to this tradition.",
+      "\"…reminiscent of the classics of 70's street cinema.\" The videos were shot on 35mm film in Panavision."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones videos', href: '/films/ilearnedthehardway'}
+  },
+  'vintage-cameras': {
+    title: 'Vintage cameras',
+    body: [
+      "Phil shoots on old tube cameras — color tube, black-and-white tube — for textures digital can't replicate. Rival Schools \"Shot After Shot\" uses both color and B&W vintage tube. Naomi Shelton & The Gospel Queens \"What Have You Done\" was shot on a vintage color tube video camera in the backyard of Daptone Records."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/shotaftershot1.jpg',
+    cta: {label: 'See the catalog', href: '/films'}
+  },
+  '35mm': {
+    title: '35mm',
+    body: [
+      "Film, not digital. Phil shoots on 35mm when the project warrants it.",
+      "The Sharon Jones & The Dap-Kings videos for Daptone Records were all shot on 35mm in Panavision. <em>Stranger: Bernie Worrell on Earth</em>'s preservation print is also 35mm — the format the Academy chose to archive."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones', href: '/films/ilearnedthehardway'}
+  },
+  'black-and-white': {
+    title: 'Black and White',
+    body: [
+      "Phil's video for Sinkane's <em>Warm Spell</em> works in black and white — a textured, period-displaced look shot for DFA Records. Featuring Azama Bashir, Annapurna Sriram, and Candice Vincent. Video premiered on Stereogum."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/warmspellnew.jpg',
+    cta: {label: 'Watch Warm Spell', href: '/films/warmspell'}
+  },
+  'ai': {
+    title: 'A.I.',
+    body: [
+      "Phil founded <em>Rumpus AI</em> to build creative tools for filmmakers, writers, and artists — tools designed to aid (not replace) humans and unleash imagination.",
+      "Current products: <em>Calvino</em>, a literary writing partner. <em>Dream Library</em>, a visual reference repository for filmmakers. <em>Plotter</em>, a story builder. <em>The Idea Machine</em>, for capturing and developing ideas."
+    ],
+    img: null,
+    cta: {label: 'Visit Rumpus AI', href: 'https://rumpus.ai'}
+  },
+  // ===== Names =====
+  'david-byrne': {
+    title: 'David Byrne',
+    body: [
+      "Talking Heads frontman. Bernie Worrell joined Byrne and the Talking Heads on the <em>Remain in Light</em> tour and the <em>Stop Making Sense</em> live band — a creative partnership that ran for years.",
+      "Byrne tells that story on camera in Phil's documentary <em>Stranger: Bernie Worrell on Earth</em>."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'george-clinton': {
+    title: 'George Clinton',
+    body: [
+      "Architect of Parliament-Funkadelic. George Clinton brought Bernie Worrell into P-Funk and built the funk universe around him.",
+      "Clinton appears in Phil's documentary <em>Stranger: Bernie Worrell on Earth</em>."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'mos-def': {
+    title: 'Mos Def',
+    body: [
+      "Yasiin Bey. One of the most respected rappers and actors of his generation.",
+      "Mos Def appears in Phil's documentary <em>Stranger: Bernie Worrell on Earth</em>, speaking to Bernie's influence across the music he came up on."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'bootsy-collins': {
+    title: 'Bootsy Collins',
+    body: [
+      "The funk bass innovator who played with James Brown's J.B.'s and built Parliament-Funkadelic alongside George Clinton and Bernie Worrell.",
+      "Bootsy appears in Phil's documentary <em>Stranger: Bernie Worrell on Earth</em>."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'peter-sarsgaard': {
+    title: 'Peter Sarsgaard',
+    body: [
+      "Hollywood character actor — <em>Shattered Glass</em>, <em>An Education</em>, <em>Jackie</em>.",
+      "Sarsgaard stars in Phil's video for Caveman's <em>Old Friend</em> — a disembodied presence in a Twilight Zone vision filmed in Claryville, New York."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/oldfriendnew.jpg',
+    cta: {label: 'Watch Old Friend', href: '/films/oldfriend'}
+  },
+  'julia-stiles': {
+    title: 'Julia Stiles',
+    body: [
+      "<em>10 Things I Hate About You</em>, <em>Save the Last Dance</em>, the <em>Bourne</em> films.",
+      "Stiles leads Phil's video for Caveman's <em>In the City</em>, shot on location at The Jane Hotel in New York City. Premiered on Vevo."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/inthecity1.jpg',
+    cta: {label: 'Watch In the City', href: '/films/inthecity'}
+  },
+  'sharon-jones': {
+    title: 'Sharon Jones',
+    body: [
+      "The soul queen of the Daptone era. Phil directed three Sharon Jones &amp; The Dap-Kings videos for Daptone Records — <em>I Learned the Hard Way</em>, <em>If You Call</em>, and <em>Game Gets Old</em>. All shot on 35mm film in Panavision.",
+      "IFC: \"…reminiscent of the classics of 70's street cinema Across 110th Street and Martin Scorsese's Mean Streets.\""
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones videos', href: '/films/ilearnedthehardway'}
+  },
+  'charles-bradley': {
+    title: 'Charles Bradley',
+    body: [
+      "The late-blooming Daptone soul icon who became a star in his sixties. Charles Bradley appears in Phil's Sharon Jones &amp; The Dap-Kings videos — <em>I Learned the Hard Way</em> and <em>Game Gets Old</em> — shot on 35mm in Panavision."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones videos', href: '/films/ilearnedthehardway'}
+  },
+  'har-mar': {
+    title: 'Har Mar Superstar',
+    body: [
+      "Har Mar Superstar leads Phil's experimental short <em>Save My Life</em> — the infinite ending of Elton John's <em>Someone Saved My Life Tonight</em>, played live by a band and recorded in a single take.",
+      "Featuring members of Caveman, Sinkane, French Kicks, and Big Data. Premiered on Funny or Die."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/savemylifenew.jpg',
+    cta: {label: 'See the film', href: '/films'}
+  },
+
+  // ===== Press / venues =====
+  'nytimes': {
+    title: 'The New York Times',
+    body: [
+      "The New York Times on Phil's documentary <em>The Buffalo Hunt</em>: \"A striking, poetic look at the Lakota Sioux.\""
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/buffalonew3.jpg',
+    cta: {label: 'Watch The Buffalo Hunt', href: '/films/thebuffalohunt'}
+  },
+  'pitchfork': {
+    title: 'Pitchfork',
+    body: [
+      "Pitchfork premiered Phil's video for Sinkane's <em>Runnin'</em> — shot in Red Hook, Brooklyn for DFA Records."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/runninnew2.jpg',
+    cta: {label: 'See the catalog', href: '/films'}
+  },
+  'slamdance': {
+    title: 'Slamdance',
+    body: [
+      "<em>Stranger: Bernie Worrell on Earth</em> premiered at the Slamdance Film Festival in Park City, Utah.",
+      "The film went on to win Best Documentary at the San Francisco Independent Film Festival and Best Foreign Film at the Thessaloniki Documentary Film Festival."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'stereogum': {
+    title: 'Stereogum',
+    body: [
+      "Stereogum on Phil's Caveman <em>Old Friend</em>: \"…a high-concept, intriguing clip featuring the ruins of an afterparty, a disembodied Peter Sarsgaard and a spooky, vintage cinema aesthetic. It's intense.\"",
+      "Stereogum also premiered Phil's Sinkane <em>Warm Spell</em>."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/oldfriendnew.jpg',
+    cta: {label: 'Watch Old Friend', href: '/films/oldfriend'}
+  },
+  'ifc': {
+    title: 'IFC',
+    body: [
+      "IFC premiered or reviewed several of Phil's videos.",
+      "On Caveman's <em>Old Friend</em>: \"A dimension of sound, a dimension of sight, a dimension of mind, that would make 'Twilight Zone' creator Rod Serling feel warm all over, but strikes a creepy chord for the rest of us.\"",
+      "On the Sharon Jones &amp; The Dap-Kings videos: \"…reminiscent of the classics of 70's street cinema Across 110th Street and Martin Scorsese's Mean Streets.\""
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/oldfriendnew.jpg',
+    cta: {label: 'See the catalog', href: '/films'}
+  },
+  'vevo': {
+    title: 'Vevo',
+    body: [
+      "Vevo premiered Phil's video for Caveman's <em>In the City</em>, starring Julia Stiles, Fran Kranz, and Michael Cavadias. Shot on location in New York City and at The Jane Hotel."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/inthecity1.jpg',
+    cta: {label: 'Watch In the City', href: '/films/inthecity'}
+  },
+
+  // ===== Labels =====
+  'daptone': {
+    title: 'Daptone Records',
+    body: [
+      "The Bushwick soul label that built Sharon Jones, Charles Bradley, Naomi Shelton, and the modern soul revival.",
+      "Phil directed all three Sharon Jones &amp; The Dap-Kings videos for Daptone — shot on 35mm in Panavision — plus Naomi Shelton &amp; The Gospel Queens <em>What Have You Done</em> and the Antibalas <em>Live at the House of Soul</em> recording from the Daptone backyard."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'See the Daptone work', href: '/films'}
+  },
+  'dfa': {
+    title: 'DFA Records',
+    body: [
+      "The New York label James Murphy and Tim Goldsworthy built around LCD Soundsystem, The Rapture, and Hot Chip — the dance-punk era.",
+      "Phil directed Sinkane's <em>Warm Spell</em> and <em>Runnin'</em> for DFA."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/warmspellnew.jpg',
+    cta: {label: 'Watch Warm Spell', href: '/films/warmspell'}
+  },
+  'fat-possum': {
+    title: 'Fat Possum',
+    body: [
+      "The Oxford, Mississippi label that put out R.L. Burnside and Junior Kimbrough — and later signed Caveman, Andrew Bird, Mac DeMarco, and others.",
+      "Phil directed Caveman's <em>In the City</em> and <em>Old Friend</em> for Fat Possum."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/inthecity1.jpg',
+    cta: {label: 'Watch In the City', href: '/films/inthecity'}
+  },
+
+  // ===== Cultural touchstones =====
+  'talking-heads': {
+    title: 'Talking Heads',
+    body: [
+      "David Byrne, Tina Weymouth, Chris Frantz, Jerry Harrison. Bernie Worrell joined Talking Heads on the <em>Remain in Light</em> tour and the <em>Stop Making Sense</em> live band.",
+      "Phil's documentary <em>Stranger: Bernie Worrell on Earth</em> tells that chapter from inside, with David Byrne on camera."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'parliament-funkadelic': {
+    title: 'Parliament Funkadelic',
+    body: [
+      "P-Funk. George Clinton, Bootsy Collins, Bernie Worrell — the funk universe that ran from <em>Mothership Connection</em> through <em>One Nation Under a Groove</em>.",
+      "Phil's documentary <em>Stranger: Bernie Worrell on Earth</em> centers on Bernie's role as the keyboard architect of that sound."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/strangernew.jpg',
+    cta: {label: 'Watch Stranger', href: '/films/stranger'}
+  },
+  'across-110th-street': {
+    title: 'Across 110th Street',
+    body: [
+      "The 1972 Barry Shear film — Harlem police procedural, soundtrack by Bobby Womack. A canonical text of 70s street cinema.",
+      "IFC.com paired Phil's Sharon Jones &amp; The Dap-Kings videos with <em>Across 110th Street</em> and Scorsese's <em>Mean Streets</em>: \"…reminiscent of the classics of 70's street cinema.\""
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones videos', href: '/films/ilearnedthehardway'}
+  },
+
+  // ===== Craft =====
+  'panavision': {
+    title: 'Panavision',
+    body: [
+      "Phil shot all three Sharon Jones &amp; The Dap-Kings videos for Daptone Records — <em>I Learned the Hard Way</em>, <em>If You Call</em>, and <em>Game Gets Old</em> — on 35mm film in Panavision. Theatrical-grade cameras and lenses for music video work."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/ilearnednew.jpg',
+    cta: {label: 'Watch Sharon Jones videos', href: '/films/ilearnedthehardway'}
+  },
+  'one-take': {
+    title: 'One take',
+    body: [
+      "Phil's <em>Save My Life</em> is the infinite ending of Elton John's <em>Someone Saved My Life Tonight</em> — played live by a band and recorded in a single continuous take. How far can you make it through?",
+      "Featuring Har Mar Superstar with members of Caveman, Sinkane, French Kicks, and Big Data. Premiered on Funny or Die."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/savemylifenew.jpg',
+    cta: {label: 'See the film', href: '/films'}
+  },
+  'light-painting': {
+    title: 'Light painting',
+    body: [
+      "Phil's video for Spacecamp's <em>Miko D.T.B.</em> uses light painting at 2:33 — long-exposure photographic technique applied to motion. Released on Modern Records. Premiered on IFC."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/mikodtbnew2.jpg',
+    cta: {label: 'See the film', href: '/films'}
+  },
+  'live-recording': {
+    title: 'Live recording',
+    body: [
+      "Phil directs live music recordings. The Ralph Lauren Denim &amp; Supply <em>Live at the Brooklyn Bowl</em> series — Class Actress, Man Man, DIIV. Antibalas in the <em>Live at the House of Soul</em> series, recorded in the backyard of Daptone Records."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/antibalasnew.jpg',
+    cta: {label: 'See the catalog', href: '/films'}
+  },
+
+  // ===== Place =====
+  'brooklyn': {
+    title: 'Brooklyn',
+    body: [
+      "Phil's home base. He founded <em>The Rumpus Room</em> in Brooklyn in 2008 — a 4,000 square foot recording and film studio that served as a stomping ground for musicians, filmmakers, actors, and artists for over a decade.",
+      "Sinkane's <em>Runnin'</em> was shot in Red Hook. The Antibalas and Naomi Shelton recordings happened in the backyard of Daptone Records in Bushwick."
+    ],
+    img: 'https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/RecordingParty_jamesrichardson2-835x1024.jpg',
+    cta: {label: 'See the catalog', href: '/films'}
+  }
+};
+
+const modalEl = document.querySelector('.portal-modal');
+const backdropEl = document.querySelector('.portal-backdrop');
+
+function openModal(data) {
+  document.getElementById('portal-modal-title').textContent = data.title;
+  const img = document.getElementById('portal-modal-img');
+  if (data.img) { img.src = data.img; img.style.display = ''; img.alt = data.title; }
+  else { img.style.display = 'none'; }
+  document.getElementById('portal-modal-body').innerHTML = data.body.map(p => `<p>${p}</p>`).join('');
+  const cta = document.getElementById('portal-modal-cta');
+  cta.textContent = data.cta.label;
+  cta.href = data.cta.href;
+  modalEl.classList.add('open');
+  backdropEl.classList.add('open');
+  modalEl.scrollTop = 0;
+}
+function closeModal() {
+  modalEl.classList.remove('open');
+  backdropEl.classList.remove('open');
+}
+
+// Click — open modal on keyword; close on close-button / backdrop
+document.addEventListener('click', e => {
+  if (e.target.closest('.portal-modal-close')) {
+    closeModal();
+    return;
+  }
+  if (e.target.closest('.portal-backdrop')) {
+    closeModal();
+    return;
+  }
+  // ignore clicks inside the modal content
+  if (e.target.closest('.portal-modal')) return;
+
+  const portal = e.target.closest('.portal');
+  if (portal && PORTALS[portal.dataset.key]) {
+    e.preventDefault();
+    openModal(PORTALS[portal.dataset.key]);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modalEl.classList.contains('open')) closeModal();
+});
+
+// Sun-mode keyword positioning: distribute spans on three concentric rings,
+// evenly around 360°. Adapts to viewport on resize.
+function arrangeSun() {
+  const hero = document.querySelector('.hero.sun');
+  if (!hero) return;
+  const w = hero.clientWidth;
+  const h = hero.clientHeight;
+  const maxR = Math.min(w, h) * 0.42;
+  const minR = maxR * 0.55;
+  const midR = (maxR + minR) / 2;
+  const radii = [minR, midR, maxR];
+  const kws = hero.querySelectorAll('.keywords .portal');
+  const n = kws.length;
+  kws.forEach((el, i) => {
+    const angle = (i / n) * 360 - 90; // start at 12 o'clock
+    const r = radii[i % 3];
+    el.style.setProperty('--angle', angle + 'deg');
+    el.style.setProperty('--r', r + 'px');
+  });
+}
+window.addEventListener('load', arrangeSun);
+window.addEventListener('resize', arrangeSun);
+// Run immediately too in case load already fired
+arrangeSun();
+</script>
 
 </body>
 </html>

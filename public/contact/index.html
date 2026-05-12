@@ -41,18 +41,21 @@
   /* header — matches redesign home */
   header {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: center;
     padding: 56px 64px 18px;
     border-bottom: 1px solid var(--rule);
-    gap: 18px;
-    flex-wrap: wrap;
+    gap: 14px;
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
   }
-  .name { font-size: 13px; color: var(--ink); border-bottom: 0; text-decoration: none; }
-  .name:hover { color: var(--link-h); }
+  .logo { display: block; border-bottom: 0; line-height: 0; }
+  .logo img { display: block; width: 48px; height: 48px; }
   nav { display: flex; gap: 22px; font-size: 12px; }
   nav a { border-bottom: 0; }
 
@@ -107,9 +110,11 @@
 <body>
 
 <header>
-  <a class="name" href="/">Philip&nbsp;Di&nbsp;Fiore</a>
+  <a class="logo" href="/" aria-label="Home">
+    <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="48" height="48">
+  </a>
   <nav>
-    <a href="/films">films.videos</a>
+    <a href="/films">archive</a>
     <a href="/contact">contact</a>
   </nav>
 </header>
