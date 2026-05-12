@@ -74,7 +74,7 @@
   /* Typographic keyword list — stays in the page's L/R margins,
      centered, items reflow up/down as the viewport changes. */
   .keywords {
-    margin: 40px 0 0;
+    margin: 80px 0 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -96,7 +96,7 @@
   }
   .keywords .portal.wide {
     flex-basis: 100%;
-    white-space: normal;
+    white-space: nowrap;
     text-align: center;
   }
   .keywords .portal:hover {
@@ -291,7 +291,7 @@
   /* hero */
   .hero { margin-bottom: 64px; }
   .hero h1 { font-size: 13px; font-weight: 400; margin: 0 0 10px; }
-  .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 auto 14px; max-width: none; text-align: center; }
+  .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 0 14px; max-width: none; text-align: left; }
   .hero .lede:last-of-type { margin-bottom: 0; }
   .hero .meta { color: var(--dim); margin-top: 12px; }
 
@@ -346,16 +346,16 @@
 </header>
 
 <section class="hero" id="about">
-  <p class="lede">Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling style.</p>
+  <p class="lede">Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling style. He writes, directs and edits his own projects. He has produced music albums and founded a recording and film studio in New York City. Di Fiore builds creative tools with A.I. that help remove barriers between ideas and execution. He is attempting to learn Italian and pottery.</p>
 
   <!-- Primary keywords -->
   <div class="keywords">
-    <span class="portal wide" data-key="ampas">Academy of Motion Picture<br>Arts and Sciences</span>
+    <span class="portal wide" data-key="ampas">Academy of Motion Picture Arts and Sciences</span>
     <span class="portal" data-key="lynchian">Lynchian</span>
     <span class="portal" data-key="lakota-sioux">Lakota Sioux</span>
-    <span class="portal" data-key="best-director">Best Director</span>
-    <span class="portal" data-key="twilight-zone">Twilight Zone</span>
     <span class="portal" data-key="mean-streets">Mean Streets</span>
+    <span class="portal" data-key="twilight-zone">Twilight Zone</span>
+    <span class="portal" data-key="best-director">Best Director</span>
     <span class="portal" data-key="vintage-cameras">Vintage cameras</span>
     <span class="portal" data-key="35mm">35mm</span>
     <span class="portal" data-key="black-and-white">Black and White</span>
