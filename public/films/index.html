@@ -376,34 +376,39 @@ body:has(.detail-overlay.visible) .crt-overlay {
 }
 .top-title:hover { opacity: 0.7; }
 
-/* ==================== LIST VIEW (terminal/80s amber) ==================== */
+/* ==================== LIST VIEW (terminal/80s amber, framed inside the matte) ==================== */
 .list-view-overlay {
+  /* Sits in the middle between top-bar and bottom-bar so the existing
+     ARCHIVE title (top-right) and PHILIP DI FIORE (bottom-left) chrome
+     stays visible as a "matte" frame. */
   position: fixed;
-  inset: 0;
+  top: 120px;
+  bottom: 150px;
+  left: 24px;
+  right: 24px;
   background: #0a0500;
   color: #ffb000;
-  z-index: 4500;
-  overflow-y: auto;
+  z-index: 999; /* below top-bar/bottom-bar (z-index 1000) */
+  overflow: hidden;
   display: none;
   font-family: 'JetBrains Mono', monospace;
-  padding: 64px 40px 60px;
-  /* subtle phosphor glow */
+  padding: 32px 36px 28px;
   text-shadow: 0 0 6px rgba(255, 176, 0, 0.15);
+  border: 1px solid rgba(255, 176, 0, 0.25);
 }
-.list-view-overlay.visible { display: block; }
-/* gentle vignette */
+.list-view-overlay.visible { display: flex; flex-direction: column; }
+/* vignette + scanlines stay within the framed area */
 .list-view-overlay::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.35) 100%);
   z-index: 5;
 }
-/* light scanlines — wider gap so text falls between lines, not across them */
 .list-view-overlay::after {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
   background: repeating-linear-gradient(
@@ -418,23 +423,34 @@ body:has(.detail-overlay.visible) .crt-overlay {
 .list-view-overlay .list-view-inner {
   position: relative;
   z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+/* When list is open: hide the artboard grid + the page-wide CRT overlay */
+body:has(.list-view-overlay.visible) .artboard,
+body:has(.list-view-overlay.visible) > .crt-overlay,
+body:has(.list-view-overlay.visible) #root > .crt-overlay {
+  display: none;
 }
 .list-view-inner {
-  max-width: 1100px;
   margin: 0 auto;
+  width: 100%;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.5;
 }
 .list-view-header {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   border-bottom: 1px solid rgba(255, 176, 0, 0.35);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 .list-view-header .close {
   cursor: pointer;
@@ -446,11 +462,12 @@ body:has(.detail-overlay.visible) .crt-overlay {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  font-size: 14px;
+  font-size: 13px;
   border-bottom: 1px solid rgba(255, 176, 0, 0.25);
-  padding-bottom: 10px;
-  margin-bottom: 24px;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
   cursor: text;
+  flex-shrink: 0;
 }
 .list-view-search .prompt {
   color: rgba(255, 176, 0, 0.8);
@@ -491,48 +508,52 @@ body:has(.detail-overlay.visible) .crt-overlay {
   padding: 0;
 }
 .list-view-table {
-  display: block;
+  flex: 1;
+  overflow-y: auto;
+  /* Multi-column flow so all records fit without scrolling on wider screens */
+  column-width: 290px;
+  column-gap: 36px;
+  column-rule: 1px solid rgba(255, 176, 0, 0.15);
 }
 .list-view-row {
+  break-inside: avoid;
   display: grid;
-  grid-template-columns: 56px 1fr 220px 24px;
-  gap: 16px;
-  padding: 6px 8px;
+  grid-template-columns: 36px 1fr;
+  gap: 0 10px;
+  padding: 4px 6px;
   cursor: pointer;
-  align-items: baseline;
-}
-.list-view-row.list-view-head {
-  cursor: default;
-  border-bottom: 1px solid rgba(255, 176, 0, 0.35);
+  border-left: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
   margin-bottom: 6px;
-  letter-spacing: 0.12em;
+}
+.list-view-row:hover {
+  color: #ffd700;
+  border-left-color: #ffd700;
+}
+.list-view-row:hover .num,
+.list-view-row:hover .category { color: #ffd700; }
+.list-view-row .num {
+  color: rgba(255, 176, 0, 0.5);
   font-size: 11px;
-  text-transform: uppercase;
-  color: rgba(255, 176, 0, 0.75);
+  grid-row: 1;
+  align-self: baseline;
 }
-.list-view-row:not(.list-view-head):hover {
-  background: rgba(255, 176, 0, 0.1);
-  color: #ffd700;
-}
-.list-view-row:not(.list-view-head):hover .num,
-.list-view-row:not(.list-view-head):hover .category,
-.list-view-row:not(.list-view-head):hover .arrow {
-  color: #ffd700;
-}
-.list-view-row .num { color: rgba(255, 176, 0, 0.5); }
 .list-view-row .title {
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  font-size: 12.5px;
+  line-height: 1.35;
+  grid-column: 2;
+  grid-row: 1;
 }
 .list-view-row .category {
-  color: rgba(255, 176, 0, 0.6);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  color: rgba(255, 176, 0, 0.55);
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-.list-view-row .arrow {
-  color: rgba(255, 176, 0, 0.5);
-  text-align: right;
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 1px;
 }
 .list-view-cursor {
   display: inline-block;
@@ -1802,13 +1823,11 @@ function renderListView() {
       <span class="num">${String(i + 1).padStart(3, '0')}</span>
       <span class="title">${decodeHTML(p.title)}</span>
       <span class="category">${p.category || ''}</span>
-      <span class="arrow">&gt;</span>
     </div>
   `).join('');
   inner.innerHTML = `
     <div class="list-view-header">
-      <span>PHILIP DI FIORE / ARCHIVE TERMINAL v1.0</span>
-      <span class="close" onclick="toggleListView()">[ X CLOSE ]</span>
+      <span>ARCHIVE TERMINAL v1.0 &nbsp;·&nbsp; [${projects.length}] RECORDS</span>
     </div>
     <div class="list-view-search" id="listSearch">
       <span class="prompt">SEARCH &gt;</span>
@@ -1818,15 +1837,8 @@ function renderListView() {
       </div>
     </div>
     <div class="list-view-table">
-      <div class="list-view-row list-view-head">
-        <span class="num">NO.</span>
-        <span class="title">TITLE</span>
-        <span class="category">CATEGORY</span>
-        <span class="arrow"></span>
-      </div>
       ${rows}
     </div>
-    <div class="list-view-cursor">_</div>
   `;
   // Row click → detail
   inner.querySelectorAll('.list-view-row[data-id]').forEach(row => {
