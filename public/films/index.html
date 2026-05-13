@@ -354,7 +354,7 @@ body:has(.detail-overlay.visible) .crt-overlay {
   color: var(--text);
   line-height: 0.85;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.12s ease;
 }
 
 .bottom-title:hover {
@@ -372,7 +372,7 @@ body:has(.detail-overlay.visible) .crt-overlay {
   margin-left: auto;
   text-align: right;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.12s ease;
 }
 .top-title:hover { opacity: 0.7; }
 
@@ -433,6 +433,29 @@ body:has(.list-view-overlay.visible) .artboard,
 body:has(.list-view-overlay.visible) > .crt-overlay,
 body:has(.list-view-overlay.visible) #root > .crt-overlay {
   display: none;
+}
+/* When list is open: matte chrome turns terminal-amber to match */
+body:has(.list-view-overlay.visible) .top-title,
+body:has(.list-view-overlay.visible) .bottom-title {
+  color: #ffb000;
+}
+/* When list is open: CRT scanlines extend across the top-bar and
+   bottom-bar so the ARCHIVE and PHILIP DI FIORE chrome reads as part
+   of the terminal screen. Same gradient pattern as the list view. */
+body:has(.list-view-overlay.visible) .top-bar::after,
+body:has(.list-view-overlay.visible) .bottom-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.22) 3px,
+    rgba(0, 0, 0, 0.22) 4px
+  );
+  z-index: 1;
 }
 .list-view-inner {
   margin: 0 auto;
