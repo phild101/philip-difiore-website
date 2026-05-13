@@ -39,8 +39,8 @@
     font-family: 'JetBrains Mono','SF Mono','IBM Plex Mono','Menlo',monospace;
     font-size: 13px; line-height: 1.7;
     padding: 56px 64px 80px;
-    /* Widened from 720 → 840 so the one-line bio fits without shrinking text. */
-    max-width: 840px; margin: 0 auto;
+    /* Widened so the staggered-bio long lines fit on one line. */
+    max-width: 1280px; margin: 0 auto;
   }
   a { color: var(--link); text-decoration: none; border-bottom: 1px solid var(--ink); }
   a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
@@ -74,7 +74,8 @@
   /* Typographic keyword list — stays in the page's L/R margins,
      centered, items reflow up/down as the viewport changes. */
   .keywords {
-    margin: 80px 0 0;
+    margin: 80px auto 0;
+    max-width: 840px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -293,6 +294,31 @@
   .hero h1 { font-size: 13px; font-weight: 400; margin: 0 0 10px; }
   .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 0 14px; max-width: none; text-align: left; }
   .hero .lede:last-of-type { margin-bottom: 0; }
+
+  /* Staggered bio: each line at a different left indent */
+  .hero .bio-stack { margin: 0 0 14px; }
+  .hero .bio-stack .bio-line {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    white-space: nowrap;
+  }
+  .hero .bio-stack .bio-line:last-child { margin-bottom: 0; }
+  .hero .bio-stack .bio-l1 { text-align: center; transform: translateX(3ch); }
+  .hero .bio-stack .bio-l2 { padding-left: 21%; }
+  .hero .bio-stack .bio-l3 { padding-left: 33%; }
+  .hero .bio-stack .bio-l4 { padding-left: 24%; }
+  .hero .bio-stack .bio-l5 { padding-left: 34%; }
+  .hero .bio-stack .bio-l6 { padding-left: 29%; }
+  .hero .bio-stack .bio-l7 { padding-left: 43%; }
+  @media (max-width: 760px) {
+    .hero .bio-stack .bio-line {
+      white-space: normal;
+      padding-left: 0 !important;
+      text-align: left;
+    }
+    .hero .bio-stack .bio-l1 { text-align: left; }
+  }
   .hero .meta { color: var(--dim); margin-top: 12px; }
 
   /* section */
@@ -346,7 +372,15 @@
 </header>
 
 <section class="hero" id="about">
-  <p class="lede">Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling style. He writes, directs and edits his own projects. He has produced music albums and founded a recording and film studio in New York City. Di Fiore builds creative tools with A.I. that help remove barriers between ideas and execution. He is attempting to learn Italian and pottery.</p>
+  <div class="bio-stack">
+    <div class="bio-line bio-l1">Philip Di Fiore</div>
+    <div class="bio-line bio-l2">is an award-winning filmmaker known for his cinematic storytelling style</div>
+    <div class="bio-line bio-l3">writes, directs and edits his own projects</div>
+    <div class="bio-line bio-l4">has produced music albums and film scores</div>
+    <div class="bio-line bio-l5">founded and operated 4000 sq ft recording and film studio in Brooklyn, NY</div>
+    <div class="bio-line bio-l6">builds AI creative tools for writers and filmmakers</div>
+    <div class="bio-line bio-l7">is attempting to learn Italian and pottery</div>
+  </div>
 
   <!-- Primary keywords -->
   <div class="keywords">
