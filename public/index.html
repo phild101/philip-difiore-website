@@ -22,35 +22,68 @@
 <meta name="twitter:image:alt" content="Philip Di Fiore">
 <link rel="stylesheet" href="https://use.typekit.net/ayz4ezz.css">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   :root {
-    --bg: #ffffff;
-    --ink: #111111;
-    --dim: #888888;
-    --rule: #e8e8e8;
-    --link: #111111;
+    --bg: #fdfcfa;
+    --ink: #1a1814;
+    --dim: #807a72;
+    --rule: #e2ddd5;
+    --link: #1a1814;
     --link-h: #c0392b;
+
+    /* Design-renderer variables — overridden when a visitor design is applied */
+    --design-bg: #fdfcfa;
+    --design-ink: #1a1814;
+    --design-accent: #c0392b;
+    --design-display-font: 'DM Serif Display', 'Times New Roman', serif;
+    --design-body-font: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+    --design-keyword-font: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+    --design-display-weight: 400;
+    --design-display-scale: 1;
   }
   html, body { margin: 0; padding: 0; }
   html { scroll-padding-top: 185px; }  /* equals bio's natural viewport-y so #projects lands in the same place */
   body {
-    background: var(--bg); color: var(--ink);
-    font-family: 'JetBrains Mono','SF Mono','IBM Plex Mono','Menlo',monospace;
-    font-size: 13px; line-height: 1.7;
-    padding: 56px 64px 80px;
-    /* Widened so the staggered-bio long lines fit on one line. */
-    max-width: 1280px; margin: 0 auto;
+    background: var(--design-bg); color: var(--design-ink);
+    font-family: var(--design-body-font);
+    font-size: 14px; line-height: 1.55;
+    padding: 64px 80px 96px;
+    max-width: 1180px; margin: 0 auto;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.4s ease, color 0.4s ease;
   }
   a { color: var(--link); text-decoration: none; border-bottom: 1px solid var(--ink); }
   a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
   .dim { color: var(--dim); }
 
-  header { display: flex; flex-direction: column; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; gap: 14px; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--design-ink);
+    margin-bottom: 0;
+    position: sticky;
+    top: 0;
+    background: var(--design-bg);
+    z-index: 10;
+  }
   .logo { display: block; border-bottom: 0; line-height: 0; }
-  .logo img { display: block; width: 48px; height: 48px; }
-  nav { display: flex; gap: 22px; font-size: 12px; }
-  nav a { border-bottom: 0; }
+  .logo img { display: block; width: 36px; height: 36px; }
+  nav {
+    display: flex;
+    gap: 28px;
+    font-family: var(--design-body-font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  nav a { border-bottom: 0; color: var(--design-ink); }
+  nav a:hover { color: var(--design-accent); }
 
   /* Featured Projects: hidden by default; revealed when URL has #projects */
   #projects { display: none; }
@@ -73,41 +106,42 @@
 
   /* Typographic keyword list — stays in the page's L/R margins,
      centered, items reflow up/down as the viewport changes. */
+  /* Editorial keyword index — sits as the right column of the hero */
+  .hero .hero-index { padding-top: 22px; }
+  .section-label {
+    font-family: var(--design-body-font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--design-ink);
+    margin: 0 0 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--design-ink);
+  }
   .keywords {
-    margin: 80px auto 0;
-    max-width: 840px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 32px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   .keywords .portal {
-    font-family: 'itc-avant-garde-gothic-pro', 'Century Gothic', sans-serif;
-    font-size: 22px;
+    font-family: var(--design-keyword-font);
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: #b5b5b5;
-    border-bottom: 0;
-    position: relative;
-    z-index: 0;
-    transform-origin: center;
+    font-size: 18px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--design-ink);
+    cursor: pointer;
+    padding: 12px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--design-ink) 15%, transparent);
     transition: color 0.25s ease, transform 0.25s ease;
-    white-space: nowrap;
+    display: block;
   }
-  .keywords .portal.wide {
-    flex-basis: 100%;
-    white-space: nowrap;
-    text-align: center;
-  }
-  .keywords .portal:hover {
-    color: var(--link-h);
-    transform: scale(1.06);
-    z-index: 5;
-  }
-  @media (max-width: 640px) {
-    .keywords { gap: 6px 20px; }
-    .keywords .portal { font-size: 16px; }
+  .keywords .portal:hover { color: var(--design-accent); }
+  .keywords .portal:last-child { border-bottom: 0; }
+  @media (max-width: 800px) {
+    .keywords .portal { font-size: 18px; padding: 10px 0; }
   }
 
   /* ==================== SUN MODE ==================== */
@@ -174,45 +208,39 @@
     .hero.sun { min-height: 720px; }
     .hero.sun .sun-bio { max-width: 22ch; padding: 14px; }
   }
-  /* Modal: dark card, red page-flip backdrop, Avant Garde Gothic + DM Sans. */
+  /* Editorial modal: warm white card, hairline border, italic serif body */
   .portal-backdrop {
     position: fixed;
     inset: 0;
-    background: #ff432e;
+    background: rgba(20, 18, 14, 0.18);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s;
     z-index: 150;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
   .portal-backdrop.open { opacity: 1; pointer-events: auto; }
 
   .portal-modal {
-    --modal-bg: #0a0a0a;
-    --modal-text: #f3f3f3;
-    --modal-dim: rgba(243, 243, 243, 0.5);
-    --modal-border: rgba(255, 255, 255, 0.12);
-    --modal-font-display: 'itc-avant-garde-gothic-pro', 'Century Gothic', sans-serif;
-    --modal-font-body: 'DM Sans', system-ui, sans-serif;
-
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.96);
-    width: min(880px, calc(100vw - 48px));
-    height: min(820px, calc(100vh - 48px));
-    background: var(--modal-bg);
-    color: var(--modal-text);
-    border: 1px solid var(--modal-border);
-    padding: 56px 60px 48px;
+    transform: translate(-50%, -50%) scale(0.98);
+    width: min(820px, calc(100vw - 48px));
+    max-height: calc(100vh - 64px);
+    background: #fdfcfa;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 48px 56px 44px;
     overflow-y: auto;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s, transform 0.25s;
     z-index: 200;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
-    font-family: var(--modal-font-body);
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
   }
   .portal-modal.open {
     opacity: 1;
@@ -221,110 +249,113 @@
   }
   .portal-modal-close {
     position: absolute;
-    top: 14px;
+    top: 16px;
     right: 18px;
     width: 32px; height: 32px;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
     cursor: pointer;
-    color: var(--modal-dim);
+    color: var(--ink);
     background: none;
     border: 0;
-    font-family: var(--modal-font-body);
-    transition: color 0.3s;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.3s;
+    opacity: 0.5;
   }
-  .portal-modal-close:hover { color: var(--modal-text); }
+  .portal-modal-close:hover { opacity: 1; }
   .portal-modal img {
     display: block;
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: 460px;
+    max-height: 360px;
     object-fit: contain;
     margin: 0 auto 28px;
     border: 0;
     filter: none;
   }
   .portal-modal h2 {
-    font-family: var(--modal-font-display);
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+    font-weight: 900;
     font-size: 2.2rem;
-    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    color: var(--modal-text);
+    color: var(--ink);
     margin: 0 0 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ink);
   }
   .portal-modal-body p {
-    font-family: var(--modal-font-body);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin: 0 0 16px;
-    color: var(--modal-dim);
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 14px;
+    color: var(--ink);
   }
-  .portal-modal-body em { font-style: italic; color: var(--modal-text); }
-  .portal-modal-body strong { font-weight: 600; color: var(--modal-text); }
+  .portal-modal-body em { font-style: italic; }
+  .portal-modal-body strong { font-weight: 600; }
   .portal-modal-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    font-family: var(--modal-font-body);
-    font-size: 10px;
-    font-weight: 500;
+    display: inline-block;
+    margin-top: 18px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--modal-text);
+    letter-spacing: 0.12em;
+    color: var(--ink);
     text-decoration: none;
-    background: transparent;
-    border: 1px solid var(--modal-border);
-    padding: 10px 18px;
-    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    transition: opacity 0.2s;
     align-self: flex-start;
   }
   .portal-modal-cta::after { content: ' →'; }
-  .portal-modal-cta:hover {
-    color: var(--modal-bg);
-    background: var(--modal-text);
-    border-color: var(--modal-text);
-  }
+  .portal-modal-cta:hover { opacity: 0.55; }
 
-  /* hero */
-  .hero { margin-bottom: 64px; }
-  .hero h1 { font-size: 13px; font-weight: 400; margin: 0 0 10px; }
-  .hero .lede { font-size: 13px; line-height: 1.7; margin: 0 0 14px; max-width: none; text-align: left; }
-  .hero .lede:last-of-type { margin-bottom: 0; }
+  /* Editorial hero: serif headline left, bio right */
+  .hero {
+    margin-top: 32px;
+    margin-bottom: 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px 80px;
+    align-items: start;
+  }
+  .hero .masthead {
+    font-family: var(--design-display-font);
+    font-weight: var(--design-display-weight);
+    font-size: calc(clamp(56px, 7vw, 96px) * var(--design-display-scale));
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    text-transform: none;
+    margin: 0;
+    color: var(--design-ink);
+  }
+  body.display-uppercase .hero .masthead { text-transform: uppercase; }
+  body.display-italic .hero .masthead,
+  body.display-italic .hero .masthead em { font-style: italic; }
+  .hero .masthead em {
+    font-style: normal;
+    font-weight: var(--design-display-weight);
+    display: block;
+  }
+  .hero .bio {
+    font-family: var(--design-body-font);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--design-ink);
+    padding-top: 22px;
+  }
+  .hero .bio p { margin: 0 0 12px; }
+  .hero .bio p:last-child { margin-bottom: 0; }
 
-  /* Staggered bio: each line at a different left indent */
-  .hero .bio-stack { margin: 0 0 14px; }
-  .hero .bio-stack .bio-line {
-    font-size: 13px;
-    line-height: 1.7;
-    margin-bottom: 14px;
-    white-space: nowrap;
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; gap: 28px; }
+    .hero .bio { padding-top: 0; }
   }
-  .hero .bio-stack .bio-line:last-child { margin-bottom: 0; }
-  .hero .bio-stack .bio-line { text-align: center; padding-left: 0 !important; }
-  @media (max-width: 760px) {
-    .hero .bio-stack .bio-line {
-      white-space: normal;
-      padding-left: 0 !important;
-      text-align: left;
-    }
-    .hero .bio-stack .bio-l1 { text-align: left; }
-  }
-
-  /* Bio as cummings-style poem */
-  .hero .bio-poem {
-    font-family: inherit;
-    font-size: 13px;
-    line-height: 1.7;
-    margin: 0 0 14px;
-    white-space: pre;
-    color: var(--ink);
-    overflow-x: auto;
-  }
-  .hero .meta { color: var(--dim); margin-top: 12px; }
 
   /* section */
   section { margin-bottom: 64px; }
@@ -362,6 +393,234 @@
     body { padding: 28px 22px 60px; }
     .projects { grid-template-columns: 1fr; gap: 0; }
   }
+
+  /* ==================== DESIGN-RENDERER LAYOUTS ==================== */
+  /* Default (no class) = the asymmetric-left layout already styled above. */
+  body.layout-asymmetric-right .hero { grid-template-columns: 1fr 1.4fr; }
+  body.layout-asymmetric-right .hero-text { order: 2; }
+  body.layout-asymmetric-right .hero-index { order: 1; }
+  body.layout-magazine-grid .hero { grid-template-columns: 1fr 1fr; }
+  body.layout-centered .hero,
+  body.layout-stacked .hero,
+  body.layout-scattered .hero { display: block; text-align: left; }
+  body.layout-centered .hero { text-align: center; }
+  body.layout-centered .hero-index,
+  body.layout-stacked .hero-index,
+  body.layout-scattered .hero-index { margin-top: 60px; }
+  body.layout-centered .keywords .portal { text-align: center; }
+  body.layout-scattered .hero .bio p { white-space: nowrap; max-width: none; }
+  body.layout-scattered .hero .bio p:nth-child(1) { padding-left: 0%; }
+  body.layout-scattered .hero .bio p:nth-child(2) { padding-left: 14%; }
+  body.layout-scattered .hero .bio p:nth-child(3) { padding-left: 6%; }
+  body.layout-scattered .hero .bio p:nth-child(4) { padding-left: 22%; }
+  body.layout-scattered .hero .bio p:nth-child(5) { padding-left: 10%; }
+  body.layout-scattered .hero .bio p:nth-child(6) { padding-left: 28%; }
+  @media (max-width: 800px) {
+    body.layout-scattered .hero .bio p { white-space: normal; padding-left: 0 !important; }
+  }
+
+  /* ==================== MODAL STYLE VARIANTS ==================== */
+  body.modal-light .portal-backdrop { background: var(--design-accent); }
+  body.modal-light .portal-modal {
+    background: #fdfcfa; color: #1a1814; border: 1px solid #1a1814;
+  }
+  body.modal-light .portal-modal h2 { color: #1a1814; border-bottom-color: #d8d4ce; }
+  body.modal-light .portal-modal-body p { color: #1a1814; }
+  body.modal-light .portal-modal-cta { color: #1a1814; border-bottom-color: #1a1814; }
+  body.modal-light .portal-modal-close { color: #1a1814; opacity: 0.5; }
+
+  body.modal-dark .portal-backdrop { background: var(--design-accent); }
+  body.modal-dark .portal-modal {
+    background: #0a0a0a; color: #f3f3f3; border: 1px solid rgba(255,255,255,0.12);
+  }
+  body.modal-dark .portal-modal h2 { color: #f3f3f3; border-bottom-color: rgba(255,255,255,0.12); }
+  body.modal-dark .portal-modal-body p { color: rgba(243,243,243,0.7); }
+  body.modal-dark .portal-modal-cta { color: #f3f3f3; border-bottom-color: #f3f3f3; }
+  body.modal-dark .portal-modal-close { color: rgba(243,243,243,0.5); }
+
+  body.modal-colored .portal-backdrop { background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+  body.modal-colored .portal-modal {
+    background: var(--design-accent); color: var(--design-bg); border: 1px solid var(--design-bg);
+  }
+  body.modal-colored .portal-modal h2 { color: var(--design-bg); border-bottom-color: var(--design-bg); }
+  body.modal-colored .portal-modal-body p { color: var(--design-bg); }
+  body.modal-colored .portal-modal-cta { color: var(--design-bg); border-bottom-color: var(--design-bg); }
+  body.modal-colored .portal-modal-close { color: var(--design-bg); }
+
+  /* ==================== IMAGE TREATMENT ==================== */
+  body.img-grayscale .portal-modal img { filter: grayscale(100%) contrast(1.05) brightness(0.92); }
+
+  /* ==================== MOTION REGISTERS ==================== */
+  body.motion-static *,
+  body.motion-static *::before,
+  body.motion-static *::after { transition: none !important; animation: none !important; }
+  body.motion-playful .keywords .portal:hover { transform: translateX(8px) scale(1.06); }
+  body.motion-playful .hero .masthead { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  body.motion-playful .hero .masthead:hover { transform: rotate(-1.5deg) scale(1.02); }
+
+  /* ==================== AI DESIGN INPUT ==================== */
+  .design-bar {
+    margin-top: 28px;
+    padding: 14px 18px;
+    border: 1px solid color-mix(in srgb, var(--design-ink) 18%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--design-ink) 4%, transparent);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    font-family: var(--design-body-font);
+  }
+  .design-bar .design-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--design-ink) 60%, transparent);
+    flex-shrink: 0;
+  }
+  .design-bar input[type="text"] {
+    flex: 1 1 240px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--design-ink) 25%, transparent);
+    outline: none;
+    font: inherit;
+    font-size: 13px;
+    color: var(--design-ink);
+    padding: 6px 0;
+  }
+  .design-bar input[type="text"]::placeholder {
+    color: color-mix(in srgb, var(--design-ink) 40%, transparent);
+  }
+  .design-bar .design-url-wrap {
+    flex: 1 1 200px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .design-bar .design-url-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--design-ink) 50%, transparent);
+  }
+  .design-bar button {
+    background: var(--design-ink);
+    color: var(--design-bg);
+    border: 0;
+    padding: 8px 14px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+  .design-bar button:hover { opacity: 0.78; }
+  .design-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .design-bar .design-gallery-link {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--design-ink) 60%, transparent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .design-bar .design-gallery-link:hover { color: var(--design-accent); }
+
+  /* Banner shown when a design is applied */
+  .design-banner {
+    display: none;
+    margin-bottom: 18px;
+    padding: 10px 14px;
+    border-left: 3px solid var(--design-accent);
+    background: color-mix(in srgb, var(--design-accent) 8%, transparent);
+    font-family: var(--design-body-font);
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--design-ink);
+  }
+  .design-banner.visible { display: block; }
+  .design-banner .label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--design-ink) 55%, transparent);
+    margin-right: 6px;
+  }
+  .design-banner .reset {
+    margin-left: 12px;
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+  }
+
+  /* Gallery overlay */
+  .design-gallery {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .design-gallery.open { display: flex; }
+  .design-gallery-card {
+    background: var(--design-bg);
+    color: var(--design-ink);
+    border: 1px solid var(--design-ink);
+    width: min(720px, 100%);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 28px 32px;
+    font-family: var(--design-body-font);
+  }
+  .design-gallery-card h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--design-ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .design-gallery-card h3 .close {
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .design-gallery-card h3 .close:hover { opacity: 1; }
+  .design-gallery-list { display: flex; flex-direction: column; gap: 12px; }
+  .design-gallery-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--design-ink) 12%, transparent);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .design-gallery-item:hover { color: var(--design-accent); }
+  .design-gallery-item .swatches { display: inline-flex; gap: 3px; flex-shrink: 0; }
+  .design-gallery-item .swatch { width: 12px; height: 12px; border: 1px solid rgba(0,0,0,0.1); }
+  .design-gallery-item .text { font-size: 13px; line-height: 1.35; }
+  .design-gallery-item .meta { display: block; font-size: 10px; opacity: 0.55; margin-top: 2px; letter-spacing: 0.04em; }
+
 </style>
 </head>
 <body>
@@ -376,31 +635,63 @@
   </nav>
 </header>
 
-<section class="hero" id="about">
-  <div class="bio-stack">
-    <div class="bio-line bio-l1">Philip Di Fiore</div>
-    <div class="bio-line bio-l2">is an award-winning filmmaker known for his cinematic storytelling style</div>
-    <div class="bio-line bio-l3">writes, directs and edits his own projects</div>
-    <div class="bio-line bio-l4">has produced music albums and film scores</div>
-    <div class="bio-line bio-l5">founded and operated a 4000 sq ft recording and film studio in Brooklyn, NY</div>
-    <div class="bio-line bio-l6">builds creative tools with A.I.</div>
-    <div class="bio-line bio-l7">is attempting to learn Italian</div>
-  </div>
+<div class="design-banner" id="designBanner">
+  <span class="label">Designed in response to:</span>
+  <span id="designBannerPrompt"></span>
+  <span class="reset" id="designReset">reset</span>
+</div>
 
-  <!-- Primary keywords -->
-  <div class="keywords">
-    <span class="portal wide" data-key="ampas">Academy of Motion Picture Arts and Sciences</span>
-    <span class="portal" data-key="lynchian">Lynchian</span>
-    <span class="portal" data-key="lakota-sioux">Lakota Sioux</span>
-    <span class="portal" data-key="mean-streets">Mean Streets</span>
-    <span class="portal" data-key="twilight-zone">Twilight Zone</span>
-    <span class="portal" data-key="best-director">Best Director</span>
-    <span class="portal" data-key="vintage-cameras">Vintage cameras</span>
-    <span class="portal" data-key="35mm">35mm</span>
-    <span class="portal" data-key="black-and-white">Black and White</span>
-    <span class="portal" data-key="ai">A.I.</span>
+<section class="hero" id="about">
+  <div class="hero-text">
+    <h1 class="masthead">Philip <em>Di Fiore</em></h1>
+    <div class="bio">
+      <p>Is an award-winning filmmaker known for his cinematic storytelling style.</p>
+      <p>Writes, directs and edits his own projects.</p>
+      <p>Has produced music albums and film scores.</p>
+      <p>Founded and operated a 4000 sq. ft. recording and film studio in Brooklyn, NY.</p>
+      <p>Builds creative tools with A.I.</p>
+      <p>Is attempting to learn Italian.</p>
+    </div>
+  </div>
+  <div class="hero-index">
+    <h2 class="section-label">Index</h2>
+    <ul class="keywords">
+      <li class="portal" data-key="ampas">Academy of Motion Picture Arts and Sciences</li>
+      <li class="portal" data-key="lynchian">Lynchian</li>
+      <li class="portal" data-key="lakota-sioux">Lakota Sioux</li>
+      <li class="portal" data-key="mean-streets">Mean Streets</li>
+      <li class="portal" data-key="twilight-zone">Twilight Zone</li>
+      <li class="portal" data-key="best-director">Best Director</li>
+      <li class="portal" data-key="vintage-cameras">Vintage cameras</li>
+      <li class="portal" data-key="35mm">35mm</li>
+      <li class="portal" data-key="black-and-white">Black and White</li>
+      <li class="portal" data-key="ai">A.I.</li>
+    </ul>
   </div>
 </section>
+
+<form class="design-bar" id="designBar" autocomplete="off">
+  <span class="design-label">Design this page →</span>
+  <input type="text" id="designPrompt" placeholder="What do you want this page to look like?" maxlength="500" required>
+  <span class="design-url-wrap">
+    <span class="design-url-label">or paste a URL:</span>
+    <input type="text" id="designStyleUrl" placeholder="https://…" maxlength="200">
+  </span>
+  <button type="submit" id="designSubmit">Apply</button>
+  <span class="design-gallery-link" id="designGalleryLink">See other versions</span>
+</form>
+
+<div class="design-gallery" id="designGallery">
+  <div class="design-gallery-card">
+    <h3>
+      Other visitors' designs
+      <span class="close" id="designGalleryClose">✕</span>
+    </h3>
+    <div class="design-gallery-list" id="designGalleryList">
+      <div style="font-size:12px;opacity:0.5;">Loading…</div>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div>&copy; Rumpus Productions 2026</div>
@@ -754,9 +1045,8 @@ const backdropEl = document.querySelector('.portal-backdrop');
 const BACKDROP_COLORS = ['#ff432e', '#facc15'];
 
 function openModal(data) {
-  // Pick a random backdrop color each open
-  backdropEl.style.backgroundColor =
-    BACKDROP_COLORS[Math.floor(Math.random() * BACKDROP_COLORS.length)];
+  // Editorial preview: backdrop stays as the CSS-defined translucent
+  // wash (no random color flip).
   document.getElementById('portal-modal-title').textContent = data.title;
   const img = document.getElementById('portal-modal-img');
   if (data.img) { img.src = data.img; img.style.display = ''; img.alt = data.title; }
@@ -822,6 +1112,205 @@ window.addEventListener('load', arrangeSun);
 window.addEventListener('resize', arrangeSun);
 // Run immediately too in case load already fired
 arrangeSun();
+
+// ==================== AI DESIGN RENDERER ====================
+const SUPABASE_URL = 'https://gjvvbofpkxuicrpshxun.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqdnZib2Zwa3h1aWNycHNoeHVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzY1NzcsImV4cCI6MjA4NTc1MjU3N30.igGl_64MuqL-0VsLE4NibmMq1hPxnZ_WusRrM043n5M';
+const SYSTEM_FONTS = new Set(['Helvetica Neue', 'Georgia', 'system-ui']);
+
+function loadFonts(families) {
+  const toLoad = [...new Set(families)].filter(f => !SYSTEM_FONTS.has(f));
+  if (!toLoad.length) return;
+  const id = 'design-fonts';
+  let link = document.getElementById(id);
+  if (!link) {
+    link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+  }
+  const familyParam = toLoad.map(f => f.replace(/ /g, '+') + ':wght@300;400;500;600;700;800;900').join('&family=');
+  link.href = `https://fonts.googleapis.com/css2?family=${familyParam}&display=swap`;
+}
+
+function fontFamilyValue(name) {
+  if (SYSTEM_FONTS.has(name)) return name;
+  // Pick reasonable fallback based on name
+  if (/(Mono|Code)/i.test(name)) return `'${name}', monospace`;
+  if (/(Serif|Garamond|Bodoni|Caslon|Lora|Crimson|Baskerville|EB|DM Serif)/i.test(name)) return `'${name}', serif`;
+  return `'${name}', sans-serif`;
+}
+
+function applyDesign(spec, prompt, designId) {
+  const r = document.documentElement;
+  // Palette
+  r.style.setProperty('--design-bg', spec.palette.bg);
+  r.style.setProperty('--design-ink', spec.palette.ink);
+  r.style.setProperty('--design-accent', spec.palette.accent);
+
+  // Typography
+  loadFonts([spec.typography.display_font, spec.typography.body_font, spec.typography.keyword_font]);
+  r.style.setProperty('--design-display-font', fontFamilyValue(spec.typography.display_font));
+  r.style.setProperty('--design-body-font', fontFamilyValue(spec.typography.body_font));
+  r.style.setProperty('--design-keyword-font', fontFamilyValue(spec.typography.keyword_font));
+  r.style.setProperty('--design-display-weight', spec.typography.display_weight);
+  r.style.setProperty('--design-display-scale', spec.typography.display_scale);
+
+  // Body class flips
+  const body = document.body;
+  // Remove old design classes
+  Array.from(body.classList).forEach(c => {
+    if (/^(layout|modal|img|motion|display)-/.test(c)) body.classList.remove(c);
+  });
+  body.classList.add(`layout-${spec.layout}`);
+  body.classList.add(`modal-${spec.modal_style}`);
+  body.classList.add(`img-${spec.image_treatment}`);
+  body.classList.add(`motion-${spec.motion}`);
+  if (spec.typography.display_uppercase) body.classList.add('display-uppercase');
+  if (spec.typography.display_italic) body.classList.add('display-italic');
+
+  // Banner
+  showBanner(prompt, spec.rationale);
+
+  // URL update
+  if (designId) {
+    const url = new URL(window.location);
+    url.searchParams.set('d', designId);
+    history.replaceState(null, '', url);
+  }
+}
+
+function showBanner(prompt, rationale) {
+  const banner = document.getElementById('designBanner');
+  const promptEl = document.getElementById('designBannerPrompt');
+  promptEl.textContent = `"${prompt}"` + (rationale ? ` — ${rationale}` : '');
+  banner.classList.add('visible');
+}
+
+function resetDesign() {
+  const r = document.documentElement;
+  ['--design-bg','--design-ink','--design-accent','--design-display-font','--design-body-font','--design-keyword-font','--design-display-weight','--design-display-scale']
+    .forEach(p => r.style.removeProperty(p));
+  const body = document.body;
+  Array.from(body.classList).forEach(c => {
+    if (/^(layout|modal|img|motion|display)-/.test(c)) body.classList.remove(c);
+  });
+  document.getElementById('designBanner').classList.remove('visible');
+  const url = new URL(window.location);
+  url.searchParams.delete('d');
+  history.replaceState(null, '', url);
+}
+
+document.getElementById('designReset').addEventListener('click', resetDesign);
+
+// Submit handler
+document.getElementById('designBar').addEventListener('submit', async e => {
+  e.preventDefault();
+  const promptInput = document.getElementById('designPrompt');
+  const urlInput = document.getElementById('designStyleUrl');
+  const submitBtn = document.getElementById('designSubmit');
+  const prompt = promptInput.value.trim();
+  const styleUrl = urlInput.value.trim();
+  if (!prompt) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Designing…';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/design-this-page`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'apikey': SUPABASE_ANON
+      },
+      body: JSON.stringify({ prompt, style_url: styleUrl || undefined })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    applyDesign(data.spec, data.prompt, data.id);
+    promptInput.value = '';
+    urlInput.value = '';
+  } catch (err) {
+    alert('Design failed: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Apply';
+  }
+});
+
+// Gallery
+document.getElementById('designGalleryLink').addEventListener('click', openGallery);
+document.getElementById('designGalleryClose').addEventListener('click', () => {
+  document.getElementById('designGallery').classList.remove('open');
+});
+document.getElementById('designGallery').addEventListener('click', e => {
+  if (e.target.id === 'designGallery') {
+    document.getElementById('designGallery').classList.remove('open');
+  }
+});
+
+async function openGallery() {
+  const galleryEl = document.getElementById('designGallery');
+  const listEl = document.getElementById('designGalleryList');
+  galleryEl.classList.add('open');
+  listEl.innerHTML = '<div style="font-size:12px;opacity:0.5;">Loading…</div>';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/site_designs?select=id,prompt,spec,rationale,created_at&order=created_at.desc&limit=30`, {
+      headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}` }
+    });
+    const items = await res.json();
+    if (!items.length) {
+      listEl.innerHTML = '<div style="font-size:12px;opacity:0.5;">No designs yet — be the first.</div>';
+      return;
+    }
+    listEl.innerHTML = items.map(it => {
+      const swatches = [it.spec?.palette?.bg, it.spec?.palette?.ink, it.spec?.palette?.accent]
+        .filter(Boolean)
+        .map(c => `<span class="swatch" style="background:${c}"></span>`).join('');
+      const ago = timeAgo(it.created_at);
+      return `<div class="design-gallery-item" data-id="${it.id}">
+        <span class="swatches">${swatches}</span>
+        <span class="text">"${escapeHtml(it.prompt)}"<span class="meta">${ago}</span></span>
+      </div>`;
+    }).join('');
+    listEl.querySelectorAll('.design-gallery-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.id;
+        const item = items.find(i => i.id === id);
+        if (item) {
+          applyDesign(item.spec, item.prompt, item.id);
+          galleryEl.classList.remove('open');
+        }
+      });
+    });
+  } catch (err) {
+    listEl.innerHTML = `<div style="font-size:12px;color:#c0392b;">Couldn't load gallery: ${err.message}</div>`;
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function timeAgo(iso) {
+  const s = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  return Math.floor(s / 86400) + 'd ago';
+}
+
+// On page load: if ?d=<id> in URL, fetch and apply that design
+(async function loadDesignFromUrl() {
+  const id = new URLSearchParams(window.location.search).get('d');
+  if (!id) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/site_designs?id=eq.${encodeURIComponent(id)}&select=id,prompt,spec,rationale`, {
+      headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}` }
+    });
+    const items = await res.json();
+    if (items?.[0]) applyDesign(items[0].spec, items[0].prompt, items[0].id);
+  } catch (err) { console.warn('Failed to load design:', err); }
+})();
 </script>
 
 </body>
