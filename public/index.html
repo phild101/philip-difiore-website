@@ -1142,23 +1142,47 @@ function fontFamilyValue(name) {
 }
 
 function applyDesign(spec, prompt, designId) {
+  // Two paths: (1) raw CSS spec (current Opus output), (2) legacy structured spec
+  if (spec && typeof spec.css === 'string') {
+    injectDesignCSS(spec.css);
+    showBanner(prompt, spec.art_direction || spec.rationale || '');
+  } else if (spec && spec.palette) {
+    applyStructuredDesign(spec);
+    showBanner(prompt, spec.rationale || '');
+  } else {
+    return;
+  }
+
+  if (designId) {
+    const url = new URL(window.location);
+    url.searchParams.set('d', designId);
+    history.replaceState(null, '', url);
+  }
+}
+
+function injectDesignCSS(css) {
+  const id = 'design-injected-css';
+  let tag = document.getElementById(id);
+  if (!tag) {
+    tag = document.createElement('style');
+    tag.id = id;
+    document.head.appendChild(tag);
+  }
+  tag.textContent = css;
+}
+
+function applyStructuredDesign(spec) {
   const r = document.documentElement;
-  // Palette
   r.style.setProperty('--design-bg', spec.palette.bg);
   r.style.setProperty('--design-ink', spec.palette.ink);
   r.style.setProperty('--design-accent', spec.palette.accent);
-
-  // Typography
   loadFonts([spec.typography.display_font, spec.typography.body_font, spec.typography.keyword_font]);
   r.style.setProperty('--design-display-font', fontFamilyValue(spec.typography.display_font));
   r.style.setProperty('--design-body-font', fontFamilyValue(spec.typography.body_font));
   r.style.setProperty('--design-keyword-font', fontFamilyValue(spec.typography.keyword_font));
   r.style.setProperty('--design-display-weight', spec.typography.display_weight);
   r.style.setProperty('--design-display-scale', spec.typography.display_scale);
-
-  // Body class flips
   const body = document.body;
-  // Remove old design classes
   Array.from(body.classList).forEach(c => {
     if (/^(layout|modal|img|motion|display)-/.test(c)) body.classList.remove(c);
   });
@@ -1168,16 +1192,6 @@ function applyDesign(spec, prompt, designId) {
   body.classList.add(`motion-${spec.motion}`);
   if (spec.typography.display_uppercase) body.classList.add('display-uppercase');
   if (spec.typography.display_italic) body.classList.add('display-italic');
-
-  // Banner
-  showBanner(prompt, spec.rationale);
-
-  // URL update
-  if (designId) {
-    const url = new URL(window.location);
-    url.searchParams.set('d', designId);
-    history.replaceState(null, '', url);
-  }
 }
 
 function showBanner(prompt, rationale) {
@@ -1188,6 +1202,10 @@ function showBanner(prompt, rationale) {
 }
 
 function resetDesign() {
+  // Remove injected raw CSS
+  const injected = document.getElementById('design-injected-css');
+  if (injected) injected.remove();
+  // Remove structured-design variables and class flips (legacy spec)
   const r = document.documentElement;
   ['--design-bg','--design-ink','--design-accent','--design-display-font','--design-body-font','--design-keyword-font','--design-display-weight','--design-display-scale']
     .forEach(p => r.style.removeProperty(p));
