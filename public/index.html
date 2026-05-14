@@ -394,6 +394,82 @@
     .projects { grid-template-columns: 1fr; gap: 0; }
   }
 
+  /* ==================== ALWAYS-ON DESIGNER CHROME ==================== */
+  /* Pinned to the bottom; protected from Claude's CSS via !important rules
+     so the visitor can always see and reach the input/reset. */
+  .designer-chrome {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99999 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: rgba(20, 18, 14, 0.92) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    color: #f3f3f3 !important;
+    padding: 12px 18px !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    border-top: 1px solid rgba(255,255,255,0.18) !important;
+  }
+  /* Add bottom padding to the main body so the chrome doesn't cover content */
+  body { padding-bottom: 140px !important; }
+
+  /* Override the inline-flow design-banner / design-bar / gallery so they sit
+     inside the always-on chrome at the bottom and are styled in dark UI */
+  .designer-chrome .design-banner {
+    display: none !important;
+    background: transparent !important;
+    border-left: 2px solid #ff432e !important;
+    padding: 6px 10px !important;
+    margin: 0 0 8px 0 !important;
+    color: #f3f3f3 !important;
+    font-size: 12px !important;
+  }
+  .designer-chrome .design-banner.visible { display: block !important; }
+  .designer-chrome .design-banner .label { color: rgba(255,255,255,0.55) !important; }
+  .designer-chrome .design-banner .reset { color: #ff432e !important; border-bottom-color: #ff432e !important; }
+
+  .designer-chrome .design-bar {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    color: #f3f3f3 !important;
+  }
+  .designer-chrome .design-bar .design-label { color: rgba(255,255,255,0.55) !important; font-size: 10px !important; }
+  .designer-chrome .design-bar input[type="text"] {
+    color: #f3f3f3 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.25) !important;
+  }
+  .designer-chrome .design-bar input[type="text"]::placeholder { color: rgba(255,255,255,0.4) !important; }
+  .designer-chrome .design-bar .design-url-label { color: rgba(255,255,255,0.5) !important; font-size: 9px !important; }
+  .designer-chrome .design-bar button {
+    background: #f3f3f3 !important;
+    color: #1a1814 !important;
+    border: 0 !important;
+  }
+  .designer-chrome .design-bar .design-gallery-link { color: rgba(255,255,255,0.55) !important; }
+
+  /* Gallery overlay still floats above everything */
+  .designer-chrome .design-gallery {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    background: rgba(0,0,0,0.55) !important;
+  }
+  .designer-chrome .design-gallery-card {
+    background: #fdfcfa !important;
+    color: #1a1814 !important;
+    border: 1px solid #1a1814 !important;
+  }
+
   /* ==================== DESIGN-RENDERER LAYOUTS ==================== */
   /* Default (no class) = the asymmetric-left layout already styled above. */
   body.layout-asymmetric-right .hero { grid-template-columns: 1fr 1.4fr; }
@@ -625,79 +701,83 @@
 </head>
 <body>
 
-<header>
-  <a class="logo" href="/" aria-label="Home">
-    <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="48" height="48">
-  </a>
-  <nav>
-    <a href="/films">archive</a>
-    <a href="/contact">contact</a>
-  </nav>
-</header>
-
-<div class="design-banner" id="designBanner">
-  <span class="label">Designed in response to:</span>
-  <span id="designBannerPrompt"></span>
-  <span class="reset" id="designReset">reset</span>
-</div>
-
-<section class="hero" id="about">
-  <div class="hero-text">
-    <h1 class="masthead">Philip <em>Di Fiore</em></h1>
-    <div class="bio">
-      <p>Is an award-winning filmmaker known for his cinematic storytelling style.</p>
-      <p>Writes, directs and edits his own projects.</p>
-      <p>Has produced music albums and film scores.</p>
-      <p>Founded and operated a 4000 sq. ft. recording and film studio in Brooklyn, NY.</p>
-      <p>Builds creative tools with A.I.</p>
-      <p>Is attempting to learn Italian.</p>
-    </div>
+<!-- Always-on visitor controls. Pinned via !important so Claude can't hide them. -->
+<div class="designer-chrome" id="designerChrome">
+  <div class="design-banner" id="designBanner">
+    <span class="label">Designed in response to:</span>
+    <span id="designBannerPrompt"></span>
+    <span class="reset" id="designReset">reset</span>
   </div>
-  <div class="hero-index">
-    <h2 class="section-label">Index</h2>
-    <ul class="keywords">
-      <li class="portal" data-key="ampas">Academy of Motion Picture Arts and Sciences</li>
-      <li class="portal" data-key="lynchian">Lynchian</li>
-      <li class="portal" data-key="lakota-sioux">Lakota Sioux</li>
-      <li class="portal" data-key="mean-streets">Mean Streets</li>
-      <li class="portal" data-key="twilight-zone">Twilight Zone</li>
-      <li class="portal" data-key="best-director">Best Director</li>
-      <li class="portal" data-key="vintage-cameras">Vintage cameras</li>
-      <li class="portal" data-key="35mm">35mm</li>
-      <li class="portal" data-key="black-and-white">Black and White</li>
-      <li class="portal" data-key="ai">A.I.</li>
-    </ul>
-  </div>
-</section>
-
-<form class="design-bar" id="designBar" autocomplete="off">
-  <span class="design-label">Design this page →</span>
-  <input type="text" id="designPrompt" placeholder="What do you want this page to look like?" maxlength="500">
-  <span class="design-url-wrap">
-    <span class="design-url-label">or paste a URL:</span>
-    <input type="text" id="designStyleUrl" placeholder="https://…" maxlength="200">
-  </span>
-  <button type="submit" id="designSubmit">Apply</button>
-  <span class="design-gallery-link" id="designGalleryLink">See other versions</span>
-</form>
-
-<div class="design-gallery" id="designGallery">
-  <div class="design-gallery-card">
-    <h3>
-      Other visitors' designs
-      <span class="close" id="designGalleryClose">✕</span>
-    </h3>
-    <div class="design-gallery-list" id="designGalleryList">
-      <div style="font-size:12px;opacity:0.5;">Loading…</div>
+  <form class="design-bar" id="designBar" autocomplete="off">
+    <span class="design-label">Design this page →</span>
+    <input type="text" id="designPrompt" placeholder="What do you want this page to look like?" maxlength="500">
+    <span class="design-url-wrap">
+      <span class="design-url-label">or paste a URL:</span>
+      <input type="text" id="designStyleUrl" placeholder="https://…" maxlength="200">
+    </span>
+    <button type="submit" id="designSubmit">Apply</button>
+    <span class="design-gallery-link" id="designGalleryLink">See other versions</span>
+  </form>
+  <div class="design-gallery" id="designGallery">
+    <div class="design-gallery-card">
+      <h3>
+        Other visitors' designs
+        <span class="close" id="designGalleryClose">✕</span>
+      </h3>
+      <div class="design-gallery-list" id="designGalleryList">
+        <div style="font-size:12px;opacity:0.5;">Loading…</div>
+      </div>
     </div>
   </div>
 </div>
 
-<footer>
-  <div>&copy; Rumpus Productions 2026</div>
-</footer>
+<!-- The canvas Claude can replace freely. Original content lives here. -->
+<div id="design-canvas">
+  <header>
+    <a class="logo" href="/" aria-label="Home">
+      <img src="https://gjvvbofpkxuicrpshxun.supabase.co/storage/v1/object/public/project-images/site/phil-flower.jpg" alt="Philip Di Fiore" width="48" height="48">
+    </a>
+    <nav>
+      <a href="/films">archive</a>
+      <a href="/contact">contact</a>
+    </nav>
+  </header>
 
-<!-- Software 3.0 portals (mock) — modal opens on click -->
+  <section class="hero" id="about">
+    <div class="hero-text">
+      <h1 class="masthead">Philip <em>Di Fiore</em></h1>
+      <div class="bio">
+        <p>Is an award-winning filmmaker known for his cinematic storytelling style.</p>
+        <p>Writes, directs and edits his own projects.</p>
+        <p>Has produced music albums and film scores.</p>
+        <p>Founded and operated a 4000 sq. ft. recording and film studio in Brooklyn, NY.</p>
+        <p>Builds creative tools with A.I.</p>
+        <p>Is attempting to learn Italian.</p>
+      </div>
+    </div>
+    <div class="hero-index">
+      <h2 class="section-label">Index</h2>
+      <ul class="keywords">
+        <li class="portal" data-key="ampas">Academy of Motion Picture Arts and Sciences</li>
+        <li class="portal" data-key="lynchian">Lynchian</li>
+        <li class="portal" data-key="lakota-sioux">Lakota Sioux</li>
+        <li class="portal" data-key="mean-streets">Mean Streets</li>
+        <li class="portal" data-key="twilight-zone">Twilight Zone</li>
+        <li class="portal" data-key="best-director">Best Director</li>
+        <li class="portal" data-key="vintage-cameras">Vintage cameras</li>
+        <li class="portal" data-key="35mm">35mm</li>
+        <li class="portal" data-key="black-and-white">Black and White</li>
+        <li class="portal" data-key="ai">A.I.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div>&copy; Rumpus Productions 2026</div>
+  </footer>
+</div>
+
+<!-- Modal infrastructure (always present so openPortal() works). Claude may restyle freely. -->
 <div class="portal-backdrop"></div>
 <aside class="portal-modal" aria-hidden="true">
   <button class="portal-modal-close" aria-label="Close">✕</button>
@@ -1114,6 +1194,17 @@ window.addEventListener('resize', arrangeSun);
 arrangeSun();
 
 // ==================== AI DESIGN RENDERER ====================
+
+// Expose modal API globally so Claude's HTML can call openPortal('lakota-sioux') etc.
+window.openPortal = function (key) {
+  const data = PORTALS[key];
+  if (data) openModal(data);
+};
+window.closePortal = function () { closeModal(); };
+
+// Capture original canvas HTML so reset can restore it
+const ORIGINAL_CANVAS_HTML = document.getElementById('design-canvas')?.innerHTML || '';
+
 const SUPABASE_URL = 'https://gjvvbofpkxuicrpshxun.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqdnZib2Zwa3h1aWNycHNoeHVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzY1NzcsImV4cCI6MjA4NTc1MjU3N30.igGl_64MuqL-0VsLE4NibmMq1hPxnZ_WusRrM043n5M';
 const SYSTEM_FONTS = new Set(['Helvetica Neue', 'Georgia', 'system-ui']);
@@ -1142,10 +1233,15 @@ function fontFamilyValue(name) {
 }
 
 function applyDesign(spec, prompt, designId) {
-  // Two paths: (1) raw CSS/JS spec (current Opus output), (2) legacy structured spec
-  if (spec && typeof spec.css === 'string') {
-    injectDesignCSS(spec.css);
-    if (spec.js) injectDesignJS(spec.js);
+  // Three paths: (1) html+css+js full takeover, (2) raw CSS/JS only, (3) legacy structured spec
+  if (spec && (typeof spec.html === 'string' || typeof spec.css === 'string')) {
+    // Reset canvas + clear injected before re-applying
+    if (typeof spec.html === 'string' && spec.html.trim()) {
+      const canvas = document.getElementById('design-canvas');
+      if (canvas) canvas.innerHTML = spec.html;
+    }
+    if (typeof spec.css === 'string') injectDesignCSS(spec.css);
+    if (typeof spec.js === 'string' && spec.js.trim()) injectDesignJS(spec.js);
     showBanner(prompt, spec.art_direction || spec.rationale || '');
   } else if (spec && spec.palette) {
     applyStructuredDesign(spec);
@@ -1215,6 +1311,9 @@ function showBanner(prompt, rationale) {
 }
 
 function resetDesign() {
+  // Restore the original canvas content
+  const canvas = document.getElementById('design-canvas');
+  if (canvas && ORIGINAL_CANVAS_HTML) canvas.innerHTML = ORIGINAL_CANVAS_HTML;
   // Remove injected raw CSS + JS
   const injectedCSS = document.getElementById('design-injected-css');
   if (injectedCSS) injectedCSS.remove();
