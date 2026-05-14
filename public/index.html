@@ -672,7 +672,7 @@
 
 <form class="design-bar" id="designBar" autocomplete="off">
   <span class="design-label">Design this page →</span>
-  <input type="text" id="designPrompt" placeholder="What do you want this page to look like?" maxlength="500" required>
+  <input type="text" id="designPrompt" placeholder="What do you want this page to look like?" maxlength="500">
   <span class="design-url-wrap">
     <span class="design-url-label">or paste a URL:</span>
     <input type="text" id="designStyleUrl" placeholder="https://…" maxlength="200">
@@ -1211,7 +1211,10 @@ document.getElementById('designBar').addEventListener('submit', async e => {
   const submitBtn = document.getElementById('designSubmit');
   const prompt = promptInput.value.trim();
   const styleUrl = urlInput.value.trim();
-  if (!prompt) return;
+  if (!prompt && !styleUrl) {
+    promptInput.focus();
+    return;
+  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = 'Designing…';
