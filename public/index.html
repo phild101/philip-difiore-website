@@ -1142,9 +1142,10 @@ function fontFamilyValue(name) {
 }
 
 function applyDesign(spec, prompt, designId) {
-  // Two paths: (1) raw CSS spec (current Opus output), (2) legacy structured spec
+  // Two paths: (1) raw CSS/JS spec (current Opus output), (2) legacy structured spec
   if (spec && typeof spec.css === 'string') {
     injectDesignCSS(spec.css);
+    if (spec.js) injectDesignJS(spec.js);
     showBanner(prompt, spec.art_direction || spec.rationale || '');
   } else if (spec && spec.palette) {
     applyStructuredDesign(spec);
@@ -1169,6 +1170,18 @@ function injectDesignCSS(css) {
     document.head.appendChild(tag);
   }
   tag.textContent = css;
+}
+
+function injectDesignJS(js) {
+  // Remove old injected JS if present, then add fresh
+  const id = 'design-injected-js';
+  const old = document.getElementById(id);
+  if (old) old.remove();
+  if (!js || !js.trim()) return;
+  const tag = document.createElement('script');
+  tag.id = id;
+  tag.textContent = js;
+  document.body.appendChild(tag);
 }
 
 function applyStructuredDesign(spec) {
@@ -1202,9 +1215,11 @@ function showBanner(prompt, rationale) {
 }
 
 function resetDesign() {
-  // Remove injected raw CSS
-  const injected = document.getElementById('design-injected-css');
-  if (injected) injected.remove();
+  // Remove injected raw CSS + JS
+  const injectedCSS = document.getElementById('design-injected-css');
+  if (injectedCSS) injectedCSS.remove();
+  const injectedJS = document.getElementById('design-injected-js');
+  if (injectedJS) injectedJS.remove();
   // Remove structured-design variables and class flips (legacy spec)
   const r = document.documentElement;
   ['--design-bg','--design-ink','--design-accent','--design-display-font','--design-body-font','--design-keyword-font','--design-display-weight','--design-display-scale']
