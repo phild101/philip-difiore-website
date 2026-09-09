@@ -1,0 +1,19 @@
+export type Artwork = { title: string; artist: string; image: string; vimeo: string };
+export const artworks: Artwork[] = [
+ {title:'Old Friend',artist:'Caveman',image:'oldfriendnew.jpg',vimeo:'43743411'},
+ {title:'Stranger',artist:'Bernie Worrell on Earth',image:'strangernew.jpg',vimeo:'183874049'},
+ {title:'Warm Spell',artist:'Sinkane',image:'warmspellnew.jpg',vimeo:'64088414'},
+ {title:'The Buffalo Hunt',artist:'Philip Di Fiore',image:'buffalonew3.jpg',vimeo:'290307313'},
+ {title:'Runnin’',artist:'Sinkane',image:'runninnew2.jpg',vimeo:'102372771'},
+ {title:'If You Call',artist:'Sharon Jones & The Dap-Kings',image:'ifyoucallnew.jpg',vimeo:'36319087'},
+ {title:'Game Gets Old',artist:'Sharon Jones & The Dap-Kings',image:'gamenew.jpg',vimeo:'36317057'},
+ {title:'Miko D.T.B.',artist:'Spacecamp',image:'mikodtbnew2.jpg',vimeo:'39061407'},
+];
+export const studies = [
+ {title:'Palimpsest',rule:'An image never quite disappears.',action:'Move the layers.',material:'Accumulation / touch / resistance',note:'The films occupy the same surface. Moving a layer uncovers another and leaves a ghost of its old position. There is no preferred order or final arrangement. The composition remembers your movements until you leave it.',gesture:'Drag a layer, or focus it and use the arrow keys. Double-click, press Enter, or use the current film title to view the film. Restore returns to the opening composition.'},
+ {title:'The Interval',rule:'The space between two images is also part of the film.',action:'Travel sideways.',material:'Duration / silence / distance',note:'One long passage, with stretches of image and authored intervals of empty space. The visitor supplies the pace. A frame can become a landscape; a blank interval can become an event.',gesture:'Scroll or drag the passage sideways. The bottom line can also move you through it. Select a film title to view the complete work.'},
+ {title:'A Sentence Without an End',rule:'Old friend. Stranger. If you call.',action:'Read in any order.',material:'Language / association / return',note:'The titles of the films become a nonlinear poem. A word changes the image; an image changes the meaning of the next word. The sentence can be read but cannot be finished.',gesture:'Move over a title or focus it to change the image. Tap or select a title to stay with its image. The small title at the top opens that film.'},
+ {title:'Chance Operations',rule:'A composition, interrupted.',action:'Make one decision.',material:'Chance / constraint / authorship',note:'A fixed cobalt ground and a single unchanging fragment hold the composition together. Exchange swaps two fragments. Rotate alters one. Absence removes a piece. Each decision leaves the rest alone.',gesture:'Use Exchange, Rotate, or Absence to alter the collage. The small eye on a fragment opens its film. Restore returns to the original state.'},
+ {title:'Afterimage',rule:'What remains when the image has gone?',action:'Move. Then be still.',material:'Memory / disappearance / stillness',note:'Movement leaves brief photographic residues. When movement stops, one image slowly resolves and then disappears. The surface is temporary; nothing is collected or scored.',gesture:'Move the pointer, or draw with a finger. Pause to let a frame resolve. The centered film title opens the current work. Next image provides a keyboard alternative.'},
+ {title:'Polyphony',rule:'Six films. No single center.',action:'Let the channels coexist.',material:'Simultaneity / rhythm / attention',note:'Six moving-image fields share a composition. Their still-image score passes through different intensities; motion mode replaces the stills with the existing films playing silently together. No channel is the main event.',gesture:'Start motion to activate the six muted Vimeo channels. Pause the score to hold the light pattern. Select a channel number to view and hear that film on its own.'},
+];
