@@ -8,7 +8,6 @@ import {CollectionOnePreview} from '../collection-one/page';
 import {works} from '../artworks/works';
 import {studies} from '../artworks/data';
 import '../artworks/art.css';
-import './catalog.css';
 const first=['After Dark','The Director’s Journal','Strange Frequencies','Cut to Color','Film Atlas','Electric Auteur'];
 const noop=()=>{};
 function Plate({children,href,no,name,material,old=false}:{children:React.ReactNode;href:string;no:number;name:string;material?:string;old?:boolean}){return <article className="catalog-plate"><div className="catalog-preview"><div className={'catalog-preview-inner'+(old?' preview-inner':'')} aria-hidden="true" inert>{children}</div></div><a href={href} aria-label={'Open study '+no+': '+name}><div className="catalog-caption"><span>{String(no).padStart(2,'0')}</span><h3>{name}</h3><span>↗</span></div>{material&&<p className="catalog-material">{material}</p>}</a></article>;}
