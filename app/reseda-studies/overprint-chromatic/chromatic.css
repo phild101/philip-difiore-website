@@ -1,0 +1,44 @@
+.op-site.op-chromatic {
+  --op-paper: #e8dfd0;
+  --op-ink: #30272e;
+  --op-red: #775165;
+  --op-blue: #436355;
+  --op-yellow: #cbb393;
+}
+.op-site.op-chromatic.op-featured {
+  background: var(--cs-paper);
+  color: var(--cs-ink);
+}
+.op-site.op-chromatic.op-featured .dr-room {
+  background: var(--cs-ground);
+  border-color: var(--cs-ink);
+}
+.op-site.op-chromatic.op-featured .dr-room .df-masthead {
+  color: var(--cs-type);
+}
+.op-site.op-chromatic.op-featured .dr-room .df-nav {
+  color: var(--cs-type);
+  border-color: color-mix(in srgb, var(--cs-type) 45%, transparent);
+}
+.op-site.op-chromatic.op-featured
+  .dr-room
+  .df-nav
+  a:is([aria-current='page'], :hover) {
+  color: var(--cs-type);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.op-site.op-chromatic.op-featured .df-slide .df-project-name {
+  background: var(--cs-label);
+  color: var(--cs-label-ink);
+}
+.op-site.op-chromatic.op-featured .dr-room .df-next {
+  color: var(--cs-type);
+}
+.op-site.op-chromatic.op-featured .dr-room .df-next:hover {
+  color: var(--cs-type);
+  opacity: 0.7;
+}
+.op-site.op-chromatic.op-featured .dr-room :is(a, button):focus-visible {
+  outline-color: var(--cs-type);
+}

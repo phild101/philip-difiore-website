@@ -12,6 +12,11 @@ import {
 import { Screening } from '../../studies/screening';
 import { PressArticle, PressFilmstrip } from './press';
 import { pressItems, type PressItem, type PressFilm } from './press-data';
+import {
+  chromaticProperties,
+  featuredPoster,
+  type OverprintEdition,
+} from '../overprint/chromatic';
 import './featured.css';
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
@@ -33,10 +38,13 @@ function ProjectName({ lines }: { lines: string[] }) {
 export function DarkroomFeatured({
   preview = false,
   treatment = 'darkroom',
+  edition = 'original',
 }: {
   preview?: boolean;
   treatment?: 'darkroom' | 'overprint';
+  edition?: OverprintEdition;
 }) {
+  const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const projects =
     treatment === 'overprint' ? overprintProjects : darkroomProjects;
   const archive =
@@ -77,9 +85,9 @@ export function DarkroomFeatured({
     const photo = new Image();
     photo.src =
       treatment === 'overprint'
-        ? nextProject.poster
+        ? featuredPoster(nextProject, edition)
         : '/images/' + nextProject.work.image;
-  }, [index, preview, treatment, projects]);
+  }, [index, preview, treatment, projects, edition]);
   useEffect(() => {
     if (previous === null) return;
     const timer = window.setTimeout(() => setPrevious(null), 720);
@@ -128,6 +136,7 @@ export function DarkroomFeatured({
             : '')
         }
         key={exiting ? 'previous' : turn}
+        style={chromatic ? chromaticProperties(project.slug) : undefined}
         aria-hidden={exiting ? true : undefined}
         inert={exiting ? true : undefined}
       >
@@ -142,7 +151,7 @@ export function DarkroomFeatured({
             <img
               src={
                 treatment === 'overprint'
-                  ? project.poster
+                  ? featuredPoster(project, edition)
                   : '/images/' + work.image
               }
               alt={work.title + ' — ' + work.artist}
@@ -159,8 +168,10 @@ export function DarkroomFeatured({
   }
   return (
     <div
+      style={chromatic ? chromaticProperties(projects[index].slug) : undefined}
       className={
         'darkroom df-site' +
+        (chromatic ? ' op-chromatic' : '') +
         (preview ? ' df-preview' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +
