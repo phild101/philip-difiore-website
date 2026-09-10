@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { FeaturedProject } from './projects';
 
-export type OverprintEdition = 'original' | 'chromatic';
+export type OverprintEdition = 'original' | 'chromatic' | 'sequence';
 type Palette = {
   ground: string;
   type: string;
@@ -125,6 +125,11 @@ export function featuredPoster(
   project: FeaturedProject,
   edition: OverprintEdition,
 ) {
+  if (edition === 'sequence') {
+    if (project.slug === 'man-man') return '/images/chromatic/man-man.png';
+    if (project.slug === 'recording-parties')
+      return '/images/sequence/recording-parties.png';
+  }
   return edition === 'chromatic'
     ? '/images/chromatic/' + project.slug + '.png'
     : project.poster;

@@ -5,33 +5,34 @@ import { DarkroomMagazine } from './magazine/magazine';
 import { DarkroomFeatured } from './darkroom-featured/featured';
 import { Overprint } from './overprint/overprint';
 import { Chromatic } from './overprint-chromatic/chromatic';
+import { Sequence } from './overprint-sequence/sequence';
 import './selection.css';
 export default function ResedaStudies() {
   return (
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>SIX DIRECTIONS</span>
+        <span>SEVEN DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Six
+            Seven
             <br />
             <em>directions.</em>
           </h1>
         </div>
         <p>
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
-          and Overprint / Chromatic.
+          Overprint / Chromatic, and Overprint / Sequence.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Six selected website designs"
+        aria-label="Seven selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -160,11 +161,29 @@ export default function ResedaStudies() {
             </p>
           </a>
         </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <Sequence preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-sequence">
+            <div className="catalog-caption">
+              <span>07</span>
+              <h2>Overprint / Sequence</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              Films. Videos. Live. Music. A fast-moving sequence.
+            </p>
+          </a>
+        </article>
       </section>
       <footer className="catalog-footer">
         <span>Philip Di Fiore / Reseda studies</span>
         <span>
-          Original / Darkroom / Magazine / Featured / Overprint / Chromatic
+          Original / Darkroom / Magazine / Featured / Overprint / Chromatic /
+          Sequence
         </span>
       </footer>
     </main>
