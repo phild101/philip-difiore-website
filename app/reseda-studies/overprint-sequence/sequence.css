@@ -1,5 +1,6 @@
 .op-site.op-sequence {
   --sq-direction: 1;
+  --sq-fit-chrome: 154px;
   --sq-control-height: clamp(70px, 9cqw, 112px);
 }
 .op-site.op-sequence.sq-backwards {
@@ -28,7 +29,9 @@
 }
 .op-site.op-sequence.op-featured .df-featured {
   container-type: inline-size;
+  width: min(100%, calc((100svh - var(--sq-fit-chrome)) * 20 / 19));
   margin-top: 24px;
+  margin-inline: auto;
   aspect-ratio: 20 / 19;
   height: auto;
   min-height: 0;
@@ -144,24 +147,37 @@
   background: #cea1b2;
   color: #332d3e;
 }
-.op-site.op-sequence.op-featured.op-project-recording-parties .dr-room {
-  background: #1fbeca;
+.op-site.op-sequence.op-featured.op-project-runnin .df-masthead {
+  color: var(--op-paper);
 }
-.op-site.op-sequence.op-featured.op-project-recording-parties .df-masthead,
+.op-site.op-sequence .op-film-runnin .df-project-name {
+  background: #ed795d;
+  color: #0a1713;
+}
+.op-site.op-sequence.op-featured.op-project-recording-parties {
+  --op-paper: #e6e3cf;
+  --op-ink: #0a1713;
+}
+.op-site.op-sequence.op-featured.op-project-recording-parties .dr-room {
+  background: var(--op-paper);
+}
+.op-site.op-sequence.op-featured.op-project-recording-parties .df-masthead {
+  color: #165bb5;
+}
 .op-site.op-sequence.op-featured.op-project-recording-parties .df-nav {
-  color: #082f35;
-  border-color: #082f3577;
+  color: var(--op-ink);
+  border-color: #0a171377;
 }
 .op-site.op-sequence.op-featured.op-project-recording-parties
   .df-nav
   a:is([aria-current='page'], :hover) {
-  color: #082f35;
+  color: #165bb5;
   text-decoration: underline;
   text-underline-offset: 5px;
 }
 .op-site.op-sequence .op-film-recording-parties .df-project-name {
-  background: #f0df3f;
-  color: #082f35;
+  background: #09c6ac;
+  color: #0a1713;
 }
 @container (max-width: 640px) {
   .op-site.op-sequence .df-nav {
@@ -172,7 +188,6 @@
   }
   .op-site.op-sequence .dr-room {
     --sq-control-height: 70px;
-    min-height: calc(100svh - 18px);
     padding-bottom: 22px;
   }
   .op-site.op-sequence.op-featured .df-featured {
@@ -195,6 +210,12 @@
     width: 48px;
     height: 70px;
     padding: 11px;
+  }
+}
+@media (max-width: 640px) {
+  .op-site.op-sequence .dr-room {
+    --sq-fit-chrome: 119px;
+    min-height: calc(100svh - 18px);
   }
 }
 .op-site.op-sequence.op-featured .op-film-stranger .df-project-name,
