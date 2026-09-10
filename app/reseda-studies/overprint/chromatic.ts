@@ -126,6 +126,9 @@ export function featuredPoster(
   edition: OverprintEdition,
 ) {
   if (edition === 'sequence') {
+    if (project.slug === 'runnin') return '/images/sequence/runnin-v2.png';
+    if (project.slug === 'young-trouble')
+      return '/images/sequence/young-trouble-v2.png';
     if (project.slug === 'man-man') return '/images/chromatic/man-man.png';
     if (project.slug === 'recording-parties')
       return '/images/sequence/recording-parties.png';

@@ -1,6 +1,6 @@
 .op-site.op-sequence {
-  --sq-stage-height: min(84cqw, calc(100svh - 154px));
   --sq-direction: 1;
+  --sq-control-height: clamp(70px, 9cqw, 112px);
 }
 .op-site.op-sequence.sq-backwards {
   --sq-direction: -1;
@@ -9,15 +9,28 @@
   min-height: calc(100svh - 36px);
   padding-bottom: 30px;
 }
+.op-site.op-sequence.op-featured .dr-room {
+  overflow: clip;
+}
+.op-site.op-sequence .df-nav {
+  justify-content: space-between;
+}
+.op-site.op-sequence .sq-home {
+  white-space: nowrap;
+}
 .op-site.op-sequence.op-featured .df-masthead {
-  top: 86px;
+  top: 0;
+  left: 0;
+  width: 18%;
 }
 .op-site.op-sequence.op-featured .dr-family-name {
-  font-size: min(18cqw, calc(var(--sq-stage-height) / 3.9));
+  font-size: 19cqw;
 }
 .op-site.op-sequence.op-featured .df-featured {
+  container-type: inline-size;
   margin-top: 24px;
-  height: var(--sq-stage-height);
+  aspect-ratio: 20 / 19;
+  height: auto;
   min-height: 0;
 }
 .op-site.op-sequence .sq-stage {
@@ -29,17 +42,17 @@
 }
 .op-site.op-sequence.op-featured .df-slide {
   min-height: 0;
-  height: var(--sq-stage-height);
+  height: 100%;
 }
 .op-site.op-sequence.op-featured .df-slide .df-print {
-  width: min(78%, calc(var(--sq-stage-height) * 0.8));
+  width: 76%;
   height: auto;
   aspect-ratio: 4 / 5;
   margin-left: auto;
   margin-right: 0;
 }
 .op-site.op-sequence.op-featured .df-slide .df-project-name {
-  left: max(19%, calc(100% - var(--sq-stage-height) * 0.8 - 3cqw));
+  left: 21%;
   right: auto;
   max-width: min(38%, 340px);
   bottom: 6%;
@@ -49,20 +62,30 @@
   right: 0;
   bottom: 38%;
 }
-.op-site.op-sequence .sq-controls {
+.op-site.op-sequence .sq-control-rail {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
+  inset: 0 14px 14px 0;
+  pointer-events: none;
+  z-index: 7;
+}
+.op-site.op-sequence .sq-controls {
+  position: sticky;
+  top: calc(
+    100svh - var(--sq-control-height) - max(24px, env(safe-area-inset-bottom))
+  );
+  width: max-content;
+  height: var(--sq-control-height);
+  margin-left: auto;
   display: flex;
   gap: 12px;
-  z-index: 7;
+  pointer-events: auto;
   transform: rotate(0.4deg);
 }
 .op-site.op-sequence .sq-arrow {
   display: grid;
   place-items: center;
   width: clamp(50px, 6cqw, 82px);
-  height: clamp(70px, 9cqw, 112px);
+  height: var(--sq-control-height);
   padding: 14px 12px;
   background: var(--op-paper);
   color: var(--op-ink);
@@ -111,6 +134,9 @@
 .op-site.op-sequence .df-about {
   margin-top: 34px;
 }
+.op-site.op-sequence.op-archive .dr-section-heading {
+  justify-content: flex-end;
+}
 .op-site.op-sequence.op-featured.op-project-man-man .df-masthead {
   color: #b8d0ba;
 }
@@ -138,19 +164,19 @@
   color: #082f35;
 }
 @container (max-width: 640px) {
+  .op-site.op-sequence .df-nav {
+    gap: 8px;
+  }
+  .op-site.op-sequence .df-nav nav {
+    gap: 12px;
+  }
   .op-site.op-sequence .dr-room {
-    --sq-stage-height: min(96cqw, calc(100svh - 128px));
+    --sq-control-height: 70px;
     min-height: calc(100svh - 18px);
     padding-bottom: 22px;
   }
-  .op-site.op-sequence.op-featured .df-masthead {
-    top: 77px;
-  }
   .op-site.op-sequence.op-featured .df-featured {
     margin-top: 20px;
-  }
-  .op-site.op-sequence.op-featured .df-slide .df-print {
-    width: min(82%, calc(var(--sq-stage-height) * 0.8));
   }
   .op-site.op-sequence.op-featured .df-slide .df-project-name {
     left: 20%;
@@ -159,9 +185,10 @@
     max-width: 70%;
     padding: 13px;
   }
+  .op-site.op-sequence .sq-control-rail {
+    inset: 0 3px 6px 0;
+  }
   .op-site.op-sequence .sq-controls {
-    right: 3px;
-    bottom: 6px;
     gap: 10px;
   }
   .op-site.op-sequence .sq-arrow {
@@ -169,6 +196,29 @@
     height: 70px;
     padding: 11px;
   }
+}
+.op-site.op-sequence.op-featured .op-film-stranger .df-project-name,
+.op-site.op-sequence.op-featured .op-film-naomi-shelton .df-project-name,
+.op-site.op-sequence.op-featured .op-film-buffalo-hunt .df-project-name {
+  left: 26%;
+  right: auto;
+  bottom: auto;
+  max-width: min(52%, 340px);
+}
+.op-site.op-sequence.op-featured .op-film-stranger .df-project-name {
+  top: 10%;
+}
+.op-site.op-sequence.op-featured .op-film-stranger .df-project-name h2 {
+  font-size: clamp(17px, 3.1cqw, 49px);
+}
+.op-site.op-sequence.op-featured .op-film-naomi-shelton .df-project-name {
+  top: 4%;
+}
+.op-site.op-sequence.op-featured .op-film-naomi-shelton .df-project-name h2 {
+  font-size: clamp(14px, 2.45cqw, 39px);
+}
+.op-site.op-sequence.op-featured .op-film-buffalo-hunt .df-project-name {
+  top: 3%;
 }
 @media (prefers-reduced-motion: reduce) {
   .op-site.op-sequence .df-slide-enter,

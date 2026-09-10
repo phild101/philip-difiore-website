@@ -198,6 +198,15 @@ export function DarkroomFeatured({
     >
       <div className="dr-room">
         <header className="dr-nav df-nav">
+          {sequence && (
+            <a
+              className="sq-home"
+              href="#featured/if-you-call"
+              aria-label="Philip Di Fiore — Home"
+            >
+              PHILIP DI FIORE
+            </a>
+          )}
           <nav aria-label="Main navigation">
             {(['featured', 'about', 'archive'] as View[]).map((item) => (
               <a
@@ -215,21 +224,18 @@ export function DarkroomFeatured({
           </nav>
         </header>
         {sequence ? (
-          <h1
-            className={
-              view === 'featured'
-                ? 'dr-masthead df-masthead sq-category'
-                : 'sr-only'
-            }
-          >
-            <span className="dr-family-name">
-              {view === 'featured'
-                ? sequenceCategories[projects[index].slug]
-                : view === 'about'
-                  ? 'About'
-                  : 'Archive'}
-            </span>
-          </h1>
+          view !== 'featured' && (
+            <h1
+              id={view === 'archive' ? 'sq-archive-title' : undefined}
+              className={
+                view === 'archive' ? 'dr-masthead df-masthead' : 'sr-only'
+              }
+            >
+              <span className="dr-family-name">
+                {view === 'archive' ? 'ARCHIVE' : 'About'}
+              </span>
+            </h1>
+          )
         ) : (
           <h1 className="dr-masthead df-masthead">
             <span className="dr-given-name">PHILIP</span>{' '}
@@ -245,10 +251,17 @@ export function DarkroomFeatured({
             }
           >
             {sequence ? (
-              <div className="sq-stage">
-                {previous !== null && slide(previous, true)}
-                {slide(index)}
-              </div>
+              <>
+                <h1 className="dr-masthead df-masthead sq-category">
+                  <span className="dr-family-name">
+                    {sequenceCategories[projects[index].slug]}
+                  </span>
+                </h1>
+                <div className="sq-stage">
+                  {previous !== null && slide(previous, true)}
+                  {slide(index)}
+                </div>
+              </>
             ) : (
               <>
                 {previous !== null && slide(previous, true)}
@@ -259,31 +272,37 @@ export function DarkroomFeatured({
               {projects[index].work.artist}: {projects[index].work.title}
             </span>
             {sequence ? (
-              <nav className="sq-controls" aria-label="Featured navigation">
-                {([-1, 1] as const).map((step) => (
-                  <button
-                    className={'sq-arrow' + (step === -1 ? ' sq-previous' : '')}
-                    key={step}
-                    onClick={() => move(step)}
-                    aria-disabled={previous !== null}
-                    aria-label={
-                      (step === -1 ? 'Previous project: ' : 'Next project: ') +
-                      projects[
-                        (index + step + projects.length) % projects.length
-                      ].work.title
-                    }
-                  >
-                    <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
-                      <path
-                        d="M18 12 104 100 18 188"
-                        stroke="currentColor"
-                        strokeWidth="5"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                    </svg>
-                  </button>
-                ))}
-              </nav>
+              <div className="sq-control-rail">
+                <nav className="sq-controls" aria-label="Featured navigation">
+                  {([-1, 1] as const).map((step) => (
+                    <button
+                      className={
+                        'sq-arrow' + (step === -1 ? ' sq-previous' : '')
+                      }
+                      key={step}
+                      onClick={() => move(step)}
+                      aria-disabled={previous !== null}
+                      aria-label={
+                        (step === -1
+                          ? 'Previous project: '
+                          : 'Next project: ') +
+                        projects[
+                          (index + step + projects.length) % projects.length
+                        ].work.title
+                      }
+                    >
+                      <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
+                        <path
+                          d="M18 12 104 100 18 188"
+                          stroke="currentColor"
+                          strokeWidth="5"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      </svg>
+                    </button>
+                  ))}
+                </nav>
+              </div>
             ) : (
               <button
                 className="df-next"
@@ -352,10 +371,10 @@ export function DarkroomFeatured({
           <section
             className="dr-contact df-archive"
             id="archive"
-            aria-labelledby="df-archive-title"
+            aria-labelledby={sequence ? 'sq-archive-title' : 'df-archive-title'}
           >
             <div className="dr-section-heading">
-              <h2 id="df-archive-title">CONTACT SHEET</h2>
+              {!sequence && <h2 id="df-archive-title">CONTACT SHEET</h2>}
               <span>
                 {String(archive.length).padStart(2, '0')}{' '}
                 {treatment === 'overprint' ? 'WORKS' : 'FILMS'}
