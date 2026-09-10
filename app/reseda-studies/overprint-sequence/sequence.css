@@ -1,6 +1,7 @@
 .op-site.op-sequence {
   --sq-direction: 1;
   --sq-control-height: clamp(70px, 9cqw, 112px);
+  --sq-page-chrome: 154px;
 }
 .op-site.op-sequence.sq-backwards {
   --sq-direction: -1;
@@ -28,9 +29,11 @@
 }
 .op-site.op-sequence.op-featured .df-featured {
   container-type: inline-size;
-  width: 85%;
+  /* Keep the complete composition at the right edge; reduce only as needed,
+     by at most 15%, so a short viewport never turns it into a small thumbnail. */
+  width: clamp(85%, calc((100svh - var(--sq-page-chrome)) * 20 / 19), 100%);
   margin-top: 24px;
-  margin-inline: 0;
+  margin-inline: auto 0;
   aspect-ratio: 20 / 19;
   height: auto;
   min-height: 0;
@@ -187,6 +190,7 @@
   }
   .op-site.op-sequence .dr-room {
     --sq-control-height: 70px;
+    --sq-page-chrome: 137px;
     padding-bottom: 22px;
   }
   .op-site.op-sequence.op-featured .df-featured {
@@ -213,6 +217,7 @@
 }
 @media (max-width: 640px) {
   .op-site.op-sequence .dr-room {
+    --sq-page-chrome: 119px;
     min-height: calc(100svh - 18px);
   }
 }
