@@ -366,3 +366,27 @@
   background: #c92228;
   color: #ffdf32;
 }
+
+/* The names are printed scraps from the same surface as the photographs. */
+.op-site.op-sequence .df-project-name {
+  isolation: isolate;
+  mask-image: url('/images/sequence/swatch-cut.svg');
+  mask-mode: luminance;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+.op-site.op-sequence .df-project-name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: url('/images/sequence/swatch-wear.svg') 0 0 / 100% 100%;
+  opacity: 0.8;
+}
+.op-site.op-sequence .df-slide:is(.op-film-stranger, .op-film-miko-dtb, .op-film-antibalas) .df-project-name::after {
+  transform: rotate(180deg);
+}
+.op-site.op-sequence .df-slide:is(.op-film-old-friend, .op-film-diiv, .op-film-recording-parties) .df-project-name::after {
+  transform: scaleX(-1);
+}
