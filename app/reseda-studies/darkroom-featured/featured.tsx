@@ -1,6 +1,6 @@
 'use client';
 /* oxlint-disable next/no-img-element -- These photographs are original portfolio assets. */
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, type CSSProperties } from 'react';
 import type { Artwork } from '../../artworks/data';
 import {
   overprintProjects,
@@ -41,20 +41,33 @@ function ProjectName({ lines }: { lines: string[] }) {
     </h2>
   );
 }
+function artworkRatio(slug: string) {
+  if (slug === 'diiv') return 1058 / 1487;
+  if (slug === 'rdgldgrn' || slug === 'antibalas') return 1073 / 1466;
+  return 4 / 5;
+}
+const categoryAdvance = {
+  FILM: 2.415,
+  VIDEO: 3.185,
+  LIVE: 2.304,
+  MUSIC: 3.351,
+};
 export function DarkroomFeatured({
   preview = false,
   treatment = 'darkroom',
   edition = 'original',
   fitScreen = false,
+  fluid = false,
 }: {
   preview?: boolean;
   treatment?: 'darkroom' | 'overprint';
   edition?: OverprintEdition;
   fitScreen?: boolean;
+  fluid?: boolean;
 }) {
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
-  const [rivalPalette, setRivalPalette] = useState<RivalPalette>('vivid');
+  const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const projects = sequence
     ? sequencePaletteProjects[rivalPalette]
     : treatment === 'overprint'
@@ -76,9 +89,9 @@ export function DarkroomFeatured({
     if (preview) return;
     function changeView() {
       setRivalPalette(
-        new URLSearchParams(window.location.search).get('rival') === 'uganda'
-          ? 'uganda'
-          : 'vivid',
+        new URLSearchParams(window.location.search).get('rival') === 'vivid'
+          ? 'vivid'
+          : 'uganda',
       );
       const nextView = hashView();
       setView(nextView);
@@ -153,20 +166,8 @@ export function DarkroomFeatured({
   function slide(n: number, exiting = false) {
     const project = projects[n];
     const work = project.work;
-    return (
-      <div
-        className={
-          'df-slide' +
-          (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '') +
-          (treatment === 'overprint'
-            ? ' op-layout-' + project.composition + ' op-film-' + project.slug
-            : '')
-        }
-        key={exiting ? 'previous' : turn}
-        style={chromatic ? chromaticProperties(project.slug) : undefined}
-        aria-hidden={exiting ? true : undefined}
-        inert={exiting ? true : undefined}
-      >
+    const print = (
+      <>
         <button
           className={
             'dr-print df-print ' + (n === 0 ? 'dr-lead-print' : 'dr-red-print')
@@ -188,14 +189,68 @@ export function DarkroomFeatured({
           <span className="dr-print-edge" aria-hidden="true" />
         </button>
         <div className="df-project-name">
-          <ProjectName lines={project.heading} />
+          {fluid ? (
+            <h2>
+              {(project.slug === 'buffalo-hunt'
+                ? ['THE BUFFALO HUNT']
+                : project.heading
+              ).map((line, lineIndex) => (
+                <span
+                  className={'fl-title-line fl-title-line-' + lineIndex}
+                  key={lineIndex + '-' + line}
+                >
+                  {line}
+                </span>
+              ))}
+            </h2>
+          ) : (
+            <ProjectName lines={project.heading} />
+          )}
         </div>
+      </>
+    );
+    return (
+      <div
+        className={
+          'df-slide' +
+          (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '') +
+          (treatment === 'overprint'
+            ? ' op-layout-' + project.composition + ' op-film-' + project.slug
+            : '')
+        }
+        key={exiting ? 'previous' : turn}
+        style={chromatic ? chromaticProperties(project.slug) : undefined}
+        aria-hidden={exiting ? true : undefined}
+        inert={exiting ? true : undefined}
+      >
+        {fluid ? (
+          <div
+            className="fl-print-group"
+            style={
+              { '--fl-art-ratio': artworkRatio(project.slug) } as CSSProperties
+            }
+          >
+            {print}
+          </div>
+        ) : (
+          print
+        )}
       </div>
     );
   }
   const site = (
     <div
-      style={chromatic ? chromaticProperties(projects[index].slug) : undefined}
+      style={
+        chromatic
+          ? chromaticProperties(projects[index].slug)
+          : fluid
+            ? ({
+                '--fl-art-ratio': artworkRatio(projects[index].slug),
+                '--fl-word-advance':
+                  categoryAdvance[sequenceCategories[projects[index].slug]],
+              } as CSSProperties)
+            : undefined
+      }
       className={
         'darkroom df-site' +
         (chromatic ? ' op-chromatic' : '') +
@@ -204,6 +259,7 @@ export function DarkroomFeatured({
           : '') +
         (preview ? ' df-preview' : '') +
         (sequence && fitScreen ? ' op-screen-fit' : '') +
+        (sequence && fluid ? ' op-fluid' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +

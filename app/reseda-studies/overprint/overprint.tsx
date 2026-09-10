@@ -6,10 +6,12 @@ export function Overprint({
   preview = false,
   edition = 'original',
   fitScreen = false,
+  fluid = false,
 }: {
   preview?: boolean;
   edition?: OverprintEdition;
   fitScreen?: boolean;
+  fluid?: boolean;
 }) {
   return (
     <DarkroomFeatured
@@ -17,6 +19,7 @@ export function Overprint({
       preview={preview}
       edition={edition}
       fitScreen={fitScreen}
+      fluid={fluid}
     />
   );
 }

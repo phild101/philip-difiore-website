@@ -1,0 +1,391 @@
+.op-site.op-sequence.op-fluid.op-featured {
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(9px, 1.25vw, 18px);
+}
+.op-site.op-sequence.op-fluid.op-featured .dr-room {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 clamp(14px, 2.6vw, 42px) clamp(12px, 1.5vw, 22px);
+}
+.op-site.op-sequence.op-fluid.op-featured .df-nav {
+  flex: 0 0 62px;
+  min-height: 0;
+  height: auto;
+}
+.op-site.op-sequence.op-fluid.op-featured .df-featured {
+  container: fluid-body / size;
+  flex: 1;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  margin: clamp(12px, 1.5vw, 24px) 0 0;
+}
+.op-site.op-sequence.op-fluid .sq-stage {
+  width: 100%;
+  height: 100%;
+  clip-path: none;
+  overflow-clip-margin: 0;
+}
+.op-site.op-sequence.op-fluid.op-featured .df-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+.op-fluid .fl-print-group,
+.op-site.op-sequence.op-fluid .sq-control-rail {
+  --fl-print-width: min(76cqw, calc(100cqh * var(--fl-art-ratio)));
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  width: var(--fl-print-width);
+  height: calc(var(--fl-print-width) / var(--fl-art-ratio));
+}
+.op-fluid .fl-print-group {
+  container-type: inline-size;
+}
+.op-site.op-sequence.op-fluid .sq-control-rail {
+  left: 0;
+  right: auto;
+  width: calc(100cqw - var(--fl-print-width));
+  height: 100cqh;
+}
+.op-site.op-sequence.op-fluid.op-featured .df-slide .fl-print-group .df-print {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+}
+.op-site.op-sequence.op-fluid .df-slide .fl-print-group .dr-print-image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+.op-site.op-sequence.op-fluid .fl-print-group img {
+  object-fit: contain;
+}
+.op-site.op-sequence.op-fluid.op-featured .sq-category {
+  top: 0;
+  left: 0;
+  width: 20%;
+}
+.op-site.op-sequence.op-fluid.op-featured .dr-family-name {
+  font-kerning: none;
+  font-size: 19cqw;
+  line-height: 0.8;
+}
+.op-site.op-sequence.op-fluid .sq-controls {
+  position: absolute;
+  top: auto;
+  right: auto;
+  left: 0;
+  bottom: 0;
+  height: clamp(48px, 8cqh, 78px);
+  gap: 10px;
+}
+.op-site.op-sequence.op-fluid .sq-arrow {
+  width: clamp(42px, 5cqh, 62px);
+  height: 100%;
+  padding: 10px;
+}
+
+/* On a wide page, the category reflows into the space beside the full print. */
+@container fluid-body (min-aspect-ratio: 11/10) {
+  .op-fluid .fl-print-group,
+  .op-site.op-sequence.op-fluid .sq-control-rail {
+    --fl-print-width: calc(100cqh * var(--fl-art-ratio));
+  }
+  .op-site.op-sequence.op-fluid.op-featured .sq-category {
+    --fl-type-width: calc(
+      100cqw - 100cqh * var(--fl-art-ratio) - clamp(14px, 2cqw, 30px)
+    );
+    width: var(--fl-type-width);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .op-site.op-sequence.op-fluid.op-featured .dr-family-name {
+    writing-mode: horizontal-tb;
+    font-size: min(calc(var(--fl-type-width) / var(--fl-word-advance)), 80cqh);
+  }
+}
+
+/* Portrait windows make a heading above the print instead of adding a gutter. */
+@container fluid-body (max-aspect-ratio: 7/10) {
+  .op-site.op-sequence.op-fluid.op-featured .sq-category {
+    width: 100%;
+  }
+  .op-site.op-sequence.op-fluid.op-featured .dr-family-name {
+    writing-mode: horizontal-tb;
+    font-size: min(calc(100cqw / var(--fl-word-advance)), 18cqh);
+  }
+  .op-fluid .fl-print-group,
+  .op-site.op-sequence.op-fluid .sq-control-rail {
+    --fl-heading-height: min(calc(80cqw / var(--fl-word-advance)), 14.4cqh);
+    --fl-print-top: calc(var(--fl-heading-height) + 18px);
+    --fl-print-width: min(
+      100cqw,
+      calc((100cqh - var(--fl-print-top) - 64px) * var(--fl-art-ratio))
+    );
+    top: var(--fl-print-top);
+  }
+  .op-site.op-sequence.op-fluid .sq-controls {
+    top: calc(100% + 10px);
+    bottom: auto;
+    right: 0;
+    left: auto;
+    height: 48px;
+  }
+  .op-site.op-sequence.op-fluid .sq-control-rail {
+    left: auto;
+    right: 0;
+    width: var(--fl-print-width);
+    height: calc(var(--fl-print-width) / var(--fl-art-ratio));
+  }
+}
+@media (max-width: 600px) {
+  .op-site.op-sequence.op-fluid.op-featured .df-nav {
+    flex-basis: 68px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    gap: 0 12px;
+    font-size: 11px;
+  }
+  .op-site.op-sequence.op-fluid .df-nav nav {
+    gap: 15px;
+  }
+}
+@container fluid-body (max-width: 400px) and (min-aspect-ratio: 7/10) and (max-aspect-ratio: 11/10) {
+  .op-site.op-sequence.op-fluid .sq-controls {
+    flex-direction: column;
+    gap: 8px;
+    height: 96px;
+    width: 42px;
+  }
+  .op-site.op-sequence.op-fluid .sq-arrow {
+    width: 42px;
+    height: 44px;
+  }
+}
+.op-site.op-sequence.op-fluid.df-preview {
+  height: 800px;
+}
+
+/* Type is ink on the photograph; only a feathered pigment wash sits behind it. */
+.op-site.op-sequence.op-fluid.op-featured
+  .df-slide
+  .fl-print-group
+  .df-project-name {
+  --fl-label-ink: #f7ead0;
+  position: absolute;
+  top: var(--fl-label-y, 74%);
+  left: var(--fl-label-x, 7%);
+  bottom: auto;
+  right: auto;
+  max-width: var(--fl-label-width, 80%);
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--fl-label-color, var(--fl-label-ink));
+  transform: rotate(var(--fl-label-angle, -0.6deg));
+  mask-image: none;
+  isolation: auto;
+  mix-blend-mode: var(--fl-label-blend, normal);
+}
+.op-site.op-sequence.op-fluid .df-project-name::after {
+  display: none;
+}
+.op-site.op-sequence.op-fluid .df-project-name::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -25% -18%;
+  background: radial-gradient(
+    ellipse at 40% 45%,
+    var(--fl-label-wash, transparent),
+    transparent 70%
+  );
+  filter: blur(6px);
+  pointer-events: none;
+}
+.op-site.op-sequence.op-fluid.op-featured
+  .df-slide
+  .fl-print-group
+  .df-project-name
+  h2 {
+  font-size: clamp(17px, var(--fl-label-size, 6.5cqw), 60px);
+  line-height: 0.94;
+  max-width: none;
+  letter-spacing: -0.045em;
+  mask-image: url('/images/sequence/swatch-cut.svg');
+  mask-mode: luminance;
+  mask-size: 100% 100%;
+  text-shadow: none;
+}
+.op-fluid .fl-title-line {
+  display: block;
+}
+.op-fluid .op-film-if-you-call {
+  --fl-label-x: 43%;
+  --fl-label-y: 79%;
+  --fl-label-width: 48%;
+  --fl-label-size: 5.6cqw;
+  --fl-label-color: #fff0cf;
+  --fl-label-wash: #15191b14;
+}
+.op-fluid .op-film-old-friend {
+  --fl-label-x: 6%;
+  --fl-label-y: 73%;
+  --fl-label-width: 35%;
+  --fl-label-size: 7.8cqw;
+  --fl-label-color: #fff3c9;
+}
+.op-fluid .op-film-stranger {
+  --fl-label-x: 29%;
+  --fl-label-y: 82%;
+  --fl-label-width: 67%;
+  --fl-label-size: 9.6cqw;
+  --fl-label-color: #fff0ce;
+  --fl-label-wash: #3524191a;
+}
+.op-fluid .op-film-in-the-city {
+  --fl-label-x: 37%;
+  --fl-label-y: 82%;
+  --fl-label-width: 59%;
+  --fl-label-size: 9.5cqw;
+  --fl-label-color: #eaf6ed;
+}
+.op-fluid .op-film-runnin {
+  --fl-label-x: 5%;
+  --fl-label-y: 84%;
+  --fl-label-width: 43%;
+  --fl-label-size: 8.4cqw;
+  --fl-label-color: #142523;
+  --fl-label-blend: multiply;
+}
+.op-fluid .op-film-warm-spell {
+  --fl-label-x: 34%;
+  --fl-label-y: 5%;
+  --fl-label-width: 58%;
+  --fl-label-size: 11.5cqw;
+  --fl-label-color: #18243e;
+  --fl-label-blend: multiply;
+}
+.op-fluid .op-film-miko-dtb {
+  --fl-label-x: 6%;
+  --fl-label-y: 47%;
+  --fl-label-width: 43%;
+  --fl-label-size: 10.5cqw;
+  --fl-label-color: #fff0ab;
+}
+.op-fluid .op-film-young-trouble {
+  --fl-label-x: 6%;
+  --fl-label-y: 75%;
+  --fl-label-width: 52%;
+  --fl-label-size: 9.8cqw;
+  --fl-label-color: #f6e4a5;
+}
+.op-fluid .op-film-naomi-shelton {
+  --fl-label-x: 5%;
+  --fl-label-y: 10%;
+  --fl-label-width: 31%;
+  --fl-label-size: 6.2cqw;
+  --fl-label-color: #092334;
+  --fl-label-blend: multiply;
+}
+.op-fluid .op-film-naomi-shelton .fl-title-line-2 {
+  font-size: 0.62em;
+  line-height: 1.25;
+}
+.op-fluid .op-film-rival-schools {
+  --fl-label-x: 12%;
+  --fl-label-y: 81%;
+  --fl-label-width: 38%;
+  --fl-label-size: 7.1cqw;
+  --fl-label-color: #ffe552;
+}
+.op-fluid .op-film-rdgldgrn {
+  --fl-label-x: 5%;
+  --fl-label-y: 89%;
+  --fl-label-width: 90%;
+  --fl-label-size: 10cqw;
+  --fl-label-color: #fff2d2;
+}
+.op-fluid .op-film-man-man {
+  --fl-label-x: 8%;
+  --fl-label-y: 13%;
+  --fl-label-width: 34%;
+  --fl-label-size: 12cqw;
+  --fl-label-color: #f5e9bb;
+  --fl-label-wash: #271b3514;
+}
+.op-fluid .op-film-diiv {
+  --fl-label-x: 54%;
+  --fl-label-y: 5%;
+  --fl-label-width: 40%;
+  --fl-label-size: 15cqw;
+  --fl-label-color: #0d3032;
+  --fl-label-blend: multiply;
+}
+.op-fluid .op-film-class-actress {
+  --fl-label-x: 68%;
+  --fl-label-y: 75%;
+  --fl-label-width: 30%;
+  --fl-label-size: 4.1cqw;
+  --fl-label-color: #fff3d2;
+}
+.op-site.op-sequence.op-fluid
+  .df-slide.op-film-class-actress
+  .fl-print-group
+  .df-project-name
+  h2 {
+  font-size: clamp(13px, 4.1cqw, 36px);
+}
+.op-fluid .op-film-save-my-life {
+  --fl-label-x: 16%;
+  --fl-label-y: 18%;
+  --fl-label-width: 31%;
+  --fl-label-size: 6.6cqw;
+  --fl-label-color: #2a1831;
+  --fl-label-blend: multiply;
+}
+.op-fluid .op-film-antibalas {
+  --fl-label-x: 49%;
+  --fl-label-y: 83%;
+  --fl-label-width: 47%;
+  --fl-label-size: 7.2cqw;
+  --fl-label-color: #e6f3c9;
+  --fl-label-wash: #4124191c;
+}
+.op-fluid .op-film-recording-parties {
+  --fl-label-x: 24%;
+  --fl-label-y: 80%;
+  --fl-label-width: 60%;
+  --fl-label-size: 8.5cqw;
+  --fl-label-color: #fff3c9;
+}
+.op-fluid .op-film-buffalo-hunt {
+  --fl-label-x: 6%;
+  --fl-label-y: 2%;
+  --fl-label-width: 76%;
+  --fl-label-size: 6.5cqw;
+  --fl-label-color: #13346b;
+  --fl-label-blend: multiply;
+}
+@media (max-height: 480px) {
+  .op-site.op-sequence.op-fluid.op-featured
+    .df-slide
+    .fl-print-group
+    .df-project-name
+    h2 {
+    font-size: clamp(12px, var(--fl-label-size, 6.5cqw), 60px);
+  }
+}

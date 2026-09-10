@@ -7,34 +7,35 @@ import { Overprint } from './overprint/overprint';
 import { Chromatic } from './overprint-chromatic/chromatic';
 import { Sequence } from './overprint-sequence/sequence';
 import { ScreenFit } from './overprint-screen-fit/screen-fit';
+import { Fluid } from './overprint-fluid/fluid';
 import './selection.css';
 export default function ResedaStudies() {
   return (
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>EIGHT DIRECTIONS</span>
+        <span>NINE DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Eight
+            Nine
             <br />
             <em>directions.</em>
           </h1>
         </div>
         <p>
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
-          Overprint / Chromatic, Overprint / Sequence, and Overprint / Screen
-          Fit.
+          Overprint / Chromatic, Overprint / Sequence, Overprint / Screen Fit,
+          and Overprint / Fluid.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Eight selected website designs"
+        aria-label="Nine selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -197,12 +198,29 @@ export default function ResedaStudies() {
             </p>
           </a>
         </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <Fluid preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-fluid">
+            <div className="catalog-caption">
+              <span>09</span>
+              <h2>Overprint / Fluid</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              A responsive composition. Names printed into the photographs.
+            </p>
+          </a>
+        </article>
       </section>
       <footer className="catalog-footer">
         <span>Philip Di Fiore / Reseda studies</span>
         <span>
           Original / Darkroom / Magazine / Featured / Overprint / Chromatic /
-          Sequence / Screen Fit
+          Sequence / Screen Fit / Fluid
         </span>
       </footer>
     </main>
