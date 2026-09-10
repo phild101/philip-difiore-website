@@ -11,6 +11,102 @@ import {
 import { pressItems, type PressItem, type PressFilm } from './press-data';
 
 type ArticleState = { slug: string; html: string; error: boolean };
+export function PressArticle({
+  article,
+  close,
+  watch,
+}: {
+  article: PressItem | null;
+  close: () => void;
+  watch: (film: PressFilm) => void;
+}) {
+  const [content, setContent] = useState<ArticleState | null>(null);
+  useEffect(() => {
+    if (!article) return;
+    const controller = new AbortController();
+    fetch('/press-articles/' + article.slug + '.json', {
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Article unavailable');
+        return response.json();
+      })
+      .then((data: unknown) => {
+        if (
+          !data ||
+          typeof data !== 'object' ||
+          !('html' in data) ||
+          typeof data.html !== 'string'
+        )
+          throw new Error('Invalid article');
+        setContent({ slug: article.slug, html: data.html, error: false });
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError')
+          setContent({ slug: article.slug, html: '', error: true });
+      });
+    return () => controller.abort();
+  }, [article]);
+  const ready = article && content?.slug === article.slug ? content : null;
+  return (
+    <Dialog
+      open={!!article}
+      onOpenChange={(open) => {
+        if (!open) close();
+      }}
+    >
+      <DialogContent className="df-article-dialog">
+        {article && (
+          <>
+            <div className="df-article-toolbar">
+              <DialogTitle className="df-article-label">
+                {article.outlet}
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                {article.project}
+              </DialogDescription>
+              {article.videos.length > 0 && (
+                <div className="df-article-watch">
+                  {article.videos.map((film) => (
+                    <button key={film.vimeo} onClick={() => watch(film)}>
+                      Watch {film.title} ↗
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="df-article-scroll" key={article.slug}>
+              {ready ? (
+                ready.error ? (
+                  <p className="df-article-error">
+                    This article could not be loaded.{' '}
+                    <a
+                      href={
+                        'https://philipdifiore.com/press/' + article.slug + '/'
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open the original article ↗
+                    </a>
+                  </p>
+                ) : (
+                  <article
+                    className="df-article-body"
+                    dangerouslySetInnerHTML={{ __html: ready.html }}
+                  />
+                )
+              ) : (
+                <output className="df-article-loading">Loading article…</output>
+              )}
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function PressFilmstrip({
   watch,
 }: {
@@ -20,7 +116,6 @@ export function PressFilmstrip({
   const drag = useRef({ active: false, startX: 0, scroll: 0, moved: false });
   const loopWidth = useRef(0);
   const [article, setArticle] = useState<PressItem | null>(null);
-  const [content, setContent] = useState<ArticleState | null>(null);
   useEffect(() => {
     const strip = viewport.current;
     if (!strip) return;
@@ -95,32 +190,6 @@ export function PressFilmstrip({
       window.removeEventListener('pointercancel', release);
     };
   }, []);
-  useEffect(() => {
-    if (!article) return;
-    const controller = new AbortController();
-    fetch('/press-articles/' + article.slug + '.json', {
-      signal: controller.signal,
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error('Article unavailable');
-        return response.json();
-      })
-      .then((data: unknown) => {
-        if (
-          !data ||
-          typeof data !== 'object' ||
-          !('html' in data) ||
-          typeof data.html !== 'string'
-        )
-          throw new Error('Invalid article');
-        setContent({ slug: article.slug, html: data.html, error: false });
-      })
-      .catch((error) => {
-        if (error.name !== 'AbortError')
-          setContent({ slug: article.slug, html: '', error: true });
-      });
-    return () => controller.abort();
-  }, [article]);
   function scroll(direction: number) {
     const strip = viewport.current;
     if (!strip) return;
@@ -131,7 +200,6 @@ export function PressFilmstrip({
         : 'smooth',
     });
   }
-  const ready = article && content?.slug === article.slug ? content : null;
   return (
     <section className="df-press" aria-labelledby="df-press-heading">
       <div className="df-press-heading">
@@ -220,65 +288,11 @@ export function PressFilmstrip({
           </div>
         ))}
       </section>
-      <Dialog
-        open={!!article}
-        onOpenChange={(open) => {
-          if (!open) setArticle(null);
-        }}
-      >
-        <DialogContent className="df-article-dialog">
-          {article && (
-            <>
-              <div className="df-article-toolbar">
-                <DialogTitle className="df-article-label">
-                  {article.outlet}
-                </DialogTitle>
-                <DialogDescription className="sr-only">
-                  {article.project}
-                </DialogDescription>
-                {article.videos.length > 0 && (
-                  <div className="df-article-watch">
-                    {article.videos.map((film) => (
-                      <button key={film.vimeo} onClick={() => watch(film)}>
-                        Watch {film.title} ↗
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="df-article-scroll" key={article.slug}>
-                {ready ? (
-                  ready.error ? (
-                    <p className="df-article-error">
-                      This article could not be loaded.{' '}
-                      <a
-                        href={
-                          'https://philipdifiore.com/press/' +
-                          article.slug +
-                          '/'
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Open the original article ↗
-                      </a>
-                    </p>
-                  ) : (
-                    <article
-                      className="df-article-body"
-                      dangerouslySetInnerHTML={{ __html: ready.html }}
-                    />
-                  )
-                ) : (
-                  <output className="df-article-loading">
-                    Loading article…
-                  </output>
-                )}
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      <PressArticle
+        article={article}
+        close={() => setArticle(null)}
+        watch={watch}
+      />
     </section>
   );
 }

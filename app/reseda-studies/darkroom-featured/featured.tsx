@@ -7,9 +7,11 @@ import {
   darkroomProjects,
   overprintArchive,
   darkroomArchive,
+  type FeaturedWork,
 } from '../overprint/projects';
 import { Screening } from '../../studies/screening';
-import { PressFilmstrip } from './press';
+import { PressArticle, PressFilmstrip } from './press';
+import { pressItems, type PressItem, type PressFilm } from './press-data';
 import './featured.css';
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
@@ -20,7 +22,7 @@ function ProjectName({ lines }: { lines: string[] }) {
   return (
     <h2>
       {lines.map((line, i) => (
-        <Fragment key={line}>
+        <Fragment key={i + '-' + line}>
           {i > 0 && <br />}
           {line}
         </Fragment>
@@ -43,6 +45,7 @@ export function DarkroomFeatured({
   const [index, setIndex] = useState(0);
   const [previous, setPrevious] = useState<number | null>(null);
   const [film, setFilm] = useState<Artwork | null>(null);
+  const [article, setArticle] = useState<PressItem | null>(null);
   const [turn, setTurn] = useState(0);
   useEffect(() => {
     if (preview) return;
@@ -95,6 +98,23 @@ export function DarkroomFeatured({
       );
     setTurn((value) => value + 1);
   }
+  function openWork(work: FeaturedWork) {
+    if ('articleSlug' in work) {
+      setArticle(
+        pressItems.find((item) => item.slug === work.articleSlug) ?? null,
+      );
+    } else {
+      setFilm(work);
+    }
+  }
+  function watchPressFilm(work: PressFilm) {
+    setFilm({
+      title: work.title,
+      vimeo: work.vimeo,
+      artist: 'Philip Di Fiore',
+      image: '',
+    });
+  }
   function slide(n: number, exiting = false) {
     const project = projects[n];
     const work = project.work;
@@ -115,8 +135,8 @@ export function DarkroomFeatured({
           className={
             'dr-print df-print ' + (n === 0 ? 'dr-lead-print' : 'dr-red-print')
           }
-          onClick={() => setFilm(work)}
-          aria-label={'Watch ' + work.title}
+          onClick={() => openWork(work)}
+          aria-label={('articleSlug' in work ? 'Open ' : 'Watch ') + work.title}
         >
           <span className="dr-print-image">
             <img
@@ -178,7 +198,9 @@ export function DarkroomFeatured({
           <section
             className="df-featured"
             id={preview ? undefined : 'featured'}
-            aria-label="Featured films"
+            aria-label={
+              treatment === 'overprint' ? 'Featured works' : 'Featured films'
+            }
           >
             {previous !== null && slide(previous, true)}
             {slide(index)}
@@ -244,16 +266,7 @@ export function DarkroomFeatured({
                 </p>
               </div>
             </div>
-            <PressFilmstrip
-              watch={(work) =>
-                setFilm({
-                  title: work.title,
-                  vimeo: work.vimeo,
-                  artist: 'Philip Di Fiore',
-                  image: '',
-                })
-              }
-            />
+            <PressFilmstrip watch={watchPressFilm} />
           </section>
         )}
         {view === 'archive' && (
@@ -264,15 +277,20 @@ export function DarkroomFeatured({
           >
             <div className="dr-section-heading">
               <h2 id="df-archive-title">CONTACT SHEET</h2>
-              <span>{String(archive.length).padStart(2, '0')} FILMS</span>
+              <span>
+                {String(archive.length).padStart(2, '0')}{' '}
+                {treatment === 'overprint' ? 'WORKS' : 'FILMS'}
+              </span>
             </div>
             <div className="dr-contact-board">
               {archive.map((work, i) => (
                 <button
                   className="dr-contact-frame"
-                  key={work.vimeo}
-                  onClick={() => setFilm(work)}
-                  aria-label={'Watch ' + work.title}
+                  key={work.image}
+                  onClick={() => openWork(work)}
+                  aria-label={
+                    ('articleSlug' in work ? 'Open ' : 'Watch ') + work.title
+                  }
                 >
                   <span className="dr-contact-photo">
                     <img
@@ -291,7 +309,16 @@ export function DarkroomFeatured({
           </section>
         )}
       </div>
-      {!preview && <Screening work={film} close={() => setFilm(null)} />}
+      {!preview && (
+        <>
+          <Screening work={film} close={() => setFilm(null)} />
+          <PressArticle
+            article={article}
+            close={() => setArticle(null)}
+            watch={watchPressFilm}
+          />
+        </>
+      )}
     </div>
   );
 }

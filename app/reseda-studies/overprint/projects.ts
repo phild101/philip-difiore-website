@@ -1,7 +1,10 @@
 import { artworks, type Artwork } from '../../artworks/data';
+export type FeaturedWork =
+  | Artwork
+  | { title: string; artist: string; image: string; articleSlug: string };
 export type FeaturedProject = {
   slug: string;
-  work: Artwork;
+  work: FeaturedWork;
   poster: string;
   heading: string[];
   palette:
@@ -31,6 +34,18 @@ const naomi: Artwork = {
   artist: 'Naomi Shelton & The Gospel Queens',
   image: 'naomi-what-have-you-done.jpg',
   vimeo: '39072847',
+};
+const manMan: Artwork = {
+  title: 'Man Man',
+  artist: 'Live at the Brooklyn Bowl',
+  image: 'man-man.jpg',
+  vimeo: '104872340',
+};
+const recordingParties: FeaturedWork = {
+  title: 'Recording Parties',
+  artist: 'The Rumpus Room',
+  image: 'recording-parties.jpg',
+  articleSlug: 'bedford-bowery-recording-parties',
 };
 export const overprintProjects: FeaturedProject[] = [
   {
@@ -105,6 +120,30 @@ export const overprintProjects: FeaturedProject[] = [
     palette: 'paper-blue',
     composition: 'left',
   },
+  {
+    slug: 'man-man',
+    work: manMan,
+    poster: '/images/overprint/man-man.png',
+    heading: ['MAN', 'MAN'],
+    palette: 'ink',
+    composition: 'center',
+  },
+  {
+    slug: 'recording-parties',
+    work: recordingParties,
+    poster: '/images/overprint/recording-parties.png',
+    heading: ['RECORDING', 'PARTIES'],
+    palette: 'cobalt',
+    composition: 'right',
+  },
+  {
+    slug: 'buffalo-hunt',
+    work: artworks[3],
+    poster: '/images/overprint/buffalo-hunt.png',
+    heading: ['THE', 'BUFFALO', 'HUNT'],
+    palette: 'paper-blue',
+    composition: 'left',
+  },
 ];
 export const darkroomProjects = overprintProjects.slice(0, 2);
 export const darkroomArchive = [5, 0, 2, 1, 3, 4, 6, 7].map((n) => artworks[n]);
@@ -113,4 +152,6 @@ export const overprintArchive = [
   inTheCity,
   youngTrouble,
   naomi,
+  manMan,
+  recordingParties,
 ];

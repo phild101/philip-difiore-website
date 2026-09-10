@@ -489,6 +489,21 @@
   background: var(--op-yellow);
   transform: rotate(-2deg);
 }
+.op-site .op-film-man-man .df-project-name {
+  background: var(--op-red);
+  color: var(--op-paper);
+  transform: rotate(1.5deg);
+}
+.op-site .op-film-recording-parties .df-project-name {
+  background: var(--op-yellow);
+  color: var(--op-ink);
+  transform: rotate(-1.5deg);
+}
+.op-site .op-film-buffalo-hunt .df-project-name {
+  background: var(--op-blue);
+  color: var(--op-paper);
+  transform: rotate(0.6deg);
+}
 .op-site .op-film-stranger .df-project-name {
   background: var(--op-blue);
   color: var(--op-paper);
