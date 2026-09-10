@@ -1,0 +1,7 @@
+/* Original Vertical geometry; reduce only the 19cqw category lettering. */
+.vertical-smaller-type
+  .op-site.op-sequence.op-vertical.op-featured
+  .sq-category
+  .dr-family-name {
+  font-size: 14.25cqw;
+}

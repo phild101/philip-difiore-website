@@ -9,19 +9,20 @@ import { Sequence } from './overprint-sequence/sequence';
 import { ScreenFit } from './overprint-screen-fit/screen-fit';
 import { Fluid } from './overprint-fluid/fluid';
 import { PosterDirection } from './poster-directions/directions';
+import { VerticalType } from './overprint-vertical-type/vertical-type';
 import './selection.css';
 export default function ResedaStudies() {
   return (
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>TWELVE DIRECTIONS</span>
+        <span>THIRTEEN DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Twelve
+            Thirteen
             <br />
             <em>directions.</em>
           </h1>
@@ -30,14 +31,14 @@ export default function ResedaStudies() {
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
           Overprint / Chromatic, Overprint / Sequence, Overprint / Screen Fit,
           Overprint / Fluid, Overprint / Vertical and Overprint / Horizontal,
-          and Vertical / 85%.
+          Vertical / 85%, and Vertical / Smaller Type.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Twelve selected website designs"
+        aria-label="Thirteen selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -162,7 +163,7 @@ export default function ResedaStudies() {
               <span>↗</span>
             </div>
             <p className="catalog-material">
-              Twelve artworks. Twelve distinct palettes.
+              Thirteen artworks. Twelve distinct palettes.
             </p>
           </a>
         </article>
@@ -268,12 +269,30 @@ export default function ResedaStudies() {
             </p>
           </a>
         </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <VerticalType preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-vertical-type">
+            <div className="catalog-caption">
+              <span>13</span>
+              <h2>Vertical / Smaller Type</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              Original Vertical artwork. Category lettering 25% smaller.
+            </p>
+          </a>
+        </article>
       </section>
       <footer className="catalog-footer">
         <span>Philip Di Fiore / Reseda studies</span>
         <span>
           Original / Darkroom / Magazine / Featured / Overprint / Chromatic /
-          Sequence / Screen Fit / Fluid / Vertical / Horizontal / Vertical 85%
+          Sequence / Screen Fit / Fluid / Vertical / Horizontal / Vertical 85% /
+          Smaller Type
         </span>
       </footer>
     </main>
