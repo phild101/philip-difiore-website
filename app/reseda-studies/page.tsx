@@ -15,13 +15,13 @@ export default function ResedaStudies() {
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>ELEVEN DIRECTIONS</span>
+        <span>TWELVE DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Eleven
+            Twelve
             <br />
             <em>directions.</em>
           </h1>
@@ -29,14 +29,15 @@ export default function ResedaStudies() {
         <p>
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
           Overprint / Chromatic, Overprint / Sequence, Overprint / Screen Fit,
-          Overprint / Fluid, Overprint / Vertical and Overprint / Horizontal.
+          Overprint / Fluid, Overprint / Vertical and Overprint / Horizontal,
+          and Vertical / 85%.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Eleven selected website designs"
+        aria-label="Twelve selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -250,12 +251,29 @@ export default function ResedaStudies() {
             </p>
           </a>
         </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <PosterDirection layout="vertical" reduced preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-vertical-reduced">
+            <div className="catalog-caption">
+              <span>12</span>
+              <h2>Vertical / 85%</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              The complete Vertical composition, reduced together by 15%.
+            </p>
+          </a>
+        </article>
       </section>
       <footer className="catalog-footer">
         <span>Philip Di Fiore / Reseda studies</span>
         <span>
           Original / Darkroom / Magazine / Featured / Overprint / Chromatic /
-          Sequence / Screen Fit / Fluid / Vertical / Horizontal
+          Sequence / Screen Fit / Fluid / Vertical / Horizontal / Vertical 85%
         </span>
       </footer>
     </main>

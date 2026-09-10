@@ -292,3 +292,14 @@
   translate: none;
   animation: none !important;
 }
+
+/* Scale the already laid-out composition, including its 16px header gap.
+   Unlike a narrower layout, this preserves clamped type, card padding, print
+   proportions and every internal offset. Full-screen dialogs stay outside. */
+.op-site.op-sequence.op-vertical.op-reduced .ps-scaled-composition {
+  display: flow-root;
+  transform: scale(0.85);
+  transform-origin: top right;
+  /* The section is .95 × the available width, plus its 16px top gap. */
+  margin-bottom: calc(-14.25% - 2.4px);
+}

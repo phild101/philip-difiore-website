@@ -1,6 +1,12 @@
 'use client';
 /* oxlint-disable next/no-img-element -- These photographs are original portfolio assets. */
-import { Fragment, useEffect, useState, type CSSProperties } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useState,
+  type ReactNode,
+  type CSSProperties,
+} from 'react';
 import type { Artwork } from '../../artworks/data';
 import {
   overprintProjects,
@@ -24,6 +30,19 @@ import {
   type RivalPalette,
 } from '../overprint-sequence/projects';
 import './featured.css';
+function CompositionScale({
+  enabled,
+  children,
+}: {
+  enabled: boolean;
+  children: ReactNode;
+}) {
+  return enabled ? (
+    <div className="ps-scaled-composition">{children}</div>
+  ) : (
+    children
+  );
+}
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
@@ -54,6 +73,7 @@ const categoryAdvance = {
 };
 export function DarkroomFeatured({
   preview = false,
+  reduced = false,
   treatment = 'darkroom',
   edition = 'original',
   fitScreen = false,
@@ -61,6 +81,7 @@ export function DarkroomFeatured({
   posterLayout,
 }: {
   preview?: boolean;
+  reduced?: boolean;
   treatment?: 'darkroom' | 'overprint';
   edition?: OverprintEdition;
   fitScreen?: boolean;
@@ -276,6 +297,7 @@ export function DarkroomFeatured({
         (sequence && fitScreen ? ' op-screen-fit' : '') +
         (sequence && fluid ? ' op-fluid' : '') +
         (posterLayout ? ' op-poster op-' + posterLayout : '') +
+        (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +
@@ -336,142 +358,149 @@ export function DarkroomFeatured({
           </h1>
         )}
         {view === 'featured' && (
-          <div className={fitScreen ? 'sq-fit-area' : 'sq-flow-area'}>
-            <section
-              className="df-featured"
-              id={preview ? undefined : 'featured'}
-              aria-label={
-                treatment === 'overprint' ? 'Featured works' : 'Featured films'
-              }
-            >
-              {sequence ? (
-                <>
-                  {horizontal ? (
-                    <nav
-                      className="ps-category-menu df-masthead"
-                      aria-label="Project categories"
-                    >
-                      {(['FILM', 'VIDEO', 'MUSIC', 'LIVE'] as const).map(
-                        (category) => {
-                          const first = projects.find(
-                            (project) =>
-                              sequenceCategories[project.slug] === category,
-                          )!;
-                          return (
-                            <a
-                              key={category}
-                              href={'#featured/' + first.slug}
-                              aria-current={
-                                currentCategory === category
-                                  ? 'page'
-                                  : undefined
-                              }
-                              style={
-                                {
-                                  '--ps-condense': Math.min(
-                                    1,
-                                    categoryAdvance.FILM /
-                                      categoryAdvance[category],
-                                  ),
-                                } as CSSProperties
-                              }
-                            >
-                              <span>{category}</span>
-                            </a>
-                          );
-                        },
-                      )}
-                    </nav>
-                  ) : (
-                    <h1 className="dr-masthead df-masthead sq-category">
-                      <span className="dr-family-name">
-                        {sequenceCategories[projects[index].slug]}
-                      </span>
-                    </h1>
-                  )}
-                  <div className="sq-stage">
+          <CompositionScale enabled={reduced}>
+            <div className={fitScreen ? 'sq-fit-area' : 'sq-flow-area'}>
+              <section
+                className="df-featured"
+                id={preview ? undefined : 'featured'}
+                aria-label={
+                  treatment === 'overprint'
+                    ? 'Featured works'
+                    : 'Featured films'
+                }
+              >
+                {sequence ? (
+                  <>
+                    {horizontal ? (
+                      <nav
+                        className="ps-category-menu df-masthead"
+                        aria-label="Project categories"
+                      >
+                        {(['FILM', 'VIDEO', 'MUSIC', 'LIVE'] as const).map(
+                          (category) => {
+                            const first = projects.find(
+                              (project) =>
+                                sequenceCategories[project.slug] === category,
+                            )!;
+                            return (
+                              <a
+                                key={category}
+                                href={'#featured/' + first.slug}
+                                aria-current={
+                                  currentCategory === category
+                                    ? 'page'
+                                    : undefined
+                                }
+                                style={
+                                  {
+                                    '--ps-condense': Math.min(
+                                      1,
+                                      categoryAdvance.FILM /
+                                        categoryAdvance[category],
+                                    ),
+                                  } as CSSProperties
+                                }
+                              >
+                                <span>{category}</span>
+                              </a>
+                            );
+                          },
+                        )}
+                      </nav>
+                    ) : (
+                      <h1 className="dr-masthead df-masthead sq-category">
+                        <span className="dr-family-name">
+                          {sequenceCategories[projects[index].slug]}
+                        </span>
+                      </h1>
+                    )}
+                    <div className="sq-stage">
+                      {previous !== null && slide(previous, true)}
+                      {slide(index)}
+                    </div>
+                  </>
+                ) : (
+                  <>
                     {previous !== null && slide(previous, true)}
                     {slide(index)}
-                  </div>
-                </>
-              ) : (
-                <>
-                  {previous !== null && slide(previous, true)}
-                  {slide(index)}
-                </>
-              )}
-              <span className="sr-only" aria-live="polite" aria-atomic="true">
-                {projects[index].work.artist}: {projects[index].work.title}
-              </span>
-              {sequence ? (
-                <div
-                  className="sq-control-rail"
-                  hidden={horizontal && navigationIndices.length < 2}
-                >
-                  <nav className="sq-controls" aria-label="Featured navigation">
-                    {([-1, 1] as const).map((step) => (
-                      <button
-                        className={
-                          'sq-arrow' + (step === -1 ? ' sq-previous' : '')
-                        }
-                        key={step}
-                        onClick={() => move(step)}
-                        aria-disabled={previous !== null}
-                        aria-label={
-                          (step === -1
-                            ? 'Previous project: '
-                            : 'Next project: ') +
-                          projects[adjacentIndex(step)].work.title
-                        }
-                      >
-                        <svg
-                          viewBox="0 0 120 200"
-                          fill="none"
-                          aria-hidden="true"
+                  </>
+                )}
+                <span className="sr-only" aria-live="polite" aria-atomic="true">
+                  {projects[index].work.artist}: {projects[index].work.title}
+                </span>
+                {sequence ? (
+                  <div
+                    className="sq-control-rail"
+                    hidden={horizontal && navigationIndices.length < 2}
+                  >
+                    <nav
+                      className="sq-controls"
+                      aria-label="Featured navigation"
+                    >
+                      {([-1, 1] as const).map((step) => (
+                        <button
+                          className={
+                            'sq-arrow' + (step === -1 ? ' sq-previous' : '')
+                          }
+                          key={step}
+                          onClick={() => move(step)}
+                          aria-disabled={previous !== null}
+                          aria-label={
+                            (step === -1
+                              ? 'Previous project: '
+                              : 'Next project: ') +
+                            projects[adjacentIndex(step)].work.title
+                          }
                         >
-                          {posterLayout ? (
-                            <path
-                              d="M17 11 40 8 110 96 107 107 38 193 15 186 13 171 76 100 14 29Z"
-                              fill="currentColor"
-                              stroke="#132323"
-                              strokeWidth="4"
-                              strokeLinejoin="bevel"
-                            />
-                          ) : (
-                            <path
-                              d="M18 12 104 100 18 188"
-                              stroke="currentColor"
-                              strokeWidth="5"
-                              vectorEffect="non-scaling-stroke"
-                            />
-                          )}
-                        </svg>
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              ) : (
-                <button
-                  className="df-next"
-                  onClick={() => move(1)}
-                  aria-disabled={previous !== null}
-                  aria-label={
-                    'Next project: ' +
-                    projects[(index + 1) % projects.length].work.title
-                  }
-                >
-                  <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
-                    <path
-                      d="M18 12 104 100 18 188"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  </svg>
-                </button>
-              )}
-            </section>
-          </div>
+                          <svg
+                            viewBox="0 0 120 200"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            {posterLayout ? (
+                              <path
+                                d="M17 11 40 8 110 96 107 107 38 193 15 186 13 171 76 100 14 29Z"
+                                fill="currentColor"
+                                stroke="#132323"
+                                strokeWidth="4"
+                                strokeLinejoin="bevel"
+                              />
+                            ) : (
+                              <path
+                                d="M18 12 104 100 18 188"
+                                stroke="currentColor"
+                                strokeWidth="5"
+                                vectorEffect="non-scaling-stroke"
+                              />
+                            )}
+                          </svg>
+                        </button>
+                      ))}
+                    </nav>
+                  </div>
+                ) : (
+                  <button
+                    className="df-next"
+                    onClick={() => move(1)}
+                    aria-disabled={previous !== null}
+                    aria-label={
+                      'Next project: ' +
+                      projects[(index + 1) % projects.length].work.title
+                    }
+                  >
+                    <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
+                      <path
+                        d="M18 12 104 100 18 188"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </section>
+            </div>
+          </CompositionScale>
         )}
         {view === 'about' && (
           <section
