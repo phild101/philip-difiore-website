@@ -421,3 +421,108 @@
     padding: 9px;
   }
 }
+/* Each film keeps the same ink vocabulary with its own page composition. */
+.op-site.op-featured.op-paper .dr-room,
+.op-site.op-featured.op-paper-red .dr-room,
+.op-site.op-featured.op-paper-blue .dr-room {
+  background: var(--op-paper);
+}
+.op-site.op-featured.op-paper .df-masthead {
+  color: var(--op-ink);
+}
+.op-site.op-featured.op-paper-red .df-masthead {
+  color: var(--op-red);
+}
+.op-site.op-featured.op-paper-blue .df-masthead {
+  color: var(--op-blue);
+}
+.op-site.op-featured:is(.op-paper, .op-paper-red, .op-paper-blue) .df-next {
+  color: var(--op-blue);
+}
+.op-site.op-featured:is(.op-paper, .op-paper-red, .op-paper-blue)
+  .df-nav
+  a:is([aria-current='page'], :hover) {
+  color: var(--op-blue);
+}
+.op-site.op-featured.op-cobalt .dr-room {
+  background: var(--op-blue);
+}
+.op-site.op-featured.op-ink .dr-room {
+  background: var(--op-ink);
+}
+.op-site.op-featured:is(.op-cobalt, .op-ink) .df-nav {
+  color: var(--op-paper);
+  border-color: #e9dbbc66;
+}
+.op-site.op-featured:is(.op-cobalt, .op-ink)
+  .df-nav
+  a:is([aria-current='page'], :hover) {
+  color: var(--op-yellow);
+}
+.op-site.op-featured.op-ink .df-masthead {
+  color: var(--op-yellow);
+}
+.op-site.op-featured:is(.op-cobalt, .op-ink) .df-next:hover {
+  color: var(--op-yellow);
+}
+.op-site.op-featured:is(.op-cobalt, .op-ink) a:focus-visible,
+.op-site.op-featured:is(.op-cobalt, .op-ink) button:focus-visible {
+  outline-color: var(--op-yellow);
+}
+.op-site .op-layout-left .df-print {
+  width: 78%;
+  margin-left: 0;
+  margin-right: auto;
+}
+.op-site .op-layout-left .df-project-name {
+  left: auto;
+  right: 0;
+  bottom: 38%;
+  transform: rotate(0.7deg);
+}
+.op-site .op-layout-center .df-print {
+  width: 82%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.op-site .op-film-runnin .df-project-name {
+  background: var(--op-yellow);
+  transform: rotate(-2deg);
+}
+.op-site .op-film-stranger .df-project-name {
+  background: var(--op-blue);
+  color: var(--op-paper);
+}
+.op-site .op-film-young-trouble .df-project-name {
+  background: var(--op-red);
+  color: var(--op-paper);
+  transform: rotate(1deg);
+}
+.op-site .op-film-naomi-shelton .df-project-name {
+  background: var(--op-red);
+  color: var(--op-paper);
+  max-width: 35%;
+}
+.op-site .op-film-naomi-shelton .df-project-name h2 {
+  font-size: clamp(21px, 2.45cqw, 39px);
+}
+@container (max-width:640px) {
+  .op-site .op-layout-left .df-print,
+  .op-site .op-layout-center .df-print {
+    width: 92%;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .op-site .op-layout-left .df-project-name {
+    left: 0;
+    right: auto;
+    bottom: 1%;
+    transform: rotate(-0.6deg);
+  }
+  .op-site .op-film-naomi-shelton .df-project-name {
+    max-width: 67%;
+  }
+  .op-site .op-film-naomi-shelton .df-project-name h2 {
+    font-size: clamp(19px, 4.7cqw, 29px);
+  }
+}

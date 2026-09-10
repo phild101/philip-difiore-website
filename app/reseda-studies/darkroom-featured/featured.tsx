@@ -1,38 +1,30 @@
 'use client';
 /* oxlint-disable next/no-img-element -- These photographs are original portfolio assets. */
-import { useEffect, useState } from 'react';
-import { artworks, type Artwork } from '../../artworks/data';
+import { Fragment, useEffect, useState } from 'react';
+import type { Artwork } from '../../artworks/data';
+import {
+  overprintProjects,
+  darkroomProjects,
+  overprintArchive,
+  darkroomArchive,
+} from '../overprint/projects';
 import { Screening } from '../../studies/screening';
 import { PressFilmstrip } from './press';
 import './featured.css';
-const featuredFilms = [5, 0];
-const overprintImages = [
-  '/images/overprint/if-you-call.png',
-  '/images/overprint/old-friend.png',
-];
-const archiveOrder = [5, 0, 2, 1, 3, 4, 6, 7];
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
   return hash === 'about' || hash === 'archive' ? hash : 'featured';
 }
-function ProjectName({ index }: { index: number }) {
+function ProjectName({ lines }: { lines: string[] }) {
   return (
     <h2>
-      {index === 0 ? (
-        <>
-          SHARON JONES
-          <br />& THE
-          <br />
-          DAP-KINGS
-        </>
-      ) : (
-        <>
-          OLD
-          <br />
-          FRIEND
-        </>
-      )}
+      {lines.map((line, i) => (
+        <Fragment key={line}>
+          {i > 0 && <br />}
+          {line}
+        </Fragment>
+      ))}
     </h2>
   );
 }
@@ -43,6 +35,10 @@ export function DarkroomFeatured({
   preview?: boolean;
   treatment?: 'darkroom' | 'overprint';
 }) {
+  const projects =
+    treatment === 'overprint' ? overprintProjects : darkroomProjects;
+  const archive =
+    treatment === 'overprint' ? overprintArchive : darkroomArchive;
   const [view, setView] = useState<View>('featured');
   const [index, setIndex] = useState(0);
   const [previous, setPrevious] = useState<number | null>(null);
@@ -51,20 +47,36 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
-      setView(hashView());
+      const nextView = hashView();
+      setView(nextView);
+      if (treatment === 'overprint' && nextView === 'featured') {
+        const slug = window.location.hash.slice(1).split('/')[1];
+        const selected = overprintProjects.findIndex(
+          (project) => project.slug === slug,
+        );
+        setIndex(selected >= 0 ? selected : 0);
+      }
+      setPrevious(null);
+      setTurn(0);
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     changeView();
     window.addEventListener('hashchange', changeView);
-    for (const [i, n] of featuredFilms.entries()) {
-      const photo = new Image();
-      photo.src =
-        treatment === 'overprint'
-          ? overprintImages[i]
-          : '/images/' + artworks[n].image;
-    }
-    return () => window.removeEventListener('hashchange', changeView);
+    window.addEventListener('popstate', changeView);
+    return () => {
+      window.removeEventListener('hashchange', changeView);
+      window.removeEventListener('popstate', changeView);
+    };
   }, [preview, treatment]);
+  useEffect(() => {
+    if (preview) return;
+    const nextProject = projects[(index + 1) % projects.length];
+    const photo = new Image();
+    photo.src =
+      treatment === 'overprint'
+        ? nextProject.poster
+        : '/images/' + nextProject.work.image;
+  }, [index, preview, treatment, projects]);
   useEffect(() => {
     if (previous === null) return;
     const timer = window.setTimeout(() => setPrevious(null), 720);
@@ -73,16 +85,27 @@ export function DarkroomFeatured({
   function next() {
     if (previous !== null) return;
     setPrevious(index);
-    setIndex((value) => (value + 1) % featuredFilms.length);
+    const nextIndex = (index + 1) % projects.length;
+    setIndex(nextIndex);
+    if (treatment === 'overprint')
+      window.history.pushState(
+        null,
+        '',
+        '#featured/' + projects[nextIndex].slug,
+      );
     setTurn((value) => value + 1);
   }
   function slide(n: number, exiting = false) {
-    const work = artworks[featuredFilms[n]];
+    const project = projects[n];
+    const work = project.work;
     return (
       <div
         className={
           'df-slide' +
-          (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '')
+          (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '') +
+          (treatment === 'overprint'
+            ? ' op-layout-' + project.composition + ' op-film-' + project.slug
+            : '')
         }
         key={exiting ? 'previous' : turn}
         aria-hidden={exiting ? true : undefined}
@@ -99,7 +122,7 @@ export function DarkroomFeatured({
             <img
               src={
                 treatment === 'overprint'
-                  ? overprintImages[n]
+                  ? project.poster
                   : '/images/' + work.image
               }
               alt={work.title + ' — ' + work.artist}
@@ -109,7 +132,7 @@ export function DarkroomFeatured({
           <span className="dr-print-edge" aria-hidden="true" />
         </button>
         <div className="df-project-name">
-          <ProjectName index={n} />
+          <ProjectName lines={project.heading} />
         </div>
       </div>
     );
@@ -120,7 +143,12 @@ export function DarkroomFeatured({
         'darkroom df-site' +
         (preview ? ' df-preview' : '') +
         (treatment === 'overprint'
-          ? ' op-site op-' + view + (index === 1 ? ' op-yellow' : '')
+          ? ' op-site op-' +
+            view +
+            ' op-' +
+            projects[index].palette +
+            ' op-project-' +
+            projects[index].slug
           : '')
       }
     >
@@ -129,7 +157,11 @@ export function DarkroomFeatured({
           <nav aria-label="Main navigation">
             {(['featured', 'about', 'archive'] as View[]).map((item) => (
               <a
-                href={'#' + item}
+                href={
+                  item === 'featured' && treatment === 'overprint'
+                    ? '#featured/' + projects[index].slug
+                    : '#' + item
+                }
                 key={item}
                 aria-current={view === item ? 'page' : undefined}
               >
@@ -151,8 +183,7 @@ export function DarkroomFeatured({
             {previous !== null && slide(previous, true)}
             {slide(index)}
             <span className="sr-only" aria-live="polite" aria-atomic="true">
-              {artworks[featuredFilms[index]].artist}:{' '}
-              {artworks[featuredFilms[index]].title}
+              {projects[index].work.artist}: {projects[index].work.title}
             </span>
             <button
               className="df-next"
@@ -160,8 +191,7 @@ export function DarkroomFeatured({
               aria-disabled={previous !== null}
               aria-label={
                 'Next project: ' +
-                artworks[featuredFilms[(index + 1) % featuredFilms.length]]
-                  .title
+                projects[(index + 1) % projects.length].work.title
               }
             >
               <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
@@ -234,20 +264,20 @@ export function DarkroomFeatured({
           >
             <div className="dr-section-heading">
               <h2 id="df-archive-title">CONTACT SHEET</h2>
-              <span>08 FILMS</span>
+              <span>{String(archive.length).padStart(2, '0')} FILMS</span>
             </div>
             <div className="dr-contact-board">
-              {archiveOrder.map((n, i) => (
+              {archive.map((work, i) => (
                 <button
                   className="dr-contact-frame"
-                  key={n}
-                  onClick={() => setFilm(artworks[n])}
-                  aria-label={'Watch ' + artworks[n].title}
+                  key={work.vimeo}
+                  onClick={() => setFilm(work)}
+                  aria-label={'Watch ' + work.title}
                 >
                   <span className="dr-contact-photo">
                     <img
-                      src={'/images/' + artworks[n].image}
-                      alt={artworks[n].title + ' — ' + artworks[n].artist}
+                      src={'/images/' + work.image}
+                      alt={work.title + ' — ' + work.artist}
                       loading="eager"
                     />
                   </span>
