@@ -6,6 +6,10 @@ import { Screening } from '../../studies/screening';
 import { PressFilmstrip } from './press';
 import './featured.css';
 const featuredFilms = [5, 0];
+const overprintImages = [
+  '/images/overprint/if-you-call.png',
+  '/images/overprint/old-friend.png',
+];
 const archiveOrder = [5, 0, 2, 1, 3, 4, 6, 7];
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
@@ -32,7 +36,13 @@ function ProjectName({ index }: { index: number }) {
     </h2>
   );
 }
-export function DarkroomFeatured({ preview = false }: { preview?: boolean }) {
+export function DarkroomFeatured({
+  preview = false,
+  treatment = 'darkroom',
+}: {
+  preview?: boolean;
+  treatment?: 'darkroom' | 'overprint';
+}) {
   const [view, setView] = useState<View>('featured');
   const [index, setIndex] = useState(0);
   const [previous, setPrevious] = useState<number | null>(null);
@@ -46,12 +56,15 @@ export function DarkroomFeatured({ preview = false }: { preview?: boolean }) {
     }
     changeView();
     window.addEventListener('hashchange', changeView);
-    for (const n of featuredFilms) {
+    for (const [i, n] of featuredFilms.entries()) {
       const photo = new Image();
-      photo.src = '/images/' + artworks[n].image;
+      photo.src =
+        treatment === 'overprint'
+          ? overprintImages[i]
+          : '/images/' + artworks[n].image;
     }
     return () => window.removeEventListener('hashchange', changeView);
-  }, [preview]);
+  }, [preview, treatment]);
   useEffect(() => {
     if (previous === null) return;
     const timer = window.setTimeout(() => setPrevious(null), 720);
@@ -84,7 +97,11 @@ export function DarkroomFeatured({ preview = false }: { preview?: boolean }) {
         >
           <span className="dr-print-image">
             <img
-              src={'/images/' + work.image}
+              src={
+                treatment === 'overprint'
+                  ? overprintImages[n]
+                  : '/images/' + work.image
+              }
               alt={work.title + ' — ' + work.artist}
               loading="eager"
             />
@@ -98,7 +115,15 @@ export function DarkroomFeatured({ preview = false }: { preview?: boolean }) {
     );
   }
   return (
-    <div className={'darkroom df-site' + (preview ? ' df-preview' : '')}>
+    <div
+      className={
+        'darkroom df-site' +
+        (preview ? ' df-preview' : '') +
+        (treatment === 'overprint'
+          ? ' op-site op-' + view + (index === 1 ? ' op-yellow' : '')
+          : '')
+      }
+    >
       <div className="dr-room">
         <header className="dr-nav df-nav">
           <nav aria-label="Main navigation">
@@ -159,8 +184,16 @@ export function DarkroomFeatured({ preview = false }: { preview?: boolean }) {
             <div className="df-about-grid">
               <figure className="df-portrait">
                 <img
-                  src="/images/phil-2026.jpg"
-                  alt="Philip Di Fiore in red darkroom light"
+                  src={
+                    treatment === 'overprint'
+                      ? '/images/overprint/philip.png'
+                      : '/images/phil-2026.jpg'
+                  }
+                  alt={
+                    treatment === 'overprint'
+                      ? 'Philip Di Fiore — photographic collage'
+                      : 'Philip Di Fiore in red darkroom light'
+                  }
                 />
               </figure>
               <div className="df-bio">
