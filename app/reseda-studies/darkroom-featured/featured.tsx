@@ -19,8 +19,9 @@ import {
 } from '../overprint/chromatic';
 import { sequenceCategories } from '../overprint-sequence/categories';
 import {
-  sequenceProjects,
+  sequencePaletteProjects,
   sequenceArchive,
+  type RivalPalette,
 } from '../overprint-sequence/projects';
 import './featured.css';
 type View = 'featured' | 'about' | 'archive';
@@ -53,8 +54,9 @@ export function DarkroomFeatured({
 }) {
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
+  const [rivalPalette, setRivalPalette] = useState<RivalPalette>('vivid');
   const projects = sequence
-    ? sequenceProjects
+    ? sequencePaletteProjects[rivalPalette]
     : treatment === 'overprint'
       ? overprintProjects
       : darkroomProjects;
@@ -73,6 +75,11 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
+      setRivalPalette(
+        new URLSearchParams(window.location.search).get('rival') === 'uganda'
+          ? 'uganda'
+          : 'vivid',
+      );
       const nextView = hashView();
       setView(nextView);
       if (treatment === 'overprint' && nextView === 'featured') {
@@ -197,6 +204,7 @@ export function DarkroomFeatured({
           : '') +
         (preview ? ' df-preview' : '') +
         (sequence && fitScreen ? ' op-screen-fit' : '') +
+        (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +
             view +

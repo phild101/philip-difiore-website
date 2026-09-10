@@ -228,12 +228,17 @@
   background: #c7e929;
   color: #382044;
 }
+.op-site.op-sequence.op-featured.op-project-rival-schools {
+  --op-paper: #d4ff45;
+  --op-ink: #251044;
+  --op-blue: #7624ff;
+}
 .op-site.op-sequence.op-featured.op-project-rival-schools .df-masthead {
-  color: #1647ac;
+  color: #7624ff;
 }
 .op-site.op-sequence .op-film-rival-schools .df-project-name {
-  background: #1647ac;
-  color: var(--op-paper);
+  background: #ff5b59;
+  color: #251044;
 }
 .op-site.op-sequence.op-featured.op-project-rdgldgrn .dr-room {
   background: #066746;
@@ -347,4 +352,17 @@
   .op-site.op-sequence .sq-arrow {
     transition: none;
   }
+}
+
+.op-site.op-sequence.op-featured.op-project-rival-schools.op-rival-uganda {
+  --op-paper: #f6d32d;
+  --op-ink: #191616;
+  --op-blue: #b31b20;
+}
+.op-site.op-sequence.op-featured.op-project-rival-schools.op-rival-uganda .df-masthead {
+  color: #191616;
+}
+.op-site.op-sequence.op-rival-uganda .op-film-rival-schools .df-project-name {
+  background: #c92228;
+  color: #ffdf32;
 }

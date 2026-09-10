@@ -4,7 +4,7 @@ import { Sequence } from './sequence';
 export const metadata: Metadata = {
   title: 'Philip Di Fiore — Overprint / Sequence',
   description:
-    'Films, videos, live performances and music. An Overprint sequence.',
+    'Film, video, live performances and music. An Overprint sequence.',
 };
 
 export default function Page() {

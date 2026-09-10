@@ -176,7 +176,7 @@ export default function ResedaStudies() {
               <span>↗</span>
             </div>
             <p className="catalog-material">
-              Film. Video. Live. Music. A fast-moving sequence.
+              Preserved Sequence sizing. Film. Video. Live. Music.
             </p>
           </a>
         </article>
@@ -193,7 +193,7 @@ export default function ResedaStudies() {
               <span>↗</span>
             </div>
             <p className="catalog-material">
-              The complete composition. One screen, at any size.
+              The bordered page, lettering and artwork fit together.
             </p>
           </a>
         </article>

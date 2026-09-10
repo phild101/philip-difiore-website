@@ -79,7 +79,7 @@ const videoProjects: FeaturedProject[] = [
   {
     slug: 'rival-schools',
     work: rivalSchools,
-    poster: '/images/sequence/rival-schools-overprint.png',
+    poster: '/images/sequence/rival-schools-vivid.png',
     heading: ['RIVAL', 'SCHOOLS'],
     palette: 'paper',
     composition: 'right',
@@ -108,3 +108,13 @@ export const sequenceArchive = [
   rdgldgrn,
   antibalas,
 ];
+
+export type RivalPalette = 'vivid' | 'uganda';
+export const sequencePaletteProjects = {
+  vivid: sequenceProjects,
+  uganda: sequenceProjects.map((project) =>
+    project.slug === 'rival-schools'
+      ? { ...project, poster: '/images/sequence/rival-schools-uganda.png' }
+      : project,
+  ),
+};

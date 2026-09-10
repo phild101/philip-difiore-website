@@ -3,7 +3,7 @@ import { Overprint } from './overprint';
 export const metadata: Metadata = {
   title: 'Philip Di Fiore — Overprint',
   description:
-    'Films, photographs and printed fragments. An artist portfolio in vermilion, cobalt and paper.',
+    'Film, photographs and printed fragments. An artist portfolio in vermilion, cobalt and paper.',
 };
 export default function Page() {
   return (
