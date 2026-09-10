@@ -58,13 +58,16 @@ export function DarkroomFeatured({
   edition = 'original',
   fitScreen = false,
   fluid = false,
+  posterLayout,
 }: {
   preview?: boolean;
   treatment?: 'darkroom' | 'overprint';
   edition?: OverprintEdition;
   fitScreen?: boolean;
   fluid?: boolean;
+  posterLayout?: 'vertical' | 'horizontal';
 }) {
+  const horizontal = posterLayout === 'horizontal';
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
@@ -93,7 +96,7 @@ export function DarkroomFeatured({
           ? 'vivid'
           : 'uganda',
       );
-      const nextView = hashView();
+      const nextView = horizontal ? 'featured' : hashView();
       setView(nextView);
       if (treatment === 'overprint' && nextView === 'featured') {
         const slug = window.location.hash.slice(1).split('/')[1];
@@ -111,7 +114,7 @@ export function DarkroomFeatured({
       window.removeEventListener('hashchange', changeView);
       window.removeEventListener('popstate', changeView);
     };
-  }, [preview, treatment, projects]);
+  }, [preview, treatment, projects, horizontal]);
   useEffect(() => {
     if (preview) return;
     for (const offset of sequence ? [1, -1] : [1]) {
@@ -132,11 +135,23 @@ export function DarkroomFeatured({
     );
     return () => window.clearTimeout(timer);
   }, [previous, sequence]);
+  const currentCategory = sequenceCategories[projects[index].slug];
+  const navigationIndices = projects.flatMap((project, projectIndex) =>
+    !horizontal || sequenceCategories[project.slug] === currentCategory
+      ? [projectIndex]
+      : [],
+  );
+  function adjacentIndex(step: 1 | -1) {
+    const position = navigationIndices.indexOf(index);
+    return navigationIndices[
+      (position + step + navigationIndices.length) % navigationIndices.length
+    ];
+  }
   function move(step: 1 | -1) {
-    if (previous !== null) return;
+    if (previous !== null || navigationIndices.length < 2) return;
     setDirection(step);
     setPrevious(index);
-    const nextIndex = (index + step + projects.length) % projects.length;
+    const nextIndex = adjacentIndex(step);
     setIndex(nextIndex);
     if (treatment === 'overprint')
       window.history.pushState(
@@ -243,7 +258,7 @@ export function DarkroomFeatured({
       style={
         chromatic
           ? chromaticProperties(projects[index].slug)
-          : fluid
+          : fluid || posterLayout
             ? ({
                 '--fl-art-ratio': artworkRatio(projects[index].slug),
                 '--fl-word-advance':
@@ -260,6 +275,7 @@ export function DarkroomFeatured({
         (preview ? ' df-preview' : '') +
         (sequence && fitScreen ? ' op-screen-fit' : '') +
         (sequence && fluid ? ' op-fluid' : '') +
+        (posterLayout ? ' op-poster op-' + posterLayout : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +
@@ -282,21 +298,23 @@ export function DarkroomFeatured({
               PHILIP DI FIORE
             </a>
           )}
-          <nav aria-label="Main navigation">
-            {(['featured', 'about', 'archive'] as View[]).map((item) => (
-              <a
-                href={
-                  item === 'featured' && treatment === 'overprint'
-                    ? '#featured/' + projects[index].slug
-                    : '#' + item
-                }
-                key={item}
-                aria-current={view === item ? 'page' : undefined}
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
+          {!horizontal && (
+            <nav aria-label="Main navigation">
+              {(['featured', 'about', 'archive'] as View[]).map((item) => (
+                <a
+                  href={
+                    item === 'featured' && treatment === 'overprint'
+                      ? '#featured/' + projects[index].slug
+                      : '#' + item
+                  }
+                  key={item}
+                  aria-current={view === item ? 'page' : undefined}
+                >
+                  {item}
+                </a>
+              ))}
+            </nav>
+          )}
         </header>
         {sequence ? (
           view !== 'featured' && (
@@ -328,11 +346,49 @@ export function DarkroomFeatured({
             >
               {sequence ? (
                 <>
-                  <h1 className="dr-masthead df-masthead sq-category">
-                    <span className="dr-family-name">
-                      {sequenceCategories[projects[index].slug]}
-                    </span>
-                  </h1>
+                  {horizontal ? (
+                    <nav
+                      className="ps-category-menu df-masthead"
+                      aria-label="Project categories"
+                    >
+                      {(['FILM', 'VIDEO', 'MUSIC', 'LIVE'] as const).map(
+                        (category) => {
+                          const first = projects.find(
+                            (project) =>
+                              sequenceCategories[project.slug] === category,
+                          )!;
+                          return (
+                            <a
+                              key={category}
+                              href={'#featured/' + first.slug}
+                              aria-current={
+                                currentCategory === category
+                                  ? 'page'
+                                  : undefined
+                              }
+                              style={
+                                {
+                                  '--ps-condense': Math.min(
+                                    1,
+                                    categoryAdvance.FILM /
+                                      categoryAdvance[category],
+                                  ),
+                                } as CSSProperties
+                              }
+                            >
+                              <span>{category}</span>
+                            </a>
+                          );
+                        },
+                      )}
+                    </nav>
+                  ) : (
+                    <h1 className="dr-masthead df-masthead sq-category">
+                      <span className="dr-family-name">
+                        {sequenceCategories[projects[index].slug]}
+                      </span>
+                    </h1>
+                  )}
                   <div className="sq-stage">
                     {previous !== null && slide(previous, true)}
                     {slide(index)}
@@ -348,7 +404,10 @@ export function DarkroomFeatured({
                 {projects[index].work.artist}: {projects[index].work.title}
               </span>
               {sequence ? (
-                <div className="sq-control-rail">
+                <div
+                  className="sq-control-rail"
+                  hidden={horizontal && navigationIndices.length < 2}
+                >
                   <nav className="sq-controls" aria-label="Featured navigation">
                     {([-1, 1] as const).map((step) => (
                       <button
@@ -362,9 +421,7 @@ export function DarkroomFeatured({
                           (step === -1
                             ? 'Previous project: '
                             : 'Next project: ') +
-                          projects[
-                            (index + step + projects.length) % projects.length
-                          ].work.title
+                          projects[adjacentIndex(step)].work.title
                         }
                       >
                         <svg
@@ -372,12 +429,22 @@ export function DarkroomFeatured({
                           fill="none"
                           aria-hidden="true"
                         >
-                          <path
-                            d="M18 12 104 100 18 188"
-                            stroke="currentColor"
-                            strokeWidth="5"
-                            vectorEffect="non-scaling-stroke"
-                          />
+                          {posterLayout ? (
+                            <path
+                              d="M17 11 40 8 110 96 107 107 38 193 15 186 13 171 76 100 14 29Z"
+                              fill="currentColor"
+                              stroke="#132323"
+                              strokeWidth="4"
+                              strokeLinejoin="bevel"
+                            />
+                          ) : (
+                            <path
+                              d="M18 12 104 100 18 188"
+                              stroke="currentColor"
+                              strokeWidth="5"
+                              vectorEffect="non-scaling-stroke"
+                            />
+                          )}
                         </svg>
                       </button>
                     ))}
@@ -490,9 +557,14 @@ export function DarkroomFeatured({
       </div>
       {!preview && (
         <>
-          <Screening work={film} close={() => setFilm(null)} />
+          <Screening
+            work={film}
+            close={() => setFilm(null)}
+            fullscreen={!!posterLayout}
+          />
           <PressArticle
             article={article}
+            fullscreen={!!posterLayout}
             close={() => setArticle(null)}
             watch={watchPressFilm}
           />

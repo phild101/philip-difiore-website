@@ -15,7 +15,9 @@ export function PressArticle({
   article,
   close,
   watch,
+  fullscreen = false,
 }: {
+  fullscreen?: boolean;
   article: PressItem | null;
   close: () => void;
   watch: (film: PressFilm) => void;
@@ -55,7 +57,9 @@ export function PressArticle({
         if (!open) close();
       }}
     >
-      <DialogContent className="df-article-dialog">
+      <DialogContent
+        className={'df-article-dialog' + (fullscreen ? ' df-article-full' : '')}
+      >
         {article && (
           <>
             <div className="df-article-toolbar">

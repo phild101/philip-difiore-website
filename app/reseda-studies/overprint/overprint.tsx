@@ -7,11 +7,13 @@ export function Overprint({
   edition = 'original',
   fitScreen = false,
   fluid = false,
+  posterLayout,
 }: {
   preview?: boolean;
   edition?: OverprintEdition;
   fitScreen?: boolean;
   fluid?: boolean;
+  posterLayout?: 'vertical' | 'horizontal';
 }) {
   return (
     <DarkroomFeatured
@@ -20,6 +22,7 @@ export function Overprint({
       edition={edition}
       fitScreen={fitScreen}
       fluid={fluid}
+      posterLayout={posterLayout}
     />
   );
 }

@@ -1,0 +1,294 @@
+/* Independent trials: the saved Sequence and Fluid keep their own geometry. */
+.op-site.op-sequence.op-poster {
+  padding: 8px;
+  --sq-page-chrome: 106px;
+}
+.op-site.op-sequence.op-poster .dr-room {
+  min-height: calc(100svh - 16px);
+  padding: 0 clamp(12px, 2.2vw, 42px) 18px;
+}
+.op-site.op-sequence.op-poster .df-nav {
+  height: 52px;
+}
+.op-site.op-sequence.op-vertical.op-featured .df-featured {
+  width: 100%;
+  margin-top: 16px;
+}
+/* The category and photograph retain Sequence's proportions and orientation. */
+.op-site.op-sequence.op-vertical.op-featured .sq-category {
+  top: 0;
+  left: 0;
+}
+.op-site.op-sequence.op-poster .sq-control-rail {
+  inset: 0 0 0 auto;
+  width: calc(95% * var(--fl-art-ratio));
+}
+.op-site.op-sequence.op-poster .sq-control-rail[hidden] {
+  display: none;
+}
+.op-site.op-sequence.op-poster .sq-controls {
+  position: sticky;
+  top: calc(50svh - 44px);
+  width: 100%;
+  height: clamp(62px, 8cqw, 106px);
+  margin: 0;
+  padding: 0 clamp(7px, 1.2cqw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  pointer-events: none;
+  transform: none;
+}
+.op-site.op-sequence.op-poster .sq-arrow,
+.op-site.op-sequence.op-poster .sq-arrow:is(:hover, :active, :focus) {
+  width: clamp(40px, 5cqw, 68px);
+  height: 100%;
+  padding: 5px;
+  border: 0;
+  background: transparent;
+  color: #f2e4c4;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+  transition: none;
+  animation: none;
+  pointer-events: auto;
+}
+.op-site.op-sequence.op-poster .sq-arrow svg {
+  mask: url('/images/sequence/arrow-wear.svg') center / 100% 100% no-repeat;
+}
+.op-site.op-sequence.op-poster .sq-arrow:focus-visible {
+  outline: 2px solid #f2e4c4;
+  outline-offset: 2px;
+}
+/* Horizontal keeps the screenshot's FILM scale; longer words are condensed
+   at the same cap height, like type set to the width of a printed poster. */
+.op-site.op-sequence.op-horizontal.op-featured .df-featured {
+  --ps-image-width: 51.5%;
+  width: 100%;
+  margin: 22px 0 0;
+  aspect-ratio: calc(var(--fl-art-ratio) / 0.515);
+  height: auto;
+  min-height: 0;
+}
+.op-site.op-sequence.op-horizontal .sq-stage {
+  width: var(--ps-image-width);
+  height: 100%;
+  margin-left: auto;
+  clip-path: none;
+  overflow: clip;
+  overflow-clip-margin: 0;
+  container-type: inline-size;
+}
+.op-site.op-sequence.op-horizontal.op-featured .df-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  height: 100%;
+}
+.op-site.op-sequence.op-horizontal.op-featured .df-slide .df-print,
+.op-site.op-sequence.op-horizontal.op-featured .df-slide .dr-print-image {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  aspect-ratio: auto;
+}
+.op-site.op-sequence.op-horizontal .df-print img {
+  object-fit: contain;
+}
+.op-site.op-sequence.op-horizontal .sq-control-rail {
+  width: var(--ps-image-width);
+}
+.op-site.op-sequence.op-horizontal.op-featured .ps-category-menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 46.5%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  pointer-events: auto;
+  container-type: normal;
+}
+.ps-category-menu a {
+  display: block;
+  width: 100%;
+  font-family: 'Archivo Black', Arial, sans-serif;
+  font-weight: 400;
+  font-kerning: none;
+  font-size: calc(46.5cqw / 2.415);
+  letter-spacing: -0.063em;
+  line-height: 0.8;
+  color: var(--op-ink);
+  text-decoration: none;
+}
+.ps-category-menu a span {
+  display: block;
+  width: max-content;
+  transform: scaleX(var(--ps-condense));
+  transform-origin: left center;
+}
+.ps-category-menu a[aria-current='page'] {
+  color: inherit;
+}
+.ps-category-menu a:hover {
+  color: inherit;
+}
+/* Keep the original rectangular, worn paper labels. Their positions are
+   measured within the photograph in this narrower, two-column edition. */
+.op-site.op-sequence.op-horizontal.op-featured .df-slide .df-project-name {
+  left: 2%;
+  right: auto;
+  top: auto;
+  bottom: 6%;
+  max-width: 66%;
+  padding: clamp(10px, 3cqw, 24px);
+}
+.op-site.op-sequence.op-horizontal .df-slide .df-project-name h2 {
+  font-size: clamp(14px, 5.1cqw, 49px);
+}
+.op-site.op-sequence.op-horizontal.op-featured
+  .op-layout-left
+  .df-project-name {
+  left: auto;
+  right: 0;
+  bottom: 32%;
+}
+.op-site.op-sequence.op-horizontal.op-featured
+  .df-slide:is(
+    .op-film-stranger,
+    .op-film-naomi-shelton,
+    .op-film-buffalo-hunt,
+    .op-film-save-my-life,
+    .op-film-antibalas
+  )
+  .df-project-name {
+  left: 3%;
+  right: auto;
+  top: 4%;
+  bottom: auto;
+}
+.op-site.op-sequence.op-horizontal.op-featured
+  .df-slide:is(.op-film-diiv, .op-film-rdgldgrn)
+  .df-project-name {
+  left: auto;
+  right: 0;
+  top: 5%;
+  bottom: auto;
+}
+.op-site.op-sequence.op-horizontal
+  .df-slide.op-film-naomi-shelton
+  .df-project-name
+  h2 {
+  font-size: clamp(12px, 4.1cqw, 39px);
+}
+@media (max-width: 640px) {
+  .op-site.op-sequence.op-poster .df-nav {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  .op-site.op-sequence.op-poster .df-nav nav {
+    gap: 10px;
+  }
+  .op-site.op-sequence.op-horizontal.op-featured .df-featured {
+    --ps-image-width: 68%;
+    height: auto;
+    aspect-ratio: calc(var(--fl-art-ratio) / 0.68);
+    margin-top: 14px;
+  }
+  .op-site.op-sequence.op-horizontal.op-featured .ps-category-menu {
+    width: 29%;
+  }
+  .ps-category-menu a {
+    font-size: calc(29cqw / 2.415);
+  }
+}
+
+.op-site.op-horizontal:is(
+    .op-cobalt,
+    .op-ink,
+    .op-project-class-actress,
+    .op-project-save-my-life,
+    .op-project-antibalas,
+    .op-project-rdgldgrn
+  )
+  .ps-category-menu
+  a:not([aria-current='page']) {
+  color: var(--op-paper);
+}
+.op-site.op-horizontal .ps-category-menu a[aria-current='page'] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.06em;
+}
+
+/* Keep Horizontal's whole spread inside the window; only the local layout
+   responds, never a fixed-size page surrounded by an expanding canvas. */
+.op-site.op-sequence.op-horizontal.op-featured {
+  height: 100dvh;
+  min-height: 0;
+}
+.op-site.op-sequence.op-horizontal.op-featured .dr-room {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.op-site.op-sequence.op-horizontal.op-featured .df-nav {
+  flex: 0 0 52px;
+}
+.op-site.op-sequence.op-horizontal.op-featured .df-featured {
+  container: horizontal-spread / size;
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  --ps-image-width: min(51.5cqw, calc(100cqh * var(--fl-art-ratio)));
+}
+.op-site.op-sequence.op-horizontal .sq-stage,
+.op-site.op-sequence.op-horizontal .sq-control-rail {
+  height: calc(var(--ps-image-width) / var(--fl-art-ratio));
+}
+.op-site.op-sequence.op-horizontal.op-featured .ps-category-menu {
+  height: calc(
+    min(51.5cqw, 100cqh * var(--fl-art-ratio)) / var(--fl-art-ratio)
+  );
+}
+.op-site.op-sequence.op-horizontal .ps-category-menu a {
+  font-size: min(calc(46.5cqw / 2.415), 30cqh);
+}
+.op-site.op-sequence.op-horizontal .sq-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (max-width: 640px) {
+  .op-site.op-sequence.op-horizontal.op-featured .df-featured {
+    --ps-image-width: min(68cqw, calc(100cqh * var(--fl-art-ratio)));
+  }
+  .op-site.op-sequence.op-horizontal.op-featured .ps-category-menu {
+    height: calc(
+      min(68cqw, 100cqh * var(--fl-art-ratio)) / var(--fl-art-ratio)
+    );
+  }
+  .op-site.op-sequence.op-horizontal .ps-category-menu a {
+    font-size: min(calc(29cqw / 2.415), 30cqh);
+  }
+}
+.op-site.op-sequence.op-horizontal.df-preview {
+  height: 800px;
+}
+.df-article-dialog.df-article-full {
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 0;
+  transform: none;
+  translate: none;
+  animation: none !important;
+}

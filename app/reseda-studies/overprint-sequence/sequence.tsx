@@ -6,10 +6,12 @@ export function Sequence({
   preview = false,
   fitScreen = false,
   fluid = false,
+  posterLayout,
 }: {
   preview?: boolean;
   fitScreen?: boolean;
   fluid?: boolean;
+  posterLayout?: 'vertical' | 'horizontal';
 }) {
   return (
     <Overprint
@@ -17,6 +19,7 @@ export function Sequence({
       edition="sequence"
       fitScreen={fitScreen}
       fluid={fluid}
+      posterLayout={posterLayout}
     />
   );
 }
