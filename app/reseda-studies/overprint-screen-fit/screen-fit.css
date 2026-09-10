@@ -1,93 +1,61 @@
-.op-site.op-sequence.op-screen-fit.op-featured {
+.sf-fit-viewport {
+  position: relative;
+  container-type: size;
+  width: 100%;
   height: 100dvh;
+  overflow: clip;
+  background: #e9dbbc;
+}
+.sf-fit-preview {
+  height: 800px;
+}
+.sf-fit-frame {
+  --sf-scale: min(calc(100cqw / 1000px), calc(100cqh / 1013px));
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(1000px * var(--sf-scale));
+  height: calc(1013px * var(--sf-scale));
+  transform: translateX(-50%);
+}
+.op-site.op-sequence.op-screen-fit.op-featured {
+  /* Fit the complete bordered page, preserving all internal proportions. */
+  width: 1000px;
+  height: 1013px;
   min-height: 0;
+  padding: 18px;
+  transform: scale(var(--sf-scale));
+  transform-origin: top left;
 }
 .op-site.op-sequence.op-screen-fit.op-featured .dr-room {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
+  display: block;
   height: 100%;
   min-height: 0;
+  padding: 0 3% 30px;
 }
 .op-site.op-sequence.op-screen-fit.op-featured .df-nav {
-  height: auto;
-  min-height: 62px;
-  flex-wrap: wrap;
-}
-.op-site.op-sequence.op-screen-fit.op-featured .df-nav nav {
-  max-width: 100%;
-  flex-wrap: wrap;
+  height: 62px;
+  flex-wrap: nowrap;
 }
 .op-screen-fit.op-featured .sq-fit-area {
-  container-type: size;
-  position: relative;
-  min-height: 0;
-  min-width: 0;
-  padding-top: 24px;
+  display: contents;
+  container-type: normal;
 }
 .op-site.op-sequence.op-screen-fit.op-featured .df-featured {
-  /* Fit both dimensions of the actual space below the header. The category,
-     artwork and title card share this one proportional composition. */
-  width: min(100%, calc(100cqh * 20 / 19));
+  width: 100%;
   height: auto;
-  margin: 0 0 0 auto;
+  margin: 24px 0 0;
   aspect-ratio: 20 / 19;
 }
 .op-screen-fit.op-featured .df-print img {
   object-fit: contain;
 }
-.op-site.op-sequence.op-screen-fit.op-featured .df-project-name {
-  padding: 2cqw 2.8cqw;
-  max-width: 38%;
-}
-.op-site.op-sequence.op-screen-fit.op-featured .df-project-name h2 {
-  font-size: 3.4cqw;
-  max-width: none;
-}
 .op-site.op-sequence.op-screen-fit .sq-control-rail {
-  inset: 0 min(10px, 1cqw) min(10px, 1cqw) 0;
+  inset: 0 14px 14px 0;
 }
 .op-site.op-sequence.op-screen-fit .sq-controls {
   position: absolute;
   top: auto;
   right: 0;
   bottom: 0;
-  height: min(100%, clamp(44px, 9cqw, 112px));
-  gap: min(8px, 1cqw);
-}
-.op-site.op-sequence.op-screen-fit .sq-arrow {
-  width: min(20cqw, clamp(36px, 6cqw, 82px));
-  height: 100%;
-  padding: min(9px, 1.5cqw);
-}
-.op-site.op-sequence.op-screen-fit.op-featured
-  .op-film-naomi-shelton
-  .df-project-name
-  h2 {
-  font-size: 2.45cqw;
-}
-.op-site.op-sequence.op-screen-fit.op-featured
-  .op-film-stranger
-  .df-project-name
-  h2 {
-  font-size: 3.1cqw;
-}
-.op-site.op-sequence.op-screen-fit.op-featured.df-preview {
-  height: 800px;
-}
-@container (max-width: 640px) {
-  .op-screen-fit.op-featured .sq-fit-area {
-    padding-top: 20px;
-  }
-}
-@media (max-height: 500px) {
-  .op-site.op-sequence.op-screen-fit.op-featured .dr-room {
-    padding-bottom: 12px;
-  }
-  .op-screen-fit.op-featured .sq-fit-area {
-    padding-top: 12px;
-  }
-  .op-site.op-sequence.op-screen-fit .sq-control-rail {
-    inset: 0 min(4px, 1cqw) min(4px, 1cqw) 0;
-  }
 }

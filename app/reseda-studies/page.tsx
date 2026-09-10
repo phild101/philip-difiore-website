@@ -51,7 +51,7 @@ export default function ResedaStudies() {
                   </div>
                   <div className="reseda-lead-copy">
                     <h2>
-                      FILMS
+                      FILM
                       <br />& IMAGES
                     </h2>
                     <div>
@@ -176,7 +176,7 @@ export default function ResedaStudies() {
               <span>↗</span>
             </div>
             <p className="catalog-material">
-              Films. Videos. Live. Music. A fast-moving sequence.
+              Film. Video. Live. Music. A fast-moving sequence.
             </p>
           </a>
         </article>

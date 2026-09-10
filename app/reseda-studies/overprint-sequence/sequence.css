@@ -213,6 +213,66 @@
   background: #f5e4c9;
   color: #141c56;
 }
+.op-site.op-sequence.op-featured.op-project-save-my-life .dr-room {
+  background: #382044;
+}
+.op-site.op-sequence.op-featured.op-project-save-my-life .df-masthead {
+  color: #eee96e;
+}
+.op-site.op-sequence.op-featured
+  .df-slide.op-film-save-my-life
+  .df-project-name {
+  top: 6%;
+  bottom: auto;
+  left: 25%;
+  background: #c7e929;
+  color: #382044;
+}
+.op-site.op-sequence.op-featured.op-project-rival-schools .df-masthead {
+  color: #1647ac;
+}
+.op-site.op-sequence .op-film-rival-schools .df-project-name {
+  background: #1647ac;
+  color: var(--op-paper);
+}
+.op-site.op-sequence.op-featured.op-project-rdgldgrn .dr-room {
+  background: #066746;
+}
+.op-site.op-sequence.op-featured .df-slide.op-film-rdgldgrn .df-project-name {
+  top: 5%;
+  bottom: auto;
+  left: auto;
+  right: 0;
+  background: #ef4327;
+  color: #102b25;
+}
+.op-site.op-sequence.op-featured.op-project-antibalas .dr-room {
+  background: #681e21;
+}
+.op-site.op-sequence.op-featured.op-project-antibalas .df-masthead {
+  color: #edaa37;
+}
+.op-site.op-sequence.op-featured .df-slide.op-film-antibalas .df-project-name {
+  top: 5%;
+  bottom: auto;
+  left: 27%;
+  background: #edaa37;
+  color: #501c20;
+}
+.op-site.op-sequence.op-featured
+  .df-slide:is(.op-film-rdgldgrn, .op-film-antibalas)
+  .df-print {
+  width: calc(95% * 1073 / 1466);
+  aspect-ratio: 1073 / 1466;
+}
+.op-site.op-sequence
+  .df-slide:is(.op-film-rdgldgrn, .op-film-antibalas)
+  .dr-print-image {
+  aspect-ratio: 1073 / 1466;
+}
+.op-site.op-sequence .df-slide:is(.op-film-rdgldgrn, .op-film-antibalas) img {
+  object-fit: contain;
+}
 @container (max-width: 640px) {
   .op-site.op-sequence .df-nav {
     gap: 8px;

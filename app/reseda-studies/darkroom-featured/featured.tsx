@@ -186,7 +186,7 @@ export function DarkroomFeatured({
       </div>
     );
   }
-  return (
+  const site = (
     <div
       style={chromatic ? chromaticProperties(projects[index].slug) : undefined}
       className={
@@ -394,7 +394,7 @@ export function DarkroomFeatured({
               {!sequence && <h2 id="df-archive-title">CONTACT SHEET</h2>}
               <span>
                 {String(archive.length).padStart(2, '0')}{' '}
-                {treatment === 'overprint' ? 'WORKS' : 'FILMS'}
+                {treatment === 'overprint' ? 'WORKS' : 'FILM'}
               </span>
             </div>
             <div className="dr-contact-board">
@@ -435,5 +435,12 @@ export function DarkroomFeatured({
         </>
       )}
     </div>
+  );
+  return sequence && fitScreen && view === 'featured' ? (
+    <div className={'sf-fit-viewport' + (preview ? ' sf-fit-preview' : '')}>
+      <div className="sf-fit-frame">{site}</div>
+    </div>
+  ) : (
+    site
   );
 }
