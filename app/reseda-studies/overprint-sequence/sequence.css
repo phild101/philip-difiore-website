@@ -1,6 +1,5 @@
 .op-site.op-sequence {
   --sq-direction: 1;
-  --sq-fit-chrome: 154px;
   --sq-control-height: clamp(70px, 9cqw, 112px);
 }
 .op-site.op-sequence.sq-backwards {
@@ -29,9 +28,9 @@
 }
 .op-site.op-sequence.op-featured .df-featured {
   container-type: inline-size;
-  width: min(100%, calc((100svh - var(--sq-fit-chrome)) * 20 / 19));
+  width: 85%;
   margin-top: 24px;
-  margin-inline: auto;
+  margin-inline: 0;
   aspect-ratio: 20 / 19;
   height: auto;
   min-height: 0;
@@ -214,7 +213,6 @@
 }
 @media (max-width: 640px) {
   .op-site.op-sequence .dr-room {
-    --sq-fit-chrome: 119px;
     min-height: calc(100svh - 18px);
   }
 }
