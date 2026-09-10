@@ -18,6 +18,10 @@ import {
   type OverprintEdition,
 } from '../overprint/chromatic';
 import { sequenceCategories } from '../overprint-sequence/categories';
+import {
+  sequenceProjects,
+  sequenceArchive,
+} from '../overprint-sequence/projects';
 import './featured.css';
 type View = 'featured' | 'about' | 'archive';
 function hashView(): View {
@@ -40,17 +44,25 @@ export function DarkroomFeatured({
   preview = false,
   treatment = 'darkroom',
   edition = 'original',
+  fitScreen = false,
 }: {
   preview?: boolean;
   treatment?: 'darkroom' | 'overprint';
   edition?: OverprintEdition;
+  fitScreen?: boolean;
 }) {
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
-  const projects =
-    treatment === 'overprint' ? overprintProjects : darkroomProjects;
-  const archive =
-    treatment === 'overprint' ? overprintArchive : darkroomArchive;
+  const projects = sequence
+    ? sequenceProjects
+    : treatment === 'overprint'
+      ? overprintProjects
+      : darkroomProjects;
+  const archive = sequence
+    ? sequenceArchive
+    : treatment === 'overprint'
+      ? overprintArchive
+      : darkroomArchive;
   const [view, setView] = useState<View>('featured');
   const [index, setIndex] = useState(0);
   const [previous, setPrevious] = useState<number | null>(null);
@@ -65,9 +77,7 @@ export function DarkroomFeatured({
       setView(nextView);
       if (treatment === 'overprint' && nextView === 'featured') {
         const slug = window.location.hash.slice(1).split('/')[1];
-        const selected = overprintProjects.findIndex(
-          (project) => project.slug === slug,
-        );
+        const selected = projects.findIndex((project) => project.slug === slug);
         setIndex(selected >= 0 ? selected : 0);
       }
       setPrevious(null);
@@ -81,7 +91,7 @@ export function DarkroomFeatured({
       window.removeEventListener('hashchange', changeView);
       window.removeEventListener('popstate', changeView);
     };
-  }, [preview, treatment]);
+  }, [preview, treatment, projects]);
   useEffect(() => {
     if (preview) return;
     for (const offset of sequence ? [1, -1] : [1]) {
@@ -186,6 +196,7 @@ export function DarkroomFeatured({
           ? ' op-sequence' + (direction === -1 ? ' sq-backwards' : '')
           : '') +
         (preview ? ' df-preview' : '') +
+        (sequence && fitScreen ? ' op-screen-fit' : '') +
         (treatment === 'overprint'
           ? ' op-site op-' +
             view +
@@ -243,87 +254,93 @@ export function DarkroomFeatured({
           </h1>
         )}
         {view === 'featured' && (
-          <section
-            className="df-featured"
-            id={preview ? undefined : 'featured'}
-            aria-label={
-              treatment === 'overprint' ? 'Featured works' : 'Featured films'
-            }
-          >
-            {sequence ? (
-              <>
-                <h1 className="dr-masthead df-masthead sq-category">
-                  <span className="dr-family-name">
-                    {sequenceCategories[projects[index].slug]}
-                  </span>
-                </h1>
-                <div className="sq-stage">
+          <div className={fitScreen ? 'sq-fit-area' : 'sq-flow-area'}>
+            <section
+              className="df-featured"
+              id={preview ? undefined : 'featured'}
+              aria-label={
+                treatment === 'overprint' ? 'Featured works' : 'Featured films'
+              }
+            >
+              {sequence ? (
+                <>
+                  <h1 className="dr-masthead df-masthead sq-category">
+                    <span className="dr-family-name">
+                      {sequenceCategories[projects[index].slug]}
+                    </span>
+                  </h1>
+                  <div className="sq-stage">
+                    {previous !== null && slide(previous, true)}
+                    {slide(index)}
+                  </div>
+                </>
+              ) : (
+                <>
                   {previous !== null && slide(previous, true)}
                   {slide(index)}
+                </>
+              )}
+              <span className="sr-only" aria-live="polite" aria-atomic="true">
+                {projects[index].work.artist}: {projects[index].work.title}
+              </span>
+              {sequence ? (
+                <div className="sq-control-rail">
+                  <nav className="sq-controls" aria-label="Featured navigation">
+                    {([-1, 1] as const).map((step) => (
+                      <button
+                        className={
+                          'sq-arrow' + (step === -1 ? ' sq-previous' : '')
+                        }
+                        key={step}
+                        onClick={() => move(step)}
+                        aria-disabled={previous !== null}
+                        aria-label={
+                          (step === -1
+                            ? 'Previous project: '
+                            : 'Next project: ') +
+                          projects[
+                            (index + step + projects.length) % projects.length
+                          ].work.title
+                        }
+                      >
+                        <svg
+                          viewBox="0 0 120 200"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M18 12 104 100 18 188"
+                            stroke="currentColor"
+                            strokeWidth="5"
+                            vectorEffect="non-scaling-stroke"
+                          />
+                        </svg>
+                      </button>
+                    ))}
+                  </nav>
                 </div>
-              </>
-            ) : (
-              <>
-                {previous !== null && slide(previous, true)}
-                {slide(index)}
-              </>
-            )}
-            <span className="sr-only" aria-live="polite" aria-atomic="true">
-              {projects[index].work.artist}: {projects[index].work.title}
-            </span>
-            {sequence ? (
-              <div className="sq-control-rail">
-                <nav className="sq-controls" aria-label="Featured navigation">
-                  {([-1, 1] as const).map((step) => (
-                    <button
-                      className={
-                        'sq-arrow' + (step === -1 ? ' sq-previous' : '')
-                      }
-                      key={step}
-                      onClick={() => move(step)}
-                      aria-disabled={previous !== null}
-                      aria-label={
-                        (step === -1
-                          ? 'Previous project: '
-                          : 'Next project: ') +
-                        projects[
-                          (index + step + projects.length) % projects.length
-                        ].work.title
-                      }
-                    >
-                      <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
-                        <path
-                          d="M18 12 104 100 18 188"
-                          stroke="currentColor"
-                          strokeWidth="5"
-                          vectorEffect="non-scaling-stroke"
-                        />
-                      </svg>
-                    </button>
-                  ))}
-                </nav>
-              </div>
-            ) : (
-              <button
-                className="df-next"
-                onClick={() => move(1)}
-                aria-disabled={previous !== null}
-                aria-label={
-                  'Next project: ' +
-                  projects[(index + 1) % projects.length].work.title
-                }
-              >
-                <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 12 104 100 18 188"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-              </button>
-            )}
-          </section>
+              ) : (
+                <button
+                  className="df-next"
+                  onClick={() => move(1)}
+                  aria-disabled={previous !== null}
+                  aria-label={
+                    'Next project: ' +
+                    projects[(index + 1) % projects.length].work.title
+                  }
+                >
+                  <svg viewBox="0 0 120 200" fill="none" aria-hidden="true">
+                    <path
+                      d="M18 12 104 100 18 188"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+                </button>
+              )}
+            </section>
+          </div>
         )}
         {view === 'about' && (
           <section

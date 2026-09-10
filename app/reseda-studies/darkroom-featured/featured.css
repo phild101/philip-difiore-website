@@ -2,6 +2,9 @@
   min-height: 100svh;
   padding-bottom: 48px;
 }
+.sq-flow-area {
+  display: contents;
+}
 .df-nav {
   justify-content: flex-end;
 }

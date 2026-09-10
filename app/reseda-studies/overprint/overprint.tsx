@@ -5,15 +5,18 @@ import './overprint.css';
 export function Overprint({
   preview = false,
   edition = 'original',
+  fitScreen = false,
 }: {
   preview?: boolean;
   edition?: OverprintEdition;
+  fitScreen?: boolean;
 }) {
   return (
     <DarkroomFeatured
       treatment="overprint"
       preview={preview}
       edition={edition}
+      fitScreen={fitScreen}
     />
   );
 }

@@ -12,6 +12,8 @@ export const sequenceCategories: Record<
   'young-trouble': 'VIDEOS',
   'naomi-shelton': 'VIDEOS',
   'man-man': 'LIVE',
+  diiv: 'LIVE',
+  'class-actress': 'LIVE',
   'recording-parties': 'MUSIC',
   'buffalo-hunt': 'FILMS',
 };

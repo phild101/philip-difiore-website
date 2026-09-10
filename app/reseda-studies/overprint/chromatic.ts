@@ -131,7 +131,7 @@ export function featuredPoster(
       return '/images/sequence/young-trouble-v2.png';
     if (project.slug === 'man-man') return '/images/chromatic/man-man.png';
     if (project.slug === 'recording-parties')
-      return '/images/sequence/recording-parties-v3.png';
+      return '/images/sequence/recording-parties-turquoise.png';
   }
   return edition === 'chromatic'
     ? '/images/chromatic/' + project.slug + '.png'

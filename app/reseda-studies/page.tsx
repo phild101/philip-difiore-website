@@ -6,33 +6,35 @@ import { DarkroomFeatured } from './darkroom-featured/featured';
 import { Overprint } from './overprint/overprint';
 import { Chromatic } from './overprint-chromatic/chromatic';
 import { Sequence } from './overprint-sequence/sequence';
+import { ScreenFit } from './overprint-screen-fit/screen-fit';
 import './selection.css';
 export default function ResedaStudies() {
   return (
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>SEVEN DIRECTIONS</span>
+        <span>EIGHT DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Seven
+            Eight
             <br />
             <em>directions.</em>
           </h1>
         </div>
         <p>
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
-          Overprint / Chromatic, and Overprint / Sequence.
+          Overprint / Chromatic, Overprint / Sequence, and Overprint / Screen
+          Fit.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Seven selected website designs"
+        aria-label="Eight selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -178,12 +180,29 @@ export default function ResedaStudies() {
             </p>
           </a>
         </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <ScreenFit preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-screen-fit">
+            <div className="catalog-caption">
+              <span>08</span>
+              <h2>Overprint / Screen Fit</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              The complete composition. One screen, at any size.
+            </p>
+          </a>
+        </article>
       </section>
       <footer className="catalog-footer">
         <span>Philip Di Fiore / Reseda studies</span>
         <span>
           Original / Darkroom / Magazine / Featured / Overprint / Chromatic /
-          Sequence
+          Sequence / Screen Fit
         </span>
       </footer>
     </main>

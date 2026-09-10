@@ -181,6 +181,38 @@
   background: #09c6ac;
   color: #0a1713;
 }
+.op-site.op-sequence.op-featured.op-project-diiv .dr-room {
+  background: #07555a;
+}
+.op-site.op-sequence.op-featured.op-project-diiv .df-masthead {
+  color: #eee951;
+}
+.op-site.op-sequence.op-featured .op-film-diiv .df-print {
+  /* Preserve the full, deliberately taller DIIV artwork at the same height. */
+  width: calc(95% * 1058 / 1487);
+  aspect-ratio: 1058 / 1487;
+}
+.op-site.op-sequence .op-film-diiv .dr-print-image {
+  aspect-ratio: 1058 / 1487;
+}
+.op-site.op-sequence .op-film-diiv img {
+  object-fit: contain;
+}
+.op-site.op-sequence.op-featured .df-slide.op-film-diiv .df-project-name {
+  left: auto;
+  right: 0;
+  top: 6%;
+  bottom: auto;
+  background: #eee951;
+  color: #09292e;
+}
+.op-site.op-sequence.op-featured.op-project-class-actress .dr-room {
+  background: #d60661;
+}
+.op-site.op-sequence .op-film-class-actress .df-project-name {
+  background: #f5e4c9;
+  color: #141c56;
+}
 @container (max-width: 640px) {
   .op-site.op-sequence .df-nav {
     gap: 8px;
