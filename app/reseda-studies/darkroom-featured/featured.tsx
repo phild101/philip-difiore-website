@@ -34,6 +34,7 @@ import {
   centeredArchive,
   type CityOption,
 } from '../overprint-centered/projects';
+import { InteractiveAbout } from '../overprint-centered/interactive-about';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -296,6 +297,9 @@ export function DarkroomFeatured({
         )}
       </div>
     );
+  }
+  if (centered && view === 'about' && !preview) {
+    return <InteractiveAbout featuredSlug={projects[index].slug} />;
   }
   const site = (
     <div
