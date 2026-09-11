@@ -223,3 +223,52 @@
     height: 18cqw;
   }
 }
+
+/* About is a plain reading page; the existing press reel follows the bio. */
+.op-site.op-sequence.op-poster.op-centered.op-about {
+  --op-paper: #fff;
+  --op-ink: #000;
+  --op-blue: #000;
+  background: #fff;
+  color: #000;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .dr-room {
+  background: #fff;
+  border-color: #000;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .dr-room::after {
+  display: none;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .df-nav {
+  color: #000;
+  border-color: #000;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about
+  .df-nav
+  a:is([aria-current='page'], :hover) {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .df-about {
+  margin: 0;
+  padding-top: clamp(40px, 6vw, 88px);
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .df-about-grid {
+  display: block;
+  padding-bottom: clamp(44px, 6vw, 80px);
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .df-bio {
+  max-width: 65ch;
+  margin: 0 auto;
+  padding: 0;
+  color: #000;
+  font:
+    clamp(18px, 1.8vw, 24px)/1.65 'Courier New',
+    monospace;
+}
+.op-site.op-sequence.op-poster.op-centered.op-about .df-bio h2 {
+  color: #000;
+  font-size: clamp(28px, 3vw, 42px);
+  margin-bottom: 30px;
+}

@@ -323,7 +323,11 @@ export function DarkroomFeatured({
           )}
           {!horizontal && (
             <nav aria-label="Main navigation">
-              {(['featured', 'about', 'archive'] as View[]).map((item) => (
+              {(
+                (centered
+                  ? ['about', 'featured']
+                  : ['featured', 'about', 'archive']) as View[]
+              ).map((item) => (
                 <a
                   href={
                     item === 'featured' && treatment === 'overprint'
@@ -336,6 +340,7 @@ export function DarkroomFeatured({
                   {item}
                 </a>
               ))}
+              {centered && <a href="mailto:phild101@gmail.com">Contact</a>}
             </nav>
           )}
         </header>
@@ -517,20 +522,22 @@ export function DarkroomFeatured({
             aria-label="About Philip Di Fiore"
           >
             <div className="df-about-grid">
-              <figure className="df-portrait">
-                <img
-                  src={
-                    treatment === 'overprint'
-                      ? '/images/overprint/philip.png'
-                      : '/images/phil-2026.jpg'
-                  }
-                  alt={
-                    treatment === 'overprint'
-                      ? 'Philip Di Fiore — photographic collage'
-                      : 'Philip Di Fiore in red darkroom light'
-                  }
-                />
-              </figure>
+              {!centered && (
+                <figure className="df-portrait">
+                  <img
+                    src={
+                      treatment === 'overprint'
+                        ? '/images/overprint/philip.png'
+                        : '/images/phil-2026.jpg'
+                    }
+                    alt={
+                      treatment === 'overprint'
+                        ? 'Philip Di Fiore — photographic collage'
+                        : 'Philip Di Fiore in red darkroom light'
+                    }
+                  />
+                </figure>
+              )}
               <div className="df-bio">
                 <h2>ABOUT</h2>
                 <p>

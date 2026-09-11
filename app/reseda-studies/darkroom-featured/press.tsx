@@ -58,6 +58,7 @@ export function PressArticle({
       }}
     >
       <DialogContent
+        fullscreen={fullscreen}
         className={'df-article-dialog' + (fullscreen ? ' df-article-full' : '')}
       >
         {article && (

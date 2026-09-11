@@ -24,6 +24,7 @@ export function Screening({
       }}
     >
       <DialogContent
+        fullscreen={fullscreen}
         className={
           'study-screening' + (fullscreen ? ' study-screening-full' : '')
         }
@@ -37,7 +38,7 @@ export function Screening({
               {work.artist} · A film by Philip Di Fiore
             </DialogDescription>
             <iframe
-              src={`https://player.vimeo.com/video/${work.vimeo}?autoplay=1&title=0&byline=0&portrait=0`}
+              src={`https://player.vimeo.com/video/${work.vimeo}?autoplay=1&title=0&byline=0&portrait=0${fullscreen ? '&transparent=0' : ''}`}
               title="Film screening"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
