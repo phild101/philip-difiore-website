@@ -328,7 +328,7 @@
   }
 }
 
-/* In the City alternatives are opt-in through their review links. */
+/* Approved Vertigo treatment; alternate artwork remains available by review link. */
 .op-site.op-sequence.op-poster.op-centered.op-project-in-the-city.op-city-night-glass {
   --cf-frame-ground: #012832;
   --cf-frame-ink: #e59007;
@@ -338,7 +338,7 @@
 }
 .op-site.op-sequence.op-poster.op-centered.op-project-in-the-city.op-city-vertigo {
   --cf-frame-ground: #b90b05;
-  --cf-frame-ink: #74c8a4;
+  --cf-frame-ink: #00ed8f;
   --cf-room-ink: #edc59b;
   --cf-title-paper: #74c8a4;
   --cf-title-ink: #310403;

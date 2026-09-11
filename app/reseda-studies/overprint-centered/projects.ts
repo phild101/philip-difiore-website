@@ -71,12 +71,12 @@ export const centeredCityProjects = {
   vertigo: {
     vivid: withCityPoster(
       centeredPaletteProjects.vivid,
-      '/images/sequence/in-the-city-vertigo.png',
+      '/images/sequence/in-the-city-vertigo-v2.png',
       1122 / 1402,
     ),
     uganda: withCityPoster(
       centeredPaletteProjects.uganda,
-      '/images/sequence/in-the-city-vertigo.png',
+      '/images/sequence/in-the-city-vertigo-v2.png',
       1122 / 1402,
     ),
   },

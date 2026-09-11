@@ -101,7 +101,7 @@ export function DarkroomFeatured({
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
-  const [cityOption, setCityOption] = useState<CityOption>('original');
+  const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const projects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -128,7 +128,7 @@ export function DarkroomFeatured({
     function changeView() {
       const city = new URLSearchParams(window.location.search).get('city');
       setCityOption(
-        city === 'night-glass' || city === 'vertigo' ? city : 'original',
+        city === 'night-glass' || city === 'original' ? city : 'vertigo',
       );
       setRivalPalette(
         new URLSearchParams(window.location.search).get('rival') === 'vivid'

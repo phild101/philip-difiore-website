@@ -1,0 +1,29 @@
+{
+  "mode": "built-in image_gen",
+  "tool": "image_gen.imagegen",
+  "operation": "precise-object-edit",
+  "input": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/sequence/in-the-city-vertigo.png",
+  "output": "/private/tmp/vertigo-hair-edit.png",
+  "generatedOriginal": "/Users/PD/.codex/generated_images/01a090d3-e5f5-73f0-a9d7-9c90389c93cf/exec-e743bb9d-62fc-453d-9893-bd84aceae28f.png",
+  "width": 1122,
+  "height": 1402,
+  "sha256": "2cc79154040867fd17363816e2ece706e294b355531aa8790b85f5428017c64f",
+  "generationCount": 1,
+  "correctiveEditCount": 0,
+  "prompt": "Use case: precise-object-edit.\nInput image: EDIT TARGET, the existing distressed cinematic photographic portrait artwork.\nPrimary request: Make one small, localized color correction ONLY to the woman's actual hair. Remove the emerald green, teal, and cyan tint from the hair, especially the bright strands following the upper-right hairline/temple and the shoulder-length locks curling along the right edge. Recolor those hair strands as natural neutral dark blonde/brown, with softly warm cream/blonde highlights and dark brown shadows. Retain all individual photographic strands and the original rich photographic texture. The hair should contain no green/teal/cyan highlight.\nStrict invariants: Preserve the exact original composition, crop, portrait image proportions, face and expression, skin color and face lighting, the left reflected face, crimson red background, emerald vertical light/print stripe across the left-center, other emerald light that is NOT on hair, and the distressed overprint/grain/scratches. Preserve the green cast on face and the left-center overlay. Do NOT globally desaturate or remove green from the artwork. Do not retouch the face, recreate the image, add text, change layout, or alter any non-hair areas. Only locally recolor green/teal/cyan pigment on actual hair to natural neutral blonde/brown and warm cream hair tones. Match the original image dimensions and proportions.",
+  "judgment": "Hair highlights are now neutral blonde/brown and cream. Emerald face lighting/left-center stripe and reflection, crimson background, crop, image dimensions, composition, and distressed aesthetic are visually retained. Image generation has subtly changed grain/skin microtexture, so outside-hair pixels are not guaranteed identical. No corrective edit judged necessary.",
+  "toolMetadata": "Tool returned image_url and output_hint only; no model identifier or seed was returned.",
+  "workspace_asset": "public/images/sequence/in-the-city-vertigo-v2.png",
+  "site_revision": {
+    "category_and_arrow_ink": "#00ED8F",
+    "default_city_option": "vertigo",
+    "preserved_options": [
+      "original",
+      "night-glass"
+    ],
+    "dimensions": [
+      1122,
+      1402
+    ]
+  }
+}
