@@ -6,6 +6,8 @@
 
 /* Three frames measured from Philip's mockup: 26 / 52 / 22. */
 .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {
+  /* 52% image width / the standard 4:5 artwork ratio. */
+  --cf-normal-frame-height: 65cqw;
   display: grid;
   grid-template-columns: minmax(0, 26fr) minmax(0, 52fr) minmax(0, 22fr);
   align-items: stretch;
@@ -24,7 +26,8 @@
   place-items: center;
   width: calc(100% + var(--cf-room-inset));
   max-width: none;
-  height: auto;
+  height: var(--cf-normal-frame-height);
+  align-self: start;
   margin: 0 0 0 calc(-1 * var(--cf-room-inset));
   padding: 0;
 }
@@ -73,7 +76,8 @@
   position: relative;
   inset: auto;
   width: calc(100% + var(--cf-room-inset));
-  height: auto;
+  height: var(--cf-normal-frame-height);
+  align-self: start;
   display: grid;
   place-items: center;
 }
@@ -131,7 +135,10 @@
   --cf-frame-ink: var(--op-yellow);
 }
 .op-site.op-sequence.op-poster.op-centered.op-project-man-man {
-  --cf-frame-ink: #b8d0ba;
+  --cf-frame-ink: #d591a6;
+}
+.op-site.op-sequence.op-poster.op-centered.op-project-class-actress {
+  --cf-frame-ink: #3e28be;
 }
 .op-site.op-sequence.op-poster.op-centered.op-project-runnin {
   --cf-frame-ink: var(--op-paper);
@@ -268,6 +275,8 @@
 }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {
+    /* 66% image width / the same standard 4:5 ratio. */
+    --cf-normal-frame-height: 82.5cqw;
     grid-template-columns: minmax(0, 19fr) minmax(0, 66fr) minmax(0, 15fr);
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured
