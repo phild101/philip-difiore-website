@@ -154,6 +154,65 @@
 .op-site.op-sequence.op-poster.op-centered.op-project-antibalas {
   --cf-frame-ink: #edaa37;
 }
+/* Approved frame colors and lettering sampled directly from each artwork. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-stranger {
+  --cf-frame-ground: #014fa8;
+  --cf-room-ink: #f6dcb7;
+  --cf-frame-ink: #f6dcb7;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-recording-parties {
+  --cf-frame-ground: #02a09e;
+  --cf-room-ink: #000;
+  --cf-frame-ink: #f74213;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt {
+  --cf-frame-ground: #f1d53f;
+  --cf-room-ink: #0c1215;
+  --cf-frame-ink: #d0341a;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-young-trouble {
+  --cf-frame-ground: #f92f02;
+  --cf-room-ink: #000;
+  --cf-frame-ink: #fef0c9;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-naomi-shelton {
+  --cf-frame-ground: #101724;
+  --cf-room-ink: #f7e5c2;
+  --cf-frame-ink: #f7e5c2;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(
+    .op-project-stranger,
+    .op-project-recording-parties,
+    .op-project-buffalo-hunt,
+    .op-project-young-trouble,
+    .op-project-naomi-shelton
+  )
+  .dr-room {
+  background: var(--cf-frame-ground);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(
+    .op-project-stranger,
+    .op-project-recording-parties,
+    .op-project-buffalo-hunt,
+    .op-project-young-trouble,
+    .op-project-naomi-shelton
+  )
+  .df-nav {
+  color: var(--cf-room-ink);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(
+    .op-project-stranger,
+    .op-project-recording-parties,
+    .op-project-buffalo-hunt,
+    .op-project-young-trouble,
+    .op-project-naomi-shelton
+  )
+  .df-nav
+  a:is(:hover, [aria-current='page']) {
+  color: var(--cf-room-ink);
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured
   .df-masthead.sq-category {
   color: var(--cf-frame-ink);
