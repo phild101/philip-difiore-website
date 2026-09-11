@@ -13,7 +13,7 @@ export function Sequence({
   reduced?: boolean;
   fitScreen?: boolean;
   fluid?: boolean;
-  posterLayout?: 'vertical' | 'horizontal';
+  posterLayout?: 'vertical' | 'horizontal' | 'centered';
 }) {
   return (
     <Overprint

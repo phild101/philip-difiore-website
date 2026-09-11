@@ -10,19 +10,20 @@ import { ScreenFit } from './overprint-screen-fit/screen-fit';
 import { Fluid } from './overprint-fluid/fluid';
 import { PosterDirection } from './poster-directions/directions';
 import { VerticalType } from './overprint-vertical-type/vertical-type';
+import { Centered } from './overprint-centered/centered';
 import './selection.css';
 export default function ResedaStudies() {
   return (
     <main className="catalog reseda-selection">
       <header className="catalog-header">
         <span>PHILIP DI FIORE</span>
-        <span>THIRTEEN DIRECTIONS</span>
+        <span>FOURTEEN DIRECTIONS</span>
       </header>
       <section className="catalog-intro">
         <div>
           <span className="catalog-overline">THE RESEDA STUDIES</span>
           <h1>
-            Thirteen
+            Fourteen
             <br />
             <em>directions.</em>
           </h1>
@@ -31,14 +32,14 @@ export default function ResedaStudies() {
           Reseda, Darkroom, Darkroom/Magazine, Darkroom / Featured, Overprint,
           Overprint / Chromatic, Overprint / Sequence, Overprint / Screen Fit,
           Overprint / Fluid, Overprint / Vertical and Overprint / Horizontal,
-          Vertical / 85%, and Vertical / Smaller Type.
+          Vertical / 85%, Vertical / Smaller Type, and Overprint / Center Frame.
           <br />
           Choose a direction to open it.
         </p>
       </section>
       <section
         className="catalog-grid selection-grid"
-        aria-label="Thirteen selected website designs"
+        aria-label="Fourteen selected website designs"
       >
         <article className="catalog-plate">
           <div className="catalog-preview">
@@ -163,7 +164,7 @@ export default function ResedaStudies() {
               <span>↗</span>
             </div>
             <p className="catalog-material">
-              Thirteen artworks. Twelve distinct palettes.
+              Fourteen artworks. Twelve distinct palettes.
             </p>
           </a>
         </article>
@@ -283,6 +284,24 @@ export default function ResedaStudies() {
             </div>
             <p className="catalog-material">
               Original Vertical artwork. Category lettering 25% smaller.
+            </p>
+          </a>
+        </article>
+        <article className="catalog-plate">
+          <div className="catalog-preview">
+            <div className="catalog-preview-inner" aria-hidden="true" inert>
+              <Centered preview />
+            </div>
+          </div>
+          <a href="/reseda-studies/overprint-centered">
+            <div className="catalog-caption">
+              <span>14</span>
+              <h2>Overprint / Center Frame</h2>
+              <span>↗</span>
+            </div>
+            <p className="catalog-material">
+              A photograph between centered vertical lettering and an open arrow
+              frame.
             </p>
           </a>
         </article>

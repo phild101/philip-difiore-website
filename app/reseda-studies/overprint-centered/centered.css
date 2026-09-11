@@ -1,0 +1,211 @@
+.op-site.op-sequence.op-centered {
+  --cf-room-inset: clamp(12px, 2.2vw, 42px);
+  --cf-frame-ink: var(--op-paper);
+}
+
+/* Three frames measured from Philip's mockup: 26 / 52 / 22. */
+.op-site.op-sequence.op-centered.op-featured .df-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 26fr) minmax(0, 52fr) minmax(0, 22fr);
+  align-items: stretch;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  margin: 12px 0 0;
+}
+.op-site.op-sequence.op-centered.op-featured .sq-category {
+  position: relative;
+  inset: auto;
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  width: calc(100% + var(--cf-room-inset));
+  max-width: none;
+  height: auto;
+  margin: 0 0 0 calc(-1 * var(--cf-room-inset));
+  padding: 0;
+}
+.op-site.op-sequence.op-centered.op-featured .sq-category .dr-family-name {
+  font-size: 14cqw;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  line-height: 0.78;
+}
+.op-site.op-sequence.op-centered .sq-stage {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--fl-art-ratio);
+  overflow: clip;
+  overflow-clip-margin: 0;
+  clip-path: none;
+  container-type: inline-size;
+}
+.op-site.op-sequence.op-centered.op-featured .df-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.op-site.op-sequence.op-centered.op-featured .df-slide .df-print,
+.op-site.op-sequence.op-centered.op-featured .df-slide .dr-print-image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+}
+.op-site.op-sequence.op-centered .df-print img {
+  object-fit: contain;
+}
+.op-site.op-sequence.op-centered .sq-control-rail {
+  grid-column: 3;
+  grid-row: 1;
+  position: relative;
+  inset: auto;
+  width: calc(100% + var(--cf-room-inset));
+  height: auto;
+  display: grid;
+  place-items: center;
+}
+.op-site.op-sequence.op-centered .sq-controls {
+  position: static;
+  inset: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  justify-content: stretch;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  transform: none;
+}
+.op-site.op-sequence.op-centered .sq-arrow,
+.op-site.op-sequence.op-centered .sq-arrow:is(:hover, :active, :focus) {
+  width: 9cqw;
+  height: 18cqw;
+  min-width: 36px;
+  min-height: 60px;
+  max-width: 80%;
+  padding: 0;
+  color: var(--cf-frame-ink);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+  transition: none;
+  animation: none;
+}
+.op-site.op-sequence.op-centered .sq-arrow svg {
+  mask: none;
+}
+.op-site.op-sequence.op-centered .sq-arrow:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+/* The category and arrow share the same ink on every project. */
+.op-site.op-sequence.op-centered.op-paper,
+.op-site.op-sequence.op-centered.op-yellow {
+  --cf-frame-ink: var(--op-ink);
+}
+.op-site.op-sequence.op-centered.op-paper-red {
+  --cf-frame-ink: var(--op-red);
+}
+.op-site.op-sequence.op-centered.op-paper-blue {
+  --cf-frame-ink: var(--op-blue);
+}
+.op-site.op-sequence.op-centered.op-ink {
+  --cf-frame-ink: var(--op-yellow);
+}
+.op-site.op-sequence.op-centered.op-project-man-man {
+  --cf-frame-ink: #b8d0ba;
+}
+.op-site.op-sequence.op-centered.op-project-runnin {
+  --cf-frame-ink: var(--op-paper);
+}
+.op-site.op-sequence.op-centered.op-project-recording-parties {
+  --cf-frame-ink: #165bb5;
+}
+.op-site.op-sequence.op-centered.op-project-diiv {
+  --cf-frame-ink: #eee951;
+}
+.op-site.op-sequence.op-centered.op-project-save-my-life {
+  --cf-frame-ink: #eee96e;
+}
+.op-site.op-sequence.op-centered.op-project-rival-schools {
+  --cf-frame-ink: #7624ff;
+}
+.op-site.op-sequence.op-centered.op-project-rival-schools.op-rival-uganda {
+  --cf-frame-ink: #191616;
+}
+.op-site.op-sequence.op-centered.op-project-antibalas {
+  --cf-frame-ink: #edaa37;
+}
+.op-site.op-sequence.op-centered.op-featured .df-masthead.sq-category {
+  color: var(--cf-frame-ink);
+}
+/* Preserve the cutouts while measuring their positions inside the image. */
+.op-site.op-sequence.op-centered.op-featured .df-slide .df-project-name {
+  top: auto;
+  left: 2%;
+  right: auto;
+  bottom: 6%;
+  max-width: 66%;
+  padding: clamp(10px, 3cqw, 24px);
+}
+.op-site.op-sequence.op-centered .df-slide .df-project-name h2 {
+  font-size: clamp(14px, 5.1cqw, 49px);
+}
+.op-site.op-sequence.op-centered.op-featured .op-layout-left .df-project-name {
+  left: auto;
+  right: 0;
+  bottom: 32%;
+}
+.op-site.op-sequence.op-centered.op-featured
+  .df-slide:is(
+    .op-film-stranger,
+    .op-film-naomi-shelton,
+    .op-film-buffalo-hunt,
+    .op-film-save-my-life,
+    .op-film-antibalas
+  )
+  .df-project-name {
+  top: 4%;
+  left: 3%;
+  right: auto;
+  bottom: auto;
+}
+.op-site.op-sequence.op-centered.op-featured
+  .df-slide:is(.op-film-diiv, .op-film-rdgldgrn)
+  .df-project-name {
+  top: 5%;
+  left: auto;
+  right: 0;
+  bottom: auto;
+}
+.op-site.op-sequence.op-centered
+  .df-slide.op-film-naomi-shelton
+  .df-project-name
+  h2 {
+  font-size: clamp(12px, 4.1cqw, 39px);
+}
+@media (max-width: 640px) {
+  .op-site.op-sequence.op-centered.op-featured .df-featured {
+    grid-template-columns: minmax(0, 19fr) minmax(0, 66fr) minmax(0, 15fr);
+  }
+  .op-site.op-sequence.op-centered.op-featured .sq-category .dr-family-name {
+    font-size: 14cqw;
+  }
+  .op-site.op-sequence.op-centered .sq-arrow,
+  .op-site.op-sequence.op-centered .sq-arrow:is(:hover, :active, :focus) {
+    width: 9cqw;
+    height: 18cqw;
+  }
+}

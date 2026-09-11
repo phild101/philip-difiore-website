@@ -15,7 +15,7 @@ export function Overprint({
   edition?: OverprintEdition;
   fitScreen?: boolean;
   fluid?: boolean;
-  posterLayout?: 'vertical' | 'horizontal';
+  posterLayout?: 'vertical' | 'horizontal' | 'centered';
 }) {
   return (
     <DarkroomFeatured

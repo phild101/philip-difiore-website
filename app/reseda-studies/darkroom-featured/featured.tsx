@@ -86,9 +86,10 @@ export function DarkroomFeatured({
   edition?: OverprintEdition;
   fitScreen?: boolean;
   fluid?: boolean;
-  posterLayout?: 'vertical' | 'horizontal';
+  posterLayout?: 'vertical' | 'horizontal' | 'centered';
 }) {
   const horizontal = posterLayout === 'horizontal';
+  const centered = posterLayout === 'centered';
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
@@ -437,45 +438,52 @@ export function DarkroomFeatured({
                       className="sq-controls"
                       aria-label="Featured navigation"
                     >
-                      {([-1, 1] as const).map((step) => (
-                        <button
-                          className={
-                            'sq-arrow' + (step === -1 ? ' sq-previous' : '')
-                          }
-                          key={step}
-                          onClick={() => move(step)}
-                          aria-disabled={previous !== null}
-                          aria-label={
-                            (step === -1
-                              ? 'Previous project: '
-                              : 'Next project: ') +
-                            projects[adjacentIndex(step)].work.title
-                          }
-                        >
-                          <svg
-                            viewBox="0 0 120 200"
-                            fill="none"
-                            aria-hidden="true"
+                      {(centered ? ([1] as const) : ([-1, 1] as const)).map(
+                        (step) => (
+                          <button
+                            className={
+                              'sq-arrow' + (step === -1 ? ' sq-previous' : '')
+                            }
+                            key={step}
+                            onClick={() => move(step)}
+                            aria-disabled={previous !== null}
+                            aria-label={
+                              (step === -1
+                                ? 'Previous project: '
+                                : 'Next project: ') +
+                              projects[adjacentIndex(step)].work.title
+                            }
                           >
-                            {posterLayout ? (
-                              <path
-                                d="M17 11 40 8 110 96 107 107 38 193 15 186 13 171 76 100 14 29Z"
-                                fill="currentColor"
-                                stroke="#132323"
-                                strokeWidth="4"
-                                strokeLinejoin="bevel"
-                              />
-                            ) : (
-                              <path
-                                d="M18 12 104 100 18 188"
-                                stroke="currentColor"
-                                strokeWidth="5"
-                                vectorEffect="non-scaling-stroke"
-                              />
-                            )}
-                          </svg>
-                        </button>
-                      ))}
+                            <svg
+                              viewBox="0 0 120 200"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              {centered ? (
+                                <path
+                                  d="M3 4H57L117 94V106L57 196H3L64 100Z"
+                                  fill="currentColor"
+                                />
+                              ) : posterLayout ? (
+                                <path
+                                  d="M17 11 40 8 110 96 107 107 38 193 15 186 13 171 76 100 14 29Z"
+                                  fill="currentColor"
+                                  stroke="#132323"
+                                  strokeWidth="4"
+                                  strokeLinejoin="bevel"
+                                />
+                              ) : (
+                                <path
+                                  d="M18 12 104 100 18 188"
+                                  stroke="currentColor"
+                                  strokeWidth="5"
+                                  vectorEffect="non-scaling-stroke"
+                                />
+                              )}
+                            </svg>
+                          </button>
+                        ),
+                      )}
                     </nav>
                   </div>
                 ) : (

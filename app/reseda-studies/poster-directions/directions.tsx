@@ -6,7 +6,7 @@ export function PosterDirection({
   preview = false,
   reduced = false,
 }: {
-  layout: 'vertical' | 'horizontal';
+  layout: 'vertical' | 'horizontal' | 'centered';
   preview?: boolean;
   reduced?: boolean;
 }) {
