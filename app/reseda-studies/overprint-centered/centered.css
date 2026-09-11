@@ -328,6 +328,59 @@
   }
 }
 
+/* In the City alternatives are opt-in through their review links. */
+.op-site.op-sequence.op-poster.op-centered.op-project-in-the-city.op-city-night-glass {
+  --cf-frame-ground: #012832;
+  --cf-frame-ink: #e59007;
+  --cf-room-ink: #ebcba5;
+  --cf-title-paper: #e59007;
+  --cf-title-ink: #012832;
+}
+.op-site.op-sequence.op-poster.op-centered.op-project-in-the-city.op-city-vertigo {
+  --cf-frame-ground: #b90b05;
+  --cf-frame-ink: #74c8a4;
+  --cf-room-ink: #edc59b;
+  --cf-title-paper: #74c8a4;
+  --cf-title-ink: #310403;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-in-the-city:is(
+    .op-city-night-glass,
+    .op-city-vertigo
+  )
+  .dr-room {
+  background: var(--cf-frame-ground);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-in-the-city:is(
+    .op-city-night-glass,
+    .op-city-vertigo
+  )
+  .df-nav {
+  color: var(--cf-room-ink);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-in-the-city:is(
+    .op-city-night-glass,
+    .op-city-vertigo
+  )
+  .df-nav
+  a:is(:hover, [aria-current='page']) {
+  color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-in-the-city:is(
+    .op-city-night-glass,
+    .op-city-vertigo
+  )
+  .df-slide
+  .df-project-name {
+  top: auto;
+  left: auto;
+  right: 3%;
+  bottom: 5%;
+  background: var(--cf-title-paper);
+  color: var(--cf-title-ink);
+}
+
 /* About is a plain reading page; the existing press reel follows the bio. */
 .op-site.op-sequence.op-poster.op-centered.op-about {
   --op-paper: #fff;

@@ -30,8 +30,9 @@ import {
   type RivalPalette,
 } from '../overprint-sequence/projects';
 import {
-  centeredPaletteProjects,
+  centeredCityProjects,
   centeredArchive,
+  type CityOption,
 } from '../overprint-centered/projects';
 import './featured.css';
 function CompositionScale({
@@ -64,7 +65,8 @@ function ProjectName({ lines }: { lines: string[] }) {
     </h2>
   );
 }
-function artworkRatio(slug: string) {
+function artworkRatio(slug: string, ratio?: number) {
+  if (ratio) return ratio;
   if (slug === 'i-learned-the-hard-way' || slug === 'game-gets-old')
     return 1072 / 1467;
   if (slug === 'diiv') return 1058 / 1487;
@@ -99,8 +101,9 @@ export function DarkroomFeatured({
   const chromatic = treatment === 'overprint' && edition === 'chromatic';
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
+  const [cityOption, setCityOption] = useState<CityOption>('original');
   const projects = sequence
-    ? (centered ? centeredPaletteProjects : sequencePaletteProjects)[
+    ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
       ]
     : treatment === 'overprint'
@@ -123,6 +126,10 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
+      const city = new URLSearchParams(window.location.search).get('city');
+      setCityOption(
+        city === 'night-glass' || city === 'vertigo' ? city : 'original',
+      );
       setRivalPalette(
         new URLSearchParams(window.location.search).get('rival') === 'vivid'
           ? 'vivid'
@@ -274,7 +281,12 @@ export function DarkroomFeatured({
           <div
             className="fl-print-group"
             style={
-              { '--fl-art-ratio': artworkRatio(project.slug) } as CSSProperties
+              {
+                '--fl-art-ratio': artworkRatio(
+                  project.slug,
+                  project.aspectRatio,
+                ),
+              } as CSSProperties
             }
           >
             {print}
@@ -292,7 +304,10 @@ export function DarkroomFeatured({
           ? chromaticProperties(projects[index].slug)
           : fluid || posterLayout
             ? ({
-                '--fl-art-ratio': artworkRatio(projects[index].slug),
+                '--fl-art-ratio': artworkRatio(
+                  projects[index].slug,
+                  projects[index].aspectRatio,
+                ),
                 '--fl-word-advance':
                   categoryAdvance[sequenceCategories[projects[index].slug]],
               } as CSSProperties)
@@ -308,6 +323,9 @@ export function DarkroomFeatured({
         (sequence && fitScreen ? ' op-screen-fit' : '') +
         (sequence && fluid ? ' op-fluid' : '') +
         (posterLayout ? ' op-poster op-' + posterLayout : '') +
+        (centered && cityOption !== 'original'
+          ? ' op-city-' + cityOption
+          : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
         (treatment === 'overprint'

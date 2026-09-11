@@ -41,3 +41,44 @@ export const centeredPaletteProjects = {
   uganda: withSharonFilms(sequencePaletteProjects.uganda),
 };
 export const centeredArchive = [...sequenceArchive, learnedTheHardWay];
+
+function withCityPoster(
+  projects: FeaturedProject[],
+  poster: string,
+  aspectRatio: number,
+) {
+  return projects.map((project) =>
+    project.slug === 'in-the-city'
+      ? { ...project, poster, aspectRatio }
+      : project,
+  );
+}
+
+export const centeredCityProjects = {
+  original: centeredPaletteProjects,
+  'night-glass': {
+    vivid: withCityPoster(
+      centeredPaletteProjects.vivid,
+      '/images/sequence/in-the-city-night-glass.png',
+      1072 / 1467,
+    ),
+    uganda: withCityPoster(
+      centeredPaletteProjects.uganda,
+      '/images/sequence/in-the-city-night-glass.png',
+      1072 / 1467,
+    ),
+  },
+  vertigo: {
+    vivid: withCityPoster(
+      centeredPaletteProjects.vivid,
+      '/images/sequence/in-the-city-vertigo.png',
+      1122 / 1402,
+    ),
+    uganda: withCityPoster(
+      centeredPaletteProjects.uganda,
+      '/images/sequence/in-the-city-vertigo.png',
+      1122 / 1402,
+    ),
+  },
+};
+export type CityOption = keyof typeof centeredCityProjects;

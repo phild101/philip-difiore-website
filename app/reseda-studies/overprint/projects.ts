@@ -6,6 +6,7 @@ export type FeaturedProject = {
   slug: string;
   work: FeaturedWork;
   poster: string;
+  aspectRatio?: number;
   heading: string[];
   palette:
     | 'vermilion'
