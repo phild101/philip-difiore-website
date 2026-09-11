@@ -29,6 +29,10 @@ import {
   sequenceArchive,
   type RivalPalette,
 } from '../overprint-sequence/projects';
+import {
+  centeredPaletteProjects,
+  centeredArchive,
+} from '../overprint-centered/projects';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -61,6 +65,8 @@ function ProjectName({ lines }: { lines: string[] }) {
   );
 }
 function artworkRatio(slug: string) {
+  if (slug === 'i-learned-the-hard-way' || slug === 'game-gets-old')
+    return 1072 / 1467;
   if (slug === 'diiv') return 1058 / 1487;
   if (slug === 'rdgldgrn' || slug === 'antibalas') return 1073 / 1466;
   return 4 / 5;
@@ -94,12 +100,16 @@ export function DarkroomFeatured({
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const projects = sequence
-    ? sequencePaletteProjects[rivalPalette]
+    ? (centered ? centeredPaletteProjects : sequencePaletteProjects)[
+        rivalPalette
+      ]
     : treatment === 'overprint'
       ? overprintProjects
       : darkroomProjects;
   const archive = sequence
-    ? sequenceArchive
+    ? centered
+      ? centeredArchive
+      : sequenceArchive
     : treatment === 'overprint'
       ? overprintArchive
       : darkroomArchive;

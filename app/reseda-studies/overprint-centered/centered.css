@@ -187,12 +187,24 @@
   --cf-room-ink: #f7e5c2;
   --cf-frame-ink: #f7e5c2;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-i-learned-the-hard-way {
+  --cf-frame-ground: #3a1833;
+  --cf-room-ink: #c3b306;
+  --cf-frame-ink: #c3b306;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-game-gets-old {
+  --cf-frame-ground: #fc5a39;
+  --cf-room-ink: #072518;
+  --cf-frame-ink: #072518;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(
     .op-project-stranger,
     .op-project-recording-parties,
     .op-project-buffalo-hunt,
     .op-project-young-trouble,
-    .op-project-naomi-shelton
+    .op-project-naomi-shelton,
+    .op-project-i-learned-the-hard-way,
+    .op-project-game-gets-old
   )
   .dr-room {
   background: var(--cf-frame-ground);
@@ -203,7 +215,9 @@
     .op-project-recording-parties,
     .op-project-buffalo-hunt,
     .op-project-young-trouble,
-    .op-project-naomi-shelton
+    .op-project-naomi-shelton,
+    .op-project-i-learned-the-hard-way,
+    .op-project-game-gets-old
   )
   .df-nav {
   color: var(--cf-room-ink);
@@ -214,7 +228,9 @@
     .op-project-recording-parties,
     .op-project-buffalo-hunt,
     .op-project-young-trouble,
-    .op-project-naomi-shelton
+    .op-project-naomi-shelton,
+    .op-project-i-learned-the-hard-way,
+    .op-project-game-gets-old
   )
   .df-nav
   a:is(:hover, [aria-current='page']) {
@@ -272,6 +288,26 @@
   .df-project-name
   h2 {
   font-size: clamp(12px, 4.1cqw, 39px);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured
+  .df-slide.op-film-i-learned-the-hard-way
+  .df-project-name {
+  top: auto;
+  left: 3%;
+  right: auto;
+  bottom: 5%;
+  background: #ead6b2;
+  color: #3a1833;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured
+  .df-slide.op-film-game-gets-old
+  .df-project-name {
+  top: auto;
+  left: auto;
+  right: 3%;
+  bottom: 5%;
+  background: #072518;
+  color: #f5dfb8;
 }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {

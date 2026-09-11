@@ -1,0 +1,36 @@
+[
+  {
+    "key": "i-learned-the-hard-way",
+    "source": "/Users/PD/Desktop/Phil LLM/Phils Website/Phil Website/ilearnednew.jpg",
+    "prompt": "Use case: style-transfer, identity-preserve. Create one finished high-quality artwork for Philip Di Fiore's filmmaker website, portrait 4:5 aspect ratio, approximately 1122\u00d71402 pixels, full bleed. Input image 1 is the EDIT TARGET and exact photographic subject: Sharon Jones in a fur coat, close portrait, looking slightly right. Preserve her exact facial likeness, expression, pose, eyes, face proportions, hairstyle, earrings and richly detailed fur coat. Input image 2 is STYLE ONLY: approved rich photographic screenprint artwork. Transfer its sophisticated tactile, continuous-photograph-plus-halftone print quality, NOT its person's face, clock, shapes or composition. Build an original tactile print composition with acid chartreuse green/yellow, deep aubergine violet, warm ivory and near black. Rich continuous photographic and fine halftone detail in her face must dominate; retain subtle natural skin tonal gradations and fur tactility. Add asymmetrical torn ink fields, restrained thin registration lines, subtle paper wear, and small overlaps/misregistration at contours. Create a distinct arrangement without clipart circles, with strong cinematic soul record sleeve presence. Color fields may interrupt clothing and background but must not obscure either eye or her face. Leave a small usable quiet bottom-left patch suitable for a separately overlaid HTML rectangular title card; do not draw that title card. No text whatsoever baked in. No poster template, white margins, logos, website UI, flat vector abstraction, blown-out face, duplicate photos, inset picture, picture-in-picture, clock or new objects. The original photograph remains the dominant subject and visual structure.",
+    "styleReference": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/overprint/if-you-call.png",
+    "generator": "Built-in image_gen.imagegen",
+    "outputOriginal": "/Users/PD/.codex/generated_images/01a09096-3c83-76b0-9ad6-85b31422fddb/exec-8f523b07-3744-4935-8f89-60efea7c1ee2.png",
+    "outputFinal": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/sequence/i-learned-the-hard-way-overprint.png",
+    "actualDimensions": [
+      1072,
+      1467
+    ],
+    "sampledPalette": {
+      "background": "#c3b306",
+      "ink": "#3a1833"
+    }
+  },
+  {
+    "key": "game-gets-old",
+    "source": "/Users/PD/Desktop/Phil LLM/Phils Website/Phil Website/gamenew.jpg",
+    "prompt": "Use case: style-transfer, identity-preserve. Create one finished high-quality artwork for Philip Di Fiore's filmmaker website, portrait 4:5 aspect ratio, approximately 1122\u00d71402 pixels, full bleed. Input image 1 is the EDIT TARGET and exact photographic scene: Sharon Jones in white knit cap and fur-trimmed coat at right/front, interacting with the man in brimmed hat and sunglasses at left/behind. Preserve both people's exact likenesses, expressions, poses, relative relationship, and detailed knitted cap, hat, clothing and skin textures. Remove the black letterbox bars and reframe into a full-bleed portrait artwork without losing either face. Extend only background and lower clothing as needed to compose the portrait; no duplicate people or inset photographs. Input image 2 is STYLE ONLY: approved rich photographic screenprint artwork. Transfer its sophisticated tactile, photograph-plus-halftone print quality, NOT its person's face, clock, orange/cobalt palette or circle arrangement. Palette: hot salmon coral, deep petrol/forest green, warm cream and black with small amber accents. Rich monochrome photographic detail under vivid screenprinted collage fields, with a large diagonal translucent ink panel across lower clothing, jagged narrow paper slivers, offset color edge, and thin registration scratch-lines. Photographs dominate, with artful imperfect printing and photographic skin gradation, not a tidy graphic grid. Keep both faces unobscured and fully recognizable. Leave the bottom-right lower clothing area useful for a separately overlaid title cutout; do not draw the title card. No text, logos, UI, white margins, photographic borders, letterboxing, duplicated faces, inset images, clock, plastic digital effects, flat vector abstraction, or blown-out facial highlights. The original interaction and photographic likenesses are invariants.",
+    "styleReference": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/overprint/if-you-call.png",
+    "generator": "Built-in image_gen.imagegen",
+    "outputOriginal": "/Users/PD/.codex/generated_images/01a09096-3c83-76b0-9ad6-85b31422fddb/exec-2cacc3ae-4b14-433a-9b11-01292fe8556e.png",
+    "outputFinal": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/sequence/game-gets-old-overprint.png",
+    "actualDimensions": [
+      1072,
+      1467
+    ],
+    "sampledPalette": {
+      "background": "#fc5a39",
+      "ink": "#072518"
+    }
+  }
+]
