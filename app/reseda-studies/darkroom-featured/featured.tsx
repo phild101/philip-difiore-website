@@ -346,7 +346,9 @@ export function DarkroomFeatured({
               href="#featured/if-you-call"
               aria-label="Philip Di Fiore — Home"
             >
-              PHILIP DI FIORE
+              {centered && view === 'about'
+                ? 'Philip Di Fiore'
+                : 'PHILIP DI FIORE'}
             </a>
           )}
           {!horizontal && (
@@ -565,21 +567,53 @@ export function DarkroomFeatured({
                 </figure>
               )}
               <div className="df-bio">
-                <h2>ABOUT</h2>
-                <p>
-                  Philip Di Fiore is an award-winning filmmaker and writer known
-                  for his cinematic storytelling style.
-                </p>
-                <p>
-                  He founded and operated a 4000 sq. ft recording and film
-                  studio in Brooklyn, NY (The Rumpus Room) and has produced
-                  music albums and film scores.
-                </p>
-                <p>
-                  In addition to directing, he is currently writing screenplays
-                  and building A.I. creative tools (and attempting to learn
-                  Italian).
-                </p>
+                {centered ? (
+                  <>
+                    <h2>Philip Di Fiore…</h2>
+                    <div className="cf-about-copy">
+                      <p>
+                        is an award winning filmmaker known for his cinematic
+                        storytelling style and mind bending narratives.
+                      </p>
+                      <p>writes screenplays and fiction.</p>
+                      <p>edits all of his own videos.</p>
+                      <p>
+                        produces music (albums and film scores) with
+                        unbelievable musicians.
+                      </p>
+                      <p>
+                        founded, owned and operated a film and music recording
+                        studio in Brooklyn for ten years.
+                      </p>
+                      <p>
+                        builds creative tools for writing, filmmaking and the
+                        creative process.
+                      </p>
+                      <p>
+                        is a partner of creative studio, Rumpus Productions,
+                        with his wife Lara.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h2>ABOUT</h2>
+                    <p>
+                      Philip Di Fiore is an award-winning filmmaker and writer
+                      known for his cinematic storytelling style.
+                    </p>
+                    <p>
+                      He founded and operated a 4000 sq. ft recording and film
+                      studio in Brooklyn, NY (The Rumpus Room) and has produced
+                      music albums and film scores.
+                    </p>
+                    <p>
+                      In addition to directing, he is currently writing
+                      screenplays and building A.I. creative tools (and
+                      attempting to learn Italian).
+                    </p>
+                  </>
+                )}
               </div>
             </div>
             <PressFilmstrip watch={watchPressFilm} />

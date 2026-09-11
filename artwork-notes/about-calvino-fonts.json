@@ -1,0 +1,33 @@
+{
+  "fonts": [
+    {
+      "family": "DM Sans",
+      "style": "normal",
+      "weight": "100 1000",
+      "url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Hp2ywxg089UriCZOIHTWEBlw.woff2",
+      "local": "/private/tmp/calvino-reference/dm-sans-latin.woff2",
+      "size": 62556,
+      "license": "SIL Open Font License 1.1",
+      "licenseSource": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/OFL.txt",
+      "licenseLocal": "/private/tmp/calvino-reference/dmsans-OFL.txt",
+      "familySource": "https://fonts.google.com/specimen/DM+Sans"
+    },
+    {
+      "family": "DM Serif Display",
+      "style": "normal",
+      "weight": "400",
+      "url": "https://fonts.gstatic.com/s/dmserifdisplay/v17/-nFnOHM81r4j6k0gjAW3mujVU2B2G_Bx0vrx52g.woff2",
+      "local": "/private/tmp/calvino-reference/dm-serif-display-latin.woff2",
+      "size": 17844,
+      "license": "SIL Open Font License 1.1",
+      "licenseSource": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmserifdisplay/OFL.txt",
+      "licenseLocal": "/private/tmp/calvino-reference/dmserifdisplay-OFL.txt",
+      "familySource": "https://fonts.google.com/specimen/DM+Serif+Display"
+    }
+  ],
+  "usage": {
+    "DM Serif Display": "Center Frame About name and heading",
+    "DM Sans": "Center Frame About body and interface"
+  },
+  "chat_corroboration": "User Calvino project notes: /Users/PD/Desktop/Phil LLM/Rumpus/raw/calvino-deep-dive.md:234; historical chat uses DM Sans, corroborating current public body CSS."
+}
