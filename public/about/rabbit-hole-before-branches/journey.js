@@ -1,7 +1,7 @@
 (() => {
 const {notes,topics}=window.ABOUT_GRAPH,custom=window.RABBIT_PASSAGES;
 const stage=document.querySelector('#stage'),scenes=document.querySelector('#scenes'),page=document.querySelector('.page');
-const home=document.querySelector('#home'),hint=document.querySelector('#entrance-hint'),sourceNote=document.querySelector('#source-note');
+const home=document.querySelector('#home'),hint=document.querySelector('#entrance-hint');
 let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const featuredSlug=new URLSearchParams(location.search).get('featured');
@@ -28,16 +28,14 @@ const el=document.createElement('section');el.className='scene';el.dataset.id=id
 if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});el.querySelectorAll('.bio p').forEach((p,i)=>{const word=p.querySelector('[data-go="'+entranceWords[i]+'"]');if(word){word.classList.add('lead-word');const arrow=document.createElement('span');arrow.className='enter-mark';arrow.setAttribute('aria-hidden','true');arrow.textContent='↗';word.append(arrow)}});return el}
 const n=node(id);el.dataset.layout=n.layout||'quiet';
 const inline=[...n.body.matchAll(/\|([^\]]+)\]/g)].map(m=>m[1]);
-const candidates=n.curated?n.related:[...n.related,...n.tags,...(incoming[id]||[])];
-const links=[...new Set(candidates)].filter(k=>notes[k]&&k!==id&&!inline.includes(k));
-if(!n.curated)links.sort((a,b)=>Number(path.some(p=>p.id===a))-Number(path.some(p=>p.id===b))); 
-if(!n.curated&&!links.length&&inline.length<2)links.push('stories','places');
-if(!n.curated&&!inline.length&&!links.length)links.push('musicians-index','stories');
-const max=n.curated?Math.max(0,(n.maxExits||3)-inline.length):(inline.length>=3?1:Math.max(2,4-inline.length));
+const links=[...new Set([...n.related,...n.tags,...(incoming[id]||[])])].filter(k=>k!==id&&!inline.includes(k)).sort((a,b)=>Number(path.some(p=>p.id===a))-Number(path.some(p=>p.id===b)));
+if(!links.length&&inline.length<2)links.push('stories','places');
+if(!inline.length&&!links.length)links.push('musicians-index','stories');
+const max=inline.length>=3?1:Math.max(2,4-inline.length);
 el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Related paths">${links.slice(0,max).map(k=>word(notes[k].label||notes[k].title,k)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
 return el;
 }
-function controls(){const current=path.at(-1);const sources=current.id==='bio'?[]:(node(current.id).sources||[]);sourceNote.open=false;sourceNote.hidden=!sources.length;document.querySelector('#source-content').innerHTML=sources.map(s=>s.url&&/^https?:\/\//.test(s.url)?`<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></p>`:`<p>${esc(s.title)}</p>`).join('');home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
+function controls(){const current=path.at(-1);home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
 function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');const entry=activeScene?.querySelector('.entry');if(entry){entry.style.transform='none';const scale=Math.min(1,(stage.clientHeight-8)/entry.offsetHeight);entry.style.transform=`scale(${Math.max(.2,scale)})`}}
 new ResizeObserver(fitScene).observe(stage);document.fonts.ready.then(fitScene);
 function remember(){if(activeScene){path.at(-1).scroll=activeScene.querySelector('.scene-content').scrollTop;history.replaceState({rabbit:true,path},'')}}
@@ -75,8 +73,6 @@ function show(direction=0,travel=null){
  Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(finish);
 }
 function go(id,source){if(!notes[id])return;if(busy)finishFlight?.();remember();const travel=travelFor(source);path=[...path,{id,via:labelOf(source)||notes[id].title,travel,scroll:0}];history.pushState({rabbit:true,path},'', '#'+id);show(1,travel)}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')sourceNote.open=false});
-document.addEventListener('pointerdown',e=>{if(!sourceNote.contains(e.target))sourceNote.open=false});
 scenes.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go,b)});
 function jump(index){if(index>=0&&index<path.length-1)history.go(index-(path.length-1));}
 home.addEventListener('click',()=>jump(0));document.querySelector('#header-about').addEventListener('click',e=>{e.preventDefault();jump(0)});
