@@ -359,7 +359,7 @@ export function DarkroomFeatured({
             <nav aria-label="Main navigation">
               {(
                 (centered
-                  ? ['about', 'featured']
+                  ? ['featured', 'about']
                   : ['featured', 'about', 'archive']) as View[]
               ).map((item) => (
                 <a
@@ -374,7 +374,6 @@ export function DarkroomFeatured({
                   {item}
                 </a>
               ))}
-              {centered && <a href="mailto:phild101@gmail.com">Contact</a>}
             </nav>
           )}
         </header>
