@@ -48,22 +48,22 @@ function show(direction=0,travel=null){
  if(!old||!direction||reduced.matches){finish();return}
  busy=true;page.classList.add('flying');stage.setAttribute('aria-busy','true');old.inert=true;old.setAttribute('aria-hidden','true');next.inert=true;
  const t=travel||{x:.5,y:.5,dx:.75,dy:.25,turn:1.2,portal:false},w=stage.clientWidth,h=stage.clientHeight;
- const duration=t.portal?380:320,ease='cubic-bezier(.16,1,.3,1)';const turn=innerWidth<=600?0:t.turn;
+ const duration=t.portal?1000:850,ease='cubic-bezier(.55,0,.2,1)';const turn=innerWidth<=600?0:t.turn;
  const far=`translate(${-t.dx*w*.42}px,${-t.dy*h*.42}px) scale(${t.portal?2.5:1.4}) rotate(${-turn}deg)`;
  const near=`translate(${t.dx*w*.40}px,${t.dy*h*.40}px) scale(${t.portal?.64:.78}) rotate(${turn}deg)`;
  const settled='translate(0px,0px) scale(1) rotate(0deg)';
  const out=direction>0?far:near,enter=direction>0?near:far;
  old.style.transformOrigin=`${t.x*100}% ${t.y*100}%`;
- animations.push(old.animate([{transform:settled,opacity:1},{transform:out,opacity:1,offset:.52},{transform:out,opacity:0,offset:.53},{transform:out,opacity:0}],{duration,easing:ease,fill:'both'}));
- animations.push(next.animate([{transform:enter,opacity:0},{transform:enter,opacity:1,offset:.01},{transform:'translate(0px,0px) scale(1.018) rotate(0deg)',opacity:1,offset:.86},{transform:settled,opacity:1}],{duration,easing:ease,fill:'both'}));
+ animations.push(old.animate([{transform:settled,opacity:1},{transform:out,opacity:0}],{duration,easing:ease,fill:'both'}));
+ animations.push(next.animate([{transform:enter,opacity:0},{transform:enter,opacity:0,offset:.12},{transform:'translate(0px,0px) scale(1.018) rotate(0deg)',opacity:1,offset:.86},{transform:settled,opacity:1}],{duration,easing:ease,fill:'both'}));
  if(t.portal&&t.label){
   portal.textContent=t.label;portal.style.fontSize='38px';portal.style.color=getComputedStyle(next).color;portal.style.left='0px';portal.style.top='0px';portal.style.transformOrigin='center';
   const pw=portal.offsetWidth,ph=portal.offsetHeight,peak=Math.min(18,Math.max(w/Math.max(pw,1)*1.3,h/Math.max(ph,1)*.95));
   const start=`translate(${t.x*w-pw/2}px,${t.y*h-ph/2}px) scale(${Math.min(1.8,Math.max(.3,t.fontScale||.42))})`;
   const mid=`translate(${w/2-pw/2}px,${h/2-ph/2}px) scale(${peak}) rotate(${-turn}deg)`;
   const end=`translate(${w/2-pw/2-t.dx*w*.16}px,${h/2-ph/2-t.dy*h*.16}px) scale(${peak*1.4}) rotate(${-turn*1.5}deg)`;
-  let frames=[{transform:start,opacity:1},{transform:mid,opacity:1,offset:.43},{transform:end,opacity:0,offset:.66},{transform:end,opacity:0}];
-  if(direction<0)frames=frames.slice().reverse().map(({offset,...f},i)=>({...f,offset:[0,.34,.57,1][i]}));
+  let frames=[{transform:start,opacity:0},{transform:start,opacity:1,offset:.12},{transform:mid,opacity:.96,offset:.58},{transform:end,opacity:0}];
+  if(direction<0)frames=frames.slice().reverse().map(({offset,...f},i)=>({...f,offset:[0,.42,.88,1][i]}));
   animations.push(portal.animate(frames,{duration,easing:ease,fill:'both'}));
  }
  Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(finish);
