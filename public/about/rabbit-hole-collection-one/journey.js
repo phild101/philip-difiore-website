@@ -9,10 +9,7 @@ const featuredBase=window.ABOUT_GRAPH.featuredBase;
 document.querySelector('header>a').href=featuredBase+'if-you-call';
 document.querySelector('#header-featured').href=featuredBase+(featuredSlug&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(featuredSlug)?featuredSlug:'if-you-call');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-// A forward click never sends the reader to a scene already in this journey.
-// Browser Back restores the earlier path and its choices; About starts fresh.
-const available=id=>Boolean(notes[id])&&!path.some(step=>step.id===id);
-const word=(label,id)=>available(id)?`<button class="word" data-label="${esc(label)}" data-go="${esc(id)}">${esc(label)}</button>`:esc(label);
+const word=(label,id)=>`<button class="word" data-label="${esc(label)}" data-go="${esc(id)}">${esc(label)}</button>`;
 function prose(s){let out='',last=0;for(const m of s.matchAll(/\[([^\]|]+)\|([^\]]+)\]/g)){out+=esc(s.slice(last,m.index))+(notes[m[2]]?word(m[1],m[2]):esc(m[1]));last=m.index+m[0].length}return (out+esc(s.slice(last))).replace(/\n\n/g,'<br><br>')}
 const bio=[
 'is an [award winning|recognition] [filmmaker|film-index] known for his [cinematic storytelling|stories] style and [mind bending narratives|experiments].',
@@ -21,23 +18,23 @@ const bio=[
 'produces [music|records] ([albums|records] and [film scores|score]) with unbelievable [musicians|musicians-index].',
 'founded, owned and operated a film and music [recording studio|rumpus-room] in [Brooklyn|places] for [ten years|ten-years].',
 'builds [creative tools|tools] for writing, filmmaker and the creative process.',
-'his film [Stranger|stranger]: Bernie Worrell on Earth was selected for inclusion in the [permanent collection of the Academy of Motion Picture Arts and Sciences|academy-collection].'];
-const entranceWords=['film-index','writing','editing','musicians-index','rumpus-room','tools','stranger'];
+'is a partner of creative studio, [Rumpus Productions|rumpus], with his wife [Lara|lara].'];
+const entranceWords=['film-index','writing','editing','musicians-index','rumpus-room','tools','rumpus'];
 const labelOf=source=>source?.dataset.label||source?.textContent||'';
+const incoming={};for(const [id,n] of Object.entries(notes))for(const target of n.tags)(incoming[target]??=[]).push(id);
 function node(id){const n=notes[id],c=custom[id]||{};return {...n,...c,heading:c.heading||n.title,body:c.body||n.body,related:c.related||[]}}
 function scene(id){
 const el=document.createElement('section');el.className='scene';el.dataset.id=id;
-if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,:]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});el.querySelectorAll('.bio p').forEach((p,i)=>{const word=p.querySelector('[data-go="'+entranceWords[i]+'"]');if(word){word.classList.add('lead-word');const arrow=document.createElement('span');arrow.className='enter-mark';arrow.setAttribute('aria-hidden','true');arrow.textContent='↗';word.append(arrow)}});return el}
+if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});el.querySelectorAll('.bio p').forEach((p,i)=>{const word=p.querySelector('[data-go="'+entranceWords[i]+'"]');if(word){word.classList.add('lead-word');const arrow=document.createElement('span');arrow.className='enter-mark';arrow.setAttribute('aria-hidden','true');arrow.textContent='↗';word.append(arrow)}});return el}
 const n=node(id);el.dataset.layout=n.layout||'quiet';
-const inline=[...new Set([...n.body.matchAll(/\|([^\]]+)\]/g)].map(m=>m[1]))].filter(available);
-// Only authored crossings and explicit choices. Incoming links used to turn
-// every detour into another route back to the same people and projects.
-const used=new Set(inline),links=[];
-for(const choice of [...(n.exits||[]),...n.related.map(k=>({id:k,label:notes[k]?.label||notes[k]?.title}))]){
- if(available(choice.id)&&!used.has(choice.id)){used.add(choice.id);links.push(choice)}
-}
-const max=inline.length>=3?1:Math.min(3,Math.max(1,3-inline.length));
-el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Continue exploring">${links.slice(0,max).map(k=>word(k.label,k.id)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
+const inline=[...n.body.matchAll(/\|([^\]]+)\]/g)].map(m=>m[1]);
+const candidates=n.curated?n.related:[...n.related,...n.tags,...(incoming[id]||[])];
+const links=[...new Set(candidates)].filter(k=>notes[k]&&k!==id&&!inline.includes(k));
+if(!n.curated)links.sort((a,b)=>Number(path.some(p=>p.id===a))-Number(path.some(p=>p.id===b))); 
+if(!n.curated&&!links.length&&inline.length<2)links.push('stories','places');
+if(!n.curated&&!inline.length&&!links.length)links.push('musicians-index','stories');
+const max=n.curated?Math.max(0,(n.maxExits||3)-inline.length):(inline.length>=3?1:Math.max(2,4-inline.length));
+el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Related paths">${links.slice(0,max).map(k=>word(notes[k].label||notes[k].title,k)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
 return el;
 }
 function controls(){const current=path.at(-1);const sources=current.id==='bio'?[]:(node(current.id).sources||[]);sourceNote.open=false;sourceNote.hidden=!sources.length;document.querySelector('#source-content').innerHTML=sources.map(s=>s.url&&/^https?:\/\//.test(s.url)?`<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></p>`:`<p>${esc(s.title)}</p>`).join('');home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
@@ -77,7 +74,7 @@ function show(direction=0,travel=null){
  }
  Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(finish);
 }
-function go(id,source){if(!available(id))return;if(busy)finishFlight?.();remember();const travel=travelFor(source);path=[...path,{id,via:labelOf(source)||notes[id].title,travel,scroll:0}];history.pushState({rabbit:true,path},'', '#'+id);show(1,travel)}
+function go(id,source){if(!notes[id])return;if(busy)finishFlight?.();remember();const travel=travelFor(source);path=[...path,{id,via:labelOf(source)||notes[id].title,travel,scroll:0}];history.pushState({rabbit:true,path},'', '#'+id);show(1,travel)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')sourceNote.open=false});
 document.addEventListener('pointerdown',e=>{if(!sourceNote.contains(e.target))sourceNote.open=false});
 scenes.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go,b)});
