@@ -2,7 +2,9 @@
    design-concepts/app project metadata + public/press-articles snapshots.
    Film-process and album notes do not imply producing credits for those albums. */
 (() => {
-  const base=window.location.origin+'/#featured/';
+  let site=new URL('/',window.location.href);
+  if(window.parent!==window)try{const parentURL=new URL(window.parent.location.href);if(parentURL.origin===site.origin)site=parentURL;}catch{}
+  const base=site.origin+site.pathname+site.search+'#featured/';
   const notes={},topics={};
   const add=(id,title,kind,body,tags=[],slug=null,source='User-supplied bio')=>{
     notes[id]={title,kind,body,tags,source,...(slug?{link:base+slug}:{})};return id;
@@ -136,5 +138,5 @@
   notes['runnin'].tags=['revolution','mars'];notes['buffalo-hunt'].tags=['no-narration','pine-ridge','score'];
   notes['save-my-life'].tags=['one-take','extended-ending'];notes['antibalas'].tags=['back-patio'];
   notes['recording-parties'].tags=['session-players','24-track','live-mix','tape-vinyl'];
-  window.ABOUT_GRAPH={notes,topics};
+  window.ABOUT_GRAPH={notes,topics,featuredBase:base};
 })();

@@ -4,6 +4,10 @@ const stage=document.querySelector('#stage'),scenes=document.querySelector('#sce
 const back=document.querySelector('#back'),home=document.querySelector('#home'),trail=document.querySelector('#trail'),depth=document.querySelector('#depth'),hint=document.querySelector('#entrance-hint');
 const dialog=document.querySelector('#trail-dialog');let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const featuredSlug=new URLSearchParams(location.search).get('featured');
+const featuredBase=window.ABOUT_GRAPH.featuredBase;
+document.querySelector('header>a').href=featuredBase+'if-you-call';
+document.querySelector('#header-featured').href=featuredBase+(featuredSlug&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(featuredSlug)?featuredSlug:'if-you-call');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const word=(label,id)=>`<button class="word" data-label="${esc(label)}" data-go="${esc(id)}">${esc(label)}</button>`;
 function prose(s){let out='',last=0;for(const m of s.matchAll(/\[([^\]|]+)\|([^\]]+)\]/g)){out+=esc(s.slice(last,m.index))+(notes[m[2]]?word(m[1],m[2]):esc(m[1]));last=m.index+m[0].length}return (out+esc(s.slice(last))).replace(/\n\n/g,'<br><br>')}
@@ -28,10 +32,10 @@ const links=[...new Set([...n.related,...n.tags,...(incoming[id]||[])])].filter(
 if(!links.length&&inline.length<2)links.push('stories','places');
 if(!inline.length&&!links.length)links.push('musicians-index','stories');
 const max=inline.length>=3?1:Math.max(2,4-inline.length);
-el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Related paths">${links.slice(0,max).map(k=>word(notes[k].label||notes[k].title,k)).join('')}</div>${n.link?`<a class="work-link" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
+el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Related paths">${links.slice(0,max).map(k=>word(notes[k].label||notes[k].title,k)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
 return el;
 }
-function controls(){const current=path.at(-1);back.hidden=trail.hidden=path.length===1;home.hidden=path.length<=2;hint.hidden=path.length!==1;depth.textContent=String(path.length-1).padStart(2,'0');back.textContent=path.length>1?'← Back to '+(path.at(-2).id==='bio'?'bio':notes[path.at(-2).id].title):'← Back';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore / Open';}
+function controls(){const current=path.at(-1);back.hidden=trail.hidden=path.length===1;home.hidden=path.length<=2;hint.hidden=path.length!==1;depth.textContent=String(path.length-1).padStart(2,'0');back.textContent=path.length>1?'← Back to '+(path.at(-2).id==='bio'?'bio':notes[path.at(-2).id].title):'← Back';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
 function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');const entry=activeScene?.querySelector('.entry');if(entry){entry.style.transform='none';const scale=Math.min(1,(stage.clientHeight-8)/entry.offsetHeight);entry.style.transform=`scale(${Math.max(.2,scale)})`}}
 new ResizeObserver(fitScene).observe(stage);document.fonts.ready.then(fitScene);
 function remember(){if(activeScene){path.at(-1).scroll=activeScene.querySelector('.scene-content').scrollTop;history.replaceState({rabbit:true,path},'')}}
