@@ -38,12 +38,14 @@ window.RABBIT_PASSAGES={
  'tools':{heading:'MAKING\nTHINGS',body:'Philip builds creative tools for [writing|writing], [filmmaking|editing] and the creative process.\n\nIn the work itself, that process includes [experiments without a fixed outcome|unpredictable].',layout:'stack'}
 };
 Object.assign(window.RABBIT_PASSAGES,{
+ 'academy-collection':{heading:'THE\nACADEMY',body:'Philip’s film [Stranger: Bernie Worrell on Earth|stranger] was selected for inclusion in the permanent collection of the Academy of Motion Picture Arts and Sciences.',related:['bernie','recognition'],layout:'wide'},
+ 'stranger':{heading:'STRANGER',body:'Bernie Worrell on Earth.\n\nPhilip’s film about [Bernie Worrell|bernie] was selected for inclusion in the [permanent collection of the Academy of Motion Picture Arts and Sciences|academy-collection].',layout:'wide'},
  'film-index':{heading:'FILM',body:'[Three Sharon Jones films|trilogy]. A portrait of [Bernie Worrell|bernie]. Life and traditions on [Pine Ridge|pine-ridge].',related:['live-index']},
  'stories':{heading:'WHAT\nHAPPENS\nNEXT?',body:'[A mysterious caller|phone]. [A hotel nightmare|hotel]. [Another reality|another-world].\n\nAnd a community speaking in its [own voice|no-narration].',layout:'stack'},
  'experiments':{heading:'LOOK\nAGAIN',body:'A [lens from 1964|1964]. An [old television camera|tube-camera]. Images played through [musical equipment|playable].\n\nOther pictures made from [paint and collage|collage].',layout:'stack'},
  'records':{heading:'ON\nRECORD',body:'Songs in the videos connect to [Mars|mars], [Mean Love|mean-love] and [Alibi|alibi].\n\n[Recording Parties|recording-parties] opens another path: live sessions, tape and vinyl.',layout:'stack'},
  'places':{heading:'SOME\nWHERE',body:'A [recording studio in Brooklyn|rumpus-room]. A [house in Claryville|one-house]. A [back patio in Bushwick|back-patio].\n\nAnd [Pine Ridge, South Dakota|pine-ridge].',layout:'stack'},
- 'recognition':{heading:'THE\nBUFFALO\nHUNT',body:'Best feature documentary honors at the Prague Film Awards and Canada International Film Festival.\n\nA film with [no narrator|no-narration], made on [Pine Ridge|pine-ridge].',layout:'stack'},
+ 'recognition':{heading:'THE\nBUFFALO\nHUNT',body:'Best feature documentary honors at the Prague Film Awards and Canada International Film Festival.\n\nA film with [no narrator|no-narration], made on [Pine Ridge|pine-ridge].',related:['academy-collection'],layout:'stack'},
  'ten-years':{heading:'TEN\nYEARS',body:'Philip founded, owned and operated a film and music recording studio in [Brooklyn|places] for ten years.\n\n[The Rumpus Room|rumpus-room]. [4,000 square feet|4000].',layout:'stack'},
  'video-index':{heading:'VIDEO',body:'[Caveman|caveman]. [Sinkane|sinkane]. [Spacecamp|spacecamp].\n\nDifferent paths through music and moving images.',related:['naomi']},
  'live-index':{heading:'LIVE',body:'Performances at [Brooklyn Bowl|brooklyn-bowl], at the [House of Soul|house-of-soul], and an [ending that keeps going|extended-ending].',related:['one-take']},

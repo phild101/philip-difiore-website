@@ -98,6 +98,9 @@
     ['coco-beware','CoCo Beware','RECORD','Old Friend is a song from Caveman’s CoCo Beware.',['old-friend'],'old-friend','paste-old-friend.json']
   ];
   facts.forEach(row=>add(...row));
+  add('academy-collection','The Academy’s permanent collection','PERMANENT COLLECTION','Philip’s film Stranger: Bernie Worrell on Earth was selected for inclusion in the permanent collection of the Academy of Motion Picture Arts and Sciences.',['stranger','bernie','recognition'],'stranger','User-supplied factoid');
+  notes['stranger'].tags=['academy-collection','bernie'];
+  notes['recognition'].tags.push('academy-collection');
   const musicians=artistRows.map(row=>row[0]),sessionMusicians=sessionRows.map(row=>row[0]);
   add('session-players','The recording party','PEOPLE','Musicians met, socialized and improvised at the studio’s recording sessions.',sessionMusicians,'recording-parties','bedford-bowery-recording-parties.json');
   add('ten-years','Ten years','A CHAPTER','Philip founded, owned and operated a film and music recording studio in Brooklyn for ten years.',['rumpus-room','4000']);
@@ -115,7 +118,7 @@
   add('records','Records + recordings','MUSIC','Songs in the featured videos connect to these records. Recording Parties opens a different path: live sessions, tape and vinyl.',['alibi','mars','mean-love','coco-beware','24-track','tape-vinyl'],null,'Matching music-video and Recording Parties press snapshots');
   add('places','Places','LOCATIONS','Brooklyn studios and stages, a house in Claryville, and Pine Ridge in South Dakota.',['rumpus-room','brooklyn-bowl','house-of-soul','one-house','pine-ridge'],null,'Project metadata; press snapshots');
   const group=(id,note,tags)=>topics[id]={note,tags};
-  group('awards','recognition',['recognition','buffalo-hunt']);
+  group('awards','recognition',['recognition','academy-collection','buffalo-hunt']);
   group('films','film-index',['trilogy','35mm','1964','blue-note','stranger','buffalo-hunt','live-index']);
   group('stories','stories',['phone','time-folding','hotel','another-world','no-narration','pine-ridge']);
   group('experiments','experiments',['playable','unpredictable','tube-camera','collage','body-paint','oil-paint','stop-motion']);
