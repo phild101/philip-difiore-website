@@ -1,8 +1,8 @@
 (() => {
 const {notes,topics}=window.ABOUT_GRAPH,custom=window.RABBIT_PASSAGES;
 const stage=document.querySelector('#stage'),scenes=document.querySelector('#scenes'),page=document.querySelector('.page');
-const back=document.querySelector('#back'),home=document.querySelector('#home'),trail=document.querySelector('#trail'),depth=document.querySelector('#depth'),hint=document.querySelector('#entrance-hint');
-const dialog=document.querySelector('#trail-dialog');let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
+const home=document.querySelector('#home'),hint=document.querySelector('#entrance-hint');
+let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const featuredSlug=new URLSearchParams(location.search).get('featured');
 const featuredBase=window.ABOUT_GRAPH.featuredBase;
@@ -35,7 +35,7 @@ const max=inline.length>=3?1:Math.max(2,4-inline.length);
 el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Related paths">${links.slice(0,max).map(k=>word(notes[k].label||notes[k].title,k)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
 return el;
 }
-function controls(){const current=path.at(-1);back.hidden=trail.hidden=path.length===1;home.hidden=path.length<=2;hint.hidden=path.length!==1;depth.textContent=String(path.length-1).padStart(2,'0');back.textContent=path.length>1?'← Back to '+(path.at(-2).id==='bio'?'bio':notes[path.at(-2).id].title):'← Back';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
+function controls(){const current=path.at(-1);home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
 function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');const entry=activeScene?.querySelector('.entry');if(entry){entry.style.transform='none';const scale=Math.min(1,(stage.clientHeight-8)/entry.offsetHeight);entry.style.transform=`scale(${Math.max(.2,scale)})`}}
 new ResizeObserver(fitScene).observe(stage);document.fonts.ready.then(fitScene);
 function remember(){if(activeScene){path.at(-1).scroll=activeScene.querySelector('.scene-content').scrollTop;history.replaceState({rabbit:true,path},'')}}
@@ -47,7 +47,7 @@ function show(direction=0,travel=null){
  const dark=Boolean(custom[path.at(-1).id]?.dark);next.style.setProperty('--ink',dark?'#f5f5f2':'#30302f');next.style.setProperty('--paper',dark?'#30302f':'#f5f5f2');next.style.setProperty('--muted',dark?'#c2c2bd':'#727270');next.style.color=dark?'#f5f5f2':'#30302f';
  next.querySelector('.scene-content').scrollTop=path.at(-1).scroll||0;
  const portal=document.querySelector('#flight-word');portal.style.opacity='0';
- const finish=()=>{if(serial!==flightSerial)return;old?.remove();next.inert=false;next.removeAttribute('aria-hidden');page.classList.remove('flying');stage.removeAttribute('aria-busy');busy=false;if(!dialog.open)next.querySelector('h1')?.focus({preventScroll:true});document.querySelector('#status').textContent=path.at(-1).id==='bio'?'Philip Di Fiore. Biography.':notes[path.at(-1).id].title};
+ const finish=()=>{if(serial!==flightSerial)return;old?.remove();next.inert=false;next.removeAttribute('aria-hidden');page.classList.remove('flying');stage.removeAttribute('aria-busy');busy=false;next.querySelector('h1')?.focus({preventScroll:true});document.querySelector('#status').textContent=path.at(-1).id==='bio'?'Philip Di Fiore. Biography.':notes[path.at(-1).id].title};
  finishFlight=()=>{animations.forEach(a=>a.cancel());portal.style.opacity='0';finish()};
  if(!old||!direction||reduced.matches){finish();return}
  busy=true;page.classList.add('flying');stage.setAttribute('aria-busy','true');old.inert=true;old.setAttribute('aria-hidden','true');next.inert=true;
@@ -75,12 +75,10 @@ function show(direction=0,travel=null){
 function go(id,source){if(!notes[id])return;if(busy)finishFlight?.();remember();const travel=travelFor(source);path=[...path,{id,via:labelOf(source)||notes[id].title,travel,scroll:0}];history.pushState({rabbit:true,path},'', '#'+id);show(1,travel)}
 scenes.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go,b)});
 function jump(index){if(index>=0&&index<path.length-1)history.go(index-(path.length-1));}
-back.addEventListener('click',()=>jump(path.length-2));home.addEventListener('click',()=>jump(0));document.querySelector('#header-about').addEventListener('click',e=>{e.preventDefault();jump(0)});
+home.addEventListener('click',()=>jump(0));document.querySelector('#header-about').addEventListener('click',e=>{e.preventDefault();jump(0)});
 window.addEventListener('popstate',()=>{if(history.state?.rabbit){const previous=path,nextPath=history.state.path;const direction=nextPath.length<previous.length?-1:1;const travel=Math.abs(nextPath.length-previous.length)>1?{x:.5,y:.5,dx:.2,dy:.15,turn:0,portal:false}:(direction<0?previous.at(-1).travel:nextPath.at(-1).travel);path=nextPath;show(direction,travel)}else{location.reload()}});
 reduced.addEventListener('change',e=>{if(e.matches&&busy)finishFlight?.()});
 scenes.addEventListener('scroll',()=>{if(!busy&&activeScene)remember()},true);
-window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&!dialog.open&&!e.target.closest('input,textarea')){e.preventDefault();jump(path.length-2)}});
-trail.addEventListener('click',()=>{document.querySelector('#trail-list').innerHTML=path.map((p,i)=>`<li><button data-index="${i}" ${i===path.length-1?'aria-current="step"':''}>${esc(p.id==='bio'?'Philip Di Fiore…':notes[p.id].title)}${p.via?`<span class="trail-via">via ${esc(p.via)}</span>`:''}</button></li>`).join('');dialog.showModal()});
-document.querySelector('#trail-list').addEventListener('click',e=>{const b=e.target.closest('[data-index]');if(b){dialog.close();jump(Number(b.dataset.index))}});document.querySelector('#close-trail').addEventListener('click',()=>dialog.close());
+window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&!e.target.closest('input,textarea')){e.preventDefault();jump(path.length-2)}});
 let start='';try{start=decodeURIComponent(location.hash.slice(1))}catch{};if(history.state?.rabbit)path=history.state.path;else{history.replaceState({rabbit:true,path},'','#bio');if(notes[start]){path=[...path,{id:start,via:notes[start].title}];history.pushState({rabbit:true,path},'','#'+start)}}show();
 })();
