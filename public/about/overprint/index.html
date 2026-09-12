@@ -8,23 +8,24 @@
     @font-face {font-family:Archivo Black;src:url('/fonts/archivo-black.ttf') format('truetype');font-weight:400}
     * {box-sizing:border-box}
     :root {--paper:#f6f6f4;--ink:#343433;--small-font:12px;--small-tracking:.05em}
-    html,body {margin:0;background:white;color:var(--ink)}
+    html,body {margin:0;height:100%;overflow:hidden;background:white;color:var(--ink)}
     body {padding:12px}
-    .page {position:relative;min-height:1086px;border:1px solid var(--ink);background:var(--paper)}
+    .page {position:relative;height:100%;min-height:0;display:flex;flex-direction:column;border:1px solid var(--ink);background:var(--paper);--stage-height:700px}
     .small-type {font:400 var(--small-font)/1.65 'Courier New',Courier,monospace;letter-spacing:var(--small-tracking)}
-    header {height:87px;margin:0 40px;display:flex;align-items:center;justify-content:space-between}
+    header {height:87px;flex-shrink:0;margin:0 40px;display:flex;align-items:center;justify-content:space-between}
     nav {display:flex;gap:42px}
     .nav-piece {display:inline-block;border:0;padding:0;background:transparent;color:inherit;text-decoration:none;white-space:nowrap}
     .active {text-decoration:underline;text-underline-offset:5px}
-    .rule {height:16px;margin:-8px 40px 0}
+    .rule {height:16px;flex-shrink:0;margin:-8px 40px 0}
     .rule::after {content:'';position:absolute;top:7px;left:0;right:0;border-top:1px solid #656563}
-    main {display:grid;grid-template-columns:33% 67%;padding:50px 70px 68px 40px;min-height:985px;align-items:start}
+    .workspace {position:relative;min-height:0;flex:1}
+    .composition {position:absolute;left:0;top:0;width:100%;display:grid;grid-template-columns:33% 67%;padding:clamp(8px,calc(var(--stage-height)*.025),25px) 70px clamp(8px,calc(var(--stage-height)*.025),25px) 40px;align-items:center;transform-origin:top left}
     h1 {width:max-content;margin:0 auto;font-family:Archivo Black,Arial,sans-serif;font-weight:400}
-    .given {display:block;margin:0 0 33px;font-size:32px;letter-spacing:.14em}
-    .family {display:block;writing-mode:vertical-rl;text-orientation:sideways;font-size:168px;line-height:.86;letter-spacing:-.065em;white-space:nowrap}
-    .ellipsis {display:block;margin-top:21px;font-size:44px;line-height:1;letter-spacing:.1em}
-    .bio {display:flex;flex-direction:column;align-items:flex-start;gap:25px;padding:60px 0 0 36px}
-    .bio p {width:fit-content;max-width:650px;margin:0;padding:23px 27px;background:var(--ink);color:#f7f7f4;border-radius:8px}
+    .given {display:block;margin:0 0 clamp(10px,calc(var(--stage-height)*.03),33px);font-size:clamp(16px,calc(var(--stage-height)*.034),32px);letter-spacing:.14em}
+    .family {display:block;writing-mode:vertical-rl;text-orientation:sideways;font-size:clamp(44px,calc(var(--stage-height)*.17),168px);line-height:.86;letter-spacing:-.065em;white-space:nowrap}
+    .ellipsis {display:block;margin-top:clamp(6px,calc(var(--stage-height)*.02),21px);font-size:clamp(20px,calc(var(--stage-height)*.04),44px);line-height:1;letter-spacing:.1em}
+    .bio {display:flex;flex-direction:column;align-items:flex-start;gap:clamp(5px,calc(var(--stage-height)*.024),25px);padding:0 0 0 36px;min-width:0}
+    .bio p {width:fit-content;max-width:650px;margin:0;padding:clamp(5px,calc(var(--stage-height)*.022),23px) 27px;background:var(--ink);color:#f7f7f4;border-radius:8px}
     .bio p:nth-child(2) {margin-left:40px}
     .bio p:nth-child(3) {margin-left:8px}
     .bio p:nth-child(4) {margin-left:62px;max-width:570px}
@@ -41,8 +42,9 @@
     .tag-cloud .fact-tag:nth-child(4n+1) {rotate:-1deg}
     .tag-cloud .fact-tag:nth-child(4n+2) {rotate:1deg}
     .fact-tag:hover,.fact-tag:focus-visible {outline:1px solid var(--ink);outline-offset:2px;text-decoration:underline;text-underline-offset:3px}
-    .page .released-note {position:absolute;left:0;top:0;width:276px;max-width:calc(100% - 32px);padding:17px 19px 20px;border:1px solid #858580;border-radius:2px;background:white;color:var(--ink)}
-    .note-head {display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:16px;color:#686865;font-size:10px}
+    .page .released-note {position:absolute;left:0;top:0;width:276px;max-width:calc(100% - 32px);max-height:calc(var(--stage-height) - 16px);display:flex;flex-direction:column;overflow:hidden;touch-action:pan-y;padding:17px 19px 20px;border:1px solid #858580;border-radius:2px;background:white;color:var(--ink)}
+    .note-head {display:flex;flex-shrink:0;align-items:start;justify-content:space-between;gap:12px;margin-bottom:16px;color:#686865;font-size:10px;touch-action:none}
+    .note-body {min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y}
     .note-close {font:18px/1 'Courier New',monospace;cursor:pointer;touch-action:manipulation;color:inherit;border:0;background:none;padding:0 0 6px 8px}
     .released-note h2 {font:700 12px/1.65 'Courier New',Courier,monospace;letter-spacing:.05em;margin:0 0 12px}
     .released-note p {margin:0 0 17px}
@@ -56,13 +58,13 @@
     [data-movable]:focus-visible {outline:1px dashed #777;outline-offset:7px}
     .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @media(max-width:1050px) {
-      main {grid-template-columns:29% 71%;padding:46px 38px 65px 22px}.family{font-size:135px}.given{font-size:25px}.bio{padding-left:20px}.bio p{max-width:calc(100% - 28px)}
+      .composition {grid-template-columns:29% 71%;padding-left:22px;padding-right:38px}.bio{padding-left:20px}.bio p{max-width:calc(100% - 28px)}
       .bio p:nth-child(n){margin-left:0;max-width:100%}.bio p:nth-child(even){margin-left:20px;max-width:calc(100% - 20px)}
     }
     @media(max-width:640px) {
       body{padding:8px}.page{min-height:0}header{height:auto;min-height:108px;gap:21px;flex-wrap:wrap;margin:0 22px;padding:22px 0}nav{gap:22px}.rule{margin-left:22px;margin-right:22px}
-      main{display:block;min-height:0;padding:38px 22px 60px}h1{margin:0;max-width:100%}.given{font-size:22px;margin-bottom:18px}.family{writing-mode:horizontal-tb;font-size:clamp(44px,13vw,78px);line-height:1}.ellipsis{font-size:32px;margin-top:4px}
-      .bio{padding:38px 0 0;gap:22px}.bio p{padding:20px}.bio p:nth-child(even){margin-left:10px;max-width:calc(100% - 10px)}
+      .composition{display:block;padding:12px 22px}h1{margin:0;max-width:100%}.given{font-size:20px;margin-bottom:8px}.family{writing-mode:horizontal-tb;font-size:clamp(44px,11vw,70px);line-height:1}.ellipsis{font-size:24px;margin-top:4px}
+      .bio{padding:18px 0 0;gap:7px}.bio p{padding:6px 12px}.bio p:nth-child(even){margin-left:10px;max-width:calc(100% - 10px)}
     }
   </style>
 </head>
@@ -78,7 +80,8 @@
       </nav>
     </header>
     <div class="rule" data-movable="rule" tabindex="0" aria-label="Header line" aria-describedby="move-help"></div>
-    <main>
+    <main class="workspace">
+      <div class="composition">
       <h1 data-movable="name" tabindex="0" aria-label="Philip Di Fiore…" aria-describedby="move-help"><span class="given">PHILIP</span><span class="family">DI FIORE</span><span class="ellipsis">…</span></h1>
       <article class="bio small-type" aria-label="Biography">
         <p data-movable="bio-1" tabindex="0" aria-describedby="move-help">is an <button class="keyword" data-topic="awards">award winning</button> <button class="keyword" data-topic="films">filmmaker</button> known for his <button class="keyword" data-topic="stories">cinematic storytelling</button> style and <button class="keyword" data-topic="experiments">mind bending narratives</button>.</p>
@@ -89,6 +92,7 @@
         <p data-movable="bio-6" tabindex="0" aria-describedby="move-help">builds <button class="keyword" data-topic="tools">creative tools</button> for writing, filmmaker and the creative process.</p>
         <p data-movable="bio-7" tabindex="0" aria-describedby="move-help">is a partner of creative studio, <button class="keyword" data-topic="rumpus">Rumpus Productions</button>, with his wife <button class="keyword" data-topic="lara">Lara</button>.</p>
       </article>
+      </div>
     </main>
   </div>
   <div id="tag-cloud" class="tag-cloud small-type" popover="auto" role="region" aria-label="Related discoveries"></div>
