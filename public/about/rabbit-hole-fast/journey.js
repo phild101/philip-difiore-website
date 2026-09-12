@@ -48,7 +48,7 @@ function show(direction=0,travel=null){
  if(!old||!direction||reduced.matches){finish();return}
  busy=true;page.classList.add('flying');stage.setAttribute('aria-busy','true');old.inert=true;old.setAttribute('aria-hidden','true');next.inert=true;
  const t=travel||{x:.5,y:.5,dx:.75,dy:.25,turn:1.2,portal:false},w=stage.clientWidth,h=stage.clientHeight;
- const duration=t.portal?1000:850,ease='cubic-bezier(.55,0,.2,1)';const turn=innerWidth<=600?0:t.turn;
+ const duration=t.portal?900:765,ease='cubic-bezier(.55,0,.2,1)';const turn=innerWidth<=600?0:t.turn;
  const far=`translate(${-t.dx*w*.42}px,${-t.dy*h*.42}px) scale(${t.portal?2.5:1.4}) rotate(${-turn}deg)`;
  const near=`translate(${t.dx*w*.40}px,${t.dy*h*.40}px) scale(${t.portal?.64:.78}) rotate(${turn}deg)`;
  const settled='translate(0px,0px) scale(1) rotate(0deg)';
