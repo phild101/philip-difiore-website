@@ -101,9 +101,12 @@ const entries=[
     "heading": "FILM",
     "kind": "WORKS",
     "body": "[Three Sharon Jones films|trilogy]. A portrait of [Bernie Worrell|stranger]. Life and traditions on [Pine Ridge|buffalo-hunt].",
-    "related": [],
+    "related": [
+      "live-index"
+    ],
     "sources": [],
     "layout": "stack",
+    "maxExits": 4,
     "curated": true
   },
   {
