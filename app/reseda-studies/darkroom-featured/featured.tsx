@@ -558,7 +558,7 @@ export function DarkroomFeatured({
                   <img
                     src={
                       treatment === 'overprint'
-                        ? '/images/overprint/philip.png'
+                        ? '/images/overprint/philip.webp'
                         : '/images/phil-2026.jpg'
                     }
                     alt={

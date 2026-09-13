@@ -52,7 +52,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'if-you-call',
     work: artworks[5],
-    poster: '/images/overprint/if-you-call.png',
+    poster: '/images/overprint/if-you-call.webp',
     heading: ['SHARON JONES', '& THE', 'DAP-KINGS'],
     palette: 'vermilion',
     composition: 'right',
@@ -60,7 +60,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'old-friend',
     work: artworks[0],
-    poster: '/images/overprint/old-friend.png',
+    poster: '/images/overprint/old-friend.webp',
     heading: ['OLD', 'FRIEND'],
     palette: 'yellow',
     composition: 'right',
@@ -68,7 +68,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'stranger',
     work: artworks[1],
-    poster: '/images/overprint/stranger.png',
+    poster: '/images/overprint/stranger.webp',
     heading: ['STRANGER'],
     palette: 'paper',
     composition: 'left',
@@ -76,7 +76,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'in-the-city',
     work: inTheCity,
-    poster: '/images/overprint/in-the-city.png',
+    poster: '/images/overprint/in-the-city.webp',
     heading: ['IN THE', 'CITY'],
     palette: 'cobalt',
     composition: 'right',
@@ -84,7 +84,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'runnin',
     work: artworks[4],
-    poster: '/images/overprint/runnin.png',
+    poster: '/images/overprint/runnin.webp',
     heading: ['RUNNIN’'],
     palette: 'ink',
     composition: 'center',
@@ -92,7 +92,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'warm-spell',
     work: artworks[2],
-    poster: '/images/overprint/warm-spell.png',
+    poster: '/images/overprint/warm-spell.webp',
     heading: ['WARM', 'SPELL'],
     palette: 'vermilion',
     composition: 'left',
@@ -100,7 +100,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'miko-dtb',
     work: artworks[7],
-    poster: '/images/overprint/miko-dtb.png',
+    poster: '/images/overprint/miko-dtb.webp',
     heading: ['MIKO', 'D.T.B.'],
     palette: 'yellow',
     composition: 'center',
@@ -108,7 +108,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'young-trouble',
     work: youngTrouble,
-    poster: '/images/overprint/young-trouble.png',
+    poster: '/images/overprint/young-trouble.webp',
     heading: ['YOUNG', 'TROUBLE'],
     palette: 'paper-red',
     composition: 'right',
@@ -116,7 +116,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'naomi-shelton',
     work: naomi,
-    poster: '/images/overprint/naomi-shelton.png',
+    poster: '/images/overprint/naomi-shelton.webp',
     heading: ['NAOMI', 'SHELTON', '& THE GOSPEL', 'QUEENS'],
     palette: 'paper-blue',
     composition: 'left',
@@ -124,7 +124,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'man-man',
     work: manMan,
-    poster: '/images/overprint/man-man.png',
+    poster: '/images/overprint/man-man.webp',
     heading: ['MAN', 'MAN'],
     palette: 'ink',
     composition: 'center',
@@ -132,7 +132,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'recording-parties',
     work: recordingParties,
-    poster: '/images/overprint/recording-parties.png',
+    poster: '/images/overprint/recording-parties.webp',
     heading: ['RECORDING', 'PARTIES'],
     palette: 'cobalt',
     composition: 'right',
@@ -140,7 +140,7 @@ export const overprintProjects: FeaturedProject[] = [
   {
     slug: 'buffalo-hunt',
     work: artworks[3],
-    poster: '/images/overprint/buffalo-hunt.png',
+    poster: '/images/overprint/buffalo-hunt.webp',
     heading: ['THE', 'BUFFALO', 'HUNT'],
     palette: 'paper-blue',
     composition: 'left',

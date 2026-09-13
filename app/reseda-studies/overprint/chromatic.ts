@@ -126,14 +126,14 @@ export function featuredPoster(
   edition: OverprintEdition,
 ) {
   if (edition === 'sequence') {
-    if (project.slug === 'runnin') return '/images/sequence/runnin-v3.png';
+    if (project.slug === 'runnin') return '/images/sequence/runnin-v3.webp';
     if (project.slug === 'young-trouble')
-      return '/images/sequence/young-trouble-v2.png';
-    if (project.slug === 'man-man') return '/images/chromatic/man-man.png';
+      return '/images/sequence/young-trouble-v2.webp';
+    if (project.slug === 'man-man') return '/images/chromatic/man-man.webp';
     if (project.slug === 'recording-parties')
-      return '/images/sequence/recording-parties-turquoise.png';
+      return '/images/sequence/recording-parties-turquoise.webp';
   }
   return edition === 'chromatic'
-    ? '/images/chromatic/' + project.slug + '.png'
+    ? '/images/chromatic/' + project.slug + '.webp'
     : project.poster;
 }

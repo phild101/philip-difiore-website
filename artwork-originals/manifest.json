@@ -1,0 +1,321 @@
+{
+  "format": "WebP lossless; original ICC and metadata retained",
+  "verification": "RGBA byte equality at original dimensions for every image",
+  "artworks": [
+    {
+      "original": "/images/buffalo-hunt.png",
+      "replacement": "/images/buffalo-hunt.webp",
+      "before": 1496995,
+      "after": 701812,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/if-you-call.png",
+      "replacement": "/images/chromatic/if-you-call.webp",
+      "before": 3141515,
+      "after": 2196488,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/buffalo-hunt.png",
+      "replacement": "/images/chromatic/buffalo-hunt.webp",
+      "before": 3314212,
+      "after": 2273038,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/in-the-city.png",
+      "replacement": "/images/chromatic/in-the-city.webp",
+      "before": 3334399,
+      "after": 2350418,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/man-man.png",
+      "replacement": "/images/chromatic/man-man.webp",
+      "before": 3056044,
+      "after": 2115956,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/miko-dtb.png",
+      "replacement": "/images/chromatic/miko-dtb.webp",
+      "before": 3054892,
+      "after": 2127596,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/old-friend.png",
+      "replacement": "/images/chromatic/old-friend.webp",
+      "before": 3491872,
+      "after": 2462432,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/recording-parties.png",
+      "replacement": "/images/chromatic/recording-parties.webp",
+      "before": 3237455,
+      "after": 2214644,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/naomi-shelton.png",
+      "replacement": "/images/chromatic/naomi-shelton.webp",
+      "before": 3213257,
+      "after": 2300334,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/stranger.png",
+      "replacement": "/images/chromatic/stranger.webp",
+      "before": 3566747,
+      "after": 2437620,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/runnin.png",
+      "replacement": "/images/chromatic/runnin.webp",
+      "before": 3270369,
+      "after": 2213338,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/warm-spell.png",
+      "replacement": "/images/chromatic/warm-spell.webp",
+      "before": 2770789,
+      "after": 1861538,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/if-you-call.png",
+      "replacement": "/images/overprint/if-you-call.webp",
+      "before": 3490122,
+      "after": 2575762,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/buffalo-hunt.png",
+      "replacement": "/images/overprint/buffalo-hunt.webp",
+      "before": 3662364,
+      "after": 2727200,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/chromatic/young-trouble.png",
+      "replacement": "/images/chromatic/young-trouble.webp",
+      "before": 2951343,
+      "after": 2203096,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/in-the-city.png",
+      "replacement": "/images/overprint/in-the-city.webp",
+      "before": 3613701,
+      "after": 2711726,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/miko-dtb.png",
+      "replacement": "/images/overprint/miko-dtb.webp",
+      "before": 3455194,
+      "after": 2695448,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/man-man.png",
+      "replacement": "/images/overprint/man-man.webp",
+      "before": 3470894,
+      "after": 2637096,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/naomi-shelton.png",
+      "replacement": "/images/overprint/naomi-shelton.webp",
+      "before": 3677443,
+      "after": 2958020,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/old-friend.png",
+      "replacement": "/images/overprint/old-friend.webp",
+      "before": 3908694,
+      "after": 2919010,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/philip.png",
+      "replacement": "/images/overprint/philip.webp",
+      "before": 3519238,
+      "after": 2615630,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/stranger.png",
+      "replacement": "/images/overprint/stranger.webp",
+      "before": 3878678,
+      "after": 2895298,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/recording-parties.png",
+      "replacement": "/images/overprint/recording-parties.webp",
+      "before": 3443664,
+      "after": 2670824,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/runnin.png",
+      "replacement": "/images/overprint/runnin.webp",
+      "before": 3595540,
+      "after": 2745790,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/antibalas-overprint.png",
+      "replacement": "/images/sequence/antibalas-overprint.webp",
+      "before": 3555635,
+      "after": 2763844,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/warm-spell.png",
+      "replacement": "/images/overprint/warm-spell.webp",
+      "before": 3234053,
+      "after": 2489274,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/overprint/young-trouble.png",
+      "replacement": "/images/overprint/young-trouble.webp",
+      "before": 3229896,
+      "after": 2586278,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/diiv-overprint.png",
+      "replacement": "/images/sequence/diiv-overprint.webp",
+      "before": 3558573,
+      "after": 2770396,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/class-actress-overprint.png",
+      "replacement": "/images/sequence/class-actress-overprint.webp",
+      "before": 3599890,
+      "after": 2822320,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/game-gets-old-overprint.png",
+      "replacement": "/images/sequence/game-gets-old-overprint.webp",
+      "before": 3510311,
+      "after": 2641012,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/in-the-city-night-glass.png",
+      "replacement": "/images/sequence/in-the-city-night-glass.webp",
+      "before": 3620725,
+      "after": 2690456,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/i-learned-the-hard-way-overprint.png",
+      "replacement": "/images/sequence/i-learned-the-hard-way-overprint.webp",
+      "before": 3432916,
+      "after": 2522348,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/in-the-city-vertigo-v2.png",
+      "replacement": "/images/sequence/in-the-city-vertigo-v2.webp",
+      "before": 2961803,
+      "after": 2216140,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/in-the-city-vertigo.png",
+      "replacement": "/images/sequence/in-the-city-vertigo.webp",
+      "before": 3375072,
+      "after": 2596430,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/recording-parties-turquoise.png",
+      "replacement": "/images/sequence/recording-parties-turquoise.webp",
+      "before": 3406609,
+      "after": 2563900,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/rdgldgrn-overprint.png",
+      "replacement": "/images/sequence/rdgldgrn-overprint.webp",
+      "before": 3437727,
+      "after": 2649628,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/rival-schools-overprint.png",
+      "replacement": "/images/sequence/rival-schools-overprint.webp",
+      "before": 3896233,
+      "after": 3170648,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/recording-parties-v3.png",
+      "replacement": "/images/sequence/recording-parties-v3.webp",
+      "before": 3214119,
+      "after": 2570954,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/recording-parties.png",
+      "replacement": "/images/sequence/recording-parties.webp",
+      "before": 3219094,
+      "after": 2621384,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/runnin-v2.png",
+      "replacement": "/images/sequence/runnin-v2.webp",
+      "before": 3301643,
+      "after": 2722014,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/rival-schools-vivid.png",
+      "replacement": "/images/sequence/rival-schools-vivid.webp",
+      "before": 3761136,
+      "after": 3009208,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/rival-schools-uganda.png",
+      "replacement": "/images/sequence/rival-schools-uganda.webp",
+      "before": 3552803,
+      "after": 2823000,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/save-my-life-overprint.png",
+      "replacement": "/images/sequence/save-my-life-overprint.webp",
+      "before": 3578464,
+      "after": 2769218,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/runnin-v3.png",
+      "replacement": "/images/sequence/runnin-v3.webp",
+      "before": 3528795,
+      "after": 2631616,
+      "pixelsIdentical": true
+    },
+    {
+      "original": "/images/sequence/young-trouble-v2.png",
+      "replacement": "/images/sequence/young-trouble-v2.webp",
+      "before": 3227506,
+      "after": 2690780,
+      "pixelsIdentical": true
+    }
+  ]
+}

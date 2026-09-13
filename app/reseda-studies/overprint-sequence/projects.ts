@@ -45,7 +45,7 @@ const liveProjects: FeaturedProject[] = [
   {
     slug: 'diiv',
     work: diiv,
-    poster: '/images/sequence/diiv-overprint.png',
+    poster: '/images/sequence/diiv-overprint.webp',
     heading: ['DIIV'],
     palette: 'ink',
     composition: 'right',
@@ -53,7 +53,7 @@ const liveProjects: FeaturedProject[] = [
   {
     slug: 'class-actress',
     work: classActress,
-    poster: '/images/sequence/class-actress-overprint.png',
+    poster: '/images/sequence/class-actress-overprint.webp',
     heading: ['CLASS', 'ACTRESS'],
     palette: 'vermilion',
     composition: 'right',
@@ -61,7 +61,7 @@ const liveProjects: FeaturedProject[] = [
   {
     slug: 'save-my-life',
     work: saveMyLife,
-    poster: '/images/sequence/save-my-life-overprint.png',
+    poster: '/images/sequence/save-my-life-overprint.webp',
     heading: ['SAVE', 'MY LIFE'],
     palette: 'ink',
     composition: 'right',
@@ -69,7 +69,7 @@ const liveProjects: FeaturedProject[] = [
   {
     slug: 'antibalas',
     work: antibalas,
-    poster: '/images/sequence/antibalas-overprint.png',
+    poster: '/images/sequence/antibalas-overprint.webp',
     heading: ['ANTIBALAS'],
     palette: 'ink',
     composition: 'right',
@@ -79,7 +79,7 @@ const videoProjects: FeaturedProject[] = [
   {
     slug: 'rival-schools',
     work: rivalSchools,
-    poster: '/images/sequence/rival-schools-vivid.png',
+    poster: '/images/sequence/rival-schools-vivid.webp',
     heading: ['RIVAL', 'SCHOOLS'],
     palette: 'paper',
     composition: 'right',
@@ -87,7 +87,7 @@ const videoProjects: FeaturedProject[] = [
   {
     slug: 'rdgldgrn',
     work: rdgldgrn,
-    poster: '/images/sequence/rdgldgrn-overprint.png',
+    poster: '/images/sequence/rdgldgrn-overprint.webp',
     heading: ['RDGLDGRN'],
     palette: 'ink',
     composition: 'right',
@@ -114,7 +114,7 @@ export const sequencePaletteProjects = {
   vivid: sequenceProjects,
   uganda: sequenceProjects.map((project) =>
     project.slug === 'rival-schools'
-      ? { ...project, poster: '/images/sequence/rival-schools-uganda.png' }
+      ? { ...project, poster: '/images/sequence/rival-schools-uganda.webp' }
       : project,
   ),
 };

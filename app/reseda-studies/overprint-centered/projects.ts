@@ -15,7 +15,7 @@ const sharonFilms: FeaturedProject[] = [
   {
     slug: 'i-learned-the-hard-way',
     work: learnedTheHardWay,
-    poster: '/images/sequence/i-learned-the-hard-way-overprint.png',
+    poster: '/images/sequence/i-learned-the-hard-way-overprint.webp',
     heading: ['I LEARNED', 'THE HARD WAY'],
     palette: 'ink',
     composition: 'right',
@@ -23,7 +23,7 @@ const sharonFilms: FeaturedProject[] = [
   {
     slug: 'game-gets-old',
     work: artworks[6],
-    poster: '/images/sequence/game-gets-old-overprint.png',
+    poster: '/images/sequence/game-gets-old-overprint.webp',
     heading: ['GAME', 'GETS OLD'],
     palette: 'ink',
     composition: 'left',
@@ -59,24 +59,24 @@ export const centeredCityProjects = {
   'night-glass': {
     vivid: withCityPoster(
       centeredPaletteProjects.vivid,
-      '/images/sequence/in-the-city-night-glass.png',
+      '/images/sequence/in-the-city-night-glass.webp',
       1072 / 1467,
     ),
     uganda: withCityPoster(
       centeredPaletteProjects.uganda,
-      '/images/sequence/in-the-city-night-glass.png',
+      '/images/sequence/in-the-city-night-glass.webp',
       1072 / 1467,
     ),
   },
   vertigo: {
     vivid: withCityPoster(
       centeredPaletteProjects.vivid,
-      '/images/sequence/in-the-city-vertigo-v2.png',
+      '/images/sequence/in-the-city-vertigo-v2.webp',
       1122 / 1402,
     ),
     uganda: withCityPoster(
       centeredPaletteProjects.uganda,
-      '/images/sequence/in-the-city-vertigo-v2.png',
+      '/images/sequence/in-the-city-vertigo-v2.webp',
       1122 / 1402,
     ),
   },
