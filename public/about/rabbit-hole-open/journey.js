@@ -27,6 +27,7 @@ const labelOf=source=>source?.dataset.label||source?.textContent||'';
 function node(id){const n=notes[id],c=custom[id]||{};return {...n,...c,heading:c.heading||n.title,body:c.body||n.body,related:c.related||[]}}
 function scene(id){
 const el=document.createElement('section');el.className='scene';el.dataset.id=id;
+if(id==='bio'&&window.RABBIT_ENTRANCE){window.RABBIT_ENTRANCE(el,{prose,bio});return el;}
 if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,:]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});const keys=['film-index','writing','editing','records','rumpus-room','tools','stranger'];el.querySelectorAll('.bio p').forEach((p,i)=>p.querySelector('[data-go="'+keys[i]+'"]')?.classList.add('lead-word'));return el}
 const n=node(id);el.dataset.layout=n.layout||'quiet';
 
