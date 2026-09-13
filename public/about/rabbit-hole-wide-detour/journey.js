@@ -1,7 +1,5 @@
 (() => {
 const {notes,topics}=window.ABOUT_GRAPH,custom=window.RABBIT_PASSAGES;
-const balance=window.RABBIT_BALANCE;
-const resolve=id=>balance.aliases[id]||id;
 const stage=document.querySelector('#stage'),scenes=document.querySelector('#scenes'),page=document.querySelector('.page');
 const home=document.querySelector('#home'),hint=document.querySelector('#entrance-hint'),sourceNote=document.querySelector('#source-note');
 let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
@@ -11,62 +9,39 @@ const featuredBase=window.ABOUT_GRAPH.featuredBase;
 document.querySelector('header>a').href=featuredBase+'if-you-call';
 document.querySelector('#header-featured').href=featuredBase+(featuredSlug&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(featuredSlug)?featuredSlug:'if-you-call');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-// Normal forward choices avoid repeats. A deliberate work-related choice can
-// revisit an earlier scene when the reader has exhausted fresh work connections.
+// A forward click never sends the reader to a scene already in this journey.
+// Browser Back restores the earlier path and its choices; About starts fresh.
 const available=id=>Boolean(notes[id])&&!path.some(step=>step.id===id);
 const word=(label,id)=>available(id)?`<button class="word" data-label="${esc(label)}" data-go="${esc(id)}">${esc(label)}</button>`:esc(label);
 function prose(s){let out='',last=0;for(const m of s.matchAll(/\[([^\]|]+)\|([^\]]+)\]/g)){out+=esc(s.slice(last,m.index))+(notes[m[2]]?word(m[1],m[2]):esc(m[1]));last=m.index+m[0].length}return (out+esc(s.slice(last))).replace(/\n\n/g,'<br><br>')}
 const bio=[
-'[Filmmaker|film-index] [Cinematic storytelling|stories]. [Mind-bending narratives|experiments].',
-'[Screenplays & fiction|writing]',
-'[Editing|editing] All of his own [videos|video-index].',
-'[Music|records] Albums. [Film scores|score]. Unbelievable [musicians|musicians-index].',
-'[Recording studio|rumpus-room] Film and music. [Ten years|ten-years] in [Brooklyn|places].',
-'[Creative tools|tools] Writing. Filmmaking. The creative process.',
-'[Stranger|stranger] Bernie Worrell on Earth. [Academy of Motion Picture Arts and Sciences — permanent collection|academy-collection].'];
-const entranceWords=['film-index','writing','editing','records','rumpus-room','tools','stranger'];
+'is an [award winning|recognition] [filmmaker|film-index] known for his [cinematic storytelling|stories] style and [mind bending narratives|experiments].',
+'writes [screenplays and fiction|writing].',
+'[edits|editing] all of his own [videos|video-index].',
+'produces [music|records] ([albums|records] and [film scores|score]) with unbelievable [musicians|musicians-index].',
+'founded, owned and operated a film and music [recording studio|rumpus-room] in [Brooklyn|places] for [ten years|ten-years].',
+'builds [creative tools|tools] for writing, filmmaker and the creative process.',
+'his film [Stranger|stranger]: Bernie Worrell on Earth was selected for inclusion in the [permanent collection of the Academy of Motion Picture Arts and Sciences|academy-collection].'];
+const entranceWords=['film-index','writing','editing','musicians-index','rumpus-room','tools','stranger'];
 const labelOf=source=>source?.dataset.label||source?.textContent||'';
 function node(id){const n=notes[id],c=custom[id]||{};return {...n,...c,heading:c.heading||n.title,body:c.body||n.body,related:c.related||[]}}
-const outside=id=>node(id).scope==='detour';
-function workContext(){
- const previous=path.slice().reverse().find(p=>p.id!=='bio'&&notes[p.id]&&!outside(p.id));
- const id=previous?.id||'stranger';
- return {id,family:balance.families[id]||(id.startsWith('wl-')?'music':id.startsWith('film-')?'film':'studio')};
-}
-function sideChoices(n,inline){
- const context=workContext(),links=[],used=new Set(inline);
- const include=(id,label=notes[id]?.title,revisit=false)=>{if(notes[id]&&!used.has(id)&&(available(id)||revisit)){used.add(id);links.push({id,label,revisit});return true}return false};
- const workInline=inline.filter(id=>!outside(id));
- const explicit=n.related.filter(id=>notes[id]&&!outside(id));
- for(const id of explicit)if(links.length<Math.max(0,2-workInline.length))include(id);
- // A fresh scene from the work context is always available beside a departure.
- if(!workInline.length&&!links.length){
-  const pool=[...(balance.groups[context.family]||[]),...balance.groups.documentary];
-  const fresh=pool.find(id=>available(id)&&!used.has(id));
-  if(fresh)include(fresh);
-  else {const earlier=path.slice(0,-1).reverse().find(p=>p.id!=='bio'&&!outside(p.id));if(earlier)include(earlier.id,notes[earlier.id].title,true)}
- }
- // The single outside door uses the same typographic treatment as other choices.
- // Never replace the work-related door, and never offer a second outside route.
- if(!inline.some(outside)){
-  const onward={'sound-mars':'art-fog','frontier-mussel-stowaways':'sound-sofar','art-snow':'frontier-forgotten-freezer'};
-  const pool=n.scope==='detour'?[onward[path.at(-1).id],...(balance.detours[context.family]||[])]:balance.detours[context.family]||[];
-  const next=pool.find(id=>id&&available(id)&&outside(id)&&!used.has(id));
-  if(next)include(next);
- }
- return links;
-}
 function scene(id){
 const el=document.createElement('section');el.className='scene';el.dataset.id=id;
-if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,:]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});el.querySelectorAll('.bio p').forEach((p,i)=>{const word=p.querySelector('[data-go="'+entranceWords[i]+'"]');if(word){word.classList.add('lead-word');word.classList.add('bio-keyword')}});return el}
+if(id==='bio'){el.innerHTML=`<div class="scene-content entry"><h1 class="sr-only" tabindex="-1">About Philip Di Fiore</h1><blockquote class="entrance-quote"><p>“The rabbit hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.” <cite>— Lewis Carroll</cite></p></blockquote><article class="bio" aria-label="Biography">${bio.map(p=>'<p>'+prose(p)+'</p>').join('')}</article></div>`;el.classList.add('entrance');el.querySelectorAll('.bio .word').forEach(word=>{const tail=word.nextSibling;if(tail?.nodeType===3&&/^[.,:]/.test(tail.textContent)){word.append(document.createTextNode(tail.textContent[0]));tail.textContent=tail.textContent.slice(1)}});el.querySelectorAll('.bio p').forEach((p,i)=>{const word=p.querySelector('[data-go="'+entranceWords[i]+'"]');if(word){word.classList.add('lead-word');const arrow=document.createElement('span');arrow.className='enter-mark';arrow.setAttribute('aria-hidden','true');arrow.textContent='↗';word.append(arrow)}});return el}
 const n=node(id);el.dataset.layout=n.layout||'quiet';
 const inline=[...new Set([...n.body.matchAll(/\|([^\]]+)\]/g)].map(m=>m[1]))].filter(available);
-const links=sideChoices(n,inline);
-el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Continue exploring">${links.map(k=>k.revisit?`<button class="word" data-revisit="${esc(k.id)}">${esc(k.label)}</button>`:word(k.label,k.id)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
+// Only authored crossings and explicit choices. Incoming links used to turn
+// every detour into another route back to the same people and projects.
+const used=new Set(inline),links=[];
+for(const choice of [...(n.exits||[]),...n.related.map(k=>({id:k,label:notes[k]?.label||notes[k]?.title}))]){
+ if(available(choice.id)&&!used.has(choice.id)){used.add(choice.id);links.push(choice)}
+}
+const max=inline.length>=3?1:Math.min(3,Math.max(1,3-inline.length));
+el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p><div class="side-paths" aria-label="Continue exploring">${links.slice(0,max).map(k=>word(k.label,k.id)).join('')}</div>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">Open in Featured ↗</a>`:''}</div></div>`;
 return el;
 }
 function controls(){const current=path.at(-1);const sources=current.id==='bio'?[]:(node(current.id).sources||[]);sourceNote.open=false;sourceNote.hidden=!sources.length;document.querySelector('#source-content').innerHTML=sources.map(s=>s.url&&/^https?:\/\//.test(s.url)?`<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></p>`:`<p>${esc(s.title)}</p>`).join('');home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
-function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');}
+function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');const entry=activeScene?.querySelector('.entry');if(entry){entry.style.transform='none';const scale=Math.min(1,(stage.clientHeight-8)/entry.offsetHeight);entry.style.transform=`scale(${Math.max(.2,scale)})`}}
 new ResizeObserver(fitScene).observe(stage);document.fonts.ready.then(fitScene);
 function remember(){if(activeScene){path.at(-1).scroll=activeScene.querySelector('.scene-content').scrollTop;history.replaceState({rabbit:true,path},'')}}
 function travelFor(source){const room=stage.getBoundingClientRect(),r=source?.getBoundingClientRect();const step=path.length;const fontScale=source?parseFloat(getComputedStyle(source).fontSize)/38*(r.height/Math.max(source.offsetHeight,1)):1;
@@ -105,12 +80,12 @@ function show(direction=0,travel=null){
 function go(id,source){if(!available(id))return;if(busy)finishFlight?.();remember();const travel=travelFor(source);path=[...path,{id,via:labelOf(source)||notes[id].title,travel,scroll:0}];history.pushState({rabbit:true,path},'', '#'+id);show(1,travel)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')sourceNote.open=false});
 document.addEventListener('pointerdown',e=>{if(!sourceNote.contains(e.target))sourceNote.open=false});
-scenes.addEventListener('click',e=>{const b=e.target.closest('[data-go],[data-revisit]');if(!b)return;if(b.dataset.revisit){jump(path.map(p=>p.id).lastIndexOf(b.dataset.revisit));return}go(b.dataset.go,b)});
+scenes.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go,b)});
 function jump(index){if(index>=0&&index<path.length-1)history.go(index-(path.length-1));}
 home.addEventListener('click',()=>jump(0));document.querySelector('#header-about').addEventListener('click',e=>{e.preventDefault();jump(0)});
 window.addEventListener('popstate',()=>{if(history.state?.rabbit){const previous=path,nextPath=history.state.path;const direction=nextPath.length<previous.length?-1:1;const travel=Math.abs(nextPath.length-previous.length)>1?{x:.5,y:.5,dx:.2,dy:.15,turn:0,portal:false}:(direction<0?previous.at(-1).travel:nextPath.at(-1).travel);path=nextPath;show(direction,travel)}else{location.reload()}});
 reduced.addEventListener('change',e=>{if(e.matches&&busy)finishFlight?.()});
 scenes.addEventListener('scroll',()=>{if(!busy&&activeScene)remember()},true);
 window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&!e.target.closest('input,textarea')){e.preventDefault();jump(path.length-2)}});
-let start='';try{start=resolve(decodeURIComponent(location.hash.slice(1)))}catch{};if(history.state?.rabbit){path=history.state.path.map(p=>({...p,id:resolve(p.id)})).filter(p=>p.id==='bio'||notes[p.id]);history.replaceState({rabbit:true,path},'','#'+path.at(-1).id)}else{history.replaceState({rabbit:true,path},'','#bio');if(notes[start]){path=[...path,{id:start,via:notes[start].title}];history.pushState({rabbit:true,path},'','#'+start)}}show();
+let start='';try{start=decodeURIComponent(location.hash.slice(1))}catch{};if(history.state?.rabbit)path=history.state.path;else{history.replaceState({rabbit:true,path},'','#bio');if(notes[start]){path=[...path,{id:start,via:notes[start].title}];history.pushState({rabbit:true,path},'','#'+start)}}show();
 })();

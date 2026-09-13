@@ -53,19 +53,3 @@ header a:hover{color:var(--muted);}
 #source-content p{margin:0 0 10px;}#source-content p:last-child{margin:0;}
 #source-content a{text-decoration:underline;text-underline-offset:3px;}
 #source-note summary:focus-visible{outline:1px dashed currentColor;outline-offset:4px;}
-
-/* A readable field of fragments. Shared alignment and type scale keep
-   the words clear without turning the entrance into prose or a row of cards. */
-.entrance .entry{display:block;width:100%;max-width:1260px;max-height:100%;overflow:auto;padding:38px 5.5%;transform:none;}
-.entrance-quote{max-width:960px;margin:0 0 42px;font:13px/1.8 'Courier New',monospace;letter-spacing:0;color:#747471;}
-.entrance-quote cite{white-space:normal;}
-.entrance .bio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 6%;padding:0;align-items:start;}
-.entrance .bio p:nth-child(n){display:block;width:100%;max-width:none;padding:0;margin:0;font:14px/1.8 'Courier New',monospace;letter-spacing:0;text-align:left;}
-.entrance .bio p:nth-child(7){grid-column:1/-1;justify-self:start;max-width:690px;padding-top:24px;border-top:1px solid #cfcfca;}
-.entrance .bio .word{display:inline;width:auto;max-width:none;margin:0;padding:0 0 2px;font:inherit;font-size:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none;text-decoration:none;border:0;border-bottom:1px solid #939390;text-wrap:wrap;vertical-align:baseline;}
-.entrance .bio p:nth-child(n) .lead-word{display:block;width:fit-content;max-width:100%;margin:0 0 12px;padding:0 0 4px;font:400 clamp(26px,2.6vw,36px)/1.06 Archivo Black,Arial,sans-serif;letter-spacing:-.035em;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;text-wrap:balance;border:0;}
-.entrance .bio .word:hover,.entrance .bio .word:focus-visible{background:#e4e4de;color:#191919;}
-.entrance .enter-mark{display:none;}
-@media(max-width:950px){.entrance .entry{padding:28px 7%;}.entrance .bio{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 8%;}.entrance-quote{margin-bottom:30px;}.entrance .bio p:nth-child(n) .lead-word{font-size:28px;}}
-@media(max-width:600px){.entrance .entry{padding:25px 22px;}.entrance-quote{font-size:12px;line-height:1.7;}.entrance .bio{gap:28px 22px;}.entrance .bio p:nth-child(n){font-size:13px;line-height:1.7;}.entrance .bio p:nth-child(n) .lead-word{font-size:21px;line-height:1.1;margin-bottom:10px;}.entrance .bio p:nth-child(7){padding-top:20px;}.entrance .bio p:nth-child(7) .lead-word{font-size:28px;}}
-@media(max-height:700px) and (min-width:951px){.entrance .entry{padding-top:24px;padding-bottom:24px;}.entrance .bio{gap:26px 6%;}.entrance-quote{margin-bottom:30px;}}
