@@ -14,3 +14,11 @@ html[data-theme=dark] .entrance .bio .word:is(:hover,:focus-visible) {
   color: var(--paper);
 }
 html[data-theme=dark] .entrance .bio p:nth-child(n) { border-top-color: #727270; }
+html[data-theme=dark][data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n) .lead-word {
+  font-size: 16px;
+}
+@media(max-width:600px) {
+  html[data-theme=dark][data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n) .lead-word {
+    font-size: 14px;
+  }
+}
