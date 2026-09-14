@@ -35,6 +35,7 @@ import {
   type CityOption,
 } from '../overprint-centered/projects';
 import { InfoPage } from '../overprint-centered/info';
+import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -119,11 +120,23 @@ export function DarkroomFeatured({
       : darkroomArchive;
   const [view, setView] = useState<View>('featured');
   const [index, setIndex] = useState(0);
+  const [filmSlug, setFilmSlug] = useState('if-you-call');
   const [previous, setPrevious] = useState<number | null>(null);
   const [film, setFilm] = useState<Artwork | null>(null);
   const [article, setArticle] = useState<PressItem | null>(null);
   const [turn, setTurn] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
+  function projectCategory(slug: string) {
+    return centered
+      ? (slug === 'recording-parties' ? 'MUSIC' : 'FILM')
+      : sequenceCategories[slug];
+  }
+  const currentCategory = projectCategory(projects[index].slug);
+  const navigationIndices = projects.flatMap((project, projectIndex) =>
+    (!horizontal && !centered) || projectCategory(project.slug) === currentCategory
+      ? [projectIndex]
+      : [],
+  );
   useEffect(() => {
     if (preview) return;
     function changeView() {
@@ -145,9 +158,22 @@ export function DarkroomFeatured({
       }
       setView(nextView);
       if (treatment === 'overprint' && nextView === 'featured') {
-        const slug = window.location.hash.slice(1).split('/')[1];
+        const [section, slug] = window.location.hash.slice(1).split('/');
         const selected = projects.findIndex((project) => project.slug === slug);
-        setIndex(selected >= 0 ? selected : 0);
+        const nextIndex = selected >= 0
+          ? selected
+          : centered && section === 'music'
+            ? projects.findIndex((project) => project.slug === 'recording-parties')
+            : 0;
+        setIndex(nextIndex);
+        if (centered) {
+          const project = projects[nextIndex];
+          const destination = project.slug === 'recording-parties' ? 'music' : 'film';
+          if (destination === 'film') setFilmSlug(project.slug);
+          const canonicalHash = '#' + destination + '/' + project.slug;
+          if (window.location.hash !== canonicalHash)
+            window.history.replaceState(null, '', window.location.pathname + window.location.search + canonicalHash);
+        }
       }
       setPrevious(null);
       setTurn(0);
@@ -164,15 +190,17 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     for (const offset of sequence ? [1, -1] : [1]) {
-      const nextProject =
-        projects[(index + offset + projects.length) % projects.length];
+      const position = navigationIndices.indexOf(index);
+      const nextProject = projects[navigationIndices[
+        (position + offset + navigationIndices.length) % navigationIndices.length
+      ]];
       const photo = new Image();
       photo.src =
         treatment === 'overprint'
           ? featuredPoster(nextProject, edition)
           : '/images/' + nextProject.work.image;
     }
-  }, [index, preview, treatment, projects, edition, sequence]);
+  }, [index, preview, treatment, projects, edition, sequence, centered, horizontal]);
   useEffect(() => {
     if (previous === null) return;
     const timer = window.setTimeout(
@@ -181,12 +209,6 @@ export function DarkroomFeatured({
     );
     return () => window.clearTimeout(timer);
   }, [previous, sequence]);
-  const currentCategory = sequenceCategories[projects[index].slug];
-  const navigationIndices = projects.flatMap((project, projectIndex) =>
-    !horizontal || sequenceCategories[project.slug] === currentCategory
-      ? [projectIndex]
-      : [],
-  );
   function adjacentIndex(step: 1 | -1) {
     const position = navigationIndices.indexOf(index);
     return navigationIndices[
@@ -199,11 +221,12 @@ export function DarkroomFeatured({
     setPrevious(index);
     const nextIndex = adjacentIndex(step);
     setIndex(nextIndex);
+    if (centered && currentCategory === 'FILM') setFilmSlug(projects[nextIndex].slug);
     if (treatment === 'overprint')
       window.history.pushState(
         null,
         '',
-        '#featured/' + projects[nextIndex].slug,
+        (centered ? (currentCategory === 'MUSIC' ? '#music/' : '#film/') : '#featured/') + projects[nextIndex].slug,
       );
     setTurn((value) => value + 1);
   }
@@ -305,7 +328,7 @@ export function DarkroomFeatured({
     );
   }
   if (centered && view === 'info' && !preview) {
-    return <InfoPage featuredSlug={projects[index].slug} />;
+    return <InfoPage filmSlug={filmSlug} />;
   }
   const site = (
     <div
@@ -319,7 +342,7 @@ export function DarkroomFeatured({
                   projects[index].aspectRatio,
                 ),
                 '--fl-word-advance':
-                  categoryAdvance[sequenceCategories[projects[index].slug]],
+                  categoryAdvance[currentCategory],
               } as CSSProperties)
             : undefined
       }
@@ -353,7 +376,7 @@ export function DarkroomFeatured({
           {sequence && (
             <a
               className="sq-home"
-              href="#featured/if-you-call"
+              href={centered ? '#film/if-you-call' : '#featured/if-you-call'}
               aria-label="Philip Di Fiore — Home"
             >
               {centered && view === 'about'
@@ -361,12 +384,15 @@ export function DarkroomFeatured({
                 : 'PHILIP DI FIORE'}
             </a>
           )}
-          {!horizontal && (
+          {centered ? (
+            <SectionNavigation
+              active={currentCategory === 'MUSIC' ? 'music' : 'film'}
+              filmSlug={filmSlug}
+            />
+          ) : !horizontal && (
             <nav aria-label="Main navigation">
               {(
-                (centered
-                  ? ['featured', 'info']
-                  : ['featured', 'about', 'archive']) as View[]
+                ['featured', 'about', 'archive'] as View[]
               ).map((item) => (
                 <a
                   href={
@@ -407,9 +433,11 @@ export function DarkroomFeatured({
             <div className={fitScreen ? 'sq-fit-area' : 'sq-flow-area'}>
               <section
                 className="df-featured"
-                id={preview ? undefined : 'featured'}
+                id={preview ? undefined : centered ? currentCategory.toLowerCase() : 'featured'}
                 aria-label={
-                  treatment === 'overprint'
+                  centered
+                    ? currentCategory === 'MUSIC' ? 'Music projects' : 'Films'
+                    : treatment === 'overprint'
                     ? 'Featured works'
                     : 'Featured films'
                 }
@@ -455,7 +483,7 @@ export function DarkroomFeatured({
                     ) : (
                       <h1 className="dr-masthead df-masthead sq-category">
                         <span className="dr-family-name">
-                          {sequenceCategories[projects[index].slug]}
+                          {currentCategory}
                         </span>
                       </h1>
                     )}
@@ -476,11 +504,12 @@ export function DarkroomFeatured({
                 {sequence ? (
                   <div
                     className="sq-control-rail"
-                    hidden={horizontal && navigationIndices.length < 2}
+                    hidden={navigationIndices.length < 2}
+                    style={navigationIndices.length < 2 ? { display: 'none' } : undefined}
                   >
                     <nav
                       className="sq-controls"
-                      aria-label="Featured navigation"
+                      aria-label={centered ? 'Film navigation' : 'Featured navigation'}
                     >
                       {([-1, 1] as const).map((step) => (
                         <button
