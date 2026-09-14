@@ -15,6 +15,12 @@ function clock(seconds: number) {
 function PlayIcon({paused = true}: {paused?: boolean}) {
   return <svg viewBox="0 0 40 40" aria-hidden="true">{paused ? <path d="M11 5 35 20 11 35Z" /> : <path d="M8 6h9v28H8zM24 6h9v28h-9z" />}</svg>;
 }
+function PartyPhoto({name, alt, width, height, mono, room = false, lazy = false}: {
+  name: string; alt: string; width: number; height: number; mono: boolean; room?: boolean; lazy?: boolean;
+}) {
+  const src = '/images/music/recording-parties/' + (mono ? 'originals/' + name + '.jpg' : name + (room ? '-room.webp' : '-film.webp'));
+  return <div className="rp-photo-print"><img src={src} alt={alt} width={width} height={height} loading={lazy ? 'lazy' : 'eager'}/></div>;
+}
 export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [catalog, setCatalog] = useState<PartyCatalog | null>(null);
   const [catalogError, setCatalogError] = useState(false);
@@ -28,6 +34,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [duration, setDuration] = useState(0);
   const [press, setPress] = useState(false);
   const [roomPhoto, setRoomPhoto] = useState(false);
+  const [mono, setMono] = useState(true);
   const audio = useRef<HTMLAudioElement>(null);
   const request = useRef(0);
   const currentTrack = useRef<PartyTrack | null>(null);
@@ -36,7 +43,9 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const article = pressItems.find(item => item.slug === 'bedford-bowery-recording-parties')!;
 
   useEffect(() => {
-    setRoomPhoto(new URLSearchParams(window.location.search).get('photos') === 'room');
+    const options = new URLSearchParams(window.location.search);
+    setRoomPhoto(options.get('photos') === 'room');
+    setMono(options.get('look') !== 'overprint' && options.get('photos') !== 'room');
     const old = document.title;
     document.title = 'Recording Parties — Philip Di Fiore';
     return () => { document.title = old; request.current += 1; };
@@ -84,7 +93,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     const next = tracks[tracks.findIndex(track => track.id === currentTrack.current?.id) + 1];
     if (next) void play(next);
   }
-  return <div className="rp-site">
+  return <div className={'rp-site' + (mono ? ' rp-mono' : '')} data-party={party}>
     <div className="rp-frame">
       <header className="rp-header">
         <a href="#film/if-you-call">Philip Di Fiore</a>
@@ -97,7 +106,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
         </div>
         <section className="rp-session" aria-label="Listen to the Recording Parties">
           <figure className="rp-session-photo">
-            <img src={'/images/music/recording-parties/james-richardson-trumpet-session-' + (roomPhoto ? 'room' : 'film') + '.webp'} alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={1200} height={1311} />
+            <PartyPhoto mono={mono} room={roomPhoto} name="james-richardson-trumpet-session" alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={520} height={568}/>
             <figcaption className="rp-photo-stamp">The Rumpus<br/>Room</figcaption>
           </figure>
           <div className="rp-listening">
@@ -127,9 +136,9 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
           </div>
         </section>
         <section className="rp-photographs" aria-label="Inside The Rumpus Room">
-          <figure className="rp-wide-photo"><img loading="lazy" src="/images/music/recording-parties/philip-di-fiore-mc-film.webp" width={1672} height={941} alt="Philip Di Fiore at the microphone as master of ceremonies"/><figcaption>Philip Di Fiore, master of ceremonies</figcaption></figure>
-          <figure className="rp-tall-photo"><img loading="lazy" src="/images/music/recording-parties/emma-gomis-bass-film.webp" width={935} height={1683} alt="Emma Gomis playing bass at the studio"/><figcaption>Emma Gomis, bass</figcaption></figure>
-          <figure className="rp-console-photo"><img loading="lazy" src="/images/music/recording-parties/albert-di-fiore-console-film.webp" width={1572} height={1001} alt="Albert Di Fiore at the recording console"/><figcaption>Albert Di Fiore, at the console</figcaption></figure>
+          <figure className="rp-wide-photo"><PartyPhoto mono={mono} lazy name="philip-di-fiore-mc" width={1000} height={563} alt="Philip Di Fiore at the microphone as master of ceremonies"/><figcaption>Philip Di Fiore, master of ceremonies</figcaption></figure>
+          <figure className="rp-tall-photo"><PartyPhoto mono={mono} lazy name="emma-gomis-bass" width={520} height={936} alt="Emma Gomis playing bass at the studio"/><figcaption>Emma Gomis, bass</figcaption></figure>
+          <figure className="rp-console-photo"><PartyPhoto mono={mono} lazy name="albert-di-fiore-console" width={520} height={331} alt="Albert Di Fiore at the recording console"/><figcaption>Albert Di Fiore, at the console</figcaption></figure>
         </section>
         <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section>
         <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span><a href="#music/recording-parties">Back to Music</a></footer>

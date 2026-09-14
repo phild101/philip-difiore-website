@@ -38,3 +38,9 @@ Each party has its own Musicians & attendees section in the listening panel, sup
 ## Photo balance comparison
 
 Philip felt the strongest treatments might lose the sensation of being in the room. `?photos=room#music/recording-parties/listen` previews a gentler treatment of the main trumpet photograph only, preserving studio detail and lighting. Remaining photographs retain their graphic treatments for now. Original photos, first duotone treatments and stronger Film treatments remain preserved in `../imports/recording-parties/`; do not regenerate every image before he reviews the single-photo comparison.
+
+## Black-and-white page / signature party washes
+
+Current default: charcoal and white page with unchanged original press photographs, tinted at render time with a single color per selected party. Party 1 cobalt `#365dcb`, Party 2 raspberry `#c43770`, Party 3 amber `#bf8730`. A CSS color blend preserves photographic luminosity, faces and studio details rather than generating replacements. Page furniture remains black and white; only small active-player accents share the party color. The photos are still the shared press collection, not confirmed party-specific imagery.
+
+Saved prior graphic/turquoise version: `?look=overprint#music/recording-parties/listen`. Gentler previous main-photo comparison remains `?photos=room#music/recording-parties/listen`. Prior source is version 60 / commit `bac2365c4db223df4778b372bdae930ffff2848f`. Desktop checks passed for all three washes and track lists, mobile has no horizontal overflow, and the prior Overprint view remains reachable.
