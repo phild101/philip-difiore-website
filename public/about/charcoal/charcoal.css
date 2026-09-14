@@ -1,0 +1,52 @@
+:root{--fact-action-size:clamp(14px,1.2vw,19px);}
+/* Retain the charcoal type, paper and Featured header of the approved About. */
+.entrance .entry{padding-top:32px;padding-bottom:32px;}
+.entrance .bio{gap:24px;}
+.destination h1,.scene[data-layout] h1{overflow-wrap:normal;word-break:normal;hyphens:none;}
+.destination .fact{max-width:480px;margin-top:9vh;}
+.work-link,#home{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:16px 24px;border:2px solid var(--ink);border-radius:0;background:var(--paper);color:var(--ink);font:400 var(--fact-action-size)/1.2 'Archivo Black',Arial,sans-serif;letter-spacing:-.02em;text-transform:uppercase;text-decoration:none;}
+.work-link{margin-top:28px;max-width:100%;text-align:center;}
+.work-link:hover,#home:hover{color:var(--paper);background:var(--ink);border-color:var(--ink);}
+.work-link:focus-visible,#home:focus-visible{outline:2px solid var(--ink);outline-offset:5px;}
+footer{min-height:84px;gap:18px;margin:0 clamp(12px,2.2vw,42px);}
+#entrance-hint{font-size:12px;letter-spacing:.03em;color:var(--ink);}
+@media(max-width:600px){.entrance .entry{padding:24px 22px;}.entrance .bio{gap:20px;}.destination .fact{margin:0;max-width:none;}.work-link,#home{font-size:var(--fact-action-size);min-height:48px;padding:13px 18px;}footer{min-height:74px;}#entrance-hint{font-size:10px;}}
+@media(max-height:700px) and (min-width:601px){.entrance .bio{gap:17px;}.entrance .entry{padding-top:20px;padding-bottom:20px;}.destination .fact{margin-top:3vh;}footer{min-height:72px;}.work-link,#home{min-height:48px;padding:12px 20px;}}
+
+/* The invitation belongs under the site header, above the seven beginnings. */
+#entrance-hint{flex:0 0 auto;text-align:center;margin:0;padding:18px 20px 10px;font:12px/1.6 'Courier New',monospace;letter-spacing:.03em;color:var(--ink);}
+.page.at-entrance footer{display:none;}
+.entrance .bio p:nth-child(7){border-top:0;padding-top:0;}
+.entrance .bio p:nth-child(3){border-top:1px solid #d3d3ce;padding-top:20px;}
+@media(max-width:600px){#entrance-hint{font-size:10px;padding:16px 14px 8px;}}
+
+/* The selected color edition uses FILMMAKER red throughout. */
+html[data-ink=colors]{--word-ink:#b90b05;--color-ink:#b90b05;--heading-ink:#b90b05;}
+html[data-ink=colors] .entrance .bio p:nth-child(n) .lead-word{color:var(--word-ink);}
+html[data-ink=colors] .entrance .bio p:nth-child(n) .lead-word:is(:hover,:focus-visible){color:var(--paper);background:var(--word-ink);}
+html[data-ink=colors] .destination h1{color:var(--heading-ink,var(--color-ink));}
+html[data-ink=colors] .work-link,html[data-ink=colors] #home{color:var(--color-ink);border-color:var(--color-ink);background:#f5f5f2;}
+html[data-ink=colors] .work-link:hover,html[data-ink=colors] #home:hover{color:#f5f5f2;background:var(--color-ink);}
+
+/* Keep the exit choices centered directly below each factoid passage. */
+.page[data-paired-actions] .journey-controls{gap:12px;align-items:stretch;justify-content:center;width:100%;max-width:100%;margin:0;}
+.page[data-paired-actions] .fact .journey-controls{margin-top:2lh;}
+.page[data-paired-actions] .journey-controls .work-link{margin:0;width:auto;max-width:400px;}
+.page[data-paired-actions] .journey-controls :is(.work-link,#home){min-width:0;flex-shrink:1;}
+@media(max-width:600px){
+ .page[data-paired-actions] footer{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:10px 0 16px;}
+ .page[data-paired-actions] #source-note{justify-self:start;}
+ .page[data-paired-actions] .journey-controls{width:100%;max-width:none;gap:10px;}
+ .page[data-paired-actions] .journey-controls :is(.work-link,#home){flex:1;padding:12px 10px;min-height:48px;max-width:none;text-align:center;}
+ .page[data-paired-actions] .journey-controls #home:only-child{flex:0 1 auto;padding-inline:18px;}
+}
+
+/* The ellipsis hangs beside a single aligned column of paragraph text. */
+html .page .entrance .bio p.bio-paragraph:nth-child(n){display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:1ch;align-items:baseline;padding:0 0 0 3em;text-indent:0;}
+.entrance .bio .bio-copy{min-width:0;}
+.entrance .bio .word{text-indent:0;}
+
+/* The subject label introduces the text, rather than the oversized heading. */
+.page[data-paired-actions] .destination .fact .kind{margin:0 0 18px;font:400 var(--fact-action-size)/1.2 'Archivo Black',Arial,sans-serif;letter-spacing:-.02em;color:var(--ink);}
+
+@media(max-width:600px){:root{--fact-action-size:13px;}}

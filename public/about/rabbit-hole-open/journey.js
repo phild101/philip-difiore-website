@@ -4,6 +4,7 @@ const balance=window.RABBIT_BALANCE;
 const resolve=id=>balance.aliases[id]||id;
 const stage=document.querySelector('#stage'),scenes=document.querySelector('#scenes'),page=document.querySelector('.page');
 const home=document.querySelector('#home'),hint=document.querySelector('#entrance-hint'),sourceNote=document.querySelector('#source-note');
+const journeyControls=home.parentElement,controlsFooter=journeyControls.parentElement;
 let path=[{id:'bio',via:'',scroll:0}],busy=false,activeScene=null,flightSerial=0,animations=[],finishFlight=null;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const featuredSlug=new URLSearchParams(location.search).get('featured');
@@ -34,8 +35,30 @@ const n=node(id);el.dataset.layout=n.layout||'quiet';
 el.innerHTML=`<div class="scene-content destination"><div class="anchor"><p class="kind">${esc(n.kind)}</p><h1 tabindex="-1">${n.layout==='numeral'&&n.heading.includes('\n')?n.heading.split('\n').map((line,i)=>i?'<span class="number-caption">'+esc(line)+'</span>':esc(line)).join(''):esc(n.heading)}</h1></div><div class="fact"><p class="passage">${prose(n.body)}</p>${n.link?`<a class="work-link" target="_top" href="${esc(n.link)}">${esc(n.linkLabel||'Open in Featured ↗')}</a>`:''}</div></div>`;
 return el;
 }
-function controls(){const current=path.at(-1);page.classList.toggle('at-entrance',current.id==='bio');const sources=current.id==='bio'?[]:(node(current.id).sources||[]);sourceNote.open=false;sourceNote.hidden=!sources.length;document.querySelector('#source-content').innerHTML=sources.map(s=>s.url&&/^https?:\/\//.test(s.url)?`<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></p>`:`<p>${esc(s.title)}</p>`).join('');home.hidden=current.id==='bio';hint.hidden=current.id!=='bio';page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
-function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');}
+function controls(){const current=path.at(-1);page.classList.toggle('at-entrance',current.id==='bio');const sources=current.id==='bio'?[]:(node(current.id).sources||[]);sourceNote.open=false;sourceNote.hidden=!sources.length;document.querySelector('#source-content').innerHTML=sources.map(s=>s.url&&/^https?:\/\//.test(s.url)?`<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></p>`:`<p>${esc(s.title)}</p>`).join('');home.hidden=current.id==='bio';if(hint)hint.hidden=current.id!=='bio';
+if(page.hasAttribute('data-paired-actions')){
+ journeyControls.querySelector('.work-link')?.remove();
+ const fact=activeScene?.querySelector('.fact');
+ const kind=activeScene?.querySelector('.anchor .kind');
+ if(kind&&fact)fact.prepend(kind);
+ const work=fact?.querySelector('.work-link');
+ if(work){work.textContent=work.textContent.replace(/(open in featured)\s*↗/i,'$1');journeyControls.insertBefore(work,home);}
+ (fact||controlsFooter).append(journeyControls);
+}
+page.classList.toggle('dark',Boolean(custom[current.id]?.dark));document.title=(current.id==='bio'?'About':notes[current.id].title)+' — Philip Di Fiore';}
+// Size complete words to their column; never chop surnames into fragments.
+const measureHeading=document.createElement('canvas').getContext('2d');
+function fitHeading(){
+ const heading=activeScene?.querySelector('.destination h1');if(!heading||!measureHeading)return;
+ heading.style.fontSize='';heading.style.overflowWrap='normal';heading.style.wordBreak='normal';heading.style.hyphens='none';
+ const style=getComputedStyle(heading),size=parseFloat(style.fontSize),spacing=parseFloat(style.letterSpacing)||0;
+ measureHeading.font=style.fontWeight+' '+size+'px '+style.fontFamily;
+ const words=heading.textContent.trim().split(/\s+/).map(w=>style.textTransform==='uppercase'?w.toUpperCase():w);
+ const widest=Math.max(...words.map(w=>measureHeading.measureText(w).width+Math.max(0,w.length-1)*spacing));
+ const available=heading.clientWidth-3;
+ if(widest>available&&available>0)heading.style.fontSize=(size*available/widest)+'px';
+}
+function fitScene(){stage.style.setProperty('--stage-h',stage.clientHeight+'px');fitHeading();}
 new ResizeObserver(fitScene).observe(stage);document.fonts.ready.then(fitScene);
 function remember(){if(activeScene){path.at(-1).scroll=activeScene.querySelector('.scene-content').scrollTop;history.replaceState({rabbit:true,path},'')}}
 function travelFor(source){const room=stage.getBoundingClientRect(),r=source?.getBoundingClientRect();const step=path.length;const fontScale=source?parseFloat(getComputedStyle(source).fontSize)/38*(r.height/Math.max(source.offsetHeight,1)):1;

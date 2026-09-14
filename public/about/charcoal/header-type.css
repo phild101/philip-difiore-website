@@ -1,0 +1,20 @@
+/* Header face for reading, restored Archivo Black for the established display roles. */
+html[data-type=header]{--fact-action-size:16px;--reading-size:12px;--reading-font:'Courier New',Courier,monospace;}
+html[data-type=header] body,
+html[data-type=header] body :where(header,header a,header nav,button,a,p,h1,span,summary,blockquote,cite,#entrance-hint,#source-note){font-family:var(--reading-font);font-size:var(--reading-size);line-height:1.85;letter-spacing:.05em;text-transform:none;}
+html[data-type=header] header{line-height:normal;}
+html[data-type=header][data-layout=editorial] .entrance .entry{max-width:760px;padding:clamp(64px,10vh,104px) 56px 40px;}
+html[data-type=header][data-layout=editorial] .entrance .bio{gap:34px;}
+html[data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n){font:400 var(--reading-size)/1.85 var(--reading-font);letter-spacing:.05em;}
+html[data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n) .lead-word{font:400 18px/1.35 'Archivo Black',Arial,sans-serif;letter-spacing:-.025em;text-transform:none;text-underline-offset:3px;}
+html[data-type=header] .destination .kind{margin:0 0 20px;font-weight:400;}
+html[data-type=header] .scene[data-layout] h1{font:400 clamp(38px,6.8vw,116px)/1 'Archivo Black',Arial,sans-serif;letter-spacing:-.045em;white-space:normal;text-transform:none;}
+html[data-type=header] .fact .passage{font:400 var(--reading-size)/1.85 var(--reading-font);letter-spacing:.05em;}
+html[data-type=header] :is(.work-link,#home){font:400 var(--fact-action-size)/1.2 'Archivo Black',Arial,sans-serif;letter-spacing:-.02em;text-transform:none;}
+html[data-type=header] #flight-word{font-family:'Archivo Black',Arial,sans-serif;font-weight:400;text-transform:none;}
+@media(max-height:825px) and (min-width:601px){html[data-type=header][data-layout=editorial] .entrance .bio{gap:28px;}}
+@media(max-width:656px){html[data-type=header]{--reading-size:11px;}}
+@media(max-width:640px){html[data-type=header]{--reading-size:10px;}}
+@media(max-width:600px){html[data-type=header][data-layout=editorial] .entrance .entry{padding:52px 32px 28px;}html[data-type=header] .scene[data-layout] h1{font-size:clamp(34px,10vw,58px);}html[data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n) .lead-word{font-size:16px;}html[data-type=header]{--fact-action-size:12px;}html[data-type=header][data-layout=editorial] .entrance .bio{gap:26px;}}
+
+html[data-type=header] .page[data-paired-actions] .destination .fact .kind{font-size:var(--fact-action-size);}
