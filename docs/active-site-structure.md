@@ -3,9 +3,9 @@
 - Landing section: Film, previously Featured.
 - Shared header order: FILM, MUSIC, INFO.
 - Film contains all 19 projects previously categorized FILM, VIDEO, or LIVE, retaining their established order and artwork. All their visible category headings read FILM.
-- Music currently contains Recording Parties alone, with its existing artwork and article-opening behavior. Its new visual identity is deferred until Philip approves this structural and Info revision.
+- Music contains Recording Parties. Clicking its existing artwork opens a dedicated listening page with seven recordings across three parties, four individually treated Overprint photographs, and the Bedford + Bowery press story.
 - Info: white background, black text, smaller Modern Noir portrait with the revised bio wrapping beside and underneath it.
-- Canonical hashes: `#film/<slug>`, `#music/recording-parties`, `#info`. Old `#featured/<slug>` URLs remain supported.
+- Canonical hashes: `#film/<slug>`, `#music/recording-parties`, `#music/recording-parties/listen`, `#info`. Old `#featured/<slug>` URLs remain supported.
 - Historical study routes retain their earlier category labels and menus.
 - Rabbit Hole remains preserved and inactive; see [full concept archive](rabbit-hole-concept-archive.md).
 

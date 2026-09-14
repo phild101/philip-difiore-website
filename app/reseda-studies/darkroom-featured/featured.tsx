@@ -34,6 +34,7 @@ import {
   centeredArchive,
   type CityOption,
 } from '../overprint-centered/projects';
+import { RecordingParties } from '../../music/recording-parties/listening';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
@@ -50,7 +51,7 @@ function CompositionScale({
     children
   );
 }
-type View = 'featured' | 'about' | 'info' | 'archive';
+type View = 'featured' | 'about' | 'info' | 'archive' | 'recording-parties';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
   return hash === 'about' || hash === 'info' || hash === 'archive' ? hash : 'featured';
@@ -149,7 +150,7 @@ export function DarkroomFeatured({
           ? 'vivid'
           : 'uganda',
       );
-      let nextView = horizontal ? 'featured' : hashView();
+      let nextView: View = centered && window.location.hash.startsWith('#music/recording-parties/listen') ? 'recording-parties' : horizontal ? 'featured' : hashView();
       if (centered && nextView === 'about') {
         nextView = 'info';
         window.history.replaceState(null, '', window.location.pathname + window.location.search + '#info');
@@ -231,6 +232,10 @@ export function DarkroomFeatured({
     setTurn((value) => value + 1);
   }
   function openWork(work: FeaturedWork) {
+    if (centered && 'articleSlug' in work && work.articleSlug === 'bedford-bowery-recording-parties') {
+      window.location.hash = 'music/recording-parties/listen';
+      return;
+    }
     if ('articleSlug' in work) {
       setArticle(
         pressItems.find((item) => item.slug === work.articleSlug) ?? null,
@@ -327,6 +332,7 @@ export function DarkroomFeatured({
       </div>
     );
   }
+  if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} />;
   if (centered && view === 'info' && !preview) {
     return <InfoPage filmSlug={filmSlug} />;
   }
