@@ -41,6 +41,7 @@
 .info-bio {
   display: flow-root;
   min-width: 0;
+  color: #000;
   font: 13px/1.95 'Courier New', Courier, monospace;
   letter-spacing: .015em;
 }
