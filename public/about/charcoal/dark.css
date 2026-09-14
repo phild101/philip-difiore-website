@@ -1,4 +1,11 @@
 /* Optional dark edition; the approved light edition remains the default. */
+@font-face {
+  font-family: 'About Archivo';
+  src: url('/fonts/archivo-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
 html[data-theme=dark],
 html[data-theme=dark] .page,
 html[data-theme=dark] .page.dark {
@@ -15,6 +22,8 @@ html[data-theme=dark] .entrance .bio .word:is(:hover,:focus-visible) {
 }
 html[data-theme=dark] .entrance .bio p:nth-child(n) { border-top-color: #727270; }
 html[data-theme=dark][data-type=header][data-layout=editorial] .entrance .bio p:nth-child(n) .lead-word {
+  font-family: 'About Archivo', Arial, sans-serif;
+  font-weight: 700;
   font-size: 16px;
 }
 @media(max-width:600px) {
