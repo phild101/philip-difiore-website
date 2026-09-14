@@ -1,0 +1,16 @@
+/* Optional dark edition; the approved light edition remains the default. */
+html[data-theme=dark],
+html[data-theme=dark] .page,
+html[data-theme=dark] .page.dark {
+  --paper: #30302f;
+  --ink: #fff;
+  --muted: #c3c3c0;
+  color-scheme: dark;
+}
+html[data-theme=dark] body { background: var(--paper); }
+html[data-theme=dark] .entrance .bio .word { border-bottom-color: #c3c3c0; }
+html[data-theme=dark] .entrance .bio .word:is(:hover,:focus-visible) {
+  background: var(--ink);
+  color: var(--paper);
+}
+html[data-theme=dark] .entrance .bio p:nth-child(n) { border-top-color: #727270; }

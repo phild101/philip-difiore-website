@@ -66,7 +66,8 @@ return {x:r?(r.left+r.width/2-room.left)/room.width:.5,y:r?(r.top+r.height/2-roo
 function show(direction=0,travel=null){
  const serial=++flightSerial;animations.forEach(a=>a.cancel());animations=[];
  const old=activeScene,next=scene(path.at(-1).id);scenes.replaceChildren(...(old?[old]:[]),next);activeScene=next;controls();fitScene();
- const dark=Boolean(custom[path.at(-1).id]?.dark);next.style.setProperty('--ink',dark?'#f5f5f2':'#30302f');next.style.setProperty('--paper',dark?'#30302f':'#f5f5f2');next.style.setProperty('--muted',dark?'#c2c2bd':'#727270');next.style.color=dark?'#f5f5f2':'#30302f';
+ // Freeze each scene's current palette during flight, including optional editions.
+ const palette=getComputedStyle(page);for(const name of ['--ink','--paper','--muted'])next.style.setProperty(name,palette.getPropertyValue(name));next.style.color=palette.getPropertyValue('--ink');
  next.querySelector('.scene-content').scrollTop=path.at(-1).scroll||0;
  const portal=document.querySelector('#flight-word');portal.style.opacity='0';
  const finish=()=>{if(serial!==flightSerial)return;old?.remove();next.inert=false;next.removeAttribute('aria-hidden');page.classList.remove('flying');stage.removeAttribute('aria-busy');busy=false;next.querySelector('h1')?.focus({preventScroll:true});document.querySelector('#status').textContent=path.at(-1).id==='bio'?'Philip Di Fiore. Biography.':notes[path.at(-1).id].title};
