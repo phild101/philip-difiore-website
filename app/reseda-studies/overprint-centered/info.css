@@ -1,0 +1,66 @@
+.info-site {
+  min-height: 100svh;
+  padding: 8px;
+  background: #30302f;
+  color: #fff;
+  color-scheme: dark;
+  font-family: 'Courier New', Courier, monospace;
+}
+.info-frame {
+  min-height: calc(100svh - 16px);
+  border: 1px solid #bcbcb8;
+  padding: 0 clamp(12px, 2.2vw, 42px);
+}
+/* The Featured header establishes the spacing and type for Info. */
+.info-header {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid #bcbcb8;
+  font: 12px 'Courier New', Courier, monospace;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.info-header nav { display: flex; gap: 32px; }
+.info-header a { padding: 12px 0; white-space: nowrap; }
+.info-header a[aria-current], .info-header a:hover { color: #c3c3c0; }
+.info-header a:focus-visible { outline: 1px dashed currentColor; outline-offset: 5px; }
+.info-content {
+  display: grid;
+  grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+  gap: clamp(40px, 5.2vw, 86px);
+  align-items: center;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: clamp(48px, 8vh, 88px) 0 clamp(48px, 8vh, 88px);
+}
+.info-portrait { margin: 0; min-width: 0; }
+.info-portrait img { width: 100%; height: auto; }
+.info-bio {
+  min-width: 0;
+  font: 13px/1.95 'Courier New', Courier, monospace;
+  letter-spacing: .015em;
+}
+.info-bio p + p { margin-top: 28px; }
+.info-bio em { font-style: italic; }
+.info-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media(max-width: 900px) {
+  .info-content { gap: 34px; }
+  .info-bio { font-size: 12px; }
+  .info-bio p + p { margin-top: 24px; }
+}
+@media(max-width: 700px) {
+  .info-content { grid-template-columns: 1fr; gap: 36px; max-width: 480px; padding: 36px 12px 48px; }
+  .info-portrait { width: min(100%, 340px); margin-inline: auto; }
+  .info-bio { font-size: 12px; line-height: 1.9; }
+}
+@media(max-width: 656px) {
+  .info-header { font-size: 11px; gap: 8px; }
+  .info-header nav { gap: 12px; }
+}
+@media(max-width: 640px) {
+  .info-header { font-size: 10px; letter-spacing: 0; }
+  .info-header nav { gap: 10px; }
+}

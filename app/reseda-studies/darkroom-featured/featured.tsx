@@ -34,7 +34,7 @@ import {
   centeredArchive,
   type CityOption,
 } from '../overprint-centered/projects';
-import { InteractiveAbout } from '../overprint-centered/interactive-about';
+import { InfoPage } from '../overprint-centered/info';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -49,10 +49,10 @@ function CompositionScale({
     children
   );
 }
-type View = 'featured' | 'about' | 'archive';
+type View = 'featured' | 'about' | 'info' | 'archive';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
-  return hash === 'about' || hash === 'archive' ? hash : 'featured';
+  return hash === 'about' || hash === 'info' || hash === 'archive' ? hash : 'featured';
 }
 function ProjectName({ lines }: { lines: string[] }) {
   return (
@@ -136,7 +136,13 @@ export function DarkroomFeatured({
           ? 'vivid'
           : 'uganda',
       );
-      const nextView = horizontal ? 'featured' : hashView();
+      let nextView = horizontal ? 'featured' : hashView();
+      if (centered && nextView === 'about') {
+        nextView = 'info';
+        window.history.replaceState(null, '', window.location.pathname + window.location.search + '#info');
+      } else if (!centered && nextView === 'info') {
+        nextView = 'about';
+      }
       setView(nextView);
       if (treatment === 'overprint' && nextView === 'featured') {
         const slug = window.location.hash.slice(1).split('/')[1];
@@ -154,7 +160,7 @@ export function DarkroomFeatured({
       window.removeEventListener('hashchange', changeView);
       window.removeEventListener('popstate', changeView);
     };
-  }, [preview, treatment, projects, horizontal]);
+  }, [preview, treatment, projects, horizontal, centered]);
   useEffect(() => {
     if (preview) return;
     for (const offset of sequence ? [1, -1] : [1]) {
@@ -298,8 +304,8 @@ export function DarkroomFeatured({
       </div>
     );
   }
-  if (centered && view === 'about' && !preview) {
-    return <InteractiveAbout featuredSlug={projects[index].slug} />;
+  if (centered && view === 'info' && !preview) {
+    return <InfoPage featuredSlug={projects[index].slug} />;
   }
   const site = (
     <div
@@ -359,7 +365,7 @@ export function DarkroomFeatured({
             <nav aria-label="Main navigation">
               {(
                 (centered
-                  ? ['featured', 'about']
+                  ? ['featured', 'info']
                   : ['featured', 'about', 'archive']) as View[]
               ).map((item) => (
                 <a
