@@ -1,4 +1,6 @@
 'use client';
+import { useEffect } from 'react';
+import { usePauseRecording } from '../music/recording-parties/playback';
 import {
   Dialog,
   DialogContent,
@@ -16,6 +18,8 @@ export function Screening({
   close: () => void;
   fullscreen?: boolean;
 }) {
+  const pauseRecording = usePauseRecording();
+  useEffect(() => { if (work) pauseRecording(); }, [work, pauseRecording]);
   return (
     <Dialog
       open={!!work}

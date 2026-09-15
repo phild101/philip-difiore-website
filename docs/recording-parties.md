@@ -4,7 +4,7 @@ Added September 14, 2026. Music retains its existing Recording Parties cover; cl
 
 ## Recordings
 
-The seven original MP3 recordings are organized as Party 1 (Tapes 3 and 4), Party 2 (Tapes 1, 2 and 3), and Party 3 (Tapes 2 and 3). These are the source file numbers; do not renumber or invent track titles. Playback uses one audio element, seeking, pause/resume, and automatic progression through the current party. Changing parties stops playback.
+The seven original MP3 recordings are organized as Party 1 (Tapes 3 and 4), Party 2 (Tapes 1, 2 and 3), and Party 3 (Tapes 2 and 3). These are the source file numbers; do not renumber or invent track titles. Playback uses one audio element, seeking, pause/resume, and automatic progression through the current party. Browsing another party leaves the current recording playing; selecting a new tape changes the playing queue.
 
 Supabase project `gjvvbofpkxuicrpshxun`, project record 9. Metadata comes from `recording_party_tracks`; originals remain in the private `recording-parties-audio` bucket. The import, SHA-256 verification, SQL and source recordings are preserved outside the Site checkout in `../imports/recording-parties/`.
 
@@ -69,3 +69,12 @@ The stacked masthead centers RECORDING PARTIES over the content/photo column. Pr
 The stacked Location line is also centered over the photo/content column, with equal outer grid tracks and the party selector on the left. On mobile the selector gets a separate row above the centered Location text to avoid collisions.
 
 The active archive now combines party number, recordings label and session duration into one heading, e.g. “Party 2 Recordings (79:00)”, with no separate recording-count line. This heading is centered in the stacked layout, aligned with the masthead and Location line. Party number and duration update for the selected party in both spare layouts; preserved historical gallery layouts keep their original metadata.
+
+
+## Persistent playback — September 15
+
+One audio element now lives in the root layout, so playback and its current party queue survive navigation between Film, Music and Info. A 48px white strip with a single charcoal rule appears only after selecting a recording. It has a party/tape link, Pause/Resume and Restart, in the approved small DM Sans 700; no artwork, shadows, animated controls or duplicate progress bar. The tape link returns to the playing party. The detailed seek slider stays beneath the selected track in the archive. Opening a film pauses music at its current position; closing a film leaves it paused until the visitor resumes. Full browser reloads or leaving the site still end playback.
+
+Latest stacked masthead adjustment: RECORDING PARTIES is left-aligned and much larger (Archivo Black, responsive 44–88px desktop; 40–64px mobile), with Press kept at the right. Location and the session recordings heading remain centered.
+
+Verified with real MP3 playback: the same audio element and increasing playhead across Info/Film/Music; pause/resume/restart; film-open pause without automatic resume; playing-party return link; browsing parties without switching the source; browser-native pause followed by resume; natural end-of-track progression while on Info; rapid tape changes followed by pause; 48px player on mobile and no horizontal overflow. Enlarged masthead reviewed at 1440px and 390px. TypeScript and production build passed.

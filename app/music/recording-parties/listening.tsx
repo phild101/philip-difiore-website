@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { SectionNavigation } from '../../reseda-studies/overprint-centered/navigation';
 import { PressArticle } from '../../reseda-studies/darkroom-featured/press';
@@ -8,6 +8,7 @@ import type { PartyCatalog, PartyTrack } from './types';
 import { partyAttendees } from './attendees';
 import { partyLocations } from './locations';
 import { partyPhotographs } from './photographs';
+import { useRecordingPlayback } from './playback';
 import './listening.css';
 
 function clock(seconds: number) {
@@ -31,21 +32,14 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [catalogError, setCatalogError] = useState(false);
   const [retry, setRetry] = useState(0);
   const [party, setParty] = useState(1);
-  const [selected, setSelected] = useState<PartyTrack | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [playError, setPlayError] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const playback = useRecordingPlayback();
+  const { selected, playing, loading, playError, elapsed, duration, seek } = playback;
   const [press, setPress] = useState(false);
   const [roomPhoto, setRoomPhoto] = useState(false);
   const [mono, setMono] = useState(true);
   const [spare, setSpare] = useState(true);
   const [stacked, setStacked] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
-  const audio = useRef<HTMLAudioElement>(null);
-  const request = useRef(0);
-  const currentTrack = useRef<PartyTrack | null>(null);
   const tracks = catalog?.tracks.filter(track => track.party === party) || [];
   const attendees = partyAttendees[party] || [];
   const location = partyLocations[party];
@@ -64,7 +58,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     if ([1,2,3].includes(requestedParty)) setParty(requestedParty);
     const old = document.title;
     document.title = 'Recording Parties — Philip Di Fiore';
-    return () => { document.title = old; request.current += 1; };
+    return () => { document.title = old; };
   }, []);
   useEffect(() => {
     const controller = new AbortController();
@@ -76,33 +70,13 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     return () => controller.abort();
   }, [retry]);
 
-  async function play(track: PartyTrack, restart = false) {
-    const player = audio.current;
-    if (!player) return;
-    const token = ++request.current;
-    setPlayError(false);
-    if (!restart && currentTrack.current?.id === track.id && player.currentSrc) {
-      if (!player.paused) { player.pause(); return; }
-    } else {
-      player.pause();
-      currentTrack.current = track;
-      setSelected(track);
-      setElapsed(0);
-      setDuration(track.duration);
-      player.src = '/api/recording-parties/' + track.id + '/audio';
-      player.load();
-    }
-    setLoading(true);
-    try { await player.play(); }
-    catch { if (request.current === token) { setPlayError(true); setLoading(false); setPlaying(false); } }
+  function play(track: PartyTrack, retryPlayback = false) {
+    playback.play(track, catalog?.tracks.filter(item => item.party === track.party) || [track], retryPlayback);
   }
   function chooseParty(next: number, updateUrl = true) {
     if (next === party) return;
-    request.current += 1;
-    audio.current?.pause();
-    if (audio.current) {audio.current.removeAttribute('src'); audio.current.load();}
-    currentTrack.current = null;
-    setSelected(null); setPlaying(false); setLoading(false); setPlayError(false); setElapsed(0); setDuration(0); setPhotoIndex(0); setParty(next);
+    setPhotoIndex(0);
+    setParty(next);
     if (spare && updateUrl) {
       const url = new URL(window.location.href);
       url.searchParams.set('party', String(next));
@@ -117,14 +91,9 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);
   }, [party, spare, catalog]);
-  function ended() {
-    setPlaying(false);
-    const next = tracks[tracks.findIndex(track => track.id === currentTrack.current?.id) + 1];
-    if (next) void play(next);
-  }
   const transport = <div className="rp-transport">
     <div className="rp-now" aria-live="polite">{playError ? 'Unable to play this recording.' : loading ? 'Loading Tape ' + selected?.tape + '…' : selected ? (playing ? 'Playing' : 'Paused') + ' / Tape ' + selected.tape : 'Choose a recording'}</div>
-    <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} aria-label="Playback position" onValueChange={value => {const seconds = Array.isArray(value) ? value[0] : value; if (audio.current && Number.isFinite(audio.current.duration)) {audio.current.currentTime = seconds; setElapsed(seconds);}}}/>
+    <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} aria-label="Playback position" onValueChange={value => seek(Array.isArray(value) ? value[0] : value)}/>
     <div className="rp-timing"><span>{clock(elapsed)}</span><span>{selected ? clock(duration) : '—:—'}</span></div>
     {playError && selected && <button className="rp-retry" onClick={() => void play(selected, true)}>Retry playback</button>}
   </div>;
@@ -182,7 +151,6 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
         <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section></>}
         {(!spare || photograph) && <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span>{!spare && <a href="#music/recording-parties">Back to Music</a>}</footer>}
       </main>
-      <audio ref={audio} preload="none" onPlay={() => setPlaying(true)} onPlaying={() => setLoading(false)} onPause={() => setPlaying(false)} onWaiting={() => {if (currentTrack.current) setLoading(true);}} onLoadedMetadata={() => {if (audio.current && Number.isFinite(audio.current.duration)) setDuration(audio.current.duration);}} onTimeUpdate={() => setElapsed(audio.current?.currentTime || 0)} onEnded={ended} onError={() => {if (currentTrack.current) {setPlayError(true); setPlaying(false); setLoading(false);}}}/>
       <PressArticle article={press ? article : null} close={() => setPress(false)} watch={() => {}} fullscreen />
     </div>
   </div>;
