@@ -93,7 +93,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   }, [party, spare, catalog]);
   const transport = <div className="rp-transport">
     <div className="rp-now" aria-live="polite">{playError ? 'Unable to play this recording.' : loading ? 'Loading Tape ' + selected?.tape + '…' : selected ? (playing ? 'Playing' : 'Paused') + ' / Tape ' + selected.tape : 'Choose a recording'}</div>
-    <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} aria-label="Playback position" onValueChange={value => seek(Array.isArray(value) ? value[0] : value)}/>
+    <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} thumbLabel="Playback position" onValueChange={value => seek(Array.isArray(value) ? value[0] : value)}/>
     <div className="rp-timing"><span>{clock(elapsed)}</span><span>{selected ? clock(duration) : '—:—'}</span></div>
     {playError && selected && <button className="rp-retry" onClick={() => void play(selected, true)}>Retry playback</button>}
   </div>;
@@ -110,7 +110,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
         </div>
         {spare && <div className="rp-archive-bar">
           <label><span>Party</span><select aria-label="Choose a recording party" value={party} onChange={event => chooseParty(Number(event.target.value))}>{partyNumbers.map(number => <option value={number} key={number}>{String(number).padStart(2,'0')}</option>)}</select></label>
-          {location && <p>Location: {location.venue}, {location.city}</p>}
+          {location && <p>{location.venue}, {location.city}</p>}
         </div>}
         <section className={'rp-session' + (spare && !photograph ? ' rp-awaiting-photos' : '')} aria-label="Listen to the Recording Parties">
           {(!spare || photograph) &&
