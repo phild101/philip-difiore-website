@@ -57,3 +57,5 @@ Imported all 22 unique original photographs, including Philip drawing words from
 Verification: 22 distinct slideshow images decoded, wraparound and audio independence passed; 15 attendees checked, cyan wash confirmed, mobile without horizontal overflow, no Party 2 images or attendee list leaking into Parties 1/3.
 
 Attendee lists are alphabetized by full surname, then given name. Compound surnames De Vore and Di Fiore sort under D. The two-column presentation reads down the left column, then down the right.
+
+September 15 typography: Philip approved the DM Sans 700 used in the header/Info comparison for all small Courier-style text on the active spare archive. This includes header, Press, party selector/location, photo captions/counter, tape names/durations, playback status/timing, attendees, credits and conditional notices. Existing responsive sizes and line heights remain. Keep the Archivo Black title, existing Arial section headings and Play/Pause labels; historical gallery typography remains preserved. Header and Info comparison parameters continue to work across navigation.
