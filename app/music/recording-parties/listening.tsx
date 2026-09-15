@@ -158,8 +158,8 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
             <div className="rp-parties" role="group" aria-label="Choose a recording party">
               {[1,2,3].map(number => <button key={number} onClick={() => chooseParty(number)} aria-pressed={party === number} aria-label={'Rumpus Room Party ' + number}>Party <span>0{number}</span></button>)}
             </div></>}
-            <h2>{spare ? 'Recordings' : <>Rumpus Room<br/><span>Party {party}</span></>}</h2>
-            <p className="rp-session-meta">{catalog ? tracks.length + ' recordings / ' + clock(tracks.reduce((total, track) => total + track.duration, 0)) : 'Loading recordings…'}</p>
+            <h2>{spare ? 'Party ' + party + ' Recordings' + (catalog ? ' (' + clock(tracks.reduce((total, track) => total + track.duration, 0)) + ')' : '') : <>Rumpus Room<br/><span>Party {party}</span></>}</h2>
+            {(!spare || (!catalog && !catalogError)) && <p className="rp-session-meta">{catalog ? tracks.length + ' recordings / ' + clock(tracks.reduce((total, track) => total + track.duration, 0)) : 'Loading recordings…'}</p>}
             <div className="rp-tracks" aria-label={'Rumpus Room Party ' + party + ' recordings'}>
               {tracks.map(track => <div key={track.id} className="rp-track-row" data-track={track.id}><button className={'rp-track' + (selected?.id === track.id ? ' rp-track-current' : '')} aria-label={(selected?.id === track.id && playing ? 'Pause ' : 'Play ') + track.title} aria-pressed={selected?.id === track.id && playing} onClick={() => void play(track, playError)}>
                 <span className="rp-track-name">Tape {track.tape}<span className="rp-track-time">{clock(track.duration)}</span></span><span className="rp-play-control"><PlayIcon paused={selected?.id !== track.id || !playing}/><span>{selected?.id === track.id && playing ? 'Pause' : 'Play'}</span></span>
