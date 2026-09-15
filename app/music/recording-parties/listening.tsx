@@ -6,6 +6,7 @@ import { PressArticle } from '../../reseda-studies/darkroom-featured/press';
 import { pressItems } from '../../reseda-studies/darkroom-featured/press-data';
 import type { PartyCatalog, PartyTrack } from './types';
 import { partyAttendees } from './attendees';
+import { partyLocations } from './locations';
 import './listening.css';
 
 const photographs = [
@@ -21,6 +22,9 @@ function clock(seconds: number) {
 }
 function PlayIcon({paused = true}: {paused?: boolean}) {
   return <svg viewBox="0 0 40 40" aria-hidden="true">{paused ? <path d="M11 5 35 20 11 35Z" /> : <path d="M8 6h9v28H8zM24 6h9v28h-9z" />}</svg>;
+}
+function PhotoArrow({previous = false}: {previous?: boolean}) {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d={previous ? 'M18 4 6 12 18 20Z' : 'M6 4 18 12 6 20Z'}/></svg>;
 }
 function PartyPhoto({name, alt, width, height, mono, room = false, lazy = false}: {
   name: string; alt: string; width: number; height: number; mono: boolean; room?: boolean; lazy?: boolean;
@@ -49,6 +53,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const currentTrack = useRef<PartyTrack | null>(null);
   const tracks = catalog?.tracks.filter(track => track.party === party) || [];
   const attendees = partyAttendees[party] || [];
+  const location = partyLocations[party];
   const partyNumbers = catalog ? [...new Set(catalog.tracks.map(track => track.party))].sort((a,b) => a-b) : [1,2,3];
   const photograph = photographs[photoIndex];
   const article = pressItems.find(item => item.slug === 'bedford-bowery-recording-parties')!;
@@ -120,6 +125,12 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     const next = tracks[tracks.findIndex(track => track.id === currentTrack.current?.id) + 1];
     if (next) void play(next);
   }
+  const transport = <div className="rp-transport">
+    <div className="rp-now" aria-live="polite">{playError ? 'Unable to play this recording.' : loading ? 'Loading Tape ' + selected?.tape + '…' : selected ? (playing ? 'Playing' : 'Paused') + ' / Tape ' + selected.tape : 'Choose a recording'}</div>
+    <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} aria-label="Playback position" onValueChange={value => {const seconds = Array.isArray(value) ? value[0] : value; if (audio.current && Number.isFinite(audio.current.duration)) {audio.current.currentTime = seconds; setElapsed(seconds);}}}/>
+    <div className="rp-timing"><span>{clock(elapsed)}</span><span>{selected ? clock(duration) : '—:—'}</span></div>
+    {playError && selected && <button className="rp-retry" onClick={() => void play(selected, true)}>Retry playback</button>}
+  </div>;
   return <div className={'rp-site' + (mono ? ' rp-mono' : '') + (spare ? ' rp-spare' : '')} data-party={party}>
     <div className="rp-frame">
       <header className="rp-header">
@@ -133,14 +144,14 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
         </div>
         {spare && <div className="rp-archive-bar">
           <label><span>Party</span><select aria-label="Choose a recording party" value={party} onChange={event => chooseParty(Number(event.target.value))}>{partyNumbers.map(number => <option value={number} key={number}>{String(number).padStart(2,'0')}</option>)}</select></label>
-          <p>The Rumpus Room<span>Brooklyn, New York</span></p>
+          {location && <p>Location: {location.venue}, {location.city}</p>}
         </div>}
         <section className="rp-session" aria-label="Listen to the Recording Parties">
           <figure className="rp-session-photo">
             {spare ? <PartyPhoto mono={mono} {...photograph}/> : <PartyPhoto mono={mono} room={roomPhoto} name="james-richardson-trumpet-session" alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={520} height={568}/>}
             {spare ? <figcaption className="rp-photo-caption">
               <span aria-live="polite">{photograph.caption}</span>
-              <div className="rp-photo-navigation"><span>{String(photoIndex+1).padStart(2,'0')} / {String(photographs.length).padStart(2,'0')}</span><button aria-label="Previous photograph" onClick={() => setPhotoIndex(index => (index+photographs.length-1)%photographs.length)}>←</button><button aria-label="Next photograph" onClick={() => setPhotoIndex(index => (index+1)%photographs.length)}>→</button></div>
+              <div className="rp-photo-navigation"><span>{String(photoIndex+1).padStart(2,'0')} / {String(photographs.length).padStart(2,'0')}</span><button aria-label="Previous photograph" onClick={() => setPhotoIndex(index => (index+photographs.length-1)%photographs.length)}><PhotoArrow previous/></button><button aria-label="Next photograph" onClick={() => setPhotoIndex(index => (index+1)%photographs.length)}><PhotoArrow/></button></div>
             </figcaption> : <figcaption className="rp-photo-stamp">The Rumpus<br/>Room</figcaption>}
           </figure>
           <div className="rp-listening">
@@ -151,17 +162,12 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
             <h2>{spare ? 'Recordings' : <>Rumpus Room<br/><span>Party {party}</span></>}</h2>
             <p className="rp-session-meta">{catalog ? tracks.length + ' recordings / ' + clock(tracks.reduce((total, track) => total + track.duration, 0)) : 'Loading recordings…'}</p>
             <div className="rp-tracks" aria-label={'Rumpus Room Party ' + party + ' recordings'}>
-              {tracks.map(track => <button key={track.id} className={'rp-track' + (selected?.id === track.id ? ' rp-track-current' : '')} aria-label={(selected?.id === track.id && playing ? 'Pause ' : 'Play ') + track.title} aria-pressed={selected?.id === track.id && playing} onClick={() => void play(track, playError)}>
+              {tracks.map(track => <div key={track.id} className="rp-track-row" data-track={track.id}><button className={'rp-track' + (selected?.id === track.id ? ' rp-track-current' : '')} aria-label={(selected?.id === track.id && playing ? 'Pause ' : 'Play ') + track.title} aria-pressed={selected?.id === track.id && playing} onClick={() => void play(track, playError)}>
                 <span className="rp-track-name">Tape {track.tape}<span className="rp-track-time">{clock(track.duration)}</span></span><span className="rp-play-control"><PlayIcon paused={selected?.id !== track.id || !playing}/><span>{selected?.id === track.id && playing ? 'Pause' : 'Play'}</span></span>
-              </button>)}
+              </button>{spare && selected?.id === track.id && transport}</div>)}
               {catalogError && <div className="rp-error" role="alert">The recordings could not be loaded. <button onClick={() => setRetry(value => value + 1)}>Try again</button></div>}
             </div>
-            <div className="rp-transport">
-              <div className="rp-now" aria-live="polite">{playError ? 'Unable to play this recording.' : loading ? 'Loading Tape ' + selected?.tape + '…' : selected ? (playing ? 'Playing' : 'Paused') + ' / Tape ' + selected.tape : 'Choose a recording'}</div>
-              <Slider className="rp-seek" min={0} max={Math.max(1, duration)} step={1} value={[elapsed]} disabled={!selected || playError} aria-label="Playback position" onValueChange={value => {const seconds = Array.isArray(value) ? value[0] : value; if (audio.current && Number.isFinite(audio.current.duration)) {audio.current.currentTime = seconds; setElapsed(seconds);}}}/>
-              <div className="rp-timing"><span>{clock(elapsed)}</span><span>{selected ? clock(duration) : '—:—'}</span></div>
-              {playError && selected && <button className="rp-retry" onClick={() => void play(selected, true)}>Retry playback</button>}
-            </div>
+            {!spare && transport}
             <section className="rp-attendees" aria-label={'Musicians and attendees of Party ' + party}>
               <h3>Musicians &amp; attendees</h3>
               {attendees.length ? <ul>{attendees.map(person => <li key={person.name}><strong>{person.name}</strong>{person.role && <span>{person.role}</span>}</li>)}</ul> : <p>Party {party} attendee list to be added.</p>}
@@ -175,7 +181,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
           <figure className="rp-console-photo"><PartyPhoto mono={mono} lazy name="albert-di-fiore-console" width={520} height={331} alt="Albert Di Fiore at the recording console"/><figcaption>Albert Di Fiore, at the console</figcaption></figure>
         </section>
         <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section></>}
-        <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span><a href="#music/recording-parties">Back to Music</a></footer>
+        <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span>{!spare && <a href="#music/recording-parties">Back to Music</a>}</footer>
       </main>
       <audio ref={audio} preload="none" onPlay={() => setPlaying(true)} onPlaying={() => setLoading(false)} onPause={() => setPlaying(false)} onWaiting={() => {if (currentTrack.current) setLoading(true);}} onLoadedMetadata={() => {if (audio.current && Number.isFinite(audio.current.duration)) setDuration(audio.current.duration);}} onTimeUpdate={() => setElapsed(audio.current?.currentTime || 0)} onEnded={ended} onError={() => {if (currentTrack.current) {setPlayError(true); setPlaying(false); setLoading(false);}}}/>
       <PressArticle article={press ? article : null} close={() => setPress(false)} watch={() => {}} fullscreen />
