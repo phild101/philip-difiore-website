@@ -1,0 +1,7 @@
+/* Optional comparison only. Existing header sizes, spacing and colors are retained. */
+.df-nav[data-header-font='bold'] a,
+.info-header[data-header-font='bold'] a,
+.rp-header[data-header-font='bold'] a {
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 700;
+}
