@@ -4,7 +4,7 @@
 - Shared header order: FILM, MUSIC, INFO.
 - Film contains all 19 projects previously categorized FILM, VIDEO, or LIVE, retaining their established order and artwork. All their visible category headings read FILM.
 - Music contains Recording Parties. Clicking its existing artwork opens a spare black-and-white archive: party selector, manual viewer with all 22 Bedford + Bowery photographs assigned to Party 2 and a cyan wash, seven recordings across three parties, 15 confirmed Party 2 attendees, and a compact Bedford + Bowery press link. Party choices have shareable `?party=2` URLs; photo browsing preserves playback.
-- Info: white background, black text, smaller Modern Noir portrait with the revised bio wrapping beside and underneath it. A centered 720px content width gives the desktop page wider typewriter-like margins; mobile retains comfortable side margins.
+- Info: white background, black text, Modern Noir portrait with the revised bio wrapping beside and underneath it. Philip’s September 15 margin reference is matched by a centered 460px desktop column, portrait at 37.5% width, and 24px image/text gap; the column scales to 425px at the existing smaller-font breakpoint. This gives wide outer margins, with the Academy paragraph flowing below the portrait and subsequent paragraphs using the full column. Mobile retains comfortable side margins. Header, font sizes, line height and paragraph spacing stay as approved.
 - Canonical hashes: `#film/<slug>`, `#music/recording-parties`, `#music/recording-parties/listen`, `#info`. Old `#featured/<slug>` URLs remain supported.
 - Historical study routes retain their earlier category labels and menus.
 - Rabbit Hole remains preserved and inactive; see [full concept archive](rabbit-hole-concept-archive.md).
