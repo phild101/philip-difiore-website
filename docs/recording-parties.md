@@ -27,9 +27,9 @@ Source selections, captions and URLs: `../imports/recording-parties/photo-select
 
 Desktop and mobile visual review; all three party track lists; actual audio playback and pause; switching parties; press modal and Escape; return to Music and re-entry from the cover; no horizontal overflow at 390px; no browser page errors. Production build and TypeScript check are required before publication.
 
-## Proposed expansion, awaiting direction
+## Archive expansion
 
-Philip anticipates adding 25 more parties and asked how to include more photographs. Proposed: one party at a time, an index opened by a Choose a party control, a shareable party URL, and a large manual slideshow with previous/next arrows, counter, and optional thumbnail overview. Photo browsing must not interrupt audio. Keep photos as a shared collection until their party associations are confirmed. Do not fabricate dates, titles, attendance, or photo associations. Remove slogan-like editorial copy; Philip specifically rejected “Put a party on vinyl.” Current listening UI remains three-party pending a decision on this structure. Future import must extend the current party-number database constraints and server path validation, not only the UI.
+Philip anticipates adding 25 more parties and potentially taking the project worldwide. The current interface shows one selected party at a time, with a native party selector, shareable `?party=2` URLs, and a large manual slideshow with previous/next arrows and counter. Photo browsing does not interrupt audio. Keep photos as a shared collection until their party associations are confirmed. Do not fabricate dates, titles, attendance, or photo associations. Remove slogan-like editorial copy; Philip specifically rejected “Put a party on vinyl.” Future import must extend the current party-number database constraints, initial query validation and server path validation, not only the UI. Keep this archive within Philip's site for now; its data and presentation can support an independent domain later. No separate site has been created.
 
 ## Musicians and attendees
 
@@ -41,6 +41,8 @@ Philip felt the strongest treatments might lose the sensation of being in the ro
 
 ## Black-and-white page / signature party washes
 
-Current default: charcoal and white page with unchanged original press photographs, tinted at render time with a single color per selected party. Party 1 cobalt `#365dcb`, Party 2 raspberry `#c43770`, Party 3 amber `#bf8730`. A CSS color blend preserves photographic luminosity, faces and studio details rather than generating replacements. Page furniture remains black and white; only small active-player accents share the party color. The photos are still the shared press collection, not confirmed party-specific imagery.
+Current default: charcoal and white page with unchanged original press photographs, tinted at render time with a single color per selected party. Party 1 cobalt `#365dcb`, Party 2 raspberry `#c43770`, Party 3 amber `#bf8730`. A CSS color blend preserves photographic luminosity, faces and studio details rather than generating replacements. Page furniture and player controls remain black and white. The photos are still the shared press collection, not confirmed party-specific imagery.
+
+The September 14 spare pass removes the tilted Rumpus Room sign, reduces display typography, groups the recordings beside one large photo viewer, and replaces the large press section with a compact Press control. Original photographs fit completely within the viewer. The preceding B&W gallery version is preserved at `?layout=gallery#music/recording-parties/listen` (version 61 / commit `eb7c710fad4756d2938004b483a128e6a9338b24`). Verified party selection, URL history, actual audio playback while changing photographs, slideshow wraparound, press modal, and mobile overflow.
 
 Saved prior graphic/turquoise version: `?look=overprint#music/recording-parties/listen`. Gentler previous main-photo comparison remains `?photos=room#music/recording-parties/listen`. Prior source is version 60 / commit `bac2365c4db223df4778b372bdae930ffff2848f`. Desktop checks passed for all three washes and track lists, mobile has no horizontal overflow, and the prior Overprint view remains reachable.

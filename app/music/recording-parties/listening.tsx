@@ -8,6 +8,13 @@ import type { PartyCatalog, PartyTrack } from './types';
 import { partyAttendees } from './attendees';
 import './listening.css';
 
+const photographs = [
+  {name:'james-richardson-trumpet-session',width:520,height:568,caption:'James Richardson on trumpet',alt:'James Richardson on trumpet, with musicians gathered around him at The Rumpus Room'},
+  {name:'philip-di-fiore-mc',width:1000,height:563,caption:'Philip Di Fiore, master of ceremonies',alt:'Philip Di Fiore at the microphone as master of ceremonies'},
+  {name:'emma-gomis-bass',width:520,height:936,caption:'Emma Gomis, bass',alt:'Emma Gomis playing bass at the studio'},
+  {name:'albert-di-fiore-console',width:520,height:331,caption:'Albert Di Fiore, at the console',alt:'Albert Di Fiore at the recording console'},
+];
+
 function clock(seconds: number) {
   const rounded = Math.max(0, Math.floor(seconds));
   return Math.floor(rounded / 60) + ':' + String(rounded % 60).padStart(2, '0');
@@ -35,17 +42,24 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [press, setPress] = useState(false);
   const [roomPhoto, setRoomPhoto] = useState(false);
   const [mono, setMono] = useState(true);
+  const [spare, setSpare] = useState(true);
+  const [photoIndex, setPhotoIndex] = useState(0);
   const audio = useRef<HTMLAudioElement>(null);
   const request = useRef(0);
   const currentTrack = useRef<PartyTrack | null>(null);
   const tracks = catalog?.tracks.filter(track => track.party === party) || [];
   const attendees = partyAttendees[party] || [];
+  const partyNumbers = catalog ? [...new Set(catalog.tracks.map(track => track.party))].sort((a,b) => a-b) : [1,2,3];
+  const photograph = photographs[photoIndex];
   const article = pressItems.find(item => item.slug === 'bedford-bowery-recording-parties')!;
 
   useEffect(() => {
     const options = new URLSearchParams(window.location.search);
     setRoomPhoto(options.get('photos') === 'room');
     setMono(options.get('look') !== 'overprint' && options.get('photos') !== 'room');
+    setSpare(options.get('layout') !== 'gallery' && options.get('look') !== 'overprint' && options.get('photos') !== 'room');
+    const requestedParty = Number(options.get('party'));
+    if ([1,2,3].includes(requestedParty)) setParty(requestedParty);
     const old = document.title;
     document.title = 'Recording Parties — Philip Di Fiore';
     return () => { document.title = old; request.current += 1; };
@@ -80,20 +94,33 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     try { await player.play(); }
     catch { if (request.current === token) { setPlayError(true); setLoading(false); setPlaying(false); } }
   }
-  function chooseParty(next: number) {
+  function chooseParty(next: number, updateUrl = true) {
     if (next === party) return;
     request.current += 1;
     audio.current?.pause();
     if (audio.current) {audio.current.removeAttribute('src'); audio.current.load();}
     currentTrack.current = null;
     setSelected(null); setPlaying(false); setLoading(false); setPlayError(false); setElapsed(0); setDuration(0); setParty(next);
+    if (spare && updateUrl) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('party', String(next));
+      window.history.pushState(null, '', url.pathname + url.search + url.hash);
+    }
   }
+  useEffect(() => {
+    const restore = () => {
+      const requested = Number(new URLSearchParams(window.location.search).get('party'));
+      chooseParty(partyNumbers.includes(requested) ? requested : 1, false);
+    };
+    window.addEventListener('popstate', restore);
+    return () => window.removeEventListener('popstate', restore);
+  }, [party, spare, catalog]);
   function ended() {
     setPlaying(false);
     const next = tracks[tracks.findIndex(track => track.id === currentTrack.current?.id) + 1];
     if (next) void play(next);
   }
-  return <div className={'rp-site' + (mono ? ' rp-mono' : '')} data-party={party}>
+  return <div className={'rp-site' + (mono ? ' rp-mono' : '') + (spare ? ' rp-spare' : '')} data-party={party}>
     <div className="rp-frame">
       <header className="rp-header">
         <a href="#film/if-you-call">Philip Di Fiore</a>
@@ -101,20 +128,27 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
       </header>
       <main>
         <div className="rp-masthead">
-          <div><p className="rp-kicker">The Rumpus Room · Brooklyn, New York</p><h1>Recording Parties</h1></div>
-          <button className="rp-press-link" onClick={() => setPress(true)}>Read the story<span>Bedford + Bowery</span></button>
+          <div>{!spare && <p className="rp-kicker">The Rumpus Room · Brooklyn, New York</p>}<h1>Recording Parties</h1></div>
+          <button className="rp-press-link" onClick={() => setPress(true)}>{spare ? 'Press' : <>Read the story<span>Bedford + Bowery</span></>}</button>
         </div>
+        {spare && <div className="rp-archive-bar">
+          <label><span>Party</span><select aria-label="Choose a recording party" value={party} onChange={event => chooseParty(Number(event.target.value))}>{partyNumbers.map(number => <option value={number} key={number}>{String(number).padStart(2,'0')}</option>)}</select></label>
+          <p>The Rumpus Room<span>Brooklyn, New York</span></p>
+        </div>}
         <section className="rp-session" aria-label="Listen to the Recording Parties">
           <figure className="rp-session-photo">
-            <PartyPhoto mono={mono} room={roomPhoto} name="james-richardson-trumpet-session" alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={520} height={568}/>
-            <figcaption className="rp-photo-stamp">The Rumpus<br/>Room</figcaption>
+            {spare ? <PartyPhoto mono={mono} {...photograph}/> : <PartyPhoto mono={mono} room={roomPhoto} name="james-richardson-trumpet-session" alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={520} height={568}/>}
+            {spare ? <figcaption className="rp-photo-caption">
+              <span aria-live="polite">{photograph.caption}</span>
+              <div className="rp-photo-navigation"><span>{String(photoIndex+1).padStart(2,'0')} / {String(photographs.length).padStart(2,'0')}</span><button aria-label="Previous photograph" onClick={() => setPhotoIndex(index => (index+photographs.length-1)%photographs.length)}>←</button><button aria-label="Next photograph" onClick={() => setPhotoIndex(index => (index+1)%photographs.length)}>→</button></div>
+            </figcaption> : <figcaption className="rp-photo-stamp">The Rumpus<br/>Room</figcaption>}
           </figure>
           <div className="rp-listening">
-            <p className="rp-listening-label">Listen to the recordings</p>
+            {!spare && <><p className="rp-listening-label">Listen to the recordings</p>
             <div className="rp-parties" role="group" aria-label="Choose a recording party">
               {[1,2,3].map(number => <button key={number} onClick={() => chooseParty(number)} aria-pressed={party === number} aria-label={'Rumpus Room Party ' + number}>Party <span>0{number}</span></button>)}
-            </div>
-            <h2>Rumpus Room<br/><span>Party {party}</span></h2>
+            </div></>}
+            <h2>{spare ? 'Recordings' : <>Rumpus Room<br/><span>Party {party}</span></>}</h2>
             <p className="rp-session-meta">{catalog ? tracks.length + ' recordings / ' + clock(tracks.reduce((total, track) => total + track.duration, 0)) : 'Loading recordings…'}</p>
             <div className="rp-tracks" aria-label={'Rumpus Room Party ' + party + ' recordings'}>
               {tracks.map(track => <button key={track.id} className={'rp-track' + (selected?.id === track.id ? ' rp-track-current' : '')} aria-label={(selected?.id === track.id && playing ? 'Pause ' : 'Play ') + track.title} aria-pressed={selected?.id === track.id && playing} onClick={() => void play(track, playError)}>
@@ -132,15 +166,15 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
               <h3>Musicians &amp; attendees</h3>
               {attendees.length ? <ul>{attendees.map(person => <li key={person.name}><strong>{person.name}</strong>{person.role && <span>{person.role}</span>}</li>)}</ul> : <p>Party {party} attendee list to be added.</p>}
             </section>
-            <p className="rp-note">Musicians from different circles, meeting to improvise freely. Organized and MC’d by Philip Di Fiore. Recorded live at The Rumpus Room.</p>
+            {!spare && <p className="rp-note">Musicians from different circles, meeting to improvise freely. Organized and MC’d by Philip Di Fiore. Recorded live at The Rumpus Room.</p>}
           </div>
         </section>
-        <section className="rp-photographs" aria-label="Inside The Rumpus Room">
+        {!spare && <><section className="rp-photographs" aria-label="Inside The Rumpus Room">
           <figure className="rp-wide-photo"><PartyPhoto mono={mono} lazy name="philip-di-fiore-mc" width={1000} height={563} alt="Philip Di Fiore at the microphone as master of ceremonies"/><figcaption>Philip Di Fiore, master of ceremonies</figcaption></figure>
           <figure className="rp-tall-photo"><PartyPhoto mono={mono} lazy name="emma-gomis-bass" width={520} height={936} alt="Emma Gomis playing bass at the studio"/><figcaption>Emma Gomis, bass</figcaption></figure>
           <figure className="rp-console-photo"><PartyPhoto mono={mono} lazy name="albert-di-fiore-console" width={520} height={331} alt="Albert Di Fiore at the recording console"/><figcaption>Albert Di Fiore, at the console</figcaption></figure>
         </section>
-        <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section>
+        <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section></>}
         <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span><a href="#music/recording-parties">Back to Music</a></footer>
       </main>
       <audio ref={audio} preload="none" onPlay={() => setPlaying(true)} onPlaying={() => setLoading(false)} onPause={() => setPlaying(false)} onWaiting={() => {if (currentTrack.current) setLoading(true);}} onLoadedMetadata={() => {if (audio.current && Number.isFinite(audio.current.duration)) setDuration(audio.current.duration);}} onTimeUpdate={() => setElapsed(audio.current?.currentTime || 0)} onEnded={ended} onError={() => {if (currentTrack.current) {setPlayError(true); setPlaying(false); setLoading(false);}}}/>
