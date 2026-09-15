@@ -21,7 +21,7 @@
 .rp-photo-print{position:relative;isolation:isolate;overflow:hidden}.rp-session-photo .rp-photo-print img{display:block;width:100%;height:auto}.rp-tall-photo .rp-photo-print{height:100%}.rp-photo-print>img{display:block;width:100%}
 /* Monochrome page; the selected party supplies one photographic wash. */
 .rp-mono{--rp-ground:#f4f4f4;--rp-ink:#1b1b1b;--rp-paper:#fff;--rp-accent:#365dcb;--rp-hot:var(--rp-accent);background:#fff}
-.rp-mono[data-party="2"]{--rp-accent:#c43770}.rp-mono[data-party="3"]{--rp-accent:#bf8730}
+.rp-mono[data-party="2"]{--rp-accent:#00b8d4}.rp-mono[data-party="3"]{--rp-accent:#bf8730}
 .rp-mono .rp-frame{background:#f4f4f4}.rp-mono .rp-header a[aria-current]{color:var(--rp-ink);text-decoration:underline;text-underline-offset:5px}.rp-mono .rp-header a:hover{color:#666}
 .rp-mono .rp-photo-print>img{filter:grayscale(1)}.rp-mono .rp-photo-print::after{content:"";position:absolute;inset:0;background:var(--rp-accent);mix-blend-mode:color;opacity:.82;pointer-events:none}
 .rp-mono .rp-photo-stamp{background:#fff;color:#1b1b1b}.rp-mono .rp-listening{background:#fff;border-top:5px solid var(--rp-accent)}
@@ -44,3 +44,6 @@
 /* The selected tape owns its transport; the row rule closes below it. */
 .rp-spare .rp-track-row{border-bottom:1px solid #1b1b1b}.rp-spare .rp-track{border-bottom:0}
 .rp-photo-navigation button svg{display:block;width:22px;height:22px;fill:currentColor}
+
+.rp-spare .rp-attendees ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px}.rp-spare .rp-attendees li{overflow-wrap:normal}
+.rp-spare .rp-awaiting-photos{display:block;max-width:760px;margin:0 auto}.rp-spare .rp-awaiting-photos .rp-listening{padding:0;border:0}.rp-photo-pending{margin:6px 0 24px;font-size:12px;color:#555}

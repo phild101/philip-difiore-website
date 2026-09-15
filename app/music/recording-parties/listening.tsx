@@ -7,14 +7,8 @@ import { pressItems } from '../../reseda-studies/darkroom-featured/press-data';
 import type { PartyCatalog, PartyTrack } from './types';
 import { partyAttendees } from './attendees';
 import { partyLocations } from './locations';
+import { partyPhotographs } from './photographs';
 import './listening.css';
-
-const photographs = [
-  {name:'james-richardson-trumpet-session',width:520,height:568,caption:'James Richardson on trumpet',alt:'James Richardson on trumpet, with musicians gathered around him at The Rumpus Room'},
-  {name:'philip-di-fiore-mc',width:1000,height:563,caption:'Philip Di Fiore, master of ceremonies',alt:'Philip Di Fiore at the microphone as master of ceremonies'},
-  {name:'emma-gomis-bass',width:520,height:936,caption:'Emma Gomis, bass',alt:'Emma Gomis playing bass at the studio'},
-  {name:'albert-di-fiore-console',width:520,height:331,caption:'Albert Di Fiore, at the console',alt:'Albert Di Fiore at the recording console'},
-];
 
 function clock(seconds: number) {
   const rounded = Math.max(0, Math.floor(seconds));
@@ -54,8 +48,9 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const tracks = catalog?.tracks.filter(track => track.party === party) || [];
   const attendees = partyAttendees[party] || [];
   const location = partyLocations[party];
+  const photographs = partyPhotographs[party] || [];
   const partyNumbers = catalog ? [...new Set(catalog.tracks.map(track => track.party))].sort((a,b) => a-b) : [1,2,3];
-  const photograph = photographs[photoIndex];
+  const photograph = photographs[photoIndex] || photographs[0];
   const article = pressItems.find(item => item.slug === 'bedford-bowery-recording-parties')!;
 
   useEffect(() => {
@@ -105,7 +100,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     audio.current?.pause();
     if (audio.current) {audio.current.removeAttribute('src'); audio.current.load();}
     currentTrack.current = null;
-    setSelected(null); setPlaying(false); setLoading(false); setPlayError(false); setElapsed(0); setDuration(0); setParty(next);
+    setSelected(null); setPlaying(false); setLoading(false); setPlayError(false); setElapsed(0); setDuration(0); setPhotoIndex(0); setParty(next);
     if (spare && updateUrl) {
       const url = new URL(window.location.href);
       url.searchParams.set('party', String(next));
@@ -146,15 +141,17 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
           <label><span>Party</span><select aria-label="Choose a recording party" value={party} onChange={event => chooseParty(Number(event.target.value))}>{partyNumbers.map(number => <option value={number} key={number}>{String(number).padStart(2,'0')}</option>)}</select></label>
           {location && <p>Location: {location.venue}, {location.city}</p>}
         </div>}
-        <section className="rp-session" aria-label="Listen to the Recording Parties">
+        <section className={'rp-session' + (spare && !photograph ? ' rp-awaiting-photos' : '')} aria-label="Listen to the Recording Parties">
+          {(!spare || photograph) &&
           <figure className="rp-session-photo">
             {spare ? <PartyPhoto mono={mono} {...photograph}/> : <PartyPhoto mono={mono} room={roomPhoto} name="james-richardson-trumpet-session" alt="James Richardson on trumpet, with musicians gathered around him at The Rumpus Room" width={520} height={568}/>}
             {spare ? <figcaption className="rp-photo-caption">
               <span aria-live="polite">{photograph.caption}</span>
               <div className="rp-photo-navigation"><span>{String(photoIndex+1).padStart(2,'0')} / {String(photographs.length).padStart(2,'0')}</span><button aria-label="Previous photograph" onClick={() => setPhotoIndex(index => (index+photographs.length-1)%photographs.length)}><PhotoArrow previous/></button><button aria-label="Next photograph" onClick={() => setPhotoIndex(index => (index+1)%photographs.length)}><PhotoArrow/></button></div>
             </figcaption> : <figcaption className="rp-photo-stamp">The Rumpus<br/>Room</figcaption>}
-          </figure>
+          </figure>}
           <div className="rp-listening">
+            {spare && !photograph && <p className="rp-photo-pending">Party {party} photographs to be added.</p>}
             {!spare && <><p className="rp-listening-label">Listen to the recordings</p>
             <div className="rp-parties" role="group" aria-label="Choose a recording party">
               {[1,2,3].map(number => <button key={number} onClick={() => chooseParty(number)} aria-pressed={party === number} aria-label={'Rumpus Room Party ' + number}>Party <span>0{number}</span></button>)}
@@ -181,7 +178,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
           <figure className="rp-console-photo"><PartyPhoto mono={mono} lazy name="albert-di-fiore-console" width={520} height={331} alt="Albert Di Fiore at the recording console"/><figcaption>Albert Di Fiore, at the console</figcaption></figure>
         </section>
         <section className="rp-press-card" aria-label="Recording Parties in the press"><div><p>Press</p><h2>Bedford + Bowery</h2></div><div className="rp-press-actions"><button onClick={() => setPress(true)}>Read the story</button><a href="https://bedfordandbowery.com/2014/06/watch-members-of-mgmt-louis-xiv-and-more-put-a-party-on-vinyl/" target="_blank" rel="noreferrer">Original article</a></div></section></>}
-        <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span>{!spare && <a href="#music/recording-parties">Back to Music</a>}</footer>
+        {(!spare || photograph) && <footer className="rp-footer"><span>Photographs: Chris J Lytwn / Bedford + Bowery</span>{!spare && <a href="#music/recording-parties">Back to Music</a>}</footer>}
       </main>
       <audio ref={audio} preload="none" onPlay={() => setPlaying(true)} onPlaying={() => setLoading(false)} onPause={() => setPlaying(false)} onWaiting={() => {if (currentTrack.current) setLoading(true);}} onLoadedMetadata={() => {if (audio.current && Number.isFinite(audio.current.duration)) setDuration(audio.current.duration);}} onTimeUpdate={() => setElapsed(audio.current?.currentTime || 0)} onEnded={ended} onError={() => {if (currentTrack.current) {setPlayError(true); setPlaying(false); setLoading(false);}}}/>
       <PressArticle article={press ? article : null} close={() => setPress(false)} watch={() => {}} fullscreen />
