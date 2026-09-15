@@ -71,3 +71,26 @@
   font-family:'DM Sans',Arial,sans-serif;
   font-weight:700;
 }
+
+/* Alternate archive layout: photograph, recordings, then attendees. */
+.rp-spare.rp-stacked main { max-width:1040px; margin-inline:auto; }
+.rp-spare.rp-stacked .rp-session { display:flex; flex-direction:column; gap:30px; }
+.rp-spare.rp-stacked .rp-listening {
+  width:100%;
+  border-left:0;
+  border-top:2px solid #1b1b1b;
+  padding:26px 0 0;
+}
+.rp-spare.rp-stacked .rp-attendees {
+  margin-top:30px;
+  padding:26px 0 12px;
+  border-top:1px solid #1b1b1b;
+}
+.rp-spare.rp-stacked .rp-attendees h3 { margin-bottom:20px; }
+.rp-spare.rp-stacked .rp-awaiting-photos { max-width:none; margin:0; }
+.rp-spare.rp-stacked .rp-awaiting-photos .rp-listening { border-top:0; padding-top:0; }
+@media(max-width:740px) {
+  .rp-spare.rp-stacked .rp-session { gap:22px; }
+  .rp-spare.rp-stacked .rp-listening { padding-top:20px; }
+  .rp-spare.rp-stacked .rp-attendees { margin-top:24px; padding-top:22px; }
+}

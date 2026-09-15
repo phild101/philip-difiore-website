@@ -41,6 +41,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [roomPhoto, setRoomPhoto] = useState(false);
   const [mono, setMono] = useState(true);
   const [spare, setSpare] = useState(true);
+  const [stacked, setStacked] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const audio = useRef<HTMLAudioElement>(null);
   const request = useRef(0);
@@ -58,6 +59,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     setRoomPhoto(options.get('photos') === 'room');
     setMono(options.get('look') !== 'overprint' && options.get('photos') !== 'room');
     setSpare(options.get('layout') !== 'gallery' && options.get('look') !== 'overprint' && options.get('photos') !== 'room');
+    setStacked(options.get('layout') === 'stacked');
     const requestedParty = Number(options.get('party'));
     if ([1,2,3].includes(requestedParty)) setParty(requestedParty);
     const old = document.title;
@@ -126,7 +128,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
     <div className="rp-timing"><span>{clock(elapsed)}</span><span>{selected ? clock(duration) : '—:—'}</span></div>
     {playError && selected && <button className="rp-retry" onClick={() => void play(selected, true)}>Retry playback</button>}
   </div>;
-  return <div className={'rp-site' + (mono ? ' rp-mono' : '') + (spare ? ' rp-spare' : '')} data-party={party}>
+  return <div className={'rp-site' + (mono ? ' rp-mono' : '') + (spare ? ' rp-spare' : '') + (spare && stacked ? ' rp-stacked' : '')} data-party={party}>
     <div className="rp-frame">
       <header className="rp-header">
         <a href="#film/if-you-call">Philip Di Fiore</a>
