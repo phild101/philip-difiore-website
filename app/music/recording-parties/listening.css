@@ -82,6 +82,12 @@
 }
 .rp-spare.rp-stacked .rp-masthead > div { grid-column:2; text-align:center; }
 .rp-spare.rp-stacked .rp-press-link { grid-column:3; justify-self:end; }
+.rp-spare.rp-stacked .rp-archive-bar {
+  display:grid;
+  grid-template-columns:160px minmax(0,1fr) 160px;
+}
+.rp-spare.rp-stacked .rp-archive-bar label { justify-self:start; }
+.rp-spare.rp-stacked .rp-archive-bar p { grid-column:2; text-align:center; }
 .rp-spare.rp-stacked .rp-session { display:flex; flex-direction:column; gap:30px; }
 .rp-spare.rp-stacked .rp-listening {
   width:100%;
@@ -89,6 +95,7 @@
   border-top:2px solid #1b1b1b;
   padding:26px 0 0;
 }
+.rp-spare.rp-stacked .rp-listening h2 { text-align:center; }
 .rp-spare.rp-stacked .rp-attendees {
   margin-top:30px;
   padding:26px 0 12px;
@@ -102,6 +109,9 @@
   .rp-spare.rp-stacked .rp-masthead > div,
   .rp-spare.rp-stacked .rp-press-link { grid-column:1; }
   .rp-spare.rp-stacked .rp-masthead h1 { max-width:none; }
+  .rp-spare.rp-stacked .rp-archive-bar { grid-template-columns:1fr; gap:12px; padding:12px 0; }
+  .rp-spare.rp-stacked .rp-archive-bar label { border-right:0; padding-right:0; }
+  .rp-spare.rp-stacked .rp-archive-bar p { grid-column:1; }
   .rp-spare.rp-stacked .rp-session { gap:22px; }
   .rp-spare.rp-stacked .rp-listening { padding-top:20px; }
   .rp-spare.rp-stacked .rp-attendees { margin-top:24px; padding-top:22px; }

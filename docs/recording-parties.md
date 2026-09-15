@@ -66,4 +66,6 @@ Optional stacked comparison: `?layout=stacked&party=2#music/recording-parties/li
 
 The stacked masthead centers RECORDING PARTIES over the content/photo column. Press stays right-aligned in an equal-width outer grid column so it cannot shift the title off center. On mobile Press occupies its own right-aligned row beneath the centered title to prevent overlap. Other section headings remain left-aligned; default side-by-side masthead remains unchanged.
 
-The active archive now combines party number, recordings label and session duration into one heading, e.g. “Party 2 Recordings (79:00)”, with no separate recording-count line. Party number and duration update for the selected party in both spare layouts; preserved historical gallery layouts keep their original metadata.
+The stacked Location line is also centered over the photo/content column, with equal outer grid tracks and the party selector on the left. On mobile the selector gets a separate row above the centered Location text to avoid collisions.
+
+The active archive now combines party number, recordings label and session duration into one heading, e.g. “Party 2 Recordings (79:00)”, with no separate recording-count line. This heading is centered in the stacked layout, aligned with the masthead and Location line. Party number and duration update for the selected party in both spare layouts; preserved historical gallery layouts keep their original metadata.
