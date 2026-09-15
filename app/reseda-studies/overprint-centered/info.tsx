@@ -1,14 +1,33 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { SectionNavigation } from './navigation';
 import './info.css';
 
 export function InfoPage({ filmSlug }: { filmSlug: string }) {
+  const biography = useRef<HTMLElement>(null);
   useEffect(() => {
     const previousTitle = document.title;
     document.title = 'Info — Philip Di Fiore';
     return () => { document.title = previousTitle; };
+  }, []);
+
+  useEffect(() => {
+    const article = biography.current;
+    if (!article) return;
+    const sync = () => {
+      if (new URLSearchParams(window.location.search).get('info') === 'bold') {
+        article.dataset.infoFont = 'bold';
+      } else {
+        delete article.dataset.infoFont;
+      }
+    };
+    sync();
+    window.addEventListener('popstate', sync);
+    return () => {
+      window.removeEventListener('popstate', sync);
+      delete article.dataset.infoFont;
+    };
   }, []);
 
   return (
@@ -20,7 +39,7 @@ export function InfoPage({ filmSlug }: { filmSlug: string }) {
         </header>
         <main className="info-content" aria-label="Info about Philip Di Fiore">
           <h1 className="info-sr-only">Philip Di Fiore</h1>
-          <article className="info-bio" aria-label="Biography">
+          <article ref={biography} className="info-bio" aria-label="Biography">
             <figure className="info-portrait">
             <img
               src="/images/info/philip-modern-noir.png"
