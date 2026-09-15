@@ -50,8 +50,9 @@ export function InfoPage({ filmSlug }: { filmSlug: string }) {
             </figure>
             <p>Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling, mind-bending narratives and visual innovation. He writes his own stories and edits his own films.</p>
             <p>The Academy of Motion Picture Arts and Sciences selected his film <em>Stranger: Bernie Worrell on Earth</em> for inclusion in its permanent film collection (the Academy Film Archive).</p>
-            <p>Besides his film work, he has produced music projects and film scores. He founded and operated a soundstage and recording studio called The Rumpus Room in Brooklyn, New York. It was here that he began organizing and MC’ing “Recording Parties”—loose gatherings where musicians from different circles could meet, socialize and improvise music freely. These parties were recorded and archived.</p>
-            <p>Philip builds creative tools for writing, filmmaking and the creative process.</p>
+            <p>Di Fiore has produced music projects and film scores with luminaries of modern music.</p>
+            <p>He founded the Rumpus Room in Brooklyn, a recording studio and soundstage. There, he began organizing and MC’ing <em>Recording Parties</em>- relaxed gatherings where musicians from different circles could meet, socialize and play. These parties were recorded and archived.</p>
+            <p>Di Fiore builds tools for writing, filmmaking and the creative process.</p>
           </article>
         </main>
       </div>
