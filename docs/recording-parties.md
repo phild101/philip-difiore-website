@@ -64,4 +64,6 @@ The Recording Parties masthead now reads RECORDING PARTIES: the same Archivo Bla
 
 Optional stacked comparison: `?layout=stacked&party=2#music/recording-parties/listen`. One centered column (maximum 1040px): photograph and slideshow, recordings, then Musicians & Attendees, with horizontal rules separating sections. Existing typography, cyan wash, whole-image fitting, audio controls and alphabetical attendee columns remain. Default without `layout=stacked` preserves the side-by-side archive. Party selection retains the layout parameter. No-photo parties retain their own recordings and pending-photo notice.
 
+The stacked masthead centers RECORDING PARTIES over the content/photo column. Press stays right-aligned in an equal-width outer grid column so it cannot shift the title off center. On mobile Press occupies its own right-aligned row beneath the centered title to prevent overlap. Other section headings remain left-aligned; default side-by-side masthead remains unchanged.
+
 The active archive now combines party number, recordings label and session duration into one heading, e.g. “Party 2 Recordings (79:00)”, with no separate recording-count line. Party number and duration update for the selected party in both spare layouts; preserved historical gallery layouts keep their original metadata.

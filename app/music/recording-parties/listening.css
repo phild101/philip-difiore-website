@@ -75,6 +75,13 @@
 
 /* Alternate archive layout: photograph, recordings, then attendees. */
 .rp-spare.rp-stacked main { max-width:1040px; margin-inline:auto; }
+.rp-spare.rp-stacked .rp-masthead {
+  display:grid;
+  grid-template-columns:minmax(60px,1fr) auto minmax(60px,1fr);
+  gap:20px;
+}
+.rp-spare.rp-stacked .rp-masthead > div { grid-column:2; text-align:center; }
+.rp-spare.rp-stacked .rp-press-link { grid-column:3; justify-self:end; }
 .rp-spare.rp-stacked .rp-session { display:flex; flex-direction:column; gap:30px; }
 .rp-spare.rp-stacked .rp-listening {
   width:100%;
@@ -91,6 +98,10 @@
 .rp-spare.rp-stacked .rp-awaiting-photos { max-width:none; margin:0; }
 .rp-spare.rp-stacked .rp-awaiting-photos .rp-listening { border-top:0; padding-top:0; }
 @media(max-width:740px) {
+  .rp-spare.rp-stacked .rp-masthead { grid-template-columns:1fr; gap:14px; }
+  .rp-spare.rp-stacked .rp-masthead > div,
+  .rp-spare.rp-stacked .rp-press-link { grid-column:1; }
+  .rp-spare.rp-stacked .rp-masthead h1 { max-width:none; }
   .rp-spare.rp-stacked .rp-session { gap:22px; }
   .rp-spare.rp-stacked .rp-listening { padding-top:20px; }
   .rp-spare.rp-stacked .rp-attendees { margin-top:24px; padding-top:22px; }
