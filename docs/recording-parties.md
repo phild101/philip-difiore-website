@@ -59,3 +59,5 @@ Verification: 22 distinct slideshow images decoded, wraparound and audio indepen
 Attendee lists are alphabetized by full surname, then given name. Compound surnames De Vore and Di Fiore sort under D. The two-column presentation reads down the left column, then down the right.
 
 September 15 typography: Philip approved the DM Sans 700 used in the header/Info comparison for all small Courier-style text on the active spare archive. This includes header, Press, party selector/location, photo captions/counter, tape names/durations, playback status/timing, attendees, credits and conditional notices. Existing responsive sizes and line heights remain. Keep the Archivo Black title, existing Arial section headings and Play/Pause labels; historical gallery typography remains preserved. Header and Info comparison parameters continue to work across navigation.
+
+The Recording Parties masthead now reads RECORDING PARTIES: the same Archivo Black 400 font file, -.045em tracking, uppercase and .92 line height as the original PETER SARSGAARD factoid screenshot. Retain the archive's existing heading size instead of enlarging it to the old full-page factoid scale.

@@ -166,7 +166,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
             </div>
             {!spare && transport}
             <section className="rp-attendees" aria-label={'Musicians and attendees of Party ' + party}>
-              <h3>Musicians &amp; attendees</h3>
+              <h3>Musicians &amp; Attendees</h3>
               {attendees.length ? <ul>{attendees.map(person => <li key={person.name}><strong>{person.name}</strong>{person.role && <span>{person.role}</span>}</li>)}</ul> : <p>Party {party} attendee list to be added.</p>}
             </section>
             {!spare && <p className="rp-note">Musicians from different circles, meeting to improvise freely. Organized and MC’d by Philip Di Fiore. Recorded live at The Rumpus Room.</p>}

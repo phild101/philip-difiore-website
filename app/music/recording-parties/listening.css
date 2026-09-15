@@ -48,6 +48,9 @@
 .rp-spare .rp-attendees ul{display:block;columns:2;column-gap:20px}.rp-spare .rp-attendees li{overflow-wrap:normal;break-inside:avoid;margin-bottom:8px}
 .rp-spare .rp-awaiting-photos{display:block;max-width:760px;margin:0 auto}.rp-spare .rp-awaiting-photos .rp-listening{padding:0;border:0}.rp-photo-pending{margin:6px 0 24px;font-size:12px;color:#555}
 
+/* Match the original PETER SARSGAARD headline's uppercase setting. */
+.rp-spare .rp-masthead h1 { text-transform:uppercase; line-height:.92; }
+
 /* Match the approved header and Info type, preserving all existing sizes. */
 .rp-spare .rp-header,
 .rp-spare .rp-press-link,
