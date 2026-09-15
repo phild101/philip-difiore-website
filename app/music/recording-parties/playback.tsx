@@ -257,7 +257,7 @@ export function RecordingPlaybackProvider({ children }: { children: ReactNode })
         <div className="rp-persistent-space" style={{height:dockHeight || undefined, background:surface.background}} aria-hidden="true" />
         <aside ref={dock} style={{"--player-ground":surface.background,"--player-ink":surface.ink} as CSSProperties} className="rp-persistent" aria-label="Recording Parties player">
           <button className="rp-persistent-track" onClick={openRecording} aria-label={'Open Recording Party ' + selected.party + ', Tape ' + selected.tape}>
-            Now playing: Recording Party {selected.party}/ Tape {selected.tape}
+            Recording Party {selected.party}/ Tape {selected.tape}
             <span className="rp-persistent-status" role="status">{playError ? 'Playback unavailable' : loading ? 'Loading…' : ''}</span>
           </button>
           <PersistentSeek key={selected.id} elapsed={elapsed} duration={duration} ready={canSeek && !playError} seek={seek}/>

@@ -127,6 +127,12 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
             <div className="rp-parties" role="group" aria-label="Choose a recording party">
               {[1,2,3].map(number => <button key={number} onClick={() => chooseParty(number)} aria-pressed={party === number} aria-label={'Rumpus Room Party ' + number}>Party <span>0{number}</span></button>)}
             </div></>}
+            {spare && selected && selected.party !== party && <div className="rp-track-row rp-other-party-playback" aria-label="Current recording">
+              <button className="rp-track rp-track-current" aria-label={(playing ? 'Pause ' : 'Play ') + selected.title} aria-pressed={playing} onClick={() => play(selected, playError)}>
+                <span className="rp-track-name">Recording Party {selected.party}/ Tape {selected.tape}</span>
+                <span className="rp-play-control"><PlayIcon paused={!playing}/><span>{playing ? 'Pause' : 'Play'}</span></span>
+              </button>{transport}
+            </div>}
             <h2>{spare ? 'Party ' + party + ' Recordings' + (catalog ? ' (' + clock(tracks.reduce((total, track) => total + track.duration, 0)) + ')' : '') : <>Rumpus Room<br/><span>Party {party}</span></>}</h2>
             {(!spare || (!catalog && !catalogError)) && <p className="rp-session-meta">{catalog ? tracks.length + ' recordings / ' + clock(tracks.reduce((total, track) => total + track.duration, 0)) : 'Loading recordings…'}</p>}
             <div className="rp-tracks" aria-label={'Rumpus Room Party ' + party + ' recordings'}>

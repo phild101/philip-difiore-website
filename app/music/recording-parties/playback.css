@@ -44,3 +44,7 @@
   .rp-persistent-controls { grid-column:1; grid-row:2; }
   .rp-persistent-progress { grid-column:2 / -1; grid-row:2; gap:6px; }
 }
+
+/* The listening page already provides its own playback controls. */
+body:has(.rp-site) .rp-persistent,
+body:has(.rp-site) .rp-persistent-space { display:none; }
