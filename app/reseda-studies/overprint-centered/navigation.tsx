@@ -33,10 +33,10 @@ export function SectionNavigation({
 
   return (
     <nav ref={navigation} aria-label="Main navigation">
-      <a href="#info" aria-current={active === 'info' ? 'page' : undefined}>Info</a>
       <a href={'#film/' + filmSlug} aria-current={active === 'film' ? 'page' : undefined}>Film</a>
       <a href="#music/recording-parties" aria-current={active === 'music' ? 'page' : undefined}>Music</a>
       <a href="#press" aria-current={active === 'press' ? 'page' : undefined}>Press</a>
+      <a href="#info" aria-current={active === 'info' ? 'page' : undefined}>Info</a>
     </nav>
   );
 }
