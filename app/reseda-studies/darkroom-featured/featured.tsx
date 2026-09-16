@@ -108,7 +108,7 @@ export function DarkroomFeatured({
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
-  const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('current');
+  const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -153,7 +153,7 @@ export function DarkroomFeatured({
     function changeView() {
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
       setTrilogyOption(
-        trilogy === 'heavy' || trilogy === 'double-exposure' ? trilogy : 'current',
+        trilogy === 'heavy' || trilogy === 'current' ? trilogy : 'double-exposure',
       );
       const city = new URLSearchParams(window.location.search).get('city');
       setCityOption(

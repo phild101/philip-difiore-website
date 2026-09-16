@@ -14,7 +14,7 @@ const learnedTheHardWay: Artwork = {
 const theTrilogy: Artwork = {
   title: 'The Trilogy',
   artist: 'Sharon Jones & The Dap-Kings',
-  image: 'sequence/the-trilogy-overprint-v2.webp',
+  image: 'sequence/the-trilogy-double-exposure.webp',
   vimeo: '36364375',
 };
 const sharonFilms: FeaturedProject[] = [
@@ -37,7 +37,7 @@ const sharonFilms: FeaturedProject[] = [
   {
     slug: 'the-trilogy',
     work: theTrilogy,
-    poster: '/images/sequence/the-trilogy-overprint-v2.webp',
+    poster: '/images/sequence/the-trilogy-double-exposure.webp',
     aspectRatio: 1122 / 1402,
     heading: ['THE', 'TRILOGY'],
     palette: 'ink',
@@ -101,12 +101,12 @@ export type CityOption = keyof typeof centeredCityProjects;
 export type TrilogyOption = 'current' | 'heavy' | 'double-exposure';
 
 const trilogyAlternatives = {
-  heavy: {
-    image: 'sequence/the-trilogy-heavy-overprint.webp',
+  current: {
+    image: 'sequence/the-trilogy-overprint-v2.webp',
     aspectRatio: 1122 / 1402,
   },
-  'double-exposure': {
-    image: 'sequence/the-trilogy-double-exposure.webp',
+  heavy: {
+    image: 'sequence/the-trilogy-heavy-overprint.webp',
     aspectRatio: 1122 / 1402,
   },
 };
@@ -115,7 +115,7 @@ export function withTrilogyOption(
   projects: FeaturedProject[],
   option: TrilogyOption,
 ) {
-  if (option === 'current') return projects;
+  if (option === 'double-exposure') return projects;
   const alternative = trilogyAlternatives[option];
   return projects.map((project) =>
     project.slug === 'the-trilogy'
