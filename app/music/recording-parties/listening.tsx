@@ -108,7 +108,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
       <main>
         <div className="rp-masthead">
           <div>{!spare && <p className="rp-kicker">The Rumpus Room · Brooklyn, New York</p>}<h1>Recording Parties</h1></div>
-          <button className="rp-press-link" onClick={() => setPress(true)}>{spare ? 'Press' : <>Read the story<span>Bedford + Bowery</span></>}</button>
+          {!spare && <button className="rp-press-link" onClick={() => setPress(true)}>Read the story<span>Bedford + Bowery</span></button>}
         </div>
         {spare && <div className="rp-archive-bar">
           <label><span>Party</span><select aria-label="Choose a recording party" value={party} onChange={event => chooseParty(Number(event.target.value))}>{partyNumbers.map(number => <option value={number} key={number}>{String(number).padStart(2,'0')}</option>)}</select></label>

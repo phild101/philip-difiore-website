@@ -81,6 +81,6 @@ The strip uses the current Film/Music cover's background and header ink instead 
 
 Verified with real MP3 playback: pause and pointer/keyboard seek, synchronized elapsed time, cross-page playback, previous/next and first/last boundaries, returning to the selected tape, film dismissal, X stop/clear, matching Film/Music colors, and 320px/390px mobile layouts with reserved player space. No browser errors; TypeScript and production build passed.
 
-Latest stacked masthead adjustment: RECORDING PARTIES is left-aligned and much larger (Archivo Black, responsive 44–88px desktop; 40–64px mobile), with Press kept at the right. Location and the session recordings heading remain centered.
+Latest stacked masthead adjustment: RECORDING PARTIES is left-aligned and much larger (Archivo Black, responsive 44–88px desktop; 40–64px mobile). Location and the session recordings heading remain centered. As of September 16, the top-right Press control is removed from the active spare/stacked listening page; press coverage is accessed from the Recording Parties project image page. The earlier gallery study retains its original press controls.
 
 When browsing a different party while a tape continues playing, its in-page pause/seek row appears above the selected party’s recordings. This keeps controls available without showing the persistent strip on the listening page. Verified real playback, updated label, header navigation, return link, browser history, mobile visibility and shared playhead state.
