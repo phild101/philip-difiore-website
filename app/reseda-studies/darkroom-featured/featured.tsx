@@ -550,11 +550,11 @@ export function DarkroomFeatured({
                       {projectPress.map(item => (
                         <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
                           aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
-                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                          <img src={'/press-logos/' + (item.railLogo ?? item.logo)} alt={item.outlet} />
                         </button>
                       ))}
                       {projectReferences.map(item => (
-                        <a key={item.href} className="cf-press-logo cf-reference-logo" href={item.href}
+                        <a key={item.href} className={'cf-press-logo cf-reference-logo' + (item.icon ? ' cf-app-icon' : '')} href={item.href}
                           target="_blank" rel="noopener noreferrer"
                           aria-label={'Open ' + item.outlet + ': ' + currentWork.title + ' (opens in a new tab)'}
                           title={item.outlet}>

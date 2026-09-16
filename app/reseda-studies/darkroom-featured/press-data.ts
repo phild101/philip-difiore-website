@@ -4,33 +4,45 @@ export type PressItem = {
   outlet: string;
   project: string;
   logo?: string;
+  railLogo?: string;
   videos: PressFilm[];
 };
 const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
+type ProjectLink = {
+  projectSlug: string;
+  outlet: string;
+  logo: string;
+  href: string;
+  icon?: boolean;
+};
 // Direct project references open the supplied source, rather than an archived article.
-export const projectLinks = [
+export const projectLinks: ProjectLink[] = [
   {
     projectSlug: 'improvisczario',
     outlet: 'Apple Music',
-    logo: 'apple-music.svg',
+    logo: 'apple-music-icon.svg',
+    icon: true,
     href: 'https://music.apple.com/us/album/improvisczario/261077376',
   },
   {
     projectSlug: 'improvisczario',
     outlet: 'Spotify',
-    logo: 'spotify.svg',
+    logo: 'spotify-icon.svg',
+    icon: true,
     href: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
   },
   {
     projectSlug: 'buffalo-hunt-soundtrack',
     outlet: 'Apple Music',
-    logo: 'apple-music.svg',
+    logo: 'apple-music-icon.svg',
+    icon: true,
     href: 'https://music.apple.com/us/album/the-buffalo-hunt-original-motion-picture-soundtrack/1469994635',
   },
   {
     projectSlug: 'buffalo-hunt-soundtrack',
     outlet: 'Spotify',
-    logo: 'spotify.svg',
+    logo: 'spotify-icon.svg',
+    icon: true,
     href: 'https://open.spotify.com/album/2Oq3TjoyVG34DzLTqJboHY?si=ab-fTyeAQT6Y2ufNJ41ncw',
   },
   {
@@ -48,7 +60,7 @@ export const projectLinks = [
   {
     projectSlug: 'stranger',
     outlet: 'Letterboxd',
-    logo: 'letterboxd.svg',
+    logo: 'letterboxd-dark.svg',
     href: 'https://letterboxd.com/film/stranger-bernie-worrell-on-earth/cast/',
   },
 ];
@@ -90,7 +102,7 @@ export const pressItems: PressItem[] = [
     slug: 'consequence-in-the-city',
     outlet: 'Consequence of Sound',
     project: 'Caveman “In the City”',
-    logo: 'consequence.jpg',
+    logo: 'consequence.svg',
     videos: [video('Caveman “In the City”', '99170468')],
   },
   {
@@ -104,7 +116,7 @@ export const pressItems: PressItem[] = [
     slug: 'paste-old-friend',
     outlet: 'Paste',
     project: 'Caveman “Old Friend”',
-    logo: 'paste.jpg',
+    logo: 'paste.svg',
     videos: [video('Caveman “Old Friend”', '43743411')],
   },
   {
@@ -119,6 +131,7 @@ export const pressItems: PressItem[] = [
     outlet: 'Pitchfork',
     project: 'Sinkane “Runnin’”',
     logo: 'pitchfork.svg',
+    railLogo: 'pitchfork-white.svg',
     videos: [video('Sinkane “Runnin’”', '102372771')],
   },
   {
