@@ -36,6 +36,8 @@ import {
   type CityOption,
   withTrilogyOption,
   type TrilogyOption,
+  withAntibalasOption,
+  type AntibalasOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { InfoPage } from '../overprint-centered/info';
@@ -109,6 +111,7 @@ export function DarkroomFeatured({
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
+  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('current');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -118,9 +121,9 @@ export function DarkroomFeatured({
       : darkroomProjects;
   const projects = useMemo(
     () => sequence && centered
-      ? withTrilogyOption(baseProjects, trilogyOption)
+      ? withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption)
       : baseProjects,
-    [baseProjects, trilogyOption, sequence, centered],
+    [baseProjects, trilogyOption, antibalasOption, sequence, centered],
   );
   const archive = sequence
     ? centered
@@ -151,6 +154,10 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
+      const antibalas = new URLSearchParams(window.location.search).get('anti');
+      setAntibalasOption(
+        antibalas === '1' || antibalas === '2' || antibalas === '3' ? antibalas : 'current',
+      );
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
       setTrilogyOption(
         trilogy === 'heavy' || trilogy === 'current' ? trilogy : 'double-exposure',
@@ -381,6 +388,9 @@ export function DarkroomFeatured({
           : '') +
         (centered && trilogyOption !== 'current'
           ? ' op-trilogy-' + trilogyOption
+          : '') +
+        (centered && antibalasOption !== 'current'
+          ? ' op-antibalas-' + antibalasOption
           : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +

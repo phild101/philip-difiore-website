@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'Anti Review Sans';
+  src: url('/fonts/dm-sans-latin.woff2') format('woff2');
+  font-weight: 100 1000;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anti Review Display';
+  src: url('/fonts/archivo-black.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+.anti-review {
+  min-height: 100vh;
+  background: #f6f5f0;
+  color: #20201c;
+  font-family: 'Anti Review Sans', sans-serif;
+  padding: 0 clamp(20px, 2.8vw, 42px) 60px;
+}
+.anti-review a { color: inherit; text-decoration: none; }
+.anti-review a:focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
+.anti-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 62px;
+  border-bottom: 1px solid currentColor;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.anti-review-header nav { display: flex; gap: clamp(18px, 2.5vw, 38px); }
+.anti-review-heading {
+  max-width: 1340px;
+  margin: 42px auto 28px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+.anti-review-heading h1 {
+  margin: 0;
+  font-family: 'Anti Review Display', sans-serif;
+  font-size: clamp(34px, 4.2vw, 60px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.anti-review-heading p { margin: 0; font-size: 15px; font-weight: 600; }
+.anti-review-grid {
+  max-width: 1340px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 38px 28px;
+}
+.anti-review-caption { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.anti-review-caption h2 { margin: 0; font-size: 20px; font-weight: 800; }
+.anti-review-caption span { font-size: 14px; font-weight: 600; }
+.anti-review-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: clamp(14px, 2vw, 28px);
+}
+.anti-review-image img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.anti-review-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border: 1px solid currentColor;
+  font-size: 14px;
+  font-weight: 700;
+}
+.anti-review-link:hover { color: #f6f5f0; background: #20201c; }
+@media (max-width: 640px) {
+  .anti-review-header { font-size: 11px; letter-spacing: .03em; }
+  .anti-review-heading { margin-top: 30px; align-items: flex-start; flex-direction: column; gap: 12px; }
+  .anti-review-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}

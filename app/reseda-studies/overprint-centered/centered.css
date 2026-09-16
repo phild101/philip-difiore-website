@@ -178,6 +178,46 @@
 .op-site.op-sequence.op-poster.op-centered.op-project-antibalas {
   --cf-frame-ink: #edaa37;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-1 {
+  --cf-frame-ground: #efaf25;
+  --cf-room-ink: #073c3f;
+  --cf-frame-ink: #073c3f;
+  --anti-label: #073c3f;
+  --anti-label-ink: #f4cf70;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-2 {
+  --cf-frame-ground: #233dbc;
+  --cf-room-ink: #eee13c;
+  --cf-frame-ink: #eee13c;
+  --anti-label: #eee13c;
+  --anti-label-ink: #17276f;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-3 {
+  --cf-frame-ground: #075345;
+  --cf-room-ink: #f1a7c9;
+  --cf-frame-ink: #f1a7c9;
+  --anti-label: #f1a7c9;
+  --anti-label-ink: #073d34;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .dr-room {
+  background: var(--cf-frame-ground);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-nav {
+  color: var(--cf-room-ink);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-nav a:is(:hover, [aria-current='page']) {
+  color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-slide.op-film-antibalas .df-project-name {
+  top: auto;
+  left: auto;
+  right: 3%;
+  bottom: 4%;
+  background: var(--anti-label);
+  color: var(--anti-label-ink);
+}
 /* Approved frame colors and lettering sampled directly from each artwork. */
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-stranger {
   --cf-frame-ground: #014fa8;

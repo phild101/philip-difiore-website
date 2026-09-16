@@ -128,3 +128,29 @@ export function withTrilogyOption(
       : project,
   );
 }
+
+export type AntibalasOption = 'current' | '1' | '2' | '3';
+
+const antibalasAlternatives = {
+  '1': { image: 'sequence/antibalas-anti-1.webp', aspectRatio: 1073 / 1466 },
+  '2': { image: 'sequence/antibalas-anti-2.webp', aspectRatio: 1060 / 1484 },
+  '3': { image: 'sequence/antibalas-anti-3.webp', aspectRatio: 1122 / 1402 },
+};
+
+export function withAntibalasOption(
+  projects: FeaturedProject[],
+  option: AntibalasOption,
+) {
+  if (option === 'current') return projects;
+  const alternative = antibalasAlternatives[option];
+  return projects.map((project) =>
+    project.slug === 'antibalas'
+      ? {
+          ...project,
+          work: { ...project.work, image: alternative.image },
+          poster: '/images/' + alternative.image,
+          aspectRatio: alternative.aspectRatio,
+        }
+      : project,
+  );
+}
