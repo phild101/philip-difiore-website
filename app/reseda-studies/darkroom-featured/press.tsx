@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { pressItems, type PressItem, type PressFilm } from './press-data';
+import './press-reader.css';
 
 type ArticleState = { slug: string; html: string; error: boolean };
 export function PressArticle({
@@ -59,28 +60,19 @@ export function PressArticle({
     >
       <DialogContent
         fullscreen={fullscreen}
-        className={'df-article-dialog' + (fullscreen ? ' df-article-full' : '')}
+        className={'df-article-dialog pr-reader' + (fullscreen ? ' df-article-full' : '')}
       >
         {article && (
           <>
-            <div className="df-article-toolbar">
-              <DialogTitle className="df-article-label">
-                {article.outlet}
-              </DialogTitle>
-              <DialogDescription className="sr-only">
-                {article.project}
-              </DialogDescription>
-              {article.videos.length > 0 && (
-                <div className="df-article-watch">
-                  {article.videos.map((film) => (
-                    <button key={film.vimeo} onClick={() => watch(film)}>
-                      Watch {film.title} ↗
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <DialogTitle className="sr-only">{article.outlet}</DialogTitle>
+            <DialogDescription className="sr-only">{article.project}</DialogDescription>
             <div className="df-article-scroll" key={article.slug}>
+              <div className="pr-reader-masthead">
+                {article.logo ? (
+                  <img className="pr-reader-logo" src={'/press-logos/' + article.logo} alt={article.outlet} />
+                ) : <span className="pr-reader-outlet">{article.outlet}</span>}
+              </div>
+              <div className="pr-reader-column">
               {ready ? (
                 ready.error ? (
                   <p className="df-article-error">
@@ -104,6 +96,16 @@ export function PressArticle({
               ) : (
                 <output className="df-article-loading">Loading article…</output>
               )}
+              {article.videos.length > 0 && (
+                <div className="df-article-watch" aria-label="Related films">
+                  {article.videos.map((film) => (
+                    <button key={film.vimeo} onClick={() => watch(film)}>
+                      Watch {film.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+              </div>
             </div>
           </>
         )}
