@@ -112,7 +112,7 @@ export function DarkroomFeatured({
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
-  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3');
+  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-plates');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette

@@ -10,7 +10,7 @@ const studies = [
   { option: 'current', title: 'Previous', subject: 'Earlier artwork', image: 'antibalas-overprint.webp', ground: '#681e21' },
   { option: '1', title: 'Anti 1', subject: 'Keyboard', image: 'antibalas-anti-1.webp', ground: '#efaf25' },
   { option: '2', title: 'Anti 2', subject: 'Horns', image: 'antibalas-anti-2.webp', ground: '#233dbc' },
-  { option: '3', title: 'Anti 3', subject: 'Selected artwork', image: 'antibalas-anti-3.webp', ground: '#075345' },
+  { option: '3', title: 'Anti 3', subject: 'Earlier selection', image: 'antibalas-anti-3.webp', ground: '#075345' },
 ];
 const site = '/?header=bold&info=bold&layout=stacked';
 
