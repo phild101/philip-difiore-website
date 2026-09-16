@@ -214,6 +214,11 @@
   --cf-room-ink: #072518;
   --cf-frame-ink: #072518;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-the-trilogy {
+  --cf-frame-ground: #ed7135;
+  --cf-room-ink: #073b3b;
+  --cf-frame-ink: #073b3b;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(
     .op-project-stranger,
     .op-project-recording-parties,
@@ -221,7 +226,8 @@
     .op-project-young-trouble,
     .op-project-naomi-shelton,
     .op-project-i-learned-the-hard-way,
-    .op-project-game-gets-old
+    .op-project-game-gets-old,
+    .op-project-the-trilogy
   )
   .dr-room {
   background: var(--cf-frame-ground);
@@ -234,7 +240,8 @@
     .op-project-young-trouble,
     .op-project-naomi-shelton,
     .op-project-i-learned-the-hard-way,
-    .op-project-game-gets-old
+    .op-project-game-gets-old,
+    .op-project-the-trilogy
   )
   .df-nav {
   color: var(--cf-room-ink);
@@ -247,7 +254,8 @@
     .op-project-young-trouble,
     .op-project-naomi-shelton,
     .op-project-i-learned-the-hard-way,
-    .op-project-game-gets-old
+    .op-project-game-gets-old,
+    .op-project-the-trilogy
   )
   .df-nav
   a:is(:hover, [aria-current='page']) {
@@ -325,6 +333,16 @@
   bottom: 5%;
   background: #072518;
   color: #f5dfb8;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured
+  .df-slide.op-film-the-trilogy
+  .df-project-name {
+  top: auto;
+  left: auto;
+  right: 3%;
+  bottom: 5%;
+  background: #efd8b2;
+  color: #073b3b;
 }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {

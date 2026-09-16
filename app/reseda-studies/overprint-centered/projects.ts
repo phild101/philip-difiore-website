@@ -11,6 +11,12 @@ const learnedTheHardWay: Artwork = {
   image: 'ilearnednew.jpg',
   vimeo: '36354563',
 };
+const theTrilogy: Artwork = {
+  title: 'The Trilogy',
+  artist: 'Sharon Jones & The Dap-Kings',
+  image: 'sequence/the-trilogy-overprint.webp',
+  vimeo: '36364375',
+};
 const sharonFilms: FeaturedProject[] = [
   {
     slug: 'i-learned-the-hard-way',
@@ -28,6 +34,15 @@ const sharonFilms: FeaturedProject[] = [
     palette: 'ink',
     composition: 'left',
   },
+  {
+    slug: 'the-trilogy',
+    work: theTrilogy,
+    poster: '/images/sequence/the-trilogy-overprint.webp',
+    aspectRatio: 1122 / 1402,
+    heading: ['THE', 'TRILOGY'],
+    palette: 'ink',
+    composition: 'right',
+  },
 ];
 
 function withSharonFilms(projects: FeaturedProject[]) {
@@ -40,7 +55,7 @@ export const centeredPaletteProjects = {
   vivid: withSharonFilms(sequencePaletteProjects.vivid),
   uganda: withSharonFilms(sequencePaletteProjects.uganda),
 };
-export const centeredArchive = [...sequenceArchive, learnedTheHardWay];
+export const centeredArchive = [...sequenceArchive, learnedTheHardWay, theTrilogy];
 
 function withCityPoster(
   projects: FeaturedProject[],

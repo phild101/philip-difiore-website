@@ -5,6 +5,7 @@ export const sequenceCategories: Record<
   'if-you-call': 'FILM',
   'i-learned-the-hard-way': 'FILM',
   'game-gets-old': 'FILM',
+  'the-trilogy': 'FILM',
   'old-friend': 'VIDEO',
   stranger: 'FILM',
   'in-the-city': 'VIDEO',

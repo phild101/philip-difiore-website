@@ -28,6 +28,7 @@ export const pressItems: PressItem[] = [
     project: 'Sharon Jones & The Dap-Kings',
     logo: 'ifc.png',
     videos: [
+      video('The Trilogy', '36364375'),
       video('I Learned the Hard Way', '36354563'),
       video('Game Gets Old', '36317057'),
       video('If You Call', '36319087'),
