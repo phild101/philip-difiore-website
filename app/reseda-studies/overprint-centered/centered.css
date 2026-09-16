@@ -303,14 +303,17 @@
 }
 /* Approved frame colors and lettering sampled directly from each artwork. */
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario {
-  --cf-frame-ground: #7025b5;
-  --cf-room-ink: #e5ef18;
-  --cf-frame-ink: #e5ef18;
+  --cf-frame-ground: #78272c;
+  --cf-room-ink: #e2ddbb;
+  --cf-frame-ink: #e2ddbb;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack {
-  --cf-frame-ground: #102c34;
-  --cf-room-ink: #e4dbc7;
-  --cf-frame-ink: #c67d78;
+  --cf-frame-ground: #bd3532;
+  --cf-room-ink: #f5e8c7;
+  --cf-frame-ink: #f5e8c7;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .df-featured {
+  --cf-normal-frame-height: 52cqw;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .dr-room {
   background: var(--cf-frame-ground);
@@ -434,12 +437,12 @@
   left: 3%;
   bottom: 4%;
   max-width: 91%;
-  background: #e5ef18;
+  background: #e2ddbb;
   color: #171411;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured .df-slide.op-film-buffalo-hunt-soundtrack .df-project-name {
-  background: #e4dbc7;
-  color: #102c34;
+  background: #f5e8c7;
+  color: #121414;
 }
 .op-site.op-sequence.op-poster.op-centered .df-slide:is(.op-film-improvisczario, .op-film-buffalo-hunt-soundtrack) .df-project-name h2 {
   font-size: clamp(14px, 4.7cqw, 42px);
