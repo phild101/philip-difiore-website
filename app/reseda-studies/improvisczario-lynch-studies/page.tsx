@@ -17,7 +17,7 @@ export default function ImprovisczarioLynchStudies() {
       </nav>
     </header>
     <div className="anti-review-heading"><h1>Improvisczario</h1><p>Lynchian studies</p></div>
-    <section className="anti-review-grid" aria-label="Selected artwork and two Lynchian alternatives">
+    <section className="anti-review-grid" aria-label="Selected artwork and saved alternatives">
       {improvisczarioLynchStudies.map(study => {
         const href = site + '&improv=' + study.option + '#music/improvisczario';
         return <article className="anti-review-card" key={study.option}>

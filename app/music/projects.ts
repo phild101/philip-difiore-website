@@ -52,6 +52,7 @@ export const improvisczarioLynchStudies = [
   {...improvisczarioFigureStudies[0], subject: 'Saved'},
   {option: 'figure-lynch-night-session', title: 'Night Session', subject: 'Option 1', image: 'improvisczario-lynch-night-session.webp', ground: '#0e1718'},
   {option: 'figure-lynch-signal-ghost', title: 'Signal Ghost', subject: 'Selected', image: 'improvisczario-lynch-signal-ghost.webp', ground: '#242b2b'},
+  {option: 'figure-lynch-purple-beret', title: 'Signal Ghost — Purple Beret', subject: 'Preview', image: 'improvisczario-lynch-purple-beret.webp', ground: '#242b2b'},
 ] as const;
 
 const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies];

@@ -320,7 +320,7 @@
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
   --cf-normal-frame-height: 52cqw;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost) .df-featured {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret) .df-featured {
   --cf-normal-frame-height: 65cqw;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-petrol-bone {
@@ -351,7 +351,7 @@
   --improv-label: #c4ada0;
   --improv-label-ink: #0e1718;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-lynch-signal-ghost {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret) {
   --cf-frame-ground: #242b2b;
   --cf-frame-ink: #d9d6c7;
   --cf-room-ink: #d9d6c7;
@@ -591,7 +591,7 @@
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
     --cf-normal-frame-height: 66cqw;
   }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost) .df-featured {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret) .df-featured {
     --cf-normal-frame-height: 82.5cqw;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured

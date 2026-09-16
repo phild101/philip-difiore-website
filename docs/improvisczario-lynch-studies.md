@@ -4,6 +4,17 @@ September 16, 2026. The user requested two Lynchian previews based on Petrol / B
 
 Review route: `/reseda-studies/improvisczario-lynch-studies`. Full site options: `improv=figure-lynch-night-session` and `improv=figure-lynch-signal-ghost`.
 
+## Purple beret preview
+
+September 16, 2026: Philip requested the selected Signal Ghost artwork unchanged except for a purple beret. One built-in imagegen precise-object-edit produced a 1122 × 1402 sibling master at `artwork-originals/images/music/improvisczario-lynch-purple-beret.png` and a quality-92 WebP at `public/images/music/improvisczario-lynch-purple-beret.webp`. Purple is confined to the hat. Composition, subject and scene remain visually preserved, but the generated edit has slight texture/detail drift outside the beret; it is not pixel-identical. The original remains the default. Preview via `?improv=figure-lynch-purple-beret#music/improvisczario`; frame, typography, label, category and arrows are identical to Signal Ghost.
+
+Exact built-in prompt:
+
+Use case: precise-object-edit.
+Input image 1 is the edit target: the supplied 1122×1402 portrait Improvisczario Signal Ghost artwork.
+Primary request: Keep this exact artwork identical and change ONLY the fabric of the beret from its existing dark sepia-black to a rich medium-deep purple/plum. The beret's lit areas must visibly read as purple while its dark folds remain deep; retain every existing fold, seam, surface grain, worn highlight, contour, position, and the tiny double-exposure echo around the beret.
+Constraints: This is an extremely localized color edit only. Preserve every part outside the beret exactly as supplied, with no reinterpretation or repainting: face geometry and all facial material/skin tones; glasses and eyes; earring; synthesizer torso, cables, knobs and every piano key; the foreground piano; background walls and shadows; sepia monochrome palette outside the beret; grain, lighting, exposure, contrast, worn border, image size, portrait aspect ratio and framing. Keep all geometry and detail identical. Do not spread purple onto the face, body, piano, background or border. No new objects, text, labels or watermark. Do not clean up, sharpen, stylize, crop or recompose. Output only the edited artwork.
+
 ## night-session
 
 Master: `artwork-originals/images/music/improvisczario-lynch-night-session.png`
