@@ -114,7 +114,7 @@ export function DarkroomFeatured({
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
   const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
-  const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>('figure-petrol-bone');
+  const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>('figure-lynch-signal-ghost');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette

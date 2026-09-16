@@ -1,6 +1,6 @@
 # Improvisczario — Lynchian previews
 
-September 16, 2026. The user selected Petrol / Bone as the default, then requested two Lynchian previews based on it. These remain alternatives; the default is unchanged. Both were made with one built-in imagegen edit per image, are 1122 × 1402, and retain the musician while replacing the graphic background with cinematic spaces.
+September 16, 2026. The user requested two Lynchian previews based on Petrol / Bone, then selected Signal Ghost for the site. Signal Ghost is now the default in Music and Info previews, with its charcoal frame and pale bone lettering, arrows and title cutout. The Spotify destination is unchanged. Both studies were made with one built-in imagegen edit per image, are 1122 × 1402, and retain the musician while replacing the graphic background with cinematic spaces. All alternatives remain saved and accessible by explicit preview queries.
 
 Review route: `/reseda-studies/improvisczario-lynch-studies`. Full site options: `improv=figure-lynch-night-session` and `improv=figure-lynch-signal-ghost`.
 

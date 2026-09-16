@@ -10,4 +10,4 @@ All three were generated with the image generation tool using the supplied abstr
 
 The user chose the earlier Buffalo Hunt Soundtrack artwork by screenshot: the photographic bison in petrol and coral, with cream title cutout. That exact existing `buffalo-hunt-soundtrack-overprint.webp` is restored as the default, along with its original portrait ratio, petrol frame, coral Music/arrows, and cream header/label. The supplied square cover remains saved as an alternative; no additional Buffalo studies were made.
 
-Later selection: the user chose the new musician Petrol / Bone study as the default; see `improvisczario-figure-studies.md`. These original comparison assets and explicit query options remain saved.
+Later selection: the user chose Signal Ghost from the subsequent Lynchian studies as the default; see `improvisczario-lynch-studies.md`. These original comparison assets and explicit query options remain saved.

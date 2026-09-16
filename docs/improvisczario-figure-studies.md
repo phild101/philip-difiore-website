@@ -6,7 +6,7 @@ Three separate built-in imagegen edits were created from that screenshot, each 1
 
 Review: `/reseda-studies/improvisczario-figure-studies`. Site previews use `?improv=figure-petrol-bone`, `figure-oxblood-rose`, or `figure-charcoal-ochre` with `#music/improvisczario`. The image opens the existing Spotify album URL.
 
-The user's final selection is Petrol / Bone. It is now the default in Music and Info previews, with a petrol frame and bone category, arrows, and title cutout. All earlier alternatives remain available by their explicit query values. `?improv=current` preserves the original supplied square cover; omitting the query uses the selected Petrol / Bone artwork.
+The user selected Petrol / Bone from this round, then selected Signal Ghost from the subsequent Lynchian studies for the site. All earlier alternatives remain available by their explicit query values. `?improv=current` preserves the original supplied square cover; omitting the query now uses Signal Ghost. See `improvisczario-lynch-studies.md`.
 
 ## Petrol / Bone — exact prompt
 
