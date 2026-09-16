@@ -28,7 +28,7 @@
 .info-header a[aria-current], .info-header a:hover { color: #666; }
 .info-header a:focus-visible { outline: 1px dashed currentColor; outline-offset: 5px; }
 .info-content {
-  width: min(calc(100% - 64px), 460px);
+  width: min(calc(100% - 64px), 520px);
   margin: 0 auto;
   padding: clamp(48px, 8vh, 88px) 0 clamp(48px, 8vh, 88px);
 }
@@ -45,7 +45,11 @@
   font: 13px/1.95 'Courier New', Courier, monospace;
   letter-spacing: .015em;
 }
+.info-bio p { text-wrap: balance; }
 .info-bio p + p { margin-top: 28px; }
+/* Keep each opening paragraph together beside the portrait, even near its bottom edge. */
+.info-bio p:nth-of-type(-n + 2) { display: flow-root; }
+.info-bio p:nth-of-type(3) { clear: both; }
 .info-bio em { font-style: italic; }
 /* Optional comparison: the same face and weight as the bolder header. */
 .info-bio[data-info-font='bold'] {
@@ -54,7 +58,7 @@
 }
 .info-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @media(max-width: 900px) {
-  .info-content { max-width: 425px; }
+  .info-content { max-width: 480px; }
   .info-bio { font-size: 12px; }
   .info-bio p + p { margin-top: 24px; }
 }
@@ -70,4 +74,7 @@
 @media(max-width: 640px) {
   .info-header { font-size: 10px; letter-spacing: 0; }
   .info-header nav { gap: 10px; }
+}
+@media(max-width: 360px) {
+  .info-portrait { float: none; width: 45%; margin: 0 0 24px; }
 }
