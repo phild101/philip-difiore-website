@@ -69,8 +69,9 @@ export function InfoPage({ filmSlug, projects }: { filmSlug: string; projects: F
             <p>Philip Di Fiore is an award-winning filmmaker known for his {preview('storytelling', 'cinematic storytelling', ['in-the-city', 'buffalo-hunt', 'i-learned-the-hard-way'].map(project))} and {preview('narratives', 'mind-bending narratives', [project('old-friend')])}. He writes his own stories and edits his own films.</p>
             <p>The {preview('academy', 'Academy of Motion Picture Arts and Sciences', [{title: 'Academy Film Archive', image: '/press-logos/' + academy.logo, href: academy.href, external: true, logo: true}])} selected his film <em>{preview('stranger', 'Stranger: Bernie Worrell on Earth', [project('stranger')])}</em> for inclusion in the Academy Film Archive, its permanent film collection.</p>
             <p>Di Fiore produces {preview('music', 'music projects', [project('recording-parties'), project('improvisczario')])} and {preview('scores', 'film scores', [project('buffalo-hunt-soundtrack')])}. He built a recording studio and soundstage in Brooklyn, NY (The Rumpus Room) which he operated for ten years.</p>
-            <p>Di Fiore organizes and MC’s <em>{preview('parties', 'Recording Parties', [project('recording-parties')])}</em>- relaxed gatherings where musicians from different circles meet, socialize and play. These parties are recorded and archived.</p>
-            <p>Di Fiore builds tools for writing, filmmaking and the creative process.</p>
+            <p>Di Fiore organizes and MC’s <em>{preview('parties', 'Recording Parties', [project('recording-parties')])}</em>- relaxed gatherings where musicians from different circles meet, socialize and play. The music from these parties is recorded and archived.</p>
+            <p>He builds apps, tools and games for writing, filmmaking and the creative process.</p>
+            <p><a className="info-email" href="mailto:info@philipdifiore.com">info@philipdifiore.com</a></p>
           </article>
         </main>
       </div>
