@@ -1,0 +1,12 @@
+.anti-review-grid-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 22px;
+}
+.anti-review-grid-three .anti-review-caption { flex-wrap: wrap; gap: 4px 12px; }
+.anti-review-grid-three .anti-review-image { aspect-ratio: 3 / 4; padding: clamp(12px, 1.4vw, 20px); }
+@media (max-width: 1000px) {
+  .anti-review-grid-three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .anti-review-grid-three { grid-template-columns: minmax(0, 1fr); }
+}
