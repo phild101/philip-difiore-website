@@ -41,6 +41,7 @@ import {
   type AntibalasOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
+import { isMusicProject } from '../../music/projects';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
@@ -143,7 +144,7 @@ export function DarkroomFeatured({
   const [direction, setDirection] = useState<1 | -1>(1);
   function projectCategory(slug: string) {
     return centered
-      ? (slug === 'recording-parties' ? 'MUSIC' : 'FILM')
+      ? (isMusicProject(slug) ? 'MUSIC' : 'FILM')
       : sequenceCategories[slug];
   }
   const currentCategory = projectCategory(projects[index].slug);
@@ -152,7 +153,7 @@ export function DarkroomFeatured({
   const projectPress = centered ? pressItems.filter(item =>
     'articleSlug' in currentWork
       ? item.slug === currentWork.articleSlug
-      : item.videos.some(video => video.vimeo === currentWork.vimeo),
+      : 'vimeo' in currentWork && item.videos.some(video => video.vimeo === currentWork.vimeo),
   ) : [];
   const navigationIndices = projects.flatMap((project, projectIndex) =>
     (!horizontal && !centered) || projectCategory(project.slug) === currentCategory
@@ -196,7 +197,7 @@ export function DarkroomFeatured({
         setIndex(nextIndex);
         if (centered) {
           const project = projects[nextIndex];
-          const destination = project.slug === 'recording-parties' ? 'music' : 'film';
+          const destination = isMusicProject(project.slug) ? 'music' : 'film';
           if (destination === 'film') setFilmSlug(project.slug);
           const canonicalHash = '#' + destination + '/' + project.slug;
           if (window.location.hash !== canonicalHash)
@@ -259,6 +260,10 @@ export function DarkroomFeatured({
     setTurn((value) => value + 1);
   }
   function openWork(work: FeaturedWork) {
+    if ('externalUrl' in work) {
+      window.open(work.externalUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
     if (centered && 'articleSlug' in work && work.articleSlug === 'bedford-bowery-recording-parties') {
       window.location.hash = 'music/recording-parties/listen';
       return;
@@ -283,28 +288,22 @@ export function DarkroomFeatured({
   function slide(n: number, exiting = false) {
     const project = projects[n];
     const work = project.work;
+    const printClass = 'dr-print df-print ' + (n === 0 ? 'dr-lead-print' : 'dr-red-print');
+    const image = <><span className="dr-print-image">
+      <img src={treatment === 'overprint' ? featuredPoster(project, edition) : '/images/' + work.image}
+        alt={work.title + ' — ' + work.artist} loading="eager" />
+    </span><span className="dr-print-edge" aria-hidden="true" /></>;
     const print = (
       <>
-        <button
-          className={
-            'dr-print df-print ' + (n === 0 ? 'dr-lead-print' : 'dr-red-print')
-          }
+        {'externalUrl' in work ? <a className={printClass} href={work.externalUrl}
+          target="_blank" rel="noopener noreferrer"
+          aria-label={'Listen to ' + work.title + ' on Spotify (opens in a new tab)'}>{image}</a> : <button
+          className={printClass}
           onClick={() => openWork(work)}
           aria-label={('articleSlug' in work ? 'Open ' : 'Watch ') + work.title}
         >
-          <span className="dr-print-image">
-            <img
-              src={
-                treatment === 'overprint'
-                  ? featuredPoster(project, edition)
-                  : '/images/' + work.image
-              }
-              alt={work.title + ' — ' + work.artist}
-              loading="eager"
-            />
-          </span>
-          <span className="dr-print-edge" aria-hidden="true" />
-        </button>
+          {image}
+        </button>}
         <div className="df-project-name">
           {fluid ? (
             <h2>
@@ -362,7 +361,7 @@ export function DarkroomFeatured({
   }
   if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} />;
   if (centered && view === 'info' && !preview) {
-    return <InfoPage filmSlug={filmSlug} />;
+    return <InfoPage filmSlug={filmSlug} projects={projects} />;
   }
   const site = (
     <div
@@ -571,7 +570,7 @@ export function DarkroomFeatured({
                   >
                     <nav
                       className="sq-controls"
-                      aria-label={centered ? 'Film navigation' : 'Featured navigation'}
+                      aria-label={centered ? (currentCategory === 'MUSIC' ? 'Music navigation' : 'Film navigation') : 'Featured navigation'}
                     >
                       {([-1, 1] as const).map((step) => (
                         <button

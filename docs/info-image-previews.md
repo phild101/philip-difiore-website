@@ -1,0 +1,23 @@
+# INFO image previews — September 16, 2026
+
+The approved magazine bio, portrait, copy and margins remain in place. Underlined phrases open square, white image panels on hover (180 ms) or click/tap. Images link into the project pages, keeping the visitor within the site; Academy opens its supplied collection record in a new tab. Panels support keyboard activation, Escape, outside dismissal and a close control. No hover enlargement, shadows or decorative animation.
+
+- cinematic storytelling: In the City, The Buffalo Hunt, I Learned the Hard Way
+- mind-bending narratives: Old Friend
+- Academy of Motion Picture Arts and Sciences: Academy Film Archive, with Academy Collection logo
+- Stranger: Stranger
+- music projects: Recording Parties and Bernie Worrell’s Improvisczario
+- film scores: The Buffalo Hunt Soundtrack
+- Recording Parties: Recording Parties
+- tools: left as regular text until Philip supplies his product links/artwork; no invented products or dead links
+
+New MUSIC projects are included after Recording Parties, using the existing artwork navigation, vertical MUSIC label and title cutouts. Their large images are direct links to Philip’s supplied Spotify albums, opening in new tabs. They are not included in FILM. The existing Recording Parties player and press links remain intact.
+
+## New original artwork
+
+Both generated using the built-in image generation tool; source portraits are retained and final assets copied into the site. These are website artwork treatments, not replacement official album covers.
+
+- `public/images/music/improvisczario-overprint.webp`; source `artwork-originals/images/music/improvisczario-overprint.png`, 1122 × 1402. Prompt: “Tight photographic crop of Bernie Worrell, recognizable face/glasses/hat, electric violet and acid citron solid ink zones, syncopated alley strips, scratched screenprint overprint, rich black/cream detail, no text or invented anatomy.” Base: `strangernew.jpg`. Frame #7025b5; ink #e5ef18.
+- `public/images/music/buffalo-hunt-soundtrack-overprint.webp`; source `artwork-originals/images/music/buffalo-hunt-soundtrack-overprint.png`, 1122 × 1402. Prompt: “Authentic frontal bison photography, detailed fur and muzzle, cinematic soundtrack mood, petrol/cyan rhythmic ink impressions, cropped dusty coral circle, cream highlights, subtle scratched print; no text, people, instruments, or added animals.” Base: `buffalonew.jpg`. Frame #102c34; ink #c67d78.
+
+Spotify destinations are stored verbatim in `app/music/projects.ts`; both album titles/artists were checked against the supplied Spotify pages. Historical About studies, the archived rabbit-hole concept and the earlier artwork remain saved.

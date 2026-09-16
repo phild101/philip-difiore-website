@@ -1,5 +1,6 @@
 import { artworks, type Artwork } from '../../artworks/data';
 import type { FeaturedProject } from '../overprint/projects';
+import { musicProjects } from '../../music/projects';
 import {
   sequenceArchive,
   sequencePaletteProjects,
@@ -47,7 +48,8 @@ const sharonFilms: FeaturedProject[] = [
 
 function withSharonFilms(projects: FeaturedProject[]) {
   return projects.flatMap((project) =>
-    project.slug === 'if-you-call' ? [project, ...sharonFilms] : [project],
+    project.slug === 'if-you-call' ? [project, ...sharonFilms]
+      : project.slug === 'recording-parties' ? [project, ...musicProjects] : [project],
   );
 }
 

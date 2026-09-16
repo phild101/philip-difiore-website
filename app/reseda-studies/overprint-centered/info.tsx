@@ -1,11 +1,29 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { SectionNavigation } from './navigation';
+import { BioPreview, type BioPreviewItem } from './bio-preview';
+import type { FeaturedProject } from '../overprint/projects';
+import { featuredPoster } from '../overprint/chromatic';
+import { isMusicProject } from '../../music/projects';
+import { projectLinks } from '../darkroom-featured/press-data';
 import './info.css';
 
-export function InfoPage({ filmSlug }: { filmSlug: string }) {
+export function InfoPage({ filmSlug, projects }: { filmSlug: string; projects: FeaturedProject[] }) {
   const biography = useRef<HTMLElement>(null);
+  const [activePreview, setActivePreview] = useState<string | null>(null);
+  function project(slug: string): BioPreviewItem {
+    const item = projects.find(item => item.slug === slug)!;
+    return {
+      title: item.work.title,
+      image: featuredPoster(item, 'sequence'),
+      href: '#' + (isMusicProject(slug) ? 'music/' : 'film/') + slug,
+    };
+  }
+  const academy = projectLinks.find(link => link.outlet === 'Academy Collection')!;
+  function preview(id: string, title: string, items: BioPreviewItem[], children: ReactNode = title) {
+    return <BioPreview id={id} title={title} items={items} active={activePreview} setActive={setActivePreview}>{children}</BioPreview>;
+  }
   useEffect(() => {
     const previousTitle = document.title;
     document.title = 'Info — Philip Di Fiore';
@@ -48,10 +66,10 @@ export function InfoPage({ filmSlug }: { filmSlug: string }) {
               height={1402}
             />
             </figure>
-            <p>Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling and mind-bending narratives. He writes his own stories and edits his own films.</p>
-            <p>The Academy of Motion Picture Arts and Sciences selected his film <em>Stranger: Bernie Worrell on Earth</em> for inclusion in the Academy Film Archive, its permanent film collection.</p>
-            <p>Di Fiore produces music projects and film scores. He built a recording studio and soundstage in Brooklyn, NY (The Rumpus Room) which he operated for ten years.</p>
-            <p>Di Fiore organizes and MC’s <em>Recording Parties</em>- relaxed gatherings where musicians from different circles meet, socialize and play. These parties are recorded and archived.</p>
+            <p>Philip Di Fiore is an award-winning filmmaker known for his {preview('storytelling', 'cinematic storytelling', ['in-the-city', 'buffalo-hunt', 'i-learned-the-hard-way'].map(project))} and {preview('narratives', 'mind-bending narratives', [project('old-friend')])}. He writes his own stories and edits his own films.</p>
+            <p>The {preview('academy', 'Academy of Motion Picture Arts and Sciences', [{title: 'Academy Film Archive', image: '/press-logos/' + academy.logo, href: academy.href, external: true, logo: true}])} selected his film <em>{preview('stranger', 'Stranger', [project('stranger')])}: Bernie Worrell on Earth</em> for inclusion in the Academy Film Archive, its permanent film collection.</p>
+            <p>Di Fiore produces {preview('music', 'music projects', [project('recording-parties'), project('improvisczario')])} and {preview('scores', 'film scores', [project('buffalo-hunt-soundtrack')])}. He built a recording studio and soundstage in Brooklyn, NY (The Rumpus Room) which he operated for ten years.</p>
+            <p>Di Fiore organizes and MC’s <em>{preview('parties', 'Recording Parties', [project('recording-parties')])}</em>- relaxed gatherings where musicians from different circles meet, socialize and play. These parties are recorded and archived.</p>
             <p>Di Fiore builds tools for writing, filmmaking and the creative process.</p>
           </article>
         </main>

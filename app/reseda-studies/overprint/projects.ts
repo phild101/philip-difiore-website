@@ -1,6 +1,7 @@
 import { artworks, type Artwork } from '../../artworks/data';
 export type FeaturedWork =
   | Artwork
+  | { title: string; artist: string; image: string; externalUrl: string }
   | { title: string; artist: string; image: string; articleSlug: string };
 export type FeaturedProject = {
   slug: string;

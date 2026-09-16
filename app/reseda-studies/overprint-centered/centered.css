@@ -302,6 +302,27 @@
   color: var(--anti-label-ink);
 }
 /* Approved frame colors and lettering sampled directly from each artwork. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario {
+  --cf-frame-ground: #7025b5;
+  --cf-room-ink: #e5ef18;
+  --cf-frame-ink: #e5ef18;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack {
+  --cf-frame-ground: #102c34;
+  --cf-room-ink: #e4dbc7;
+  --cf-frame-ink: #c67d78;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .dr-room {
+  background: var(--cf-frame-ground);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .df-nav {
+  color: var(--cf-room-ink);
+  border-color: var(--cf-room-ink);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .df-nav a:is(:hover, [aria-current='page']) {
+  color: var(--cf-room-ink);
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-stranger {
   --cf-frame-ground: #014fa8;
   --cf-room-ink: #f6dcb7;
@@ -406,6 +427,22 @@
 }
 .op-site.op-sequence.op-poster.op-centered .df-slide .df-project-name h2 {
   font-size: clamp(14px, 5.1cqw, 49px);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured .df-slide:is(.op-film-improvisczario, .op-film-buffalo-hunt-soundtrack) .df-project-name {
+  top: auto;
+  right: auto;
+  left: 3%;
+  bottom: 4%;
+  max-width: 91%;
+  background: #e5ef18;
+  color: #171411;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured .df-slide.op-film-buffalo-hunt-soundtrack .df-project-name {
+  background: #e4dbc7;
+  color: #102c34;
+}
+.op-site.op-sequence.op-poster.op-centered .df-slide:is(.op-film-improvisczario, .op-film-buffalo-hunt-soundtrack) .df-project-name h2 {
+  font-size: clamp(14px, 4.7cqw, 42px);
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured
   .op-layout-left
