@@ -42,7 +42,6 @@ import {
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { InfoPage } from '../overprint-centered/info';
-import { PressPage } from '../overprint-centered/press-page';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
 function CompositionScale({
@@ -58,10 +57,10 @@ function CompositionScale({
     children
   );
 }
-type View = 'featured' | 'about' | 'info' | 'press' | 'archive' | 'recording-parties';
+type View = 'featured' | 'about' | 'info' | 'archive' | 'recording-parties';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
-  return hash === 'about' || hash === 'info' || hash === 'press' || hash === 'archive' ? hash : 'featured';
+  return hash === 'about' || hash === 'info' || hash === 'archive' ? hash : 'featured';
 }
 function ProjectName({ lines }: { lines: string[] }) {
   return (
@@ -148,6 +147,12 @@ export function DarkroomFeatured({
       : sequenceCategories[slug];
   }
   const currentCategory = projectCategory(projects[index].slug);
+  const currentWork = projects[index].work;
+  const projectPress = centered ? pressItems.filter(item =>
+    'articleSlug' in currentWork
+      ? item.slug === currentWork.articleSlug
+      : item.videos.some(video => video.vimeo === currentWork.vimeo),
+  ) : [];
   const navigationIndices = projects.flatMap((project, projectIndex) =>
     (!horizontal && !centered) || projectCategory(project.slug) === currentCategory
       ? [projectIndex]
@@ -266,6 +271,7 @@ export function DarkroomFeatured({
     }
   }
   function watchPressFilm(work: PressFilm) {
+    setArticle(null);
     setFilm({
       title: work.title,
       vimeo: work.vimeo,
@@ -356,9 +362,6 @@ export function DarkroomFeatured({
   if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} />;
   if (centered && view === 'info' && !preview) {
     return <InfoPage filmSlug={filmSlug} />;
-  }
-  if (centered && view === 'press' && !preview) {
-    return <PressPage filmSlug={filmSlug} />;
   }
   const site = (
     <div
@@ -533,6 +536,20 @@ export function DarkroomFeatured({
                     {previous !== null && slide(previous, true)}
                     {slide(index)}
                   </>
+                )}
+                {centered && projectPress.length > 0 && (
+                  <aside className="cf-project-press" aria-label={'Press for ' + currentWork.title}
+                    data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
+                    <h2>Press</h2>
+                    <div className="cf-press-logos">
+                      {projectPress.map(item => (
+                        <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
+                          aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                        </button>
+                      ))}
+                    </div>
+                  </aside>
                 )}
                 <span className="sr-only" aria-live="polite" aria-atomic="true">
                   {projects[index].work.artist}: {projects[index].work.title}

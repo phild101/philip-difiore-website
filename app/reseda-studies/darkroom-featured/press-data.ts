@@ -122,6 +122,7 @@ export const pressItems: PressItem[] = [
     slug: 'bedford-bowery-recording-parties',
     outlet: 'Bedford + Bowery',
     project: 'Recording Parties',
+    logo: 'bedford.png',
     videos: [],
   },
 ];
