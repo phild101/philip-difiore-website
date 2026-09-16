@@ -541,7 +541,7 @@ export function DarkroomFeatured({
                 {centered && (projectPress.length > 0 || projectReferences.length > 0) && (
                   <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
                     data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
-                    <h2>{projectPress.length > 0 ? 'Press' : 'Links'}</h2>
+                    <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
                     <div className="cf-press-logos">
                       {projectReferences.map(item => (
                         <a key={item.href} className="cf-press-logo cf-reference-logo" href={item.href}

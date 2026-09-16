@@ -10,6 +10,12 @@ const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
 // Direct project references open the supplied source, rather than an archived article.
 export const projectLinks = [
   {
+    projectSlug: 'buffalo-hunt',
+    outlet: 'Letterboxd',
+    logo: 'letterboxd.svg',
+    href: 'https://letterboxd.com/film/the-buffalo-hunt/',
+  },
+  {
     projectSlug: 'stranger',
     outlet: 'Academy Collection',
     logo: 'academy-collection.png',
