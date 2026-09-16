@@ -215,9 +215,9 @@
   --cf-frame-ink: #072518;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-the-trilogy {
-  --cf-frame-ground: #ed7135;
-  --cf-room-ink: #073b3b;
-  --cf-frame-ink: #073b3b;
+  --cf-frame-ground: #682dc1;
+  --cf-room-ink: #d5ed26;
+  --cf-frame-ink: #d5ed26;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(
     .op-project-stranger,
@@ -341,8 +341,8 @@
   left: auto;
   right: 3%;
   bottom: 5%;
-  background: #efd8b2;
-  color: #073b3b;
+  background: #d5ed26;
+  color: #111511;
 }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {

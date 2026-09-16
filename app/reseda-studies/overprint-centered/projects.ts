@@ -14,7 +14,7 @@ const learnedTheHardWay: Artwork = {
 const theTrilogy: Artwork = {
   title: 'The Trilogy',
   artist: 'Sharon Jones & The Dap-Kings',
-  image: 'sequence/the-trilogy-overprint.webp',
+  image: 'sequence/the-trilogy-overprint-v2.webp',
   vimeo: '36364375',
 };
 const sharonFilms: FeaturedProject[] = [
@@ -37,7 +37,7 @@ const sharonFilms: FeaturedProject[] = [
   {
     slug: 'the-trilogy',
     work: theTrilogy,
-    poster: '/images/sequence/the-trilogy-overprint.webp',
+    poster: '/images/sequence/the-trilogy-overprint-v2.webp',
     aspectRatio: 1122 / 1402,
     heading: ['THE', 'TRILOGY'],
     palette: 'ink',
