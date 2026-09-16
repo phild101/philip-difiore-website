@@ -11,6 +11,8 @@ import { partyPhotographs } from './photographs';
 import { useRecordingPlayback } from './playback';
 import './listening.css';
 
+const DEFAULT_PARTY = 2;
+
 function clock(seconds: number) {
   const rounded = Math.max(0, Math.floor(seconds));
   return Math.floor(rounded / 60) + ':' + String(rounded % 60).padStart(2, '0');
@@ -31,7 +33,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   const [catalog, setCatalog] = useState<PartyCatalog | null>(null);
   const [catalogError, setCatalogError] = useState(false);
   const [retry, setRetry] = useState(0);
-  const [party, setParty] = useState(1);
+  const [party, setParty] = useState(DEFAULT_PARTY);
   const playback = useRecordingPlayback();
   const { selected, playing, loading, playError, elapsed, duration, seek } = playback;
   const [press, setPress] = useState(false);
@@ -86,7 +88,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   useEffect(() => {
     const restore = () => {
       const requested = Number(new URLSearchParams(window.location.search).get('party'));
-      chooseParty(partyNumbers.includes(requested) ? requested : 1, false);
+      chooseParty(partyNumbers.includes(requested) ? requested : DEFAULT_PARTY, false);
     };
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);

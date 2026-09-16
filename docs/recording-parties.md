@@ -6,6 +6,8 @@ Added September 14, 2026. Music retains its existing Recording Parties cover; cl
 
 The seven original MP3 recordings are organized as Party 1 (Tapes 3 and 4), Party 2 (Tapes 1, 2 and 3), and Party 3 (Tapes 2 and 3). These are the source file numbers; do not renumber or invent track titles. Playback uses one audio element, seeking, pause/resume, and automatic progression through the current party. Browsing another party leaves the current recording playing; selecting a new tape changes the playing queue.
 
+Party 2 is the default when the archive opens without a valid `party` query parameter, including browser Back to a no-query entry. Preserve this default until Philip requests another. Explicit links to Party 1 or Party 3 still select that party.
+
 Supabase project `gjvvbofpkxuicrpshxun`, project record 9. Metadata comes from `recording_party_tracks`; originals remain in the private `recording-parties-audio` bucket. The import, SHA-256 verification, SQL and source recordings are preserved outside the Site checkout in `../imports/recording-parties/`.
 
 `GET /api/recording-parties` returns the public-facing catalog. `GET /api/recording-parties/<party>-<tape>-<version>/audio` validates the registered track and redirects to a four-hour signed storage URL. This lets Supabase serve audio with Range support rather than buffering it through the website. No bucket policies were made public. `SUPABASE_SERVICE_ROLE_KEY` is a server-only Sites environment secret; local development reads the ignored `.dev.vars` file. Never put the key in client code or checked-in files.
