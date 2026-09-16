@@ -84,6 +84,14 @@
 .op-site.op-sequence.op-poster.op-centered .df-print img {
   object-fit: contain;
 }
+/* The main site uses Buffalo Hunt's 4:5 frame; saved studies retain their ratios. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-stage {
+  aspect-ratio: 4 / 5;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-print img {
+  object-fit: cover;
+  object-position: center;
+}
 .op-site.op-sequence.op-poster.op-centered .sq-control-rail {
   grid-column: 3;
   grid-row: 1;
@@ -766,5 +774,17 @@
   }
   .op-site.op-sequence.op-poster.op-centered.op-about .df-bio {
     font-size: 1rem;
+  }
+}
+
+/* Keep category, controls, and artwork on one common frame, including music. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario .df-featured,
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+  --cf-normal-frame-height: 65cqw;
+}
+@media (max-width: 640px) {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario .df-featured,
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+    --cf-normal-frame-height: 82.5cqw;
   }
 }

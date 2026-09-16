@@ -398,6 +398,7 @@ export function DarkroomFeatured({
         (sequence && fitScreen ? ' op-screen-fit' : '') +
         (sequence && fluid ? ' op-fluid' : '') +
         (posterLayout ? ' op-poster op-' + posterLayout : '') +
+        (centered && landingView === 'info' ? ' op-uniform-artwork' : '') +
         (centered && cityOption !== 'original'
           ? ' op-city-' + cityOption
           : '') +
