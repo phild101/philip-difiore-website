@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
-import { improvisczarioPhotoOverprintStudies } from '../../music/projects';
+import { improvisczarioPhotoOverprintStudies, improvisczarioWildStudies } from '../../music/projects';
 import '../antibalas-studies/studies.css';
 import '../improvisczario-figure-studies/studies.css';
+import './studies.css';
 
 export const metadata: Metadata = {title: 'Improvisczario — Photographic Overprints | Philip Di Fiore'};
 const site = '/?header=bold&info=bold&layout=stacked';
 
 export default function ImprovisczarioPhotoOverprintStudies() {
-  return <main className="anti-review figure-review">
+  return <main className="anti-review figure-review photo-overprint-review">
     <header className="anti-review-header">
       <a href={site + '#info'}>Philip Di Fiore</a>
       <nav aria-label="Main navigation">
@@ -17,8 +18,8 @@ export default function ImprovisczarioPhotoOverprintStudies() {
       </nav>
     </header>
     <div className="anti-review-heading"><h1>Improvisczario</h1><p>Photographic overprints</p></div>
-    <section className="anti-review-grid" aria-label="Three artwork previews">
-      {improvisczarioPhotoOverprintStudies.map(study => {
+    <section className="anti-review-grid" aria-label="New artwork and three saved options">
+      {[...improvisczarioWildStudies, ...improvisczarioPhotoOverprintStudies].map(study => {
         const href = site + '&improv=' + study.option + '#music/improvisczario';
         return <article className="anti-review-card" key={study.option}>
           <div className="anti-review-caption"><h2>{study.title}</h2><span>{study.subject}</span></div>

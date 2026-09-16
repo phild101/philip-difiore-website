@@ -56,12 +56,16 @@ export const improvisczarioLynchStudies = [
 ] as const;
 
 export const improvisczarioPhotoOverprintStudies = [
-  {option: 'figure-photo-petrol-ochre', title: 'Petrol / Ochre', subject: 'Original preview', image: 'improvisczario-photo-petrol-ochre.webp', ground: '#163b40'},
-  {option: 'figure-photo-oxblood-rose', title: 'Oxblood / Rose', subject: 'New 1', image: 'improvisczario-photo-oxblood-rose.webp', ground: '#4d2028'},
-  {option: 'figure-photo-indigo-ice', title: 'Indigo / Ice', subject: 'New 2', image: 'improvisczario-photo-indigo-ice.webp', ground: '#202b43'},
+  {option: 'figure-photo-petrol-ochre', title: 'Petrol / Ochre', subject: 'Saved', image: 'improvisczario-photo-petrol-ochre.webp', ground: '#163b40'},
+  {option: 'figure-photo-oxblood-rose', title: 'Oxblood / Rose', subject: 'Saved', image: 'improvisczario-photo-oxblood-rose.webp', ground: '#4d2028'},
+  {option: 'figure-photo-indigo-ice', title: 'Indigo / Ice', subject: 'Saved', image: 'improvisczario-photo-indigo-ice.webp', ground: '#202b43'},
 ] as const;
 
-const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies];
+export const improvisczarioWildStudies = [
+  {option: 'figure-photo-electric-cut', title: 'Electric Cut', subject: 'New', image: 'improvisczario-photo-electric-cut.webp', ground: '#3a153d'},
+] as const;
+
+const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies, ...improvisczarioWildStudies];
 export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {
