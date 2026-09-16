@@ -135,7 +135,7 @@ export function withTrilogyOption(
   );
 }
 
-export type AntibalasOption = 'current' | '1' | '2' | '3' | '3-cyan-coral' | '3-violet-citron' | '3-amber-oxblood';
+export type AntibalasOption = 'current' | '1' | '2' | '3' | '3-cyan-coral' | '3-violet-citron' | '3-amber-oxblood' | '3-photo-original' | '3-photo-cyan' | '3-photo-amber';
 
 const antibalasAlternatives = {
   '1': { image: 'sequence/antibalas-anti-1.webp', aspectRatio: 1073 / 1466 },
@@ -144,6 +144,9 @@ const antibalasAlternatives = {
   '3-cyan-coral': { image: 'sequence/antibalas-anti-3-cyan-coral.webp', aspectRatio: 1122 / 1402 },
   '3-violet-citron': { image: 'sequence/antibalas-anti-3-violet-citron.webp', aspectRatio: 1122 / 1402 },
   '3-amber-oxblood': { image: 'sequence/antibalas-anti-3-amber-oxblood.webp', aspectRatio: 1122 / 1402 },
+  '3-photo-original': { image: 'sequence/antibalas-anti-3-photo-original.webp', aspectRatio: 1122 / 1402 },
+  '3-photo-cyan': { image: 'sequence/antibalas-anti-3-photo-cyan.webp', aspectRatio: 1122 / 1402 },
+  '3-photo-amber': { image: 'sequence/antibalas-anti-3-photo-amber.webp', aspectRatio: 1072 / 1467 },
 };
 
 export function parseAntibalasOption(value: string | null): AntibalasOption {
