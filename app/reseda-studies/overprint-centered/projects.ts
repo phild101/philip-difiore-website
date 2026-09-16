@@ -57,7 +57,7 @@ export const centeredPaletteProjects = {
 };
 export const centeredArchive = [
   ...sequenceArchive.map(work => work.title === 'Antibalas'
-    ? { ...work, image: 'sequence/antibalas-anti-3-amber-room-plates.webp' }
+    ? { ...work, image: 'sequence/antibalas-anti-3-amber-room-rhythm.webp' }
     : work),
   learnedTheHardWay,
   theTrilogy,
@@ -154,7 +154,7 @@ const antibalasAlternatives = {
 export function parseAntibalasOption(value: string | null): AntibalasOption {
   return value === 'current' || (value !== null && Object.hasOwn(antibalasAlternatives, value))
     ? value as AntibalasOption
-    : '3-amber-room-plates';
+    : '3-amber-room-rhythm';
 }
 
 export function withAntibalasOption(

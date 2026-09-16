@@ -42,6 +42,7 @@ import {
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { InfoPage } from '../overprint-centered/info';
+import { PressPage } from '../overprint-centered/press-page';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
 function CompositionScale({
@@ -57,10 +58,10 @@ function CompositionScale({
     children
   );
 }
-type View = 'featured' | 'about' | 'info' | 'archive' | 'recording-parties';
+type View = 'featured' | 'about' | 'info' | 'press' | 'archive' | 'recording-parties';
 function hashView(): View {
   const hash = window.location.hash.slice(1);
-  return hash === 'about' || hash === 'info' || hash === 'archive' ? hash : 'featured';
+  return hash === 'about' || hash === 'info' || hash === 'press' || hash === 'archive' ? hash : 'featured';
 }
 function ProjectName({ lines }: { lines: string[] }) {
   return (
@@ -112,7 +113,7 @@ export function DarkroomFeatured({
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
-  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-plates');
+  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -355,6 +356,9 @@ export function DarkroomFeatured({
   if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} />;
   if (centered && view === 'info' && !preview) {
     return <InfoPage filmSlug={filmSlug} />;
+  }
+  if (centered && view === 'press' && !preview) {
+    return <PressPage filmSlug={filmSlug} />;
   }
   const site = (
     <div

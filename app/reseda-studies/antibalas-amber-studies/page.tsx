@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 const studies = [
   { option: '3-photo-amber', title: 'Earlier version', subject: 'Circular overprint', image: 'antibalas-anti-3-photo-amber.webp', ground: '#6b1d25' },
-  { option: '3-amber-room-plates', title: 'New 1', subject: 'Selected', image: 'antibalas-anti-3-amber-room-plates.webp', ground: '#6b1d25' },
-  { option: '3-amber-room-rhythm', title: 'New 2', subject: 'Ink bands', image: 'antibalas-anti-3-amber-room-rhythm.webp', ground: '#6b1d25' },
+  { option: '3-amber-room-plates', title: 'New 1', subject: 'Ink plates', image: 'antibalas-anti-3-amber-room-plates.webp', ground: '#6b1d25' },
+  { option: '3-amber-room-rhythm', title: 'New 2', subject: 'Selected', image: 'antibalas-anti-3-amber-room-rhythm.webp', ground: '#6b1d25' },
 ];
 const site = '/?header=bold&info=bold&layout=stacked';
 

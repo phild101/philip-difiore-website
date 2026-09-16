@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import './header-preview.css';
 
-export type SiteSection = 'film' | 'music' | 'info';
+export type SiteSection = 'film' | 'music' | 'info' | 'press';
 
 export function SectionNavigation({
   active,
@@ -33,9 +33,10 @@ export function SectionNavigation({
 
   return (
     <nav ref={navigation} aria-label="Main navigation">
+      <a href="#info" aria-current={active === 'info' ? 'page' : undefined}>Info</a>
       <a href={'#film/' + filmSlug} aria-current={active === 'film' ? 'page' : undefined}>Film</a>
       <a href="#music/recording-parties" aria-current={active === 'music' ? 'page' : undefined}>Music</a>
-      <a href="#info" aria-current={active === 'info' ? 'page' : undefined}>Info</a>
+      <a href="#press" aria-current={active === 'press' ? 'page' : undefined}>Press</a>
     </nav>
   );
 }
