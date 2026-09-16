@@ -10,6 +10,18 @@ const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
 // Direct project references open the supplied source, rather than an archived article.
 export const projectLinks = [
   {
+    projectSlug: 'improvisczario',
+    outlet: 'Spotify',
+    logo: 'spotify.svg',
+    href: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
+  },
+  {
+    projectSlug: 'buffalo-hunt-soundtrack',
+    outlet: 'Spotify',
+    logo: 'spotify.svg',
+    href: 'https://open.spotify.com/album/2Oq3TjoyVG34DzLTqJboHY?si=ab-fTyeAQT6Y2ufNJ41ncw',
+  },
+  {
     projectSlug: 'buffalo-hunt',
     outlet: 'Letterboxd',
     logo: 'letterboxd.svg',
