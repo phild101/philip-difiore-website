@@ -91,6 +91,7 @@ const categoryAdvance = {
 };
 export function DarkroomFeatured({
   preview = false,
+  landingView = 'featured',
   reduced = false,
   treatment = 'darkroom',
   edition = 'original',
@@ -99,6 +100,7 @@ export function DarkroomFeatured({
   posterLayout,
 }: {
   preview?: boolean;
+  landingView?: 'featured' | 'info';
   reduced?: boolean;
   treatment?: 'darkroom' | 'overprint';
   edition?: OverprintEdition;
@@ -135,7 +137,8 @@ export function DarkroomFeatured({
     : treatment === 'overprint'
       ? overprintArchive
       : darkroomArchive;
-  const [view, setView] = useState<View>('featured');
+  const [view, setView] = useState<View>(!preview && centered ? landingView : 'featured');
+  const homeHref = landingView === 'info' ? '#info' : '#film/if-you-call';
   const [index, setIndex] = useState(0);
   const [filmSlug, setFilmSlug] = useState('if-you-call');
   const [previous, setPrevious] = useState<number | null>(null);
@@ -180,7 +183,11 @@ export function DarkroomFeatured({
           ? 'vivid'
           : 'uganda',
       );
-      let nextView: View = centered && window.location.hash.startsWith('#music/recording-parties/listen') ? 'recording-parties' : horizontal ? 'featured' : hashView();
+      let nextView: View = centered && !window.location.hash.slice(1)
+        ? landingView
+        : centered && window.location.hash.startsWith('#music/recording-parties/listen')
+          ? 'recording-parties'
+          : horizontal ? 'featured' : hashView();
       if (centered && nextView === 'about') {
         nextView = 'info';
         window.history.replaceState(null, '', window.location.pathname + window.location.search + '#info');
@@ -217,7 +224,7 @@ export function DarkroomFeatured({
       window.removeEventListener('hashchange', changeView);
       window.removeEventListener('popstate', changeView);
     };
-  }, [preview, treatment, projects, horizontal, centered]);
+  }, [preview, treatment, projects, horizontal, centered, landingView]);
   useEffect(() => {
     if (preview) return;
     for (const offset of sequence ? [1, -1] : [1]) {
@@ -361,9 +368,9 @@ export function DarkroomFeatured({
       </div>
     );
   }
-  if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} />;
+  if (centered && view === 'recording-parties' && !preview) return <RecordingParties filmSlug={filmSlug} homeHref={homeHref} />;
   if (centered && view === 'info' && !preview) {
-    return <InfoPage filmSlug={filmSlug} projects={projects} />;
+    return <InfoPage filmSlug={filmSlug} projects={projects} homeHref={homeHref} />;
   }
   const site = (
     <div
@@ -420,7 +427,7 @@ export function DarkroomFeatured({
           {sequence && (
             <a
               className="sq-home"
-              href={centered ? '#film/if-you-call' : '#featured/if-you-call'}
+              href={centered ? homeHref : '#featured/if-you-call'}
               aria-label="Philip Di Fiore — Home"
             >
               {centered && view === 'about'

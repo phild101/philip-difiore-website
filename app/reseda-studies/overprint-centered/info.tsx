@@ -9,7 +9,7 @@ import { isMusicProject } from '../../music/projects';
 import { projectLinks } from '../darkroom-featured/press-data';
 import './info.css';
 
-export function InfoPage({ filmSlug, projects }: { filmSlug: string; projects: FeaturedProject[] }) {
+export function InfoPage({ filmSlug, projects, homeHref = '#film/if-you-call' }: { filmSlug: string; projects: FeaturedProject[]; homeHref?: string }) {
   const biography = useRef<HTMLElement>(null);
   const [activePreview, setActivePreview] = useState<string | null>(null);
   function project(slug: string): BioPreviewItem {
@@ -34,7 +34,8 @@ export function InfoPage({ filmSlug, projects }: { filmSlug: string; projects: F
     const article = biography.current;
     if (!article) return;
     const sync = () => {
-      if (new URLSearchParams(window.location.search).get('info') === 'bold') {
+      const choice = new URLSearchParams(window.location.search).get('info');
+      if (choice === 'bold' || (choice === null && window.location.pathname === '/')) {
         article.dataset.infoFont = 'bold';
       } else {
         delete article.dataset.infoFont;
@@ -52,7 +53,7 @@ export function InfoPage({ filmSlug, projects }: { filmSlug: string; projects: F
     <div className="info-site">
       <div className="info-frame">
         <header className="info-header">
-          <a href="#film/if-you-call" aria-label="Philip Di Fiore — Home">Philip Di Fiore</a>
+          <a href={homeHref} aria-label="Philip Di Fiore — Home">Philip Di Fiore</a>
           <SectionNavigation active="info" filmSlug={filmSlug} />
         </header>
         <main className="info-content" aria-label="Info about Philip Di Fiore">

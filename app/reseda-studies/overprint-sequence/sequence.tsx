@@ -4,12 +4,14 @@ import './sequence.css';
 
 export function Sequence({
   preview = false,
+  landingView = 'featured',
   reduced = false,
   fitScreen = false,
   fluid = false,
   posterLayout,
 }: {
   preview?: boolean;
+  landingView?: 'featured' | 'info';
   reduced?: boolean;
   fitScreen?: boolean;
   fluid?: boolean;
@@ -18,6 +20,7 @@ export function Sequence({
   return (
     <Overprint
       preview={preview}
+      landingView={landingView}
       reduced={reduced}
       edition="sequence"
       fitScreen={fitScreen}

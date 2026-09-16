@@ -17,7 +17,8 @@ export function SectionNavigation({
     const header = navigation.current?.closest('header');
     if (!header) return;
     const sync = () => {
-      if (new URLSearchParams(window.location.search).get('header') === 'bold') {
+      const choice = new URLSearchParams(window.location.search).get('header');
+      if (choice === 'bold' || (choice === null && window.location.pathname === '/')) {
         header.dataset.headerFont = 'bold';
       } else {
         delete header.dataset.headerFont;

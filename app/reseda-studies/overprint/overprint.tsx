@@ -4,6 +4,7 @@ import type { OverprintEdition } from './chromatic';
 import './overprint.css';
 export function Overprint({
   preview = false,
+  landingView = 'featured',
   reduced = false,
   edition = 'original',
   fitScreen = false,
@@ -11,6 +12,7 @@ export function Overprint({
   posterLayout,
 }: {
   preview?: boolean;
+  landingView?: 'featured' | 'info';
   reduced?: boolean;
   edition?: OverprintEdition;
   fitScreen?: boolean;
@@ -21,6 +23,7 @@ export function Overprint({
     <DarkroomFeatured
       treatment="overprint"
       preview={preview}
+      landingView={landingView}
       reduced={reduced}
       edition={edition}
       fitScreen={fitScreen}

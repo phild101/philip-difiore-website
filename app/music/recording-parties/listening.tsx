@@ -29,7 +29,7 @@ function PartyPhoto({name, alt, width, height, mono, room = false, lazy = false}
   const src = '/images/music/recording-parties/' + (mono ? 'originals/' + name + '.jpg' : name + (room ? '-room.webp' : '-film.webp'));
   return <div className="rp-photo-print"><img src={src} alt={alt} width={width} height={height} loading={lazy ? 'lazy' : 'eager'}/></div>;
 }
-export function RecordingParties({filmSlug}: {filmSlug: string}) {
+export function RecordingParties({filmSlug, homeHref = '#film/if-you-call'}: {filmSlug: string; homeHref?: string}) {
   const [catalog, setCatalog] = useState<PartyCatalog | null>(null);
   const [catalogError, setCatalogError] = useState(false);
   const [retry, setRetry] = useState(0);
@@ -102,7 +102,7 @@ export function RecordingParties({filmSlug}: {filmSlug: string}) {
   return <div className={'rp-site' + (mono ? ' rp-mono' : '') + (spare ? ' rp-spare' : '') + (spare && stacked ? ' rp-stacked' : '')} data-party={party}>
     <div className="rp-frame">
       <header className="rp-header">
-        <a href="#film/if-you-call">Philip Di Fiore</a>
+        <a href={homeHref} aria-label="Philip Di Fiore — Home">Philip Di Fiore</a>
         <SectionNavigation active="music" filmSlug={filmSlug} />
       </header>
       <main>

@@ -4,7 +4,9 @@ September 16, 2026. The user requested two Lynchian previews based on Petrol / B
 
 Review route: `/reseda-studies/improvisczario-lynch-studies`. Full site options: `improv=figure-lynch-night-session` and `improv=figure-lynch-signal-ghost`.
 
-## Purple beret preview
+## Purple beret — saved alternative
+
+Selection confirmed September 16, 2026: keep original Signal Ghost on the site and preserve the purple-beret version for future reference.
 
 September 16, 2026: Philip requested the selected Signal Ghost artwork unchanged except for a purple beret. One built-in imagegen precise-object-edit produced a 1122 × 1402 sibling master at `artwork-originals/images/music/improvisczario-lynch-purple-beret.png` and a quality-92 WebP at `public/images/music/improvisczario-lynch-purple-beret.webp`. Purple is confined to the hat. Composition, subject and scene remain visually preserved, but the generated edit has slight texture/detail drift outside the beret; it is not pixel-identical. The original remains the default. Preview via `?improv=figure-lynch-purple-beret#music/improvisczario`; frame, typography, label, category and arrows are identical to Signal Ghost.
 
