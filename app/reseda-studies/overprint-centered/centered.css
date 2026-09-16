@@ -328,7 +328,7 @@
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
   --cf-normal-frame-height: 52cqw;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret) .df-featured {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret, .op-improv-figure-photo-petrol-ochre, .op-improv-figure-photo-oxblood-rose, .op-improv-figure-photo-indigo-ice) .df-featured {
   --cf-normal-frame-height: 65cqw;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-petrol-bone {
@@ -372,6 +372,28 @@
   --cf-frame-ink: #fff1d8;
   --improv-label: #ff5c32;
   --improv-label-ink: #171411;
+}
+/* Saved photographic overprint previews; the selected Signal Ghost stays intact. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-photo-petrol-ochre {
+  --cf-frame-ground: #163b40;
+  --cf-frame-ink: #bf9655;
+  --cf-room-ink: #e1d5bb;
+  --improv-label: #e1d5bb;
+  --improv-label-ink: #163b40;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-photo-oxblood-rose {
+  --cf-frame-ground: #4d2028;
+  --cf-frame-ink: #c39890;
+  --cf-room-ink: #e5d6c0;
+  --improv-label: #e5d6c0;
+  --improv-label-ink: #4d2028;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-photo-indigo-ice {
+  --cf-frame-ground: #202b43;
+  --cf-frame-ink: #aac2d1;
+  --cf-room-ink: #deded3;
+  --improv-label: #deded3;
+  --improv-label-ink: #202b43;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-violet-citron {
   --cf-frame-ground: #502270;
@@ -599,7 +621,7 @@
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
     --cf-normal-frame-height: 66cqw;
   }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret) .df-featured {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost, .op-improv-figure-lynch-purple-beret, .op-improv-figure-photo-petrol-ochre, .op-improv-figure-photo-oxblood-rose, .op-improv-figure-photo-indigo-ice) .df-featured {
     --cf-normal-frame-height: 82.5cqw;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured

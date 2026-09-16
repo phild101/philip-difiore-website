@@ -1,0 +1,42 @@
+# Improvisczario — photographic overprint previews
+
+September 16, 2026. Three saved alternatives for comparing in the full site. The user liked the Petrol / Ochre preview and requested two new palettes and overprint structures. Original Signal Ghost remains the default, including its saved purple-beret alternative. These previews preserve the photographic human face, piano, synthesizer body, and faint shoulder echo.
+
+Comparison: `/reseda-studies/improvisczario-photo-overprint-studies`.
+
+| Preview | Full-site query | Master | Web asset |
+| --- | --- | --- | --- |
+| Petrol / Ochre | `?improv=figure-photo-petrol-ochre#music/improvisczario` | `artwork-originals/images/music/improvisczario-photo-petrol-ochre.png` | `public/images/music/improvisczario-photo-petrol-ochre.webp` |
+| Oxblood / Rose | `?improv=figure-photo-oxblood-rose#music/improvisczario` | `artwork-originals/images/music/improvisczario-photo-oxblood-rose.png` | `public/images/music/improvisczario-photo-oxblood-rose.webp` |
+| Indigo / Ice | `?improv=figure-photo-indigo-ice#music/improvisczario` | `artwork-originals/images/music/improvisczario-photo-indigo-ice.png` | `public/images/music/improvisczario-photo-indigo-ice.webp` |
+
+All three are 1122 × 1402 pixels, generated with the built-in imagegen tool (one edit per variation). WebP copies use quality 92 with no crop or recoloring. Full site previews use the shared 4:5 project frame. The page background, MUSIC lettering, arrows, and title label coordinate with each artwork. Existing artwork, navigation, listening links and default selection are preserved.
+
+Source for all edits: human-face Signal Ghost generation `exec-32cd9128-2a87-4e12-b200-b3a6d4884df2.png` in the originating task's generated images. The two new images used the first overprint only as a print-density reference, not a face source. Generated edits preserve recognizable details but are not pixel-identical composites.
+
+## Petrol / Ochre — exact prompt
+
+Use case: style-transfer. EDIT the supplied portrait artwork into a materially overprinted version for the Improvisczario project. Preserve the entire underlying composition: the same photorealistic human face and identity, dark glasses, fabric beret, hoop earring, expression, synthesizer torso, cables and keys, left foreground black piano, ghostly partial silhouette behind the head and shoulders, and photographic lighting. Crucial invariant: the face remains fully photographic, natural skin texture, pores and wrinkles, no illustrated/cubist/metallic face, no ink shapes crossing eyes, nose or mouth. Add a clearly visible, sophisticated analog screenprint/overprint treatment in the established cinematic art-poster aesthetic: a restrained three-ink palette of deep smoked petrol, muted weathered ochre, and bone against the existing charcoal blacks. Use large imperfect transparent ink plates that let photographic detail show through, an off-register vertical petrol plate occupying part of the left/background, a broad broken ochre diagonal impression across the upper background and peripheral lower-right piano surface, selectively erased bone paper impressions, uneven roller density, tiny misregistered edges, sparse coarse halftone concentrated in the peripheral ink and a few dry scraped ink streaks. Graphic marks should feel physically printed onto an old photographic sheet, with visible structure and deliberate negative space; stronger than the existing edge grain, not merely a color grade. Let a small amount of transparent overprint cross the outer torso and piano but keep the synth controls and keys legible. Retain dark mysterious cinematic depth and the faint double-exposure ghost. Protect the human face, glasses and hat from large graphic marks. Restrained, dirty, ink-on-paper colors, no neon, no garish saturation, no rainbow, no repeated circles, no stock grunge overlay, no new figures or objects. Keep the same full-bleed 4:5 portrait framing and subject proportions. No text, labels, numbers, logos or watermark. Produce ONE finished artwork preview.
+
+## Oxblood / Rose — exact prompt
+
+Use case: identity-preserve / style-transfer.
+Asset type: full-bleed 4:5 portrait preview for Philip Di Fiore's cinematic music website.
+Input images: Image 1 is the EDIT TARGET and determines the entire subject, face, pose, room, piano, synthesizer body, and composition. Image 2 is ONLY a reference for screenprint texture and the density of overprinted ink; do not copy its colors or diagonal stroke layout.
+
+Edit Image 1 into a sophisticated OXBLOOD / DUSTY ROSE overprint variant. Add deep muted wine-red and oxblood ink, faded dusty rose, and warm bone impressions over charcoal and rich photographic blacks. Build a clearly different print structure from Image 2: broad worn VERTICAL ink fields, ragged torn rectangular printing-plate edges, and interrupted narrow paper strips. Use irregular gaps and overlapping vertical rectangles, with tactile worn screenprint ink, selective coarse halftone, and imperfect offset registration. Keep the photographic room, light, piano surfaces, cables, knobs, keyboard keys, and metallic body details visible through translucent, uneven impressions. Achieve comparable visual presence and layered texture to the reference while using a restrained, muted wine-and-rose palette. Keep natural shadow depth and strong black areas; avoid a flat uniform color wash.
+
+INVARIANTS: Preserve exactly the recognizable face identity, expression, proportions, realistic skin pores, wrinkles, moustache, photographic shading, beret, dark sunglasses, and earring of Image 1. The face must remain human and photorealistic. Keep the faint eerie ghost impression at the shoulder/head, the piano and synthesizer body, all keys, framing, placement, and cinematic Signal Ghost mood. Preserve the existing camera angle and source framing. Keep all graphic printing plates and paper strips away from eyes, nose, and mouth; do not facet, illustrate, pixelate, mask, or mechanize the face. Keep gentle photographic facial color rather than pink face paint.
+Composition: full bleed portrait, 4:5 aspect ratio, matching Image 1.
+Avoid: diagonal ochre strokes, teal/petrol dominant colors, bright red, neon, garish saturation, new objects or characters, text, titles, logos, watermark.
+
+## Indigo / Ice — exact prompt
+
+Use case: identity-preserve.
+Asset type: full-bleed 4:5 portrait artwork preview for Philip Di Fiore's music website, one image.
+Input images: Image 1 is the EDIT TARGET and sole source of identity, pose, scene, framing, and photographic detail. Image 2 is ONLY a reference for the density, transparency, distressed texture and quality of overprinted inks; do not copy its colors or geometric arrangement.
+Primary request: edit Image 1 to create an INDIGO / ICE color-overprint variant. Deep midnight indigo, desaturated icy blue and silver-bone over charcoal and rich black. Sophisticated muted hues, clearly cool indigo/ice rather than petrol, teal or ochre.
+Overprint geometry: broad broken HORIZONTAL ink bands through the upper background and the lower torso/periphery, plus one partial open-arc impression in the negative space behind the shoulder. Bands must have varied width, chipped interrupted ends and large visible photographic gaps, with imperfect slight offset registration. The partial arc must remain incomplete, atmospheric and secondary. Make this a distinct graphic composition from Image 2. No diagonal ochre design, repeated circles, vertical striped wallpaper or evenly spaced stripe pattern.
+Materials: transparent worn ink plates, selective halftone, dry paper abrasion, distressed analog print texture. Match Image 2's visible density of graphic design, while keeping underlying room shadows and detailed synthesizer photographs legible through the ink. Preserve rich blacks and fine highlights.
+CRITICAL INVARIANTS: Keep Image 1's EXACT recognizable face identity, expression, human facial proportions, real photographic skin pores, wrinkles and moustache. Face remains convincingly human and photographic: no faceting, illustration, robotic/mask face, flattened posterization, or ink plates crossing eyes, nose or mouth. Keep the hat, glasses, earring, piano, keys and synthesizer body composition exactly positioned as Image 1. Retain the eerie faint shoulder ghost and scene lighting. Do not reinvent the subject or instruments.
+Composition: same portrait 4:5 aspect ratio, framing and crop as Image 1, full bleed. No title, text, logo, watermark, new objects, neon or garish color.

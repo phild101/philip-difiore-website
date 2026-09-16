@@ -55,7 +55,13 @@ export const improvisczarioLynchStudies = [
   {option: 'figure-lynch-purple-beret', title: 'Signal Ghost — Purple Beret', subject: 'Saved', image: 'improvisczario-lynch-purple-beret.webp', ground: '#242b2b'},
 ] as const;
 
-const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies];
+export const improvisczarioPhotoOverprintStudies = [
+  {option: 'figure-photo-petrol-ochre', title: 'Petrol / Ochre', subject: 'Original preview', image: 'improvisczario-photo-petrol-ochre.webp', ground: '#163b40'},
+  {option: 'figure-photo-oxblood-rose', title: 'Oxblood / Rose', subject: 'New 1', image: 'improvisczario-photo-oxblood-rose.webp', ground: '#4d2028'},
+  {option: 'figure-photo-indigo-ice', title: 'Indigo / Ice', subject: 'New 2', image: 'improvisczario-photo-indigo-ice.webp', ground: '#202b43'},
+] as const;
+
+const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies];
 export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {
