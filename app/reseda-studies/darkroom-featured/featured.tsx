@@ -41,7 +41,7 @@ import {
   type AntibalasOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
-import { isMusicProject } from '../../music/projects';
+import { isMusicProject, parseImprovisczarioOption, withImprovisczarioOption, type ImprovisczarioOption } from '../../music/projects';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
@@ -114,6 +114,7 @@ export function DarkroomFeatured({
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
   const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
+  const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>('current');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -123,9 +124,9 @@ export function DarkroomFeatured({
       : darkroomProjects;
   const projects = useMemo(
     () => sequence && centered
-      ? withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption)
+      ? withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption)
       : baseProjects,
-    [baseProjects, trilogyOption, antibalasOption, sequence, centered],
+    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, sequence, centered],
   );
   const archive = sequence
     ? centered
@@ -163,6 +164,7 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
+      setImprovisczarioOption(parseImprovisczarioOption(new URLSearchParams(window.location.search).get('improv')));
       const antibalas = new URLSearchParams(window.location.search).get('anti');
       setAntibalasOption(parseAntibalasOption(antibalas));
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
@@ -397,6 +399,9 @@ export function DarkroomFeatured({
           : '') +
         (centered && antibalasOption !== 'current'
           ? ' op-antibalas-' + antibalasOption
+          : '') +
+        (centered && improvisczarioOption !== 'current'
+          ? ' op-improv-' + improvisczarioOption
           : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +

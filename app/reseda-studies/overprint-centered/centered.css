@@ -308,12 +308,33 @@
   --cf-frame-ink: #e2ddbb;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack {
-  --cf-frame-ground: #bd3532;
-  --cf-room-ink: #f5e8c7;
-  --cf-frame-ink: #f5e8c7;
+  --cf-frame-ground: #102c34;
+  --cf-room-ink: #e4dbc7;
+  --cf-frame-ink: #c67d78;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .df-featured {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
   --cf-normal-frame-height: 52cqw;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-cyan-vermilion {
+  --cf-frame-ground: #008a9b;
+  --cf-room-ink: #fff1d8;
+  --cf-frame-ink: #fff1d8;
+  --improv-label: #ff5c32;
+  --improv-label-ink: #171411;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-violet-citron {
+  --cf-frame-ground: #502270;
+  --cf-room-ink: #e7ee25;
+  --cf-frame-ink: #e7ee25;
+  --improv-label: #e7ee25;
+  --improv-label-ink: #281a32;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-ochre-petrol {
+  --cf-frame-ground: #d39a37;
+  --cf-room-ink: #173e44;
+  --cf-frame-ink: #173e44;
+  --improv-label: #173e44;
+  --improv-label-ink: #faeacb;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-project-improvisczario, .op-project-buffalo-hunt-soundtrack) .dr-room {
   background: var(--cf-frame-ground);
@@ -437,12 +458,12 @@
   left: 3%;
   bottom: 4%;
   max-width: 91%;
-  background: #e2ddbb;
-  color: #171411;
+  background: var(--improv-label, #e2ddbb);
+  color: var(--improv-label-ink, #171411);
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured .df-slide.op-film-buffalo-hunt-soundtrack .df-project-name {
-  background: #f5e8c7;
-  color: #121414;
+  background: #e4dbc7;
+  color: #102c34;
 }
 .op-site.op-sequence.op-poster.op-centered .df-slide:is(.op-film-improvisczario, .op-film-buffalo-hunt-soundtrack) .df-project-name h2 {
   font-size: clamp(14px, 4.7cqw, 42px);
@@ -523,6 +544,9 @@
     /* 66% image width / the same standard 4:5 ratio. */
     --cf-normal-frame-height: 82.5cqw;
     grid-template-columns: minmax(0, 19fr) minmax(0, 66fr) minmax(0, 15fr);
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
+    --cf-normal-frame-height: 66cqw;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured
     .sq-category

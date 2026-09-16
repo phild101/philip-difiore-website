@@ -1,0 +1,7 @@
+.improv-review .anti-review-image { aspect-ratio: 1; }
+.improv-review-footer { max-width: 1340px; margin: 42px auto 0; border-top: 1px solid currentColor; padding-top: 24px; font-weight: 700; font-size: 14px; }
+.improv-review-footer a { text-decoration: underline; text-underline-offset: 4px; }
+@media(max-width: 640px) {
+  .improv-review .anti-review-heading h1 { font-size: clamp(25px, 7vw, 40px); }
+  .improv-review .anti-review-caption h2 { font-size: 18px; }
+}
