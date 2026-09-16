@@ -33,6 +33,7 @@ import {
 import {
   centeredCityProjects,
   centeredArchive,
+  orderSiteProjects,
   type CityOption,
   withTrilogyOption,
   type TrilogyOption,
@@ -125,10 +126,12 @@ export function DarkroomFeatured({
       ? overprintProjects
       : darkroomProjects;
   const projects = useMemo(
-    () => sequence && centered
-      ? withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption)
-      : baseProjects,
-    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, sequence, centered],
+    () => {
+      if (!sequence || !centered) return baseProjects;
+      const selected = withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption);
+      return landingView === 'info' ? orderSiteProjects(selected) : selected;
+    },
+    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, sequence, centered, landingView],
   );
   const archive = sequence
     ? centered
@@ -140,7 +143,7 @@ export function DarkroomFeatured({
   const [view, setView] = useState<View>(!preview && centered ? landingView : 'featured');
   const homeHref = landingView === 'info' ? '#info' : '#film/if-you-call';
   const [index, setIndex] = useState(0);
-  const [filmSlug, setFilmSlug] = useState('if-you-call');
+  const [filmSlug, setFilmSlug] = useState(projects[0].slug);
   const [previous, setPrevious] = useState<number | null>(null);
   const [film, setFilm] = useState<Artwork | null>(null);
   const [article, setArticle] = useState<PressItem | null>(null);

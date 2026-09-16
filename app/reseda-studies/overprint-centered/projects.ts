@@ -57,6 +57,37 @@ export const centeredPaletteProjects = {
   vivid: withSharonFilms(sequencePaletteProjects.vivid),
   uganda: withSharonFilms(sequencePaletteProjects.uganda),
 };
+
+const filmOrder = [
+  'in-the-city',
+  'buffalo-hunt',
+  'i-learned-the-hard-way',
+  'old-friend',
+  'stranger',
+  'game-gets-old',
+  'runnin',
+  'if-you-call',
+  'warm-spell',
+  'miko-dtb',
+  'the-trilogy',
+  'young-trouble',
+  'naomi-shelton',
+  'rival-schools',
+  'rdgldgrn',
+  'man-man',
+  'diiv',
+  'antibalas',
+  'save-my-life',
+  'class-actress',
+];
+const filmRank = new Map(filmOrder.map((slug, index) => [slug, index]));
+
+export function orderSiteProjects(projects: FeaturedProject[]) {
+  return [...projects].sort((a, b) =>
+    (filmRank.get(a.slug) ?? filmOrder.length) - (filmRank.get(b.slug) ?? filmOrder.length),
+  );
+}
+
 export const centeredArchive = [
   ...sequenceArchive.map(work => work.title === 'Antibalas'
     ? { ...work, image: 'sequence/antibalas-anti-3-amber-room-rhythm.webp' }
