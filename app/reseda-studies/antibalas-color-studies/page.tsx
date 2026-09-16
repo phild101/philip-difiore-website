@@ -1,20 +1,20 @@
 /* oxlint-disable next/no-img-element -- These are the original generated artwork files. */
 import type { Metadata } from 'next';
-import './studies.css';
+import '../antibalas-studies/studies.css';
 
 export const metadata: Metadata = {
-  title: 'Antibalas — Artwork Comparison | Philip Di Fiore',
+  title: 'Antibalas — Anti 3 Color Comparison | Philip Di Fiore',
 };
 
 const studies = [
-  { option: 'current', title: 'Previous', subject: 'Earlier artwork', image: 'antibalas-overprint.webp', ground: '#681e21' },
-  { option: '1', title: 'Anti 1', subject: 'Keyboard', image: 'antibalas-anti-1.webp', ground: '#efaf25' },
-  { option: '2', title: 'Anti 2', subject: 'Horns', image: 'antibalas-anti-2.webp', ground: '#233dbc' },
-  { option: '3', title: 'Anti 3', subject: 'Selected artwork', image: 'antibalas-anti-3.webp', ground: '#075345' },
+  { option: '3', title: 'Original Anti 3', subject: 'Magenta / Emerald', image: 'antibalas-anti-3.webp', ground: '#075345' },
+  { option: '3-cyan-coral', title: 'Cyan / Coral', subject: 'Option 1', image: 'antibalas-anti-3-cyan-coral.webp', ground: '#087a83' },
+  { option: '3-violet-citron', title: 'Violet / Citron', subject: 'Option 2', image: 'antibalas-anti-3-violet-citron.webp', ground: '#421b7c' },
+  { option: '3-amber-oxblood', title: 'Amber / Oxblood', subject: 'Option 3', image: 'antibalas-anti-3-amber-oxblood.webp', ground: '#6b1d25' },
 ];
 const site = '/?header=bold&info=bold&layout=stacked';
 
-export default function AntibalasStudies() {
+export default function AntibalasColorStudies() {
   return (
     <main className="anti-review">
       <header className="anti-review-header">
@@ -27,9 +27,9 @@ export default function AntibalasStudies() {
       </header>
       <div className="anti-review-heading">
         <h1>Antibalas</h1>
-        <p>Artwork comparison</p>
+        <p>Anti 3 — Color comparison</p>
       </div>
-      <section className="anti-review-grid" aria-label="Current artwork and three alternatives">
+      <section className="anti-review-grid" aria-label="Original Anti 3 artwork and three color alternatives">
         {studies.map(study => {
           const href = site + '&anti=' + study.option + '#film/antibalas';
           return (

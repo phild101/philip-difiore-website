@@ -55,7 +55,13 @@ export const centeredPaletteProjects = {
   vivid: withSharonFilms(sequencePaletteProjects.vivid),
   uganda: withSharonFilms(sequencePaletteProjects.uganda),
 };
-export const centeredArchive = [...sequenceArchive, learnedTheHardWay, theTrilogy];
+export const centeredArchive = [
+  ...sequenceArchive.map(work => work.title === 'Antibalas'
+    ? { ...work, image: 'sequence/antibalas-anti-3.webp' }
+    : work),
+  learnedTheHardWay,
+  theTrilogy,
+];
 
 function withCityPoster(
   projects: FeaturedProject[],
@@ -129,13 +135,22 @@ export function withTrilogyOption(
   );
 }
 
-export type AntibalasOption = 'current' | '1' | '2' | '3';
+export type AntibalasOption = 'current' | '1' | '2' | '3' | '3-cyan-coral' | '3-violet-citron' | '3-amber-oxblood';
 
 const antibalasAlternatives = {
   '1': { image: 'sequence/antibalas-anti-1.webp', aspectRatio: 1073 / 1466 },
   '2': { image: 'sequence/antibalas-anti-2.webp', aspectRatio: 1060 / 1484 },
   '3': { image: 'sequence/antibalas-anti-3.webp', aspectRatio: 1122 / 1402 },
+  '3-cyan-coral': { image: 'sequence/antibalas-anti-3-cyan-coral.webp', aspectRatio: 1122 / 1402 },
+  '3-violet-citron': { image: 'sequence/antibalas-anti-3-violet-citron.webp', aspectRatio: 1122 / 1402 },
+  '3-amber-oxblood': { image: 'sequence/antibalas-anti-3-amber-oxblood.webp', aspectRatio: 1122 / 1402 },
 };
+
+export function parseAntibalasOption(value: string | null): AntibalasOption {
+  return value === 'current' || (value !== null && Object.hasOwn(antibalasAlternatives, value))
+    ? value as AntibalasOption
+    : '3';
+}
 
 export function withAntibalasOption(
   projects: FeaturedProject[],

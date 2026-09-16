@@ -37,6 +37,7 @@ import {
   withTrilogyOption,
   type TrilogyOption,
   withAntibalasOption,
+  parseAntibalasOption,
   type AntibalasOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
@@ -111,7 +112,7 @@ export function DarkroomFeatured({
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
-  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('current');
+  const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -155,9 +156,7 @@ export function DarkroomFeatured({
     if (preview) return;
     function changeView() {
       const antibalas = new URLSearchParams(window.location.search).get('anti');
-      setAntibalasOption(
-        antibalas === '1' || antibalas === '2' || antibalas === '3' ? antibalas : 'current',
-      );
+      setAntibalasOption(parseAntibalasOption(antibalas));
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
       setTrilogyOption(
         trilogy === 'heavy' || trilogy === 'current' ? trilogy : 'double-exposure',

@@ -199,18 +199,39 @@
   --anti-label: #f1a7c9;
   --anti-label-ink: #073d34;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .dr-room {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-3-cyan-coral {
+  --cf-frame-ground: #087a83;
+  --cf-room-ink: #ff7d63;
+  --cf-frame-ink: #ff7d63;
+  --anti-label: #ff7d63;
+  --anti-label-ink: #083c43;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-3-violet-citron {
+  --cf-frame-ground: #421b7c;
+  --cf-room-ink: #e2f05a;
+  --cf-frame-ink: #e2f05a;
+  --anti-label: #e2f05a;
+  --anti-label-ink: #32195b;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas.op-antibalas-3-amber-oxblood {
+  --cf-frame-ground: #6b1d25;
+  --cf-room-ink: #ffb442;
+  --cf-frame-ink: #ffb442;
+  --anti-label: #ffb442;
+  --anti-label-ink: #47191b;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3, .op-antibalas-3-cyan-coral, .op-antibalas-3-violet-citron, .op-antibalas-3-amber-oxblood) .dr-room {
   background: var(--cf-frame-ground);
   border-color: var(--cf-room-ink);
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-nav {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3, .op-antibalas-3-cyan-coral, .op-antibalas-3-violet-citron, .op-antibalas-3-amber-oxblood) .df-nav {
   color: var(--cf-room-ink);
   border-color: var(--cf-room-ink);
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-nav a:is(:hover, [aria-current='page']) {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3, .op-antibalas-3-cyan-coral, .op-antibalas-3-violet-citron, .op-antibalas-3-amber-oxblood) .df-nav a:is(:hover, [aria-current='page']) {
   color: var(--cf-room-ink);
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3) .df-slide.op-film-antibalas .df-project-name {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-antibalas:is(.op-antibalas-1, .op-antibalas-2, .op-antibalas-3, .op-antibalas-3-cyan-coral, .op-antibalas-3-violet-citron, .op-antibalas-3-amber-oxblood) .df-slide.op-film-antibalas .df-project-name {
   top: auto;
   left: auto;
   right: 3%;
