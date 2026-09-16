@@ -4,7 +4,6 @@ export type PressItem = {
   outlet: string;
   project: string;
   logo?: string;
-  railLogo?: string;
   videos: PressFilm[];
 };
 const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
@@ -60,7 +59,7 @@ export const projectLinks: ProjectLink[] = [
   {
     projectSlug: 'stranger',
     outlet: 'Letterboxd',
-    logo: 'letterboxd-dark.svg',
+    logo: 'letterboxd.svg',
     href: 'https://letterboxd.com/film/stranger-bernie-worrell-on-earth/cast/',
   },
 ];
@@ -131,7 +130,6 @@ export const pressItems: PressItem[] = [
     outlet: 'Pitchfork',
     project: 'Sinkane “Runnin’”',
     logo: 'pitchfork.svg',
-    railLogo: 'pitchfork-white.svg',
     videos: [video('Sinkane “Runnin’”', '102372771')],
   },
   {

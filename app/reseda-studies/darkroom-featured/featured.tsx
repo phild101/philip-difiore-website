@@ -546,11 +546,11 @@ export function DarkroomFeatured({
                   <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
                     data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
                     <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
-                    <div className="cf-press-logos">
+                    <div className={'cf-press-logos' + (projectPress.length === 0 && projectReferences.every(item => item.icon) ? ' cf-app-links' : '')}>
                       {projectPress.map(item => (
                         <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
                           aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
-                          <img src={'/press-logos/' + (item.railLogo ?? item.logo)} alt={item.outlet} />
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
                         </button>
                       ))}
                       {projectReferences.map(item => (
