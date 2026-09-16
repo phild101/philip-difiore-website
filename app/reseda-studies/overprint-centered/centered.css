@@ -137,21 +137,21 @@
   outline: 2px solid currentColor;
   outline-offset: 6px;
 }
-/* Project coverage lives beneath the arrows without shifting the composition. */
+/* Project coverage aligns with the bottom of the artwork without moving the arrows. */
 .op-site.op-sequence.op-poster.op-centered .cf-project-press {
   grid-column: 3;
   grid-row: 1;
-  align-self: start;
+  align-self: end;
   justify-self: start;
   width: calc(100% + var(--cf-room-inset));
-  margin-top: calc(var(--cf-normal-frame-height) / 2 + 6cqw + 20px);
+  margin-top: 0;
   padding: 0 16px;
   color: var(--cf-frame-ink);
   text-align: center;
   z-index: 2;
 }
 .op-site.op-sequence.op-poster.op-centered .cf-project-press[data-solo='true'] {
-  margin-top: calc(var(--cf-normal-frame-height) / 2 - 40px);
+  margin-top: 0;
 }
 .cf-project-press h2 {
   margin: 0 0 12px;
@@ -180,6 +180,7 @@
 }
 .cf-press-logo:hover { background: #fff; }
 .cf-press-logo:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+.cf-reference-logo img { filter: none; mix-blend-mode: normal; }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered .cf-project-press,
   .op-site.op-sequence.op-poster.op-centered .cf-project-press[data-solo='true'] {

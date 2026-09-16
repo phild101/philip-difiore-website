@@ -18,7 +18,7 @@ import {
 } from '../overprint/projects';
 import { Screening } from '../../studies/screening';
 import { PressArticle, PressFilmstrip } from './press';
-import { pressItems, type PressItem, type PressFilm } from './press-data';
+import { pressItems, projectLinks, type PressItem, type PressFilm } from './press-data';
 import {
   chromaticProperties,
   featuredPoster,
@@ -148,6 +148,7 @@ export function DarkroomFeatured({
   }
   const currentCategory = projectCategory(projects[index].slug);
   const currentWork = projects[index].work;
+  const projectReferences = centered ? projectLinks.filter(item => item.projectSlug === projects[index].slug) : [];
   const projectPress = centered ? pressItems.filter(item =>
     'articleSlug' in currentWork
       ? item.slug === currentWork.articleSlug
@@ -537,11 +538,19 @@ export function DarkroomFeatured({
                     {slide(index)}
                   </>
                 )}
-                {centered && projectPress.length > 0 && (
-                  <aside className="cf-project-press" aria-label={'Press for ' + currentWork.title}
+                {centered && (projectPress.length > 0 || projectReferences.length > 0) && (
+                  <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
                     data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
-                    <h2>Press</h2>
+                    <h2>{projectPress.length > 0 ? 'Press' : 'Links'}</h2>
                     <div className="cf-press-logos">
+                      {projectReferences.map(item => (
+                        <a key={item.href} className="cf-press-logo cf-reference-logo" href={item.href}
+                          target="_blank" rel="noopener noreferrer"
+                          aria-label={'Open ' + item.outlet + ': ' + currentWork.title + ' (opens in a new tab)'}
+                          title={item.outlet}>
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                        </a>
+                      ))}
                       {projectPress.map(item => (
                         <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
                           aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>

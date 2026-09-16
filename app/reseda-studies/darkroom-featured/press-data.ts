@@ -7,6 +7,21 @@ export type PressItem = {
   videos: PressFilm[];
 };
 const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
+// Direct project references open the supplied source, rather than an archived article.
+export const projectLinks = [
+  {
+    projectSlug: 'stranger',
+    outlet: 'Academy Collection',
+    logo: 'academy-collection.png',
+    href: 'https://www.academycollection.org/search/#/entity/academy/W081740/stranger%3A-bernie-worrell-on-earth?q=stranger+bernie+worrell&isFuzzy=true&source=academy',
+  },
+  {
+    projectSlug: 'stranger',
+    outlet: 'Letterboxd',
+    logo: 'letterboxd.svg',
+    href: 'https://letterboxd.com/film/stranger-bernie-worrell-on-earth/cast/',
+  },
+];
 export const pressItems: PressItem[] = [
   {
     slug: 'nyt-buffalo-hunt',
