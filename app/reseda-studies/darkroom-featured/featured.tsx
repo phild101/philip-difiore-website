@@ -543,6 +543,12 @@ export function DarkroomFeatured({
                     data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
                     <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
                     <div className="cf-press-logos">
+                      {projectPress.map(item => (
+                        <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
+                          aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                        </button>
+                      ))}
                       {projectReferences.map(item => (
                         <a key={item.href} className="cf-press-logo cf-reference-logo" href={item.href}
                           target="_blank" rel="noopener noreferrer"
@@ -550,12 +556,6 @@ export function DarkroomFeatured({
                           title={item.outlet}>
                           <img src={'/press-logos/' + item.logo} alt={item.outlet} />
                         </a>
-                      ))}
-                      {projectPress.map(item => (
-                        <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
-                          aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
-                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
-                        </button>
                       ))}
                     </div>
                   </aside>
