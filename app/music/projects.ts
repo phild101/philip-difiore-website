@@ -6,11 +6,11 @@ export const musicProjects: FeaturedProject[] = [
     work: {
       title: 'Improvisczario',
       artist: 'Bernie Worrell',
-      image: 'music/improvisczario-cover-v2.webp',
+      image: 'music/improvisczario-figure-petrol-bone.webp',
       externalUrl: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
     },
-    poster: '/images/music/improvisczario-cover-v2.webp',
-    aspectRatio: 1,
+    poster: '/images/music/improvisczario-figure-petrol-bone.webp',
+    aspectRatio: 1122 / 1402,
     heading: ['BERNIE WORRELL', 'IMPROVISCZARIO'],
     palette: 'ink',
     composition: 'right',
@@ -36,27 +36,32 @@ export function isMusicProject(slug: string) {
 }
 
 export const improvisczarioStudies = [
-  {option: 'current', title: 'Current cover', subject: 'Saved', image: 'improvisczario-cover-v2.webp', ground: '#78272c'},
+  {option: 'current', title: 'Original cover', subject: 'Saved', image: 'improvisczario-cover-v2.webp', ground: '#78272c'},
   {option: 'cyan-vermilion', title: 'Cyan / Vermilion', subject: 'Option 1', image: 'improvisczario-cyan-vermilion.webp', ground: '#008a9b'},
   {option: 'violet-citron', title: 'Violet / Citron', subject: 'Option 2', image: 'improvisczario-violet-citron.webp', ground: '#502270'},
   {option: 'ochre-petrol', title: 'Ochre / Petrol', subject: 'Option 3', image: 'improvisczario-ochre-petrol.webp', ground: '#d39a37'},
 ] as const;
 
 export const improvisczarioFigureStudies = [
-  {option: 'figure-petrol-bone', title: 'Petrol / Bone', subject: 'Option 1', image: 'improvisczario-figure-petrol-bone.webp', ground: '#163d42'},
+  {option: 'figure-petrol-bone', title: 'Petrol / Bone', subject: 'Selected', image: 'improvisczario-figure-petrol-bone.webp', ground: '#163d42'},
   {option: 'figure-oxblood-rose', title: 'Oxblood / Rose', subject: 'Option 2', image: 'improvisczario-figure-oxblood-rose.webp', ground: '#4e2028'},
   {option: 'figure-charcoal-ochre', title: 'Charcoal / Ochre', subject: 'Option 3', image: 'improvisczario-figure-charcoal-ochre.webp', ground: '#2b2c29'},
 ] as const;
 
-const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies];
+export const improvisczarioLynchStudies = [
+  improvisczarioFigureStudies[0],
+  {option: 'figure-lynch-night-session', title: 'Night Session', subject: 'Option 1', image: 'improvisczario-lynch-night-session.webp', ground: '#0e1718'},
+  {option: 'figure-lynch-signal-ghost', title: 'Signal Ghost', subject: 'Option 2', image: 'improvisczario-lynch-signal-ghost.webp', ground: '#242b2b'},
+] as const;
+
+const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies];
 export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {
-  return allImprovisczarioStudies.find(study => study.option === value)?.option ?? 'current';
+  return allImprovisczarioStudies.find(study => study.option === value)?.option ?? 'figure-petrol-bone';
 }
 
 export function withImprovisczarioOption(projects: FeaturedProject[], option: ImprovisczarioOption) {
-  if (option === 'current') return projects;
   const study = allImprovisczarioStudies.find(study => study.option === option)!;
   return projects.map(project => project.slug === 'improvisczario'
     ? {...project, aspectRatio: option.startsWith('figure-') ? 1122 / 1402 : 1, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}

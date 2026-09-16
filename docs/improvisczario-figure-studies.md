@@ -4,7 +4,9 @@ The user supplied `Screenshot 2026-09-16 at 1.05.23 PM.png`, depicting a cubist 
 
 Three separate built-in imagegen edits were created from that screenshot, each 1122 × 1402. The full-resolution PNG masters are preserved at `artwork-originals/images/music/improvisczario-figure-{petrol-bone,oxblood-rose,charcoal-ochre}.png`. Quality-92 WebP assets with matching basenames are served from `public/images/music/`.
 
-Review: `/reseda-studies/improvisczario-figure-studies`. Site previews use `?improv=figure-petrol-bone`, `figure-oxblood-rose`, or `figure-charcoal-ochre` with `#music/improvisczario`. The default album cover and all earlier alternatives remain unchanged. The image opens the existing Spotify album URL.
+Review: `/reseda-studies/improvisczario-figure-studies`. Site previews use `?improv=figure-petrol-bone`, `figure-oxblood-rose`, or `figure-charcoal-ochre` with `#music/improvisczario`. The image opens the existing Spotify album URL.
+
+The user's final selection is Petrol / Bone. It is now the default in Music and Info previews, with a petrol frame and bone category, arrows, and title cutout. All earlier alternatives remain available by their explicit query values. `?improv=current` preserves the original supplied square cover; omitting the query uses the selected Petrol / Bone artwork.
 
 ## Petrol / Bone — exact prompt
 

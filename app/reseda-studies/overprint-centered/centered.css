@@ -315,7 +315,7 @@
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
   --cf-normal-frame-height: 52cqw;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre) .df-featured {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost) .df-featured {
   --cf-normal-frame-height: 65cqw;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-petrol-bone {
@@ -338,6 +338,20 @@
   --cf-room-ink: #e6e0d1;
   --improv-label: #b9a06c;
   --improv-label-ink: #242521;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-lynch-night-session {
+  --cf-frame-ground: #0e1718;
+  --cf-frame-ink: #d3c4a9;
+  --cf-room-ink: #d3c4a9;
+  --improv-label: #c4ada0;
+  --improv-label-ink: #0e1718;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-lynch-signal-ghost {
+  --cf-frame-ground: #242b2b;
+  --cf-frame-ink: #d9d6c7;
+  --cf-room-ink: #d9d6c7;
+  --improv-label: #d9d6c7;
+  --improv-label-ink: #242b2b;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-cyan-vermilion {
   --cf-frame-ground: #008a9b;
@@ -572,7 +586,7 @@
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
     --cf-normal-frame-height: 66cqw;
   }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre) .df-featured {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre, .op-improv-figure-lynch-night-session, .op-improv-figure-lynch-signal-ghost) .df-featured {
     --cf-normal-frame-height: 82.5cqw;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured

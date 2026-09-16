@@ -1,0 +1,25 @@
+# Improvisczario — Lynchian previews
+
+September 16, 2026. The user selected Petrol / Bone as the default, then requested two Lynchian previews based on it. These remain alternatives; the default is unchanged. Both were made with one built-in imagegen edit per image, are 1122 × 1402, and retain the musician while replacing the graphic background with cinematic spaces.
+
+Review route: `/reseda-studies/improvisczario-lynch-studies`. Full site options: `improv=figure-lynch-night-session` and `improv=figure-lynch-signal-ghost`.
+
+## night-session
+
+Master: `artwork-originals/images/music/improvisczario-lynch-night-session.png`
+
+Web: `public/images/music/improvisczario-lynch-night-session.webp`
+
+Exact prompt:
+
+Use case: style-transfer, identity-preserve. NIGHT SESSION. Transform this exact selected petrol-and-bone overprint artwork into a haunting cinematic 4:5 portrait: a damaged frame from an unsettling music dream, with David Lynch's surreal film atmosphere. Preserve the recognizable source musician's angular face, hat, glasses, upright torso built from synthesizer modules, controls and keys, and the large piano cutting diagonally across the left foreground. Retain visual lineage and the same essential figure/composition; do not replace him with a generic person or robot. Render rich photographic material detail: old lacquer, worn metal synthesizer panels, ivory keys, subtle skinlike angular planes, dark fabric hat. Remove most of the original graphic background, replacing it with an ambiguous dark recording room, nearly-black petrol shadows and hard bone-colored light catching the face and piano keys. One small dim red practical light or reflection far in the background. Smoky chiaroscuro, imperfect analogue focus, subtle emulsion grain and restrained traces of the original overprint beneath the exposure, like a printed image becoming film. The musician stays still and faces us. ONE uncanny detail: his cast shadow on the far wall is subtly turned away, a quiet wrong-direction silhouette rather than a second person. Keep the face, hat, glasses and musical torso sufficiently readable at website poster size, with strong pools of illumination and rich shadow detail. Quiet, psychologically unsettling, sophisticated cinema. No cheesy red curtains, no checkerboards, no gore, no horror makeup, no jump-scare, no tentacles, no new characters, no typography, no text, no UI, no watermark, no outer frame. Full-bleed 4:5 portrait artwork.
+
+## signal-ghost
+
+Master: `artwork-originals/images/music/improvisczario-lynch-signal-ghost.png`
+
+Web: `public/images/music/improvisczario-lynch-signal-ghost.webp`
+
+Exact prompt:
+
+Use case: style-transfer. Edit the supplied Petrol/Bone musician artwork into ONE portrait 4:5 cinematic art image titled internally SIGNAL GHOST, with no actual text. Create unsettling, intimate, dreamlike stillness in a David Lynch-like analogue photographic treatment. Preserve the source's unmistakable cubist musician: same soft hat, glasses, long angular face, hoop earring, torso assembled from synthesizer modules, keys, knobs and cables, and strong piano diagonal entering from the left. Keep one figure. Translate the printed drawing toward believable tangible cinematic surfaces: softly weathered hat fabric, worn lacquer, dark bakelite, ivory keys, tactile faceted face planes and delicate glass reflections. Retain the cubist identity and source composition, but move decisively away from flat graphic line art, comic/vector rendering or a science-fiction robot poster. Scene: a pale bare room whose corners and edges fall into profound blackness, no visible decorations. Almost monochrome palette of silver-gray, cold bone and very subdued smoked petrol only; remove all orange, rainbow colors, large circles and busy graphic background shapes. Cold bone light catches the musician's face and the white keys, giving clear, haunting detail readable at thumbnail size, while the body and piano sink into dense high-contrast black shadows. One delicate analogue double-exposure registration echo sits slightly behind the head and shoulder, as if the film remembered a previous movement: a faint partial contour only, not a second character, not a full repeated portrait, not a collage. Let the left piano keyboard recede quietly into impossible darkness. Fine photographic grain and subtle film halation, tiny traces of imprinted radio-static and overprint abrasion confined to the far periphery; restrained warm paper undertone under the cold silvery light. Eerie empty space and material richness, unhurried silence, no dramatic action. Full bleed, no border. Avoid red lighting, bright comic colors, neon, big colored circles, all-over grunge, repeated portraits, extra people, costumes or props. No title, letters, labels, numbers, logos, watermark, camera controls, X icons, UI or screenshot border.
