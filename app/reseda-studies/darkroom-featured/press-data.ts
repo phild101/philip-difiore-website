@@ -11,9 +11,21 @@ const video = (title: string, vimeo: string): PressFilm => ({ title, vimeo });
 export const projectLinks = [
   {
     projectSlug: 'improvisczario',
+    outlet: 'Apple Music',
+    logo: 'apple-music.svg',
+    href: 'https://music.apple.com/us/album/improvisczario/261077376',
+  },
+  {
+    projectSlug: 'improvisczario',
     outlet: 'Spotify',
     logo: 'spotify.svg',
     href: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
+  },
+  {
+    projectSlug: 'buffalo-hunt-soundtrack',
+    outlet: 'Apple Music',
+    logo: 'apple-music.svg',
+    href: 'https://music.apple.com/us/album/the-buffalo-hunt-original-motion-picture-soundtrack/1469994635',
   },
   {
     projectSlug: 'buffalo-hunt-soundtrack',

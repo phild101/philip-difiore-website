@@ -192,6 +192,11 @@
     text-align: left;
   }
   .cf-press-logos { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .op-project-improvisczario .cf-press-logos,
+  .op-project-buffalo-hunt-soundtrack .cf-press-logos {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .cf-press-logo { width: 124px; height: 44px; padding: 9px 12px; }
 }
 /* The category and arrow share the same ink on every project. */
