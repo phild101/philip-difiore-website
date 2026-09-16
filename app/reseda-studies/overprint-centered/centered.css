@@ -219,6 +219,11 @@
   --cf-room-ink: #d5ed26;
   --cf-frame-ink: #d5ed26;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-the-trilogy.op-trilogy-double-exposure {
+  --cf-frame-ground: #ee929c;
+  --cf-room-ink: #181512;
+  --cf-frame-ink: #181512;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured:is(
     .op-project-stranger,
     .op-project-recording-parties,
@@ -343,6 +348,12 @@
   bottom: 5%;
   background: #d5ed26;
   color: #111511;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-trilogy-double-exposure
+  .df-slide.op-film-the-trilogy
+  .df-project-name {
+  background: #ee929c;
+  color: #181512;
 }
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered.op-featured .df-featured {

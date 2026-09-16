@@ -3,6 +3,7 @@
 import {
   Fragment,
   useEffect,
+  useMemo,
   useState,
   type ReactNode,
   type CSSProperties,
@@ -33,6 +34,8 @@ import {
   centeredCityProjects,
   centeredArchive,
   type CityOption,
+  withTrilogyOption,
+  type TrilogyOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { InfoPage } from '../overprint-centered/info';
@@ -105,13 +108,20 @@ export function DarkroomFeatured({
   const sequence = treatment === 'overprint' && edition === 'sequence';
   const [rivalPalette, setRivalPalette] = useState<RivalPalette>('uganda');
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
-  const projects = sequence
+  const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('current');
+  const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
       ]
     : treatment === 'overprint'
       ? overprintProjects
       : darkroomProjects;
+  const projects = useMemo(
+    () => sequence && centered
+      ? withTrilogyOption(baseProjects, trilogyOption)
+      : baseProjects,
+    [baseProjects, trilogyOption, sequence, centered],
+  );
   const archive = sequence
     ? centered
       ? centeredArchive
@@ -141,6 +151,10 @@ export function DarkroomFeatured({
   useEffect(() => {
     if (preview) return;
     function changeView() {
+      const trilogy = new URLSearchParams(window.location.search).get('trilogy');
+      setTrilogyOption(
+        trilogy === 'heavy' || trilogy === 'double-exposure' ? trilogy : 'current',
+      );
       const city = new URLSearchParams(window.location.search).get('city');
       setCityOption(
         city === 'night-glass' || city === 'original' ? city : 'vertigo',
@@ -364,6 +378,9 @@ export function DarkroomFeatured({
         (posterLayout ? ' op-poster op-' + posterLayout : '') +
         (centered && cityOption !== 'original'
           ? ' op-city-' + cityOption
+          : '') +
+        (centered && trilogyOption !== 'current'
+          ? ' op-trilogy-' + trilogyOption
           : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +

@@ -97,3 +97,34 @@ export const centeredCityProjects = {
   },
 };
 export type CityOption = keyof typeof centeredCityProjects;
+
+export type TrilogyOption = 'current' | 'heavy' | 'double-exposure';
+
+const trilogyAlternatives = {
+  heavy: {
+    image: 'sequence/the-trilogy-heavy-overprint.webp',
+    aspectRatio: 1122 / 1402,
+  },
+  'double-exposure': {
+    image: 'sequence/the-trilogy-double-exposure.webp',
+    aspectRatio: 1122 / 1402,
+  },
+};
+
+export function withTrilogyOption(
+  projects: FeaturedProject[],
+  option: TrilogyOption,
+) {
+  if (option === 'current') return projects;
+  const alternative = trilogyAlternatives[option];
+  return projects.map((project) =>
+    project.slug === 'the-trilogy'
+      ? {
+          ...project,
+          work: { ...project.work, image: alternative.image },
+          poster: '/images/' + alternative.image,
+          aspectRatio: alternative.aspectRatio,
+        }
+      : project,
+  );
+}
