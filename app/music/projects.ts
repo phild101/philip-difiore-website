@@ -42,16 +42,23 @@ export const improvisczarioStudies = [
   {option: 'ochre-petrol', title: 'Ochre / Petrol', subject: 'Option 3', image: 'improvisczario-ochre-petrol.webp', ground: '#d39a37'},
 ] as const;
 
-export type ImprovisczarioOption = typeof improvisczarioStudies[number]['option'];
+export const improvisczarioFigureStudies = [
+  {option: 'figure-petrol-bone', title: 'Petrol / Bone', subject: 'Option 1', image: 'improvisczario-figure-petrol-bone.webp', ground: '#163d42'},
+  {option: 'figure-oxblood-rose', title: 'Oxblood / Rose', subject: 'Option 2', image: 'improvisczario-figure-oxblood-rose.webp', ground: '#4e2028'},
+  {option: 'figure-charcoal-ochre', title: 'Charcoal / Ochre', subject: 'Option 3', image: 'improvisczario-figure-charcoal-ochre.webp', ground: '#2b2c29'},
+] as const;
+
+const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies];
+export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {
-  return improvisczarioStudies.find(study => study.option === value)?.option ?? 'current';
+  return allImprovisczarioStudies.find(study => study.option === value)?.option ?? 'current';
 }
 
 export function withImprovisczarioOption(projects: FeaturedProject[], option: ImprovisczarioOption) {
   if (option === 'current') return projects;
-  const study = improvisczarioStudies.find(study => study.option === option)!;
+  const study = allImprovisczarioStudies.find(study => study.option === option)!;
   return projects.map(project => project.slug === 'improvisczario'
-    ? {...project, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
+    ? {...project, aspectRatio: option.startsWith('figure-') ? 1122 / 1402 : 1, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
     : project);
 }

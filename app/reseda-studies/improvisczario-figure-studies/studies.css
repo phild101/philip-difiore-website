@@ -1,0 +1,14 @@
+.figure-review .anti-review-heading,
+.figure-review .anti-review-grid,
+.figure-review-footer { max-width: 1680px; }
+.figure-review .anti-review-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.figure-review .anti-review-caption { flex-wrap: wrap; gap: 6px 12px; }
+.figure-review .anti-review-image { padding: clamp(12px, 1.2vw, 22px); }
+.figure-review-footer { margin: 42px auto 0; border-top: 1px solid currentColor; padding-top: 24px; font-size: 14px; font-weight: 700; }
+.figure-review-footer a { text-decoration: underline; text-underline-offset: 4px; }
+@media(max-width: 800px) {
+  .figure-review .anti-review-grid { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+}
+@media(max-width: 640px) {
+  .figure-review .anti-review-heading h1 { font-size: clamp(25px, 7vw, 40px); }
+}

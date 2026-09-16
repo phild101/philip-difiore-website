@@ -315,6 +315,30 @@
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
   --cf-normal-frame-height: 52cqw;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre) .df-featured {
+  --cf-normal-frame-height: 65cqw;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-petrol-bone {
+  --cf-frame-ground: #163d42;
+  --cf-frame-ink: #e3d9be;
+  --cf-room-ink: #e3d9be;
+  --improv-label: #e3d9be;
+  --improv-label-ink: #163d42;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-oxblood-rose {
+  --cf-frame-ground: #4e2028;
+  --cf-frame-ink: #c99891;
+  --cf-room-ink: #e9dfcb;
+  --improv-label: #c99891;
+  --improv-label-ink: #32191d;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-figure-charcoal-ochre {
+  --cf-frame-ground: #2b2c29;
+  --cf-frame-ink: #b9a06c;
+  --cf-room-ink: #e6e0d1;
+  --improv-label: #b9a06c;
+  --improv-label-ink: #242521;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-cyan-vermilion {
   --cf-frame-ground: #008a9b;
   --cf-room-ink: #fff1d8;
@@ -547,6 +571,9 @@
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario .df-featured {
     --cf-normal-frame-height: 66cqw;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario:is(.op-improv-figure-petrol-bone, .op-improv-figure-oxblood-rose, .op-improv-figure-charcoal-ochre) .df-featured {
+    --cf-normal-frame-height: 82.5cqw;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured
     .sq-category
