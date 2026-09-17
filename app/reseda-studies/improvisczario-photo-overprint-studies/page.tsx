@@ -18,7 +18,7 @@ export default function ImprovisczarioPhotoOverprintStudies() {
       </nav>
     </header>
     <div className="anti-review-heading"><h1>Improvisczario</h1><p>Photographic overprints</p></div>
-    <section className="anti-review-grid" aria-label="New artwork and three saved options">
+    <section className="anti-review-grid" aria-label="Selected artwork and three saved options">
       {[...improvisczarioWildStudies, ...improvisczarioPhotoOverprintStudies].map(study => {
         const href = site + '&improv=' + study.option + '#music/improvisczario';
         return <article className="anti-review-card" key={study.option}>

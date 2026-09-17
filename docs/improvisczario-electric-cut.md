@@ -1,8 +1,10 @@
-# Improvisczario — Electric Cut preview
+# Improvisczario — Electric Cut selected
 
-September 16, 2026. Philip asked to preserve Petrol / Ochre, Oxblood / Rose and Indigo / Ice, but found their compositions lacked the flair of Sharon Jones and Old Friend. All three masters and in-site queries remain saved unchanged. Their gallery badges now read Saved. The original Signal Ghost remains the site's default.
+Selection confirmed September 16, 2026: Philip approved Electric Cut as the site's default Improvisczario artwork. Music and Info previews use the Electric Cut image, with its aubergine frame and sulfur-yellow lettering, arrows and title cutout. No query is required; absent or invalid `improv` values resolve to Electric Cut. Explicit historical preview queries remain supported. All other masters, WebP images and study routes remain saved.
 
-Electric Cut adds a closer asymmetrical crop, more prominent photographic human face, torn silhouette, sharp diagonal piano, sulfur and aubergine inks, paper cuts and registration lines. It is a separate preview, not a replacement. Reference art: `artwork-originals/images/overprint/old-friend.png` and `artwork-originals/images/sequence/i-learned-the-hard-way-overprint.png`. The existing human-face Signal Ghost generation supplied the subject.
+September 16, 2026. Philip asked to preserve Petrol / Ochre, Oxblood / Rose and Indigo / Ice, but found their compositions lacked the flair of Sharon Jones and Old Friend. All three masters and in-site queries remain saved unchanged. Their gallery badges read Saved. Original Signal Ghost is also preserved as an alternative.
+
+Electric Cut adds a closer asymmetrical crop, more prominent photographic human face, torn silhouette, sharp diagonal piano, sulfur and aubergine inks, paper cuts and registration lines. Reference art: `artwork-originals/images/overprint/old-friend.png` and `artwork-originals/images/sequence/i-learned-the-hard-way-overprint.png`. The existing human-face Signal Ghost generation supplied the subject.
 
 Full-site preview: `/?improv=figure-photo-electric-cut#music/improvisczario`.
 Comparison gallery: `/reseda-studies/improvisczario-photo-overprint-studies`.

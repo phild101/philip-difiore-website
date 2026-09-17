@@ -1,15 +1,17 @@
 import type { FeaturedProject } from '../reseda-studies/overprint/projects';
 
+export const defaultImprovisczarioOption = 'figure-photo-electric-cut';
+
 export const musicProjects: FeaturedProject[] = [
   {
     slug: 'improvisczario',
     work: {
       title: 'Improvisczario',
       artist: 'Bernie Worrell',
-      image: 'music/improvisczario-lynch-signal-ghost.webp',
+      image: 'music/improvisczario-photo-electric-cut.webp',
       externalUrl: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
     },
-    poster: '/images/music/improvisczario-lynch-signal-ghost.webp',
+    poster: '/images/music/improvisczario-photo-electric-cut.webp',
     aspectRatio: 1122 / 1402,
     heading: ['BERNIE WORRELL', 'IMPROVISCZARIO'],
     palette: 'ink',
@@ -51,7 +53,7 @@ export const improvisczarioFigureStudies = [
 export const improvisczarioLynchStudies = [
   {...improvisczarioFigureStudies[0], subject: 'Saved'},
   {option: 'figure-lynch-night-session', title: 'Night Session', subject: 'Option 1', image: 'improvisczario-lynch-night-session.webp', ground: '#0e1718'},
-  {option: 'figure-lynch-signal-ghost', title: 'Signal Ghost', subject: 'Selected', image: 'improvisczario-lynch-signal-ghost.webp', ground: '#242b2b'},
+  {option: 'figure-lynch-signal-ghost', title: 'Signal Ghost', subject: 'Saved', image: 'improvisczario-lynch-signal-ghost.webp', ground: '#242b2b'},
   {option: 'figure-lynch-purple-beret', title: 'Signal Ghost — Purple Beret', subject: 'Saved', image: 'improvisczario-lynch-purple-beret.webp', ground: '#242b2b'},
 ] as const;
 
@@ -62,19 +64,38 @@ export const improvisczarioPhotoOverprintStudies = [
 ] as const;
 
 export const improvisczarioWildStudies = [
-  {option: 'figure-photo-electric-cut', title: 'Electric Cut', subject: 'New', image: 'improvisczario-photo-electric-cut.webp', ground: '#3a153d'},
+  {option: 'figure-photo-electric-cut', title: 'Electric Cut', subject: 'Selected', image: 'improvisczario-photo-electric-cut.webp', ground: '#3a153d'},
 ] as const;
 
 const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies, ...improvisczarioWildStudies];
 export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {
-  return allImprovisczarioStudies.find(study => study.option === value)?.option ?? 'figure-lynch-signal-ghost';
+  return allImprovisczarioStudies.find(study => study.option === value)?.option ?? defaultImprovisczarioOption;
 }
 
 export function withImprovisczarioOption(projects: FeaturedProject[], option: ImprovisczarioOption) {
   const study = allImprovisczarioStudies.find(study => study.option === option)!;
   return projects.map(project => project.slug === 'improvisczario'
     ? {...project, aspectRatio: option.startsWith('figure-') ? 1122 / 1402 : 1, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
+    : project);
+}
+
+export const buffaloSoundtrackStudies = [
+  {option: 'current', title: 'Original', subject: 'Selected', image: 'buffalo-hunt-soundtrack-overprint.webp', ground: '#102c34'},
+  {option: 'fifth-face', title: 'The Fifth Face', subject: 'Option 1', image: 'buffalo-hunt-soundtrack-fifth-face.webp', ground: '#173f46'},
+  {option: 'monument', title: 'Buffalo Monument', subject: 'Option 2', image: 'buffalo-hunt-soundtrack-monument.webp', ground: '#7a3427'},
+  {option: 'mountain-ghost', title: 'Mountain Ghost', subject: 'Option 3', image: 'buffalo-hunt-soundtrack-mountain-ghost.webp', ground: '#183347'},
+] as const;
+export type BuffaloSoundtrackOption = typeof buffaloSoundtrackStudies[number]['option'];
+
+export function parseBuffaloSoundtrackOption(value: string | null): BuffaloSoundtrackOption {
+  return buffaloSoundtrackStudies.find(study => study.option === value)?.option ?? 'current';
+}
+
+export function withBuffaloSoundtrackOption(projects: FeaturedProject[], option: BuffaloSoundtrackOption) {
+  const study = buffaloSoundtrackStudies.find(study => study.option === option)!;
+  return projects.map(project => project.slug === 'buffalo-hunt-soundtrack'
+    ? {...project, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
     : project);
 }

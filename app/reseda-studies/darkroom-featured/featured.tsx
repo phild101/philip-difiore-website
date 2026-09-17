@@ -42,7 +42,8 @@ import {
   type AntibalasOption,
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
-import { isMusicProject, parseImprovisczarioOption, withImprovisczarioOption, type ImprovisczarioOption } from '../../music/projects';
+import { defaultImprovisczarioOption, isMusicProject, parseImprovisczarioOption, withImprovisczarioOption, type ImprovisczarioOption } from '../../music/projects';
+import { parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type BuffaloSoundtrackOption } from '../../music/projects';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
@@ -117,7 +118,8 @@ export function DarkroomFeatured({
   const [cityOption, setCityOption] = useState<CityOption>('vertigo');
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
   const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
-  const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>('figure-lynch-signal-ghost');
+  const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>(defaultImprovisczarioOption);
+  const [buffaloSoundtrackOption, setBuffaloSoundtrackOption] = useState<BuffaloSoundtrackOption>('current');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -128,10 +130,10 @@ export function DarkroomFeatured({
   const projects = useMemo(
     () => {
       if (!sequence || !centered) return baseProjects;
-      const selected = withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption);
+      const selected = withBuffaloSoundtrackOption(withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption), buffaloSoundtrackOption);
       return landingView === 'info' ? orderSiteProjects(selected) : selected;
     },
-    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, sequence, centered, landingView],
+    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, buffaloSoundtrackOption, sequence, centered, landingView],
   );
   const archive = sequence
     ? centered
@@ -171,6 +173,7 @@ export function DarkroomFeatured({
     if (preview) return;
     function changeView() {
       setImprovisczarioOption(parseImprovisczarioOption(new URLSearchParams(window.location.search).get('improv')));
+      setBuffaloSoundtrackOption(parseBuffaloSoundtrackOption(new URLSearchParams(window.location.search).get('buffalo')));
       const antibalas = new URLSearchParams(window.location.search).get('anti');
       setAntibalasOption(parseAntibalasOption(antibalas));
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
@@ -413,6 +416,9 @@ export function DarkroomFeatured({
           : '') +
         (centered && improvisczarioOption !== 'current'
           ? ' op-improv-' + improvisczarioOption
+          : '') +
+        (centered && buffaloSoundtrackOption !== 'current'
+          ? ' op-buffalo-' + buffaloSoundtrackOption
           : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +
