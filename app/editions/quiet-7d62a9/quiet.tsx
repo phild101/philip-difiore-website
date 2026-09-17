@@ -13,7 +13,7 @@ import { Screening } from '../../studies/screening';
 import { quietProjects, quietPhotograph, quietPhotographSize } from './catalog';
 import './quiet.css';
 
-type Section = 'info' | 'film' | 'music';
+type Section = 'info' | 'index' | 'film' | 'music';
 type Route = { section: Section; slug?: string; listen?: boolean };
 const films = quietProjects.filter(project => !isMusicProject(project.slug));
 const music = quietProjects.filter(project => isMusicProject(project.slug));
@@ -21,15 +21,18 @@ const href = (project: FeaturedProject) => '#' + (isMusicProject(project.slug) ?
 
 function readRoute(): Route {
   const [section, slug, action] = window.location.hash.slice(1).split('/');
+  if (section === 'index') return { section: 'index' };
   if (section !== 'film' && section !== 'music') return { section: 'info' };
   const collection = section === 'film' ? films : music;
-  return { section, slug: collection.some(project => project.slug === slug) ? slug : undefined,
+  if (!collection.some(project => project.slug === slug)) return { section: 'index' };
+  return { section, slug,
     listen: section === 'music' && slug === 'recording-parties' && action === 'listen' };
 }
 
 function Navigation({ section }: { section: Section }) {
   return <nav aria-label="Main navigation">
-      {(['film', 'music', 'info'] as const).map(item => <a key={item} href={'#' + item} aria-current={section === item ? 'page' : undefined}>{item}</a>)}
+      <a href="#index" aria-current={section !== 'info' ? 'page' : undefined}>Index</a>
+      <a href="#info" aria-current={section === 'info' ? 'page' : undefined}>Info</a>
     </nav>;
 }
 
@@ -40,16 +43,19 @@ function Header({ section }: { section: Section }) {
   </header>;
 }
 
-function Index({ section, collection }: { section: 'film' | 'music'; collection: FeaturedProject[] }) {
-  return <main className="quiet-content quiet-index" aria-label={section === 'film' ? 'Films' : 'Music projects'}>
-    <h1>{section === 'film' ? 'Film' : 'Music'}</h1>
-    <ul className="quiet-projects">
+function Index() {
+  return <main className="quiet-content quiet-index" aria-label="Project index">
+    <h1 className="info-sr-only">Index</h1>
+    {([{ title: 'Film', collection: films }, { title: 'Music', collection: music }]).map(({ title, collection }) => <section className="quiet-index-section" key={title} aria-label={title}>
+      <h2>{title}</h2>
+      <ul className="quiet-projects">
       {collection.map(project => <li key={project.slug}>
         <a className="quiet-project" href={href(project)}>
           <span className="quiet-project-caption"><span>{project.work.title}</span>{project.work.artist && <span className="quiet-secondary"> — {project.work.artist}</span>}</span>
         </a>
       </li>)}
-    </ul>
+      </ul>
+    </section>)}
   </main>;
 }
 
@@ -75,7 +81,9 @@ export function AustereEdition() {
 
   useEffect(() => {
     const navigate = () => {
-      setRoute(readRoute()); setFilm(null); setArticle(null);
+      const next = readRoute();
+      if (next.section === 'index' && window.location.hash !== '#index') window.history.replaceState(null, '', '#index');
+      setRoute(next); setFilm(null); setArticle(null);
       window.scrollTo({ top: 0, behavior: 'instant' });
     };
     navigate();
@@ -85,7 +93,7 @@ export function AustereEdition() {
   }, []);
 
   useEffect(() => {
-    document.title = (project?.work.title || (route.section === 'film' ? 'Film' : route.section === 'music' ? 'Music' : 'Info')) + ' — Philip Di Fiore · Austere';
+    document.title = (project?.work.title || (route.section === 'index' ? 'Index' : 'Info')) + ' — Philip Di Fiore · Austere';
   }, [route.section, project]);
 
   useEffect(() => {
@@ -119,7 +127,7 @@ export function AustereEdition() {
           <p className="quiet-back"><a href="#music/recording-parties">Recording Parties</a></p>
         </div> : project ? <main className="quiet-content quiet-detail" aria-label={project.work.title}>
           <div className="quiet-detail-heading"><div><h1>{project.work.title}</h1><p className="quiet-secondary">{project.work.artist}</p></div>
-            <a href={'#' + route.section}>All {route.section === 'film' ? 'films' : 'music'}</a>
+            <a href="#index">Index</a>
           </div>
           <figure key={project.slug} className={'quiet-photograph' + (route.section === 'music' ? ' quiet-album' : '')} style={photoSize ? { '--quiet-photo-ratio': photoSize[0] / photoSize[1] } as CSSProperties : undefined}>
             {'vimeo' in project.work ? <button ref={screeningTrigger} className="quiet-image-link" onClick={playProject} aria-label={'Play ' + project.work.title}>
@@ -132,7 +140,7 @@ export function AustereEdition() {
           </div>}
           <nav className="quiet-adjacent" aria-label="Project navigation">
             {index > 0 ? <a href={href(collection[index - 1])} rel="prev" aria-label={'Previous project: ' + collection[index - 1].work.title}><span aria-hidden="true">←</span><span>{collection[index - 1].work.title}</span></a> : <span />}
-            <a className="quiet-index-link" href={'#' + route.section}>{route.section === 'film' ? 'Film' : 'Music'} index</a>
+            <a className="quiet-index-link" href="#index">Index</a>
             {index < collection.length - 1 ? <a href={href(collection[index + 1])} rel="next" aria-label={'Next project: ' + collection[index + 1].work.title}><span>{collection[index + 1].work.title}</span><span aria-hidden="true">→</span></a> : <span />}
           </nav>
           {(articles.length > 0 || references.some(item => !item.icon)) && <section className="quiet-references" aria-label="Press and references">
@@ -141,7 +149,7 @@ export function AustereEdition() {
               {references.filter(item => !item.icon).map(item => <a href={item.href} key={item.outlet} target="_blank" rel="noreferrer">{item.outlet}</a>)}
             </div>
           </section>}
-        </main> : <Index section={route.section} collection={collection} />}
+        </main> : <Index />}
       </div></div>}
     <PressArticle article={article} close={() => setArticle(null)} watch={watchPress} fullscreen />
     <Screening work={film} close={() => setFilm(null)} fullscreen finalFocus={screeningTrigger} />

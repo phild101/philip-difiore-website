@@ -14,7 +14,8 @@
 .quiet-site button { font:inherit; cursor:pointer; border-radius:0; }
 .quiet-site :is(a,button,select):focus-visible { outline:1px solid #000; outline-offset:5px; }
 .quiet-content { width:min(calc(100% - 64px),560px); margin:0 auto; padding:clamp(48px,8vh,88px) 0 64px; }
-.quiet-index h1 { padding-bottom:22px; border-bottom:1px solid #111; }
+.quiet-index-section h2 { padding-bottom:14px; border-bottom:1px solid #111; }
+.quiet-index-section + .quiet-index-section { margin-top:36px; }
 .quiet-projects { list-style:none; margin:0; padding:0; }
 .quiet-projects { padding-top:12px; }
 .quiet-project { display:block; padding:6px 0; text-decoration:none; }
