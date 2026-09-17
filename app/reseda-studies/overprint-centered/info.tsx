@@ -9,14 +9,14 @@ import { isMusicProject } from '../../music/projects';
 import { projectLinks } from '../darkroom-featured/press-data';
 import './info.css';
 
-export function InfoPage({ filmSlug, projects, homeHref = '#film/if-you-call' }: { filmSlug: string; projects: FeaturedProject[]; homeHref?: string }) {
+export function InfoPage({ filmSlug, projects, homeHref = '#film/if-you-call', projectImage, navigation }: { filmSlug: string; projects: FeaturedProject[]; homeHref?: string; projectImage?: (project: FeaturedProject) => string; navigation?: ReactNode }) {
   const biography = useRef<HTMLElement>(null);
   const [activePreview, setActivePreview] = useState<string | null>(null);
   function project(slug: string): BioPreviewItem {
     const item = projects.find(item => item.slug === slug)!;
     return {
       title: item.work.title,
-      image: featuredPoster(item, 'sequence'),
+      image: projectImage ? projectImage(item) : featuredPoster(item, 'sequence'),
       href: '#' + (isMusicProject(slug) ? 'music/' : 'film/') + slug,
     };
   }
@@ -54,7 +54,7 @@ export function InfoPage({ filmSlug, projects, homeHref = '#film/if-you-call' }:
       <div className="info-frame">
         <header className="info-header">
           <a href={homeHref} aria-label="Philip Di Fiore — Home">Philip Di Fiore</a>
-          <SectionNavigation active="info" filmSlug={filmSlug} />
+          {navigation ?? <SectionNavigation active="info" filmSlug={filmSlug} />}
         </header>
         <main className="info-content" aria-label="Info about Philip Di Fiore">
           <h1 className="info-sr-only">Philip Di Fiore</h1>

@@ -5,3 +5,4 @@ Disallow: /reseda-studies/
 Disallow: /collection-one/
 Disallow: /collection-two/
 Disallow: /api/
+Disallow: /editions/
