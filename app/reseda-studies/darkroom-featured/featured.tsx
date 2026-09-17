@@ -625,8 +625,7 @@ export function DarkroomFeatured({
                         <Fragment key={step}>
                         {mobileCarousel && step === 1 && (
                           <span className="cf-swipe-cue" aria-hidden="true">
-                            <span>Swipe to explore</span>
-                            <span className="cf-project-position">{navigationIndices.indexOf(index) + 1} / {navigationIndices.length}</span>
+                            <span className="cf-project-position">{navigationIndices.indexOf(index) + 1}/{navigationIndices.length}</span>
                           </span>
                         )}
                         <button
