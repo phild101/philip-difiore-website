@@ -41,3 +41,6 @@ next-env.d.ts
 
 .dev.vars*
 !.env.example
+
+# Netlify build/deploy cache (never commit generated functions or credentials)
+/.netlify/

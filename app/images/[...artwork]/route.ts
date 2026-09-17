@@ -51,5 +51,5 @@ export function GET(request: Request) {
   const url = new URL(request.url);
   const destination = artworkRedirects[url.pathname];
   if (!destination) return new Response('Not found', { status: 404 });
-  return Response.redirect(new URL(destination, url.origin), 308);
+  return new Response(null, { status: 308, headers: { Location: destination } });
 }

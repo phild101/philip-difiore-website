@@ -1,4 +1,4 @@
-import { env } from 'cloudflare:workers';
+import { recordingServiceKey } from '@/lib/recording-environment';
 
 const origin = 'https://gjvvbofpkxuicrpshxun.supabase.co';
 const bucket = 'recording-parties-audio';
@@ -8,7 +8,7 @@ type RecordingRow = {
 };
 // Exact project and bucket: this server helper cannot sign arbitrary user paths.
 async function recordingRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const key = (env as unknown as Record<string, string>).SUPABASE_SERVICE_ROLE_KEY;
+  const key = recordingServiceKey();
   if (!key) throw new Error('Recording service is not configured');
   const response = await fetch(origin + path, {
     ...init,

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {Darkroom} from '../reseda-darkroom/darkroom';
 import {BeautifulComposition} from '../studies/beautiful';
 import {beautyStudies} from '../studies/data';
-import {CollectionOnePreview} from '../collection-one/page';
+import {CollectionOnePreview} from '../collection-one/collection';
 import {works} from '../artworks/works';
 import {studies} from '../artworks/data';
 import '../artworks/art.css';

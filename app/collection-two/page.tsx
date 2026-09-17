@@ -2,7 +2,7 @@
 import {useEffect,useState} from 'react';
 import Link from 'next/link';
 import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/ui/dialog';
-import CollectionOne from '../collection-one/page';
+import CollectionOne from '../collection-one/collection';
 import {works} from '../artworks/works';
 import {studies,type Artwork} from '../artworks/data';
 import '../artworks/art.css';
