@@ -44,6 +44,7 @@ import {
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { defaultImprovisczarioOption, isMusicProject, parseImprovisczarioOption, withImprovisczarioOption, type ImprovisczarioOption } from '../../music/projects';
 import { parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type BuffaloSoundtrackOption } from '../../music/projects';
+import { parseBuffaloFilmOption, withBuffaloFilmOption, type BuffaloFilmOption } from '../overprint-centered/buffalo-film-studies';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
 import './featured.css';
@@ -120,6 +121,7 @@ export function DarkroomFeatured({
   const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
   const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>(defaultImprovisczarioOption);
   const [buffaloSoundtrackOption, setBuffaloSoundtrackOption] = useState<BuffaloSoundtrackOption>('current');
+  const [buffaloFilmOption, setBuffaloFilmOption] = useState<BuffaloFilmOption>('current');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[
         rivalPalette
@@ -130,10 +132,10 @@ export function DarkroomFeatured({
   const projects = useMemo(
     () => {
       if (!sequence || !centered) return baseProjects;
-      const selected = withBuffaloSoundtrackOption(withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption), buffaloSoundtrackOption);
+      const selected = withBuffaloFilmOption(withBuffaloSoundtrackOption(withImprovisczarioOption(withAntibalasOption(withTrilogyOption(baseProjects, trilogyOption), antibalasOption), improvisczarioOption), buffaloSoundtrackOption), buffaloFilmOption);
       return landingView === 'info' ? orderSiteProjects(selected) : selected;
     },
-    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, buffaloSoundtrackOption, sequence, centered, landingView],
+    [baseProjects, trilogyOption, antibalasOption, improvisczarioOption, buffaloSoundtrackOption, buffaloFilmOption, sequence, centered, landingView],
   );
   const archive = sequence
     ? centered
@@ -174,6 +176,7 @@ export function DarkroomFeatured({
     function changeView() {
       setImprovisczarioOption(parseImprovisczarioOption(new URLSearchParams(window.location.search).get('improv')));
       setBuffaloSoundtrackOption(parseBuffaloSoundtrackOption(new URLSearchParams(window.location.search).get('buffalo')));
+      setBuffaloFilmOption(parseBuffaloFilmOption(new URLSearchParams(window.location.search).get('bufffilm')));
       const antibalas = new URLSearchParams(window.location.search).get('anti');
       setAntibalasOption(parseAntibalasOption(antibalas));
       const trilogy = new URLSearchParams(window.location.search).get('trilogy');
@@ -419,6 +422,9 @@ export function DarkroomFeatured({
           : '') +
         (centered && buffaloSoundtrackOption !== 'current'
           ? ' op-buffalo-' + buffaloSoundtrackOption
+          : '') +
+        (centered && buffaloFilmOption !== 'current'
+          ? ' op-bufffilm-' + buffaloFilmOption
           : '') +
         (reduced ? ' op-reduced' : '') +
         (sequence && rivalPalette === 'uganda' ? ' op-rival-uganda' : '') +

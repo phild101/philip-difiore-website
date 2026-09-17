@@ -467,6 +467,16 @@
   --cf-room-ink: #0c1215;
   --cf-frame-ink: #d0341a;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt.op-bufffilm-acid-negative {
+  --cf-frame-ground: #172c68;
+  --cf-room-ink: #eddec1;
+  --cf-frame-ink: #f1d53f;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt.op-bufffilm-cold-press {
+  --cf-frame-ground: #581e2a;
+  --cf-room-ink: #eddec1;
+  --cf-frame-ink: #41bfd8;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-young-trouble {
   --cf-frame-ground: #f92f02;
   --cf-room-ink: #000;
@@ -602,6 +612,18 @@
   left: 3%;
   right: auto;
   bottom: auto;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured:is(.op-bufffilm-acid-negative, .op-bufffilm-cold-press) .df-slide.op-film-buffalo-hunt .df-project-name {
+  top: auto;
+  bottom: 2%;
+  left: 3%;
+  padding: 2cqw;
+  max-width: 90%;
+  background: #eddec1;
+  color: var(--cf-frame-ground);
+}
+.op-site.op-sequence.op-poster.op-centered:is(.op-bufffilm-acid-negative, .op-bufffilm-cold-press) .df-slide.op-film-buffalo-hunt .df-project-name h2 {
+  font-size: clamp(14px, 4.7cqw, 42px);
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured
   .df-slide:is(.op-film-diiv, .op-film-rdgldgrn)
