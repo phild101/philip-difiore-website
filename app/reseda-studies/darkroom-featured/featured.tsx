@@ -47,6 +47,7 @@ import { parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type Buffalo
 import { parseBuffaloFilmOption, withBuffaloFilmOption, type BuffaloFilmOption } from '../overprint-centered/buffalo-film-studies';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
+import { useProjectSwipe } from '../overprint-centered/use-project-swipe';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -294,6 +295,8 @@ export function DarkroomFeatured({
       setFilm(work);
     }
   }
+  const mobileSwipe = centered && landingView === 'info';
+  const swipe = useProjectSwipe(mobileSwipe && previous === null && !film && !article, move);
   function watchPressFilm(work: PressFilm) {
     setArticle(null);
     setFilm({
@@ -554,9 +557,18 @@ export function DarkroomFeatured({
                         </span>
                       </h1>
                     )}
-                    <div className="sq-stage">
-                      {previous !== null && slide(previous, true)}
-                      {slide(index)}
+                    <div className="sq-stage" {...(mobileSwipe ? swipe : {})}>
+                      {mobileSwipe ? (
+                        <div className="cf-swipe-track">
+                          {previous !== null && slide(previous, true)}
+                          {slide(index)}
+                        </div>
+                      ) : (
+                        <>
+                          {previous !== null && slide(previous, true)}
+                          {slide(index)}
+                        </>
+                      )}
                     </div>
                   </>
                 ) : (
@@ -564,28 +576,6 @@ export function DarkroomFeatured({
                     {previous !== null && slide(previous, true)}
                     {slide(index)}
                   </>
-                )}
-                {centered && (projectPress.length > 0 || projectReferences.length > 0) && (
-                  <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
-                    data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
-                    <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
-                    <div className={'cf-press-logos' + (projectPress.length === 0 && projectReferences.every(item => item.icon) ? ' cf-app-links' : '')}>
-                      {projectPress.map(item => (
-                        <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
-                          aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
-                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
-                        </button>
-                      ))}
-                      {projectReferences.map(item => (
-                        <a key={item.href} className={'cf-press-logo cf-reference-logo' + (item.icon ? ' cf-app-icon' : '')} href={item.href}
-                          target="_blank" rel="noopener noreferrer"
-                          aria-label={'Open ' + item.outlet + ': ' + currentWork.title + ' (opens in a new tab)'}
-                          title={item.outlet}>
-                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
-                        </a>
-                      ))}
-                    </div>
-                  </aside>
                 )}
                 <span className="sr-only" aria-live="polite" aria-atomic="true">
                   {projects[index].work.artist}: {projects[index].work.title}
@@ -601,6 +591,13 @@ export function DarkroomFeatured({
                       aria-label={centered ? (currentCategory === 'MUSIC' ? 'Music navigation' : 'Film navigation') : 'Featured navigation'}
                     >
                       {([-1, 1] as const).map((step) => (
+                        <Fragment key={step}>
+                        {mobileSwipe && step === 1 && (
+                          <span className="cf-swipe-cue" aria-hidden="true">
+                            <span>Swipe to explore</span>
+                            <span className="cf-project-position">{navigationIndices.indexOf(index) + 1} / {navigationIndices.length}</span>
+                          </span>
+                        )}
                         <button
                           className={
                             'sq-arrow' + (step === -1 ? ' sq-previous' : '')
@@ -643,6 +640,7 @@ export function DarkroomFeatured({
                             )}
                           </svg>
                         </button>
+                        </Fragment>
                       ))}
                     </nav>
                   </div>
@@ -665,6 +663,28 @@ export function DarkroomFeatured({
                       />
                     </svg>
                   </button>
+                )}
+                {centered && (projectPress.length > 0 || projectReferences.length > 0) && (
+                  <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
+                    data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
+                    <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
+                    <div className={'cf-press-logos' + (projectPress.length === 0 && projectReferences.every(item => item.icon) ? ' cf-app-links' : '')}>
+                      {projectPress.map(item => (
+                        <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
+                          aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                        </button>
+                      ))}
+                      {projectReferences.map(item => (
+                        <a key={item.href} className={'cf-press-logo cf-reference-logo' + (item.icon ? ' cf-app-icon' : '')} href={item.href}
+                          target="_blank" rel="noopener noreferrer"
+                          aria-label={'Open ' + item.outlet + ': ' + currentWork.title + ' (opens in a new tab)'}
+                          title={item.outlet}>
+                          <img src={'/press-logos/' + item.logo} alt={item.outlet} />
+                        </a>
+                      ))}
+                    </div>
+                  </aside>
                 )}
               </section>
             </div>

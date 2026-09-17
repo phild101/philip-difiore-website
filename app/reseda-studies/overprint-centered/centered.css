@@ -863,6 +863,8 @@
 }
 
 /* Keep category, controls, and artwork on one common frame, including music. */
+.cf-swipe-cue { display: none; }
+.cf-swipe-track { position: absolute; inset: 0; }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario .df-featured,
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
   --cf-normal-frame-height: 65cqw;
@@ -872,4 +874,105 @@
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
     --cf-normal-frame-height: 82.5cqw;
   }
+}
+
+/* Phones get a poster, not a scaled-down desktop spread. The unchanged 4:5
+   artwork fills the width; controls and coverage follow in reading order. */
+@media (max-width: 760px), (max-width: 1024px) and (max-height: 540px) and (pointer: coarse) {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-category {
+    width: 100%;
+    height: auto;
+    margin: 0 0 18px;
+    display: block;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-category .dr-family-name {
+    font-size: clamp(32px, 10vw, 54px);
+    writing-mode: horizontal-tb;
+    line-height: .85;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-stage {
+    width: 100%;
+    max-width: calc((100svh - 190px) * .8);
+    flex: none;
+    margin: 0;
+    touch-action: pan-y pinch-zoom;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-stage img {
+    -webkit-user-drag: none;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-control-rail {
+    position: static;
+    order: 1;
+    width: 100%;
+    height: auto;
+    margin: 12px 0 0;
+    pointer-events: auto;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-controls {
+    justify-content: space-between;
+    gap: 12px;
+    height: 48px;
+    pointer-events: auto;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-arrow {
+    width: 48px;
+    height: 48px;
+    padding: 11px 16px;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-swipe-cue {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--cf-frame-ink);
+    font: 700 12px/1.4 'DM Sans', Arial, sans-serif;
+  }
+  .cf-project-position { font-variant-numeric: tabular-nums; }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press {
+    order: 2;
+    width: 100%;
+    margin: 22px 0 0;
+    padding: 0 0 max(10px, env(safe-area-inset-bottom));
+    text-align: center;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logos {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-app-links {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .cf-swipe-track {
+    transform: translateX(var(--cf-swipe-offset, 0px));
+    transition: transform var(--cf-swipe-settle, 180ms) ease-out;
+  }
+  .sq-stage[data-dragging] .cf-swipe-track { transition: none; }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-slide-enter {
+    animation-name: cf-swipe-arrive;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-slide-exit {
+    animation-name: cf-swipe-depart;
+  }
+}
+@keyframes cf-swipe-arrive {
+  from { transform: translateX(calc(var(--sq-direction) * 100% + var(--cf-swipe-release, 0px))); }
+  to { transform: translateX(0); }
+}
+@keyframes cf-swipe-depart {
+  from { transform: translateX(var(--cf-swipe-release, 0px)); }
+  to { transform: translateX(calc(var(--sq-direction) * -100%)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cf-swipe-track { transition: none; }
 }

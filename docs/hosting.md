@@ -19,7 +19,7 @@ Edit this `design-concepts` checkout for both hosts. Do not modify the archived 
 
 Publish visual experiments to Sites first. A Sites deployment does not update the production domain. Only release approved changes to Netlify.
 
-Netlify's production Git branch is planned as `codex/netlify-production` in the existing `phild101/philip-difiore-website` repository, preserving its old `main` branch and previous deploy. This branch receives approved source commits from this checkout. Verify current Netlify settings before release.
+Netlify's production Git branch is `codex/netlify-production` in the existing `phild101/philip-difiore-website` repository, preserving its old `main` branch and previous deploy. This branch receives approved source commits from this checkout. Verify current Netlify settings before release.
 
 Before switching production, validate a draft Netlify deployment: Info, Film, Music, films, press, original asset redirects, archived pages, desktop/mobile layout, recording catalog, actual audio playback and seeking, and the persistent player. Keep the previous deployment and domain snapshot.
 
