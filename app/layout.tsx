@@ -4,5 +4,11 @@ import './globals.css';
 import './reseda/reseda.css';
 import './catalog/catalog.css';
 import './reseda-darkroom/darkroom.css';
-export const metadata:Metadata={title:'Philip Di Fiore — 20 Website Studies',description:'Twenty website studies: six original portfolio directions, six interactive browser artworks, a Reseda adaptation, six composed visual studies, and Reseda in a darkroom.',robots:{index:false,follow:false}};
+export const metadata: Metadata = {
+  metadataBase: new URL('https://philipdifiore.com'),
+  title: 'Philip Di Fiore — Film & Music',
+  description: 'Philip Di Fiore is an award-winning filmmaker known for his cinematic storytelling and mind-bending narratives. Films, music projects, and Recording Parties.',
+  alternates: { canonical: 'https://philipdifiore.com/' },
+  robots: { index: true, follow: true },
+};
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><RecordingPlaybackProvider>{children}</RecordingPlaybackProvider></body></html>;}

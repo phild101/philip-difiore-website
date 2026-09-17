@@ -40,7 +40,7 @@ export function RecordingParties({filmSlug, homeHref = '#film/if-you-call'}: {fi
   const [roomPhoto, setRoomPhoto] = useState(false);
   const [mono, setMono] = useState(true);
   const [spare, setSpare] = useState(true);
-  const [stacked, setStacked] = useState(false);
+  const [stacked, setStacked] = useState(true);
   const [photoIndex, setPhotoIndex] = useState(0);
   const tracks = catalog?.tracks.filter(track => track.party === party) || [];
   const attendees = partyAttendees[party] || [];
@@ -55,7 +55,7 @@ export function RecordingParties({filmSlug, homeHref = '#film/if-you-call'}: {fi
     setRoomPhoto(options.get('photos') === 'room');
     setMono(options.get('look') !== 'overprint' && options.get('photos') !== 'room');
     setSpare(options.get('layout') !== 'gallery' && options.get('look') !== 'overprint' && options.get('photos') !== 'room');
-    setStacked(options.get('layout') === 'stacked');
+    setStacked(!options.has('layout') || options.get('layout') === 'stacked');
     const requestedParty = Number(options.get('party'));
     if ([1,2,3].includes(requestedParty)) setParty(requestedParty);
     const old = document.title;
