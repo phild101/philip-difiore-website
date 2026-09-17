@@ -4,6 +4,7 @@ import {
   Fragment,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
   type CSSProperties,
@@ -47,7 +48,8 @@ import { parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type Buffalo
 import { parseBuffaloFilmOption, withBuffaloFilmOption, type BuffaloFilmOption } from '../overprint-centered/buffalo-film-studies';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
-import { useProjectSwipe } from '../overprint-centered/use-project-swipe';
+import { MobileProjectCarousel, useMobileCarousel } from '../overprint-centered/mobile-carousel';
+import type { EmblaCarouselType } from 'embla-carousel';
 import './featured.css';
 function CompositionScale({
   enabled,
@@ -172,6 +174,19 @@ export function DarkroomFeatured({
       ? [projectIndex]
       : [],
   );
+  const mobileCarousel = useMobileCarousel(centered && landingView === 'info' && !preview);
+  const carousel = useRef<EmblaCarouselType | undefined>(undefined);
+  // Reserve the same coverage space for every project in the section. Resizing
+  // the carousel mid-drag would interrupt its motion on projects with more links.
+  const mobilePressRows = Math.max(1, ...navigationIndices.map(n => {
+    const project = projects[n];
+    const work = project.work;
+    const references = projectLinks.filter(item => item.projectSlug === project.slug);
+    const coverage = pressItems.filter(item => 'articleSlug' in work
+      ? item.slug === work.articleSlug
+      : 'vimeo' in work && item.videos.some(video => video.vimeo === work.vimeo));
+    return !coverage.length && references.every(item => item.icon) ? 1 : coverage.length + references.length;
+  }));
   useEffect(() => {
     if (preview) return;
     function changeView() {
@@ -263,8 +278,13 @@ export function DarkroomFeatured({
       (position + step + navigationIndices.length) % navigationIndices.length
     ];
   }
-  function move(step: 1 | -1, fromSwipe = false) {
-    if ((!fromSwipe && previous !== null) || navigationIndices.length < 2) return;
+  function move(step: 1 | -1) {
+    if (mobileCarousel && carousel.current) {
+      if (step === 1) carousel.current.scrollNext();
+      else carousel.current.scrollPrev();
+      return;
+    }
+    if (previous !== null || navigationIndices.length < 2) return;
     setDirection(step);
     setPrevious(index);
     const nextIndex = adjacentIndex(step);
@@ -295,8 +315,15 @@ export function DarkroomFeatured({
       setFilm(work);
     }
   }
-  const mobileSwipe = centered && landingView === 'info';
-  const swipe = useProjectSwipe(mobileSwipe && !film && !article, (step) => move(step, true));
+  function selectMobileProject(nextIndex: number) {
+    if (nextIndex === index) return;
+    setIndex(nextIndex);
+    setPrevious(null);
+    setTurn(0);
+    if (currentCategory === 'FILM') setFilmSlug(projects[nextIndex].slug);
+    window.history.pushState(null, '',
+      (currentCategory === 'MUSIC' ? '#music/' : '#film/') + projects[nextIndex].slug);
+  }
   function watchPressFilm(work: PressFilm) {
     setArticle(null);
     setFilm({
@@ -306,13 +333,13 @@ export function DarkroomFeatured({
       image: '',
     });
   }
-  function slide(n: number, exiting = false) {
+  function slide(n: number, exiting = false, carouselSlide = false) {
     const project = projects[n];
     const work = project.work;
     const printClass = 'dr-print df-print ' + (n === 0 ? 'dr-lead-print' : 'dr-red-print');
     const image = <><span className="dr-print-image">
       <img src={treatment === 'overprint' ? featuredPoster(project, edition) : '/images/' + work.image}
-        alt={work.title + ' — ' + work.artist} loading="eager" />
+        alt={work.title + ' — ' + work.artist} loading={carouselSlide && n !== index ? 'lazy' : 'eager'} draggable={false} />
     </span><span className="dr-print-edge" aria-hidden="true" /></>;
     const print = (
       <>
@@ -350,12 +377,12 @@ export function DarkroomFeatured({
       <div
         className={
           'df-slide' +
-          (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '') +
+          (!carouselSlide && (exiting ? ' df-slide-exit' : turn ? ' df-slide-enter' : '') || '') +
           (treatment === 'overprint'
             ? ' op-layout-' + project.composition + ' op-film-' + project.slug
             : '')
         }
-        key={exiting ? 'previous-' + turn : turn}
+        key={carouselSlide ? project.slug : exiting ? 'previous-' + turn : turn}
         style={chromatic ? chromaticProperties(project.slug) : undefined}
         aria-hidden={exiting ? true : undefined}
         inert={exiting ? true : undefined}
@@ -503,6 +530,7 @@ export function DarkroomFeatured({
             <div className={fitScreen ? 'sq-fit-area' : 'sq-flow-area'}>
               <section
                 className="df-featured"
+                style={mobileCarousel ? { '--cf-mobile-press-rows': mobilePressRows } as CSSProperties : undefined}
                 id={preview ? undefined : centered ? currentCategory.toLowerCase() : 'featured'}
                 aria-label={
                   centered
@@ -557,19 +585,22 @@ export function DarkroomFeatured({
                         </span>
                       </h1>
                     )}
-                    <div className="sq-stage" {...(mobileSwipe ? swipe : {})}>
-                      {mobileSwipe ? (
-                        <div className="cf-swipe-track">
-                          {previous !== null && slide(previous, true)}
-                          {slide(index)}
+                    {mobileCarousel ? (
+                      <div className="cf-mobile-artwork">
+                        <div className="sq-stage">
+                          <MobileProjectCarousel key={currentCategory} indices={navigationIndices} selected={index}
+                            controller={carousel} onSelect={selectMobileProject}
+                            renderSlide={n => slide(n, false, true)} />
                         </div>
-                      ) : (
+                      </div>
+                    ) : (
+                      <div className="sq-stage">
                         <>
                           {previous !== null && slide(previous, true)}
                           {slide(index)}
                         </>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
@@ -592,7 +623,7 @@ export function DarkroomFeatured({
                     >
                       {([-1, 1] as const).map((step) => (
                         <Fragment key={step}>
-                        {mobileSwipe && step === 1 && (
+                        {mobileCarousel && step === 1 && (
                           <span className="cf-swipe-cue" aria-hidden="true">
                             <span>Swipe to explore</span>
                             <span className="cf-project-position">{navigationIndices.indexOf(index) + 1} / {navigationIndices.length}</span>
@@ -604,7 +635,7 @@ export function DarkroomFeatured({
                           }
                           key={step}
                           onClick={() => move(step)}
-                          aria-disabled={previous !== null}
+                          aria-disabled={!mobileCarousel && previous !== null}
                           aria-label={
                             (step === -1
                               ? 'Previous project: '

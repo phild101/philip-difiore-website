@@ -864,7 +864,6 @@
 
 /* Keep category, controls, and artwork on one common frame, including music. */
 .cf-swipe-cue { display: none; }
-.cf-swipe-track { position: absolute; inset: 0; }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario .df-featured,
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
   --cf-normal-frame-height: 65cqw;
@@ -876,58 +875,106 @@
   }
 }
 
-/* Phones get a poster, not a scaled-down desktop spread. The unchanged 4:5
-   artwork fills the width; controls and coverage follow in reading order. */
+/* Mobile carousel: one stable, viewport-sized composition. Coverage gets its
+   own reserved row before the artwork is sized; images never push links away. */
 @media (max-width: 760px), (max-width: 1024px) and (max-height: 540px) and (pointer: coarse) {
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .dr-room {
+    height: calc(100svh - 16px);
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0;
-    margin-top: 20px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+  body:has(.rp-persistent) .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .dr-room {
+    height: calc(100svh - 16px - 89px - env(safe-area-inset-bottom));
+  }
+  @media (min-width: 851px) {
+    body:has(.rp-persistent) .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .dr-room {
+      height: calc(100svh - 16px - 48px - env(safe-area-inset-bottom));
+    }
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-nav {
+    flex: 0 0 52px;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-flow-area {
+    flex: 1;
+    min-height: 0;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+    --cf-mobile-coverage-height: calc(18px + var(--cf-mobile-press-rows, 3) * 44px + (var(--cf-mobile-press-rows, 3) - 1) * 6px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) 56px var(--cf-mobile-coverage-height);
+    align-items: stretch;
+    row-gap: 8px;
+    height: 100%;
+    margin: 0;
+    padding-top: 12px;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-category {
+    grid-column: 1;
+    grid-row: 1;
     width: 100%;
     height: auto;
-    margin: 0 0 18px;
+    margin: 0;
     display: block;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-category .dr-family-name {
-    font-size: clamp(32px, 10vw, 54px);
+    font-size: clamp(28px, 9vw, 40px);
     writing-mode: horizontal-tb;
-    line-height: .85;
+    line-height: .9;
   }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-stage {
+  .cf-mobile-artwork {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0;
     width: 100%;
-    max-width: calc((100svh - 190px) * .8);
-    flex: none;
+    container-type: size;
+    display: grid;
+    place-items: center;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-mobile-artwork .sq-stage {
+    grid-area: auto;
+    width: min(100cqw, 80cqh);
+    height: min(125cqw, 100cqh);
+    max-width: none;
     margin: 0;
+  }
+  .cf-carousel, .cf-carousel-track { width: 100%; height: 100%; }
+  .cf-carousel {
+    overflow: hidden;
     touch-action: pan-y pinch-zoom;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
   }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-stage img {
-    -webkit-user-drag: none;
-  }
+  .cf-carousel-track { display: flex; will-change: transform; }
+  .cf-carousel-slide { position: relative; flex: 0 0 100%; min-width: 0; height: 100%; }
+  .cf-carousel img { -webkit-user-drag: none; }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-control-rail {
+    grid-column: 1;
+    grid-row: 3;
     position: static;
-    order: 1;
     width: 100%;
-    height: auto;
-    margin: 12px 0 0;
+    height: 56px;
+    margin: 0;
     pointer-events: auto;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-controls {
     justify-content: space-between;
     gap: 12px;
-    height: 48px;
+    height: 56px;
     pointer-events: auto;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-arrow {
-    width: 48px;
-    height: 48px;
-    padding: 11px 16px;
+    width: 60px;
+    height: 56px;
+    padding: 5px;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .sq-arrow path {
+    stroke: currentColor;
+    stroke-width: 5px;
+    stroke-linejoin: round;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-swipe-cue {
     display: flex;
@@ -938,41 +985,43 @@
   }
   .cf-project-position { font-variant-numeric: tabular-nums; }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press {
-    order: 2;
+    grid-column: 1;
+    grid-row: 4;
+    align-self: start;
     width: 100%;
-    margin: 22px 0 0;
-    padding: 0 0 max(10px, env(safe-area-inset-bottom));
+    margin: 0;
+    padding: 0;
     text-align: center;
   }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press h2 { margin-bottom: 6px; }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logos {
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     align-items: center;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logo {
+    height: 44px;
   }
   .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-app-links {
     flex-direction: row;
     justify-content: center;
   }
-  .cf-swipe-track {
-    transform: translateX(var(--cf-swipe-offset, 0px));
-    transition: transform var(--cf-swipe-settle, 180ms) ease-out;
-  }
-  .sq-stage[data-dragging] .cf-swipe-track { transition: none; }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-slide-enter {
-    animation-name: cf-swipe-arrive;
-  }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-slide-exit {
-    animation-name: cf-swipe-depart;
-  }
 }
-@keyframes cf-swipe-arrive {
-  from { transform: translateX(calc(var(--sq-direction) * 100% + var(--cf-swipe-release, 0px))); }
-  to { transform: translateX(0); }
-}
-@keyframes cf-swipe-depart {
-  from { transform: translateX(var(--cf-swipe-release, 0px)); }
-  to { transform: translateX(calc(var(--sq-direction) * -100%)); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cf-swipe-track { transition: none; }
+/* Short phones keep the links beneath the picture in one compact row. */
+@media (max-width: 760px) and (max-height: 700px), (max-width: 1024px) and (max-height: 540px) and (pointer: coarse) {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .df-featured {
+    --cf-mobile-coverage-height: 62px;
+    row-gap: 6px;
+    padding-top: 8px;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logos {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logo:not(.cf-app-icon) {
+    width: min(124px, calc((100% - 12px) / var(--cf-mobile-press-rows, 3)));
+    min-width: 0;
+    padding: 8px;
+  }
 }
