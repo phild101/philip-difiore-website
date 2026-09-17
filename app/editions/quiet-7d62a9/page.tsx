@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { QuietEdition } from './quiet';
+import { AustereEdition } from './quiet';
 
 export const metadata: Metadata = {
-  title: 'Philip Di Fiore — Quiet edition',
+  title: 'Philip Di Fiore — Austere',
   robots: { index: false, follow: false, noarchive: true },
 };
 
-export default function Page() { return <QuietEdition />; }
+export default function Page() { return <AustereEdition />; }

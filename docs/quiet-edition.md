@@ -1,8 +1,8 @@
-# Quiet edition — September 16, 2026
+# Austere — September 16, 2026
 
 Philip requested a secret backup direction that completely follows the Info page: simple, austere, clean. He clarified that Overprint does not belong in this edition and that the main font must be the one used on Info.
 
-Preview route: `/editions/quiet-7d62a9/`. It is unlisted, has noindex/nofollow/noarchive metadata, and `/editions/` is excluded in robots.txt. It is not password-protected: anyone given the URL can open it. No link is added to the public site's navigation. The root site remains the approved Overprint edition, with Info as home.
+Philip named the alternate **Austere**. Preview route: `/editions/austere/`; the original `/editions/quiet-7d62a9/` remains a working alias. It is unlisted, has noindex/nofollow/noarchive metadata, and `/editions/` is excluded in robots.txt. It is not password-protected: anyone given the URL can open it. No link is added to the public site's navigation. The root site remains the approved Overprint edition, with Info as home.
 
 The alternate also starts on Info. Film and Music open compact text-only indexes, with each title immediately followed by its artist on the same line, separated by a dash. There are no thumbnails, distant columns, or individual row dividers. Each project has a restrained detail page with original imagery in its natural colors, Play film or listening links, relevant press/references, and previous/next navigation. Recording Parties keeps the full catalog, Party 2 default, slideshow, attendees, inline transport, and persistent playback, all restyled to the Info scale. Apple Music and Spotify links remain available on the two album pages.
 
@@ -11,3 +11,5 @@ Typography is DM Sans 700, 13px body and 12px at narrower widths, matching the a
 Film data and order come from the existing centered project catalog. The Trilogy and Antibalas use preserved photographic source derivatives in `public/images/quiet-edition/`; Buffalo Hunt uses the original NYT film still. The two album entries use their pre-overprint covers. The biography component has an optional display-image resolver so this edition's hover previews also use original imagery, without changing normal Info previews.
 
 All edition-specific style changes are scoped under `.quiet-site`, or a matching body :has selector for portaled dialogs. The primary site must retain its own imagery, typography, playback, and routes. Do not promote this edition to the homepage unless Philip explicitly selects it.
+
+The September 16 refinement widens project pages to 1040px, with photographs scaled proportionally up to 76% of viewport height (820px maximum), and albums to 72% / 720px. A small rectangular Play film control is always visible on each film image; the entire photograph is clickable. Project navigation directly below the image names adjacent works and includes a centered index link. Left/right arrow keys navigate only on project pages, never in a film/press dialog, listening page, or interactive input. Closing a screening returns keyboard focus to its image trigger. Original image dimensions reserve space and prevent the prior photograph from lingering during navigation. No new artwork, crop, or color treatment is introduced.

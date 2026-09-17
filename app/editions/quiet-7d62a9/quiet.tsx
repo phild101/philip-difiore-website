@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Artwork } from '../../artworks/data';
 import { isMusicProject } from '../../music/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
@@ -10,7 +10,7 @@ import { pressItems, projectLinks, type PressItem, type PressFilm } from '../../
 import { PressArticle } from '../../reseda-studies/darkroom-featured/press';
 import '../../reseda-studies/darkroom-featured/featured.css';
 import { Screening } from '../../studies/screening';
-import { quietProjects, quietPhotograph } from './catalog';
+import { quietProjects, quietPhotograph, quietPhotographSize } from './catalog';
 import './quiet.css';
 
 type Section = 'info' | 'film' | 'music';
@@ -53,14 +53,21 @@ function Index({ section, collection }: { section: 'film' | 'music'; collection:
   </main>;
 }
 
-export function QuietEdition() {
+function PlayMark() {
+  return <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M4 2 14 8 4 14Z" /></svg>;
+}
+
+export function AustereEdition() {
   const [route, setRoute] = useState<Route>({ section: 'info' });
   const [film, setFilm] = useState<Artwork | null>(null);
   const [article, setArticle] = useState<PressItem | null>(null);
+  const screeningTrigger = useRef<HTMLButtonElement>(null);
   const collection = route.section === 'music' ? music : films;
   const project = collection.find(item => item.slug === route.slug);
   const index = project ? collection.indexOf(project) : -1;
   const work = project?.work;
+  const photoSize = project ? quietPhotographSize(project) : undefined;
+  const picture = project && <img src={quietPhotograph(project)} alt={project.work.title} width={photoSize?.[0]} height={photoSize?.[1]} />;
   const articles = work ? pressItems.filter(item => 'articleSlug' in work
     ? item.slug === work.articleSlug
     : 'vimeo' in work && item.videos.some(video => video.vimeo === work.vimeo)) : [];
@@ -78,8 +85,21 @@ export function QuietEdition() {
   }, []);
 
   useEffect(() => {
-    document.title = (project?.work.title || (route.section === 'film' ? 'Film' : route.section === 'music' ? 'Music' : 'Info')) + ' — Philip Di Fiore';
+    document.title = (project?.work.title || (route.section === 'film' ? 'Film' : route.section === 'music' ? 'Music' : 'Info')) + ' — Philip Di Fiore · Austere';
   }, [route.section, project]);
+
+  useEffect(() => {
+    if (!project || route.listen || film || article) return;
+    const navigateProject = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.target instanceof Element && event.target.closest('input,textarea,select,button,audio,video,[contenteditable],[role="slider"],[role="combobox"],[role="dialog"]')) return;
+      const direction = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
+      const destination = direction && collection[index + direction];
+      if (destination) { event.preventDefault(); window.location.hash = href(destination); }
+    };
+    window.addEventListener('keydown', navigateProject);
+    return () => window.removeEventListener('keydown', navigateProject);
+  }, [project, route.listen, film, article, collection, index]);
 
   function playProject() {
     if (!project) return;
@@ -101,29 +121,29 @@ export function QuietEdition() {
           <div className="quiet-detail-heading"><div><h1>{project.work.title}</h1><p className="quiet-secondary">{project.work.artist}</p></div>
             <a href={'#' + route.section}>All {route.section === 'film' ? 'films' : 'music'}</a>
           </div>
-          <figure className={'quiet-photograph' + (route.section === 'music' ? ' quiet-album' : '')}>
-            {'vimeo' in project.work ? <button onClick={playProject} aria-label={'Play ' + project.work.title}>
-              <img src={quietPhotograph(project)} alt={project.work.title} />
-            </button> : project.slug === 'recording-parties' ? <a href="#music/recording-parties/listen" aria-label="Listen to Recording Parties"><img src={quietPhotograph(project)} alt="Musicians recording together at The Rumpus Room" /></a> : <img src={quietPhotograph(project)} alt={project.work.title} />}
+          <figure key={project.slug} className={'quiet-photograph' + (route.section === 'music' ? ' quiet-album' : '')} style={photoSize ? { '--quiet-photo-ratio': photoSize[0] / photoSize[1] } as CSSProperties : undefined}>
+            {'vimeo' in project.work ? <button ref={screeningTrigger} className="quiet-image-link" onClick={playProject} aria-label={'Play ' + project.work.title}>
+              {picture}
+              <span className="quiet-image-action"><PlayMark />Play film</span>
+            </button> : project.slug === 'recording-parties' ? <a className="quiet-image-link" href="#music/recording-parties/listen" aria-label="Listen to Recording Parties">{picture}<span className="quiet-image-action"><PlayMark />Listen to the recordings</span></a> : picture}
           </figure>
-          <div className="quiet-project-actions">
-            {'vimeo' in project.work && <button onClick={playProject}>Play film</button>}
-            {project.slug === 'recording-parties' && <a href="#music/recording-parties/listen">Listen to the recordings</a>}
+          {references.some(item => item.icon) && <div className="quiet-project-actions">
             {references.filter(item => item.icon).map(item => <a href={item.href} key={item.outlet} target="_blank" rel="noreferrer">{item.outlet}</a>)}
-          </div>
+          </div>}
+          <nav className="quiet-adjacent" aria-label="Project navigation">
+            {index > 0 ? <a href={href(collection[index - 1])} rel="prev" aria-label={'Previous project: ' + collection[index - 1].work.title}><span aria-hidden="true">←</span><span>{collection[index - 1].work.title}</span></a> : <span />}
+            <a className="quiet-index-link" href={'#' + route.section}>{route.section === 'film' ? 'Film' : 'Music'} index</a>
+            {index < collection.length - 1 ? <a href={href(collection[index + 1])} rel="next" aria-label={'Next project: ' + collection[index + 1].work.title}><span>{collection[index + 1].work.title}</span><span aria-hidden="true">→</span></a> : <span />}
+          </nav>
           {(articles.length > 0 || references.some(item => !item.icon)) && <section className="quiet-references" aria-label="Press and references">
             <h2>Press &amp; links</h2><div>
               {articles.map(item => <button key={item.slug} onClick={() => setArticle(item)}>{item.outlet}</button>)}
               {references.filter(item => !item.icon).map(item => <a href={item.href} key={item.outlet} target="_blank" rel="noreferrer">{item.outlet}</a>)}
             </div>
           </section>}
-          <nav className="quiet-adjacent" aria-label="Project navigation">
-            {index > 0 ? <a href={href(collection[index - 1])}>Previous</a> : <span />}
-            {index < collection.length - 1 ? <a href={href(collection[index + 1])}>Next</a> : <span />}
-          </nav>
         </main> : <Index section={route.section} collection={collection} />}
       </div></div>}
     <PressArticle article={article} close={() => setArticle(null)} watch={watchPress} fullscreen />
-    <Screening work={film} close={() => setFilm(null)} fullscreen />
+    <Screening work={film} close={() => setFilm(null)} fullscreen finalFocus={screeningTrigger} />
   </div>;
 }

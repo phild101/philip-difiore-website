@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, type RefObject } from 'react';
 import { useDismissRecording } from '../music/recording-parties/playback';
 import {
   Dialog,
@@ -13,10 +13,12 @@ export function Screening({
   work,
   close,
   fullscreen = false,
+  finalFocus,
 }: {
   work: Artwork | null;
   close: () => void;
   fullscreen?: boolean;
+  finalFocus?: RefObject<HTMLElement | null>;
 }) {
   const dismissRecording = useDismissRecording();
   useEffect(() => { if (work) dismissRecording(); }, [work, dismissRecording]);
@@ -29,6 +31,7 @@ export function Screening({
     >
       <DialogContent
         fullscreen={fullscreen}
+        finalFocus={finalFocus}
         className={
           'study-screening' + (fullscreen ? ' study-screening-full' : '')
         }
