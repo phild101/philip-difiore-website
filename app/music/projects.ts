@@ -87,14 +87,20 @@ export const buffaloSoundtrackStudies = [
   {option: 'monument', title: 'Buffalo Monument', subject: 'Option 2', image: 'buffalo-hunt-soundtrack-monument.webp', ground: '#7a3427'},
   {option: 'mountain-ghost', title: 'Mountain Ghost', subject: 'Option 3', image: 'buffalo-hunt-soundtrack-mountain-ghost.webp', ground: '#183347'},
 ] as const;
-export type BuffaloSoundtrackOption = typeof buffaloSoundtrackStudies[number]['option'];
+export const buffaloFifthFaceStudies = [
+  {...buffaloSoundtrackStudies[1], subject: 'Saved version'},
+  {option: 'fifth-face-rupture', title: 'Rupture', subject: 'New 1', image: 'buffalo-hunt-soundtrack-fifth-face-rupture.webp', ground: '#172d64'},
+  {option: 'fifth-face-fault-line', title: 'Fault Line', subject: 'New 2', image: 'buffalo-hunt-soundtrack-fifth-face-fault-line.webp', ground: '#302337'},
+] as const;
+const allBuffaloSoundtrackStudies = [...buffaloSoundtrackStudies, ...buffaloFifthFaceStudies];
+export type BuffaloSoundtrackOption = typeof allBuffaloSoundtrackStudies[number]['option'];
 
 export function parseBuffaloSoundtrackOption(value: string | null): BuffaloSoundtrackOption {
-  return buffaloSoundtrackStudies.find(study => study.option === value)?.option ?? 'current';
+  return allBuffaloSoundtrackStudies.find(study => study.option === value)?.option ?? 'current';
 }
 
 export function withBuffaloSoundtrackOption(projects: FeaturedProject[], option: BuffaloSoundtrackOption) {
-  const study = buffaloSoundtrackStudies.find(study => study.option === option)!;
+  const study = allBuffaloSoundtrackStudies.find(study => study.option === option)!;
   return projects.map(project => project.slug === 'buffalo-hunt-soundtrack'
     ? {...project, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
     : project);

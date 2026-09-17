@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
-import { buffaloSoundtrackStudies } from '../../music/projects';
+import { buffaloFifthFaceStudies } from '../../music/projects';
 import '../antibalas-studies/studies.css';
 import '../improvisczario-figure-studies/studies.css';
-import '../improvisczario-photo-overprint-studies/studies.css';
 
-export const metadata: Metadata = {title: 'The Buffalo Hunt Soundtrack — Rushmore Studies | Philip Di Fiore'};
+export const metadata: Metadata = {title: 'The Fifth Face — Overprint Studies | Philip Di Fiore'};
 const site = '/?header=bold&info=bold&layout=stacked';
 
-export default function BuffaloRushmoreStudies() {
-  return <main className="anti-review figure-review photo-overprint-review">
+export default function BuffaloFifthFaceStudies() {
+  return <main className="anti-review figure-review">
     <header className="anti-review-header">
       <a href={site + '#info'}>Philip Di Fiore</a>
       <nav aria-label="Main navigation">
@@ -17,9 +16,9 @@ export default function BuffaloRushmoreStudies() {
         <a href={site + '#info'}>Info</a>
       </nav>
     </header>
-    <div className="anti-review-heading"><h1>The Buffalo Hunt</h1><p>Soundtrack / Rushmore studies</p></div>
-    <section className="anti-review-grid" aria-label="Original artwork and three Rushmore concepts">
-      {buffaloSoundtrackStudies.map(study => {
+    <div className="anti-review-heading"><h1>The Fifth Face</h1><p>The Buffalo Hunt Soundtrack / Overprint studies</p></div>
+    <section className="anti-review-grid" aria-label="The Fifth Face and two new overprint versions">
+      {buffaloFifthFaceStudies.map(study => {
         const href = site + '&buffalo=' + study.option + '#music/buffalo-hunt-soundtrack';
         return <article className="anti-review-card" key={study.option}>
           <div className="anti-review-caption"><h2>{study.title}</h2><span>{study.subject}</span></div>
@@ -30,6 +29,6 @@ export default function BuffaloRushmoreStudies() {
         </article>;
       })}
     </section>
-    <footer className="figure-review-footer"><a href="/reseda-studies/buffalo-fifth-face-studies">New Fifth Face overprint studies</a></footer>
+    <footer className="figure-review-footer"><a href="/reseda-studies/buffalo-rushmore-studies">Earlier Rushmore studies</a></footer>
   </main>;
 }

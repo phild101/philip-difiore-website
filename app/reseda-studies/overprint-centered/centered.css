@@ -330,6 +330,16 @@
   --cf-frame-ink: #dc8f79;
   --cf-room-ink: #e9d9b9;
 }
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack.op-buffalo-fifth-face-rupture {
+  --cf-frame-ground: #172d64;
+  --cf-frame-ink: #ef6847;
+  --cf-room-ink: #e8ddc4;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack.op-buffalo-fifth-face-fault-line {
+  --cf-frame-ground: #302337;
+  --cf-frame-ink: #e4cb42;
+  --cf-room-ink: #e8ddc4;
+}
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack.op-buffalo-monument {
   --cf-frame-ground: #7a3427;
   --cf-frame-ink: #eab965;
