@@ -47,7 +47,7 @@ export default defineConfig(async () => {
 
   return {
     resolve: { alias: {
-      '@/lib/recording-environment': fileURLToPath(new URL('./lib/recording-environment.sites.ts', import.meta.url)),
+      './recording-environment': fileURLToPath(new URL('./lib/recording-environment.sites.ts', import.meta.url)),
     } },
     css: { postcss: { plugins: [tailwindcss()] } },
     server: isCodexSeatbeltSandbox

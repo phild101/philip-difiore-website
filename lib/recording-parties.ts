@@ -1,4 +1,4 @@
-import { recordingServiceKey } from '@/lib/recording-environment';
+import { recordingServiceKey } from './recording-environment';
 
 const origin = 'https://gjvvbofpkxuicrpshxun.supabase.co';
 const bucket = 'recording-parties-audio';

@@ -11,7 +11,7 @@ Edit this `design-concepts` checkout for both hosts. Do not modify the archived 
 - Sites: `npm run dev`, `npm run build`; existing Vinext/Workers workflow.
 - Netlify: `npm run dev:netlify`, `npm run build:netlify`; standard Next.js with Netlify's OpenNext adapter. Node 24.
 - `tsconfig.next.json` excludes Sites runtime types and build configuration from Next's type check.
-- Vite resolves `@/lib/recording-environment` to the Workers binding module. Next uses the Node environment module. Both feed the same recording catalog and signing helper.
+- Vite resolves the relative `./recording-environment` import to the Workers binding module. Next uses the Node environment module. Both feed the same recording catalog and signing helper.
 - `SUPABASE_SERVICE_ROLE_KEY` stays server-only. Never prefix it with `NEXT_PUBLIC_`, add it to Next `env` configuration, embed it in assets, or commit it. Local `.dev.vars` is ignored; hosted values are configured separately.
 - Supabase project, private audio bucket, catalog and four-hour signed playback URLs are unchanged. Netlify does not store copies of the recordings.
 
