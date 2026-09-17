@@ -263,8 +263,8 @@ export function DarkroomFeatured({
       (position + step + navigationIndices.length) % navigationIndices.length
     ];
   }
-  function move(step: 1 | -1) {
-    if (previous !== null || navigationIndices.length < 2) return;
+  function move(step: 1 | -1, fromSwipe = false) {
+    if ((!fromSwipe && previous !== null) || navigationIndices.length < 2) return;
     setDirection(step);
     setPrevious(index);
     const nextIndex = adjacentIndex(step);
@@ -296,7 +296,7 @@ export function DarkroomFeatured({
     }
   }
   const mobileSwipe = centered && landingView === 'info';
-  const swipe = useProjectSwipe(mobileSwipe && previous === null && !film && !article, move);
+  const swipe = useProjectSwipe(mobileSwipe && !film && !article, (step) => move(step, true));
   function watchPressFilm(work: PressFilm) {
     setArticle(null);
     setFilm({
@@ -355,7 +355,7 @@ export function DarkroomFeatured({
             ? ' op-layout-' + project.composition + ' op-film-' + project.slug
             : '')
         }
-        key={exiting ? 'previous' : turn}
+        key={exiting ? 'previous-' + turn : turn}
         style={chromatic ? chromaticProperties(project.slug) : undefined}
         aria-hidden={exiting ? true : undefined}
         inert={exiting ? true : undefined}
