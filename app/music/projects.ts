@@ -1,6 +1,6 @@
 import type { FeaturedProject } from '../reseda-studies/overprint/projects';
 
-export const defaultImprovisczarioOption = 'figure-photo-electric-cut';
+export const defaultImprovisczarioOption = 'rumpus-painted-improvisation';
 
 export const musicProjects: FeaturedProject[] = [
   {
@@ -8,11 +8,11 @@ export const musicProjects: FeaturedProject[] = [
     work: {
       title: 'Improvisczario',
       artist: 'Bernie Worrell',
-      image: 'music/improvisczario-photo-electric-cut.webp',
+      image: 'music/improvisczario-rumpus-painted-improvisation.webp',
       externalUrl: 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w',
     },
-    poster: '/images/music/improvisczario-photo-electric-cut.webp',
-    aspectRatio: 1122 / 1402,
+    poster: '/images/music/improvisczario-rumpus-painted-improvisation.webp',
+    aspectRatio: 1,
     heading: ['BERNIE WORRELL', 'IMPROVISCZARIO'],
     palette: 'ink',
     composition: 'right',
@@ -64,10 +64,14 @@ export const improvisczarioPhotoOverprintStudies = [
 ] as const;
 
 export const improvisczarioWildStudies = [
-  {option: 'figure-photo-electric-cut', title: 'Electric Cut', subject: 'Selected', image: 'improvisczario-photo-electric-cut.webp', ground: '#3a153d'},
+  {option: 'figure-photo-electric-cut', title: 'Electric Cut', subject: 'Saved', image: 'improvisczario-photo-electric-cut.webp', ground: '#3a153d'},
 ] as const;
 
-const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies, ...improvisczarioWildStudies];
+export const improvisczarioAlbumStudies = [
+  {option: 'rumpus-painted-improvisation', title: 'Painted Improvisation', subject: 'Selected', image: 'improvisczario-rumpus-painted-improvisation.webp', ground: '#102b3e'},
+] as const;
+
+const allImprovisczarioStudies = [...improvisczarioStudies, ...improvisczarioFigureStudies, ...improvisczarioLynchStudies, ...improvisczarioPhotoOverprintStudies, ...improvisczarioWildStudies, ...improvisczarioAlbumStudies];
 export type ImprovisczarioOption = typeof allImprovisczarioStudies[number]['option'];
 
 export function parseImprovisczarioOption(value: string | null): ImprovisczarioOption {

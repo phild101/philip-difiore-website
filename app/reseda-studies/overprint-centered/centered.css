@@ -92,6 +92,26 @@
   object-fit: cover;
   object-position: center;
 }
+/* The approved album cover keeps its complete square inside the stable artwork
+   frame on desktop and in every mobile carousel slide. Its title is in the art. */
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print {
+  position: absolute;
+  inset: 50% 0 auto;
+  height: auto;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .dr-print-image {
+  height: auto;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print img {
+  object-fit: contain;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-project-name {
+  display: none;
+}
 .op-site.op-sequence.op-poster.op-centered .sq-control-rail {
   grid-column: 3;
   grid-row: 1;
@@ -360,6 +380,11 @@
   --cf-frame-ground: #78272c;
   --cf-room-ink: #e2ddbb;
   --cf-frame-ink: #e2ddbb;
+}
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-project-improvisczario.op-improv-rumpus-painted-improvisation {
+  --cf-frame-ground: #102b3e;
+  --cf-room-ink: #f3dfad;
+  --cf-frame-ink: #f3dfad;
 }
 .op-site.op-sequence.op-poster.op-centered.op-featured.op-project-buffalo-hunt-soundtrack {
   --cf-frame-ground: #102c34;
@@ -1064,5 +1089,16 @@
     width: min(124px, calc((100% - 12px) / var(--cf-mobile-press-rows, 3)));
     min-width: 0;
     padding: 8px;
+  }
+}
+
+/* Album sleeves retain their complete square on desktop, with listening links
+   directly below the sleeve. Mobile keeps its stable swipe-stage geometry. */
+@media (min-width: 761px) {
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .df-featured {
+    --cf-normal-frame-height: 52cqw;
+  }
+  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .sq-stage {
+    aspect-ratio: 1;
   }
 }

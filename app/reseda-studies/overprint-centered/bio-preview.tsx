@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTitle, PopoverTrigger } from '@/compone
 export type BioPreviewItem = {
   title: string;
   image: string;
+  aspectRatio?: number;
   href: string;
   external?: boolean;
   logo?: boolean;
@@ -35,7 +36,7 @@ export function BioPreview({ id, title, children, items, active, setActive }: {
           href={item.href} target={item.external ? '_blank' : undefined}
           rel={item.external ? 'noopener noreferrer' : undefined} onClick={() => setActive(null)}
           aria-label={item.title + (item.external ? ' (opens in a new tab)' : '')}>
-          <img src={item.image} alt="" />
+          <img src={item.image} alt="" style={item.aspectRatio ? { aspectRatio: item.aspectRatio } : undefined} />
           <span>{item.title}</span>
         </a>)}
       </div>
