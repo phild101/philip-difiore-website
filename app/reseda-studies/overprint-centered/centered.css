@@ -192,6 +192,47 @@
 .cf-app-icon { width: 44px; height: 44px; padding: 0; align-items: flex-end; background: transparent; }
 .cf-app-icon img { width: 36px; height: 36px; }
 .cf-app-icon:hover { background: transparent; opacity: .75; }
+/* Desktop study: smaller coverage links in a row beneath the artwork.
+   Keep the existing mobile composition, including landscape phones. */
+@media (min-width: 761px) {
+  @media not all and (max-width: 1024px) and (max-height: 540px) and (pointer: coarse) {
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      justify-self: stretch;
+      width: 100%;
+      margin: 0;
+      padding: 18px 0 0;
+      text-align: center;
+    }
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press h2 {
+      margin-bottom: 9px;
+    }
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logos {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-press-logo:not(.cf-app-icon) {
+      width: 110px;
+      height: 34px;
+      padding: 7px 10px;
+    }
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-app-icon {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      align-items: center;
+    }
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-app-icon img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
 @media (max-width: 640px) {
   .op-site.op-sequence.op-poster.op-centered .cf-project-press,
   .op-site.op-sequence.op-poster.op-centered .cf-project-press[data-solo='true'] {
