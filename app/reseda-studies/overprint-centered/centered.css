@@ -226,6 +226,11 @@
       padding: 18px 0 0;
       text-align: center;
     }
+    /* Keep the square sleeve's top spacing, but reclaim the empty lower
+       eighth of its width so listening links sit just below the artwork. */
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .cf-project-press {
+      margin-top: -12.5%;
+    }
     .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press h2 {
       margin-bottom: 9px;
     }

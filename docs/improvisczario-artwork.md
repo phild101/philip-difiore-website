@@ -7,7 +7,7 @@ On September 18, 2026, Philip selected **Painted Improvisation**, round 7 of the
 - Source study, prompt, prior options, export script and print package: `../mockups/improvisczario-vinyl/2026-09-18/`.
 - Desktop delivery: `~/Desktop/Bernie Worrell - Improvisczario - Approved Cover/`.
 
-Show the full square cover without cropping or an additional project-title plaque, centered vertically inside the same 4:5 rectangular frame used by the other projects. The equal bars above and below show the page background. The navy and cream page surround comes from its palette. Apple Music and Spotify links stay beneath the rectangular frame. Mobile retains its stable swipe frame. Info's music-project preview uses the same selected art. The separate Austere edition retains its previous untreated album image.
+Show the full square cover without cropping or an additional project-title plaque. Keep its top background spacing within the other projects' standard 4:5 frame, but reclaim the lower bar on desktop so Apple Music and Spotify links sit directly beneath the artwork. The navy and cream page surround comes from its palette. Mobile retains its stable swipe frame. Info's music-project preview uses the same selected art. The separate Austere edition retains its previous untreated album image.
 
 The previous Electric Cut artwork and all earlier study options remain available by their existing query values. The new default option is `rumpus-painted-improvisation`.
 
