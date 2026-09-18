@@ -1091,14 +1091,3 @@
     padding: 8px;
   }
 }
-
-/* Album sleeves retain their complete square on desktop, with listening links
-   directly below the sleeve. Mobile keeps its stable swipe-stage geometry. */
-@media (min-width: 761px) {
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .df-featured {
-    --cf-normal-frame-height: 52cqw;
-  }
-  .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .sq-stage {
-    aspect-ratio: 1;
-  }
-}
