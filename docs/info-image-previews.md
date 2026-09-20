@@ -32,4 +32,4 @@ Philip replaced the first artwork treatments with his desktop cover images. Earl
 
 ## Italic bio links — September 20, 2026
 
-Design preview: bio preview triggers use italics instead of underlines. Font family, size, weight, hover/click behavior and keyboard focus outlines remain unchanged. The separate info@philipdifiore.com email link stays underlined and upright.
+Design preview: bio preview triggers use italics instead of underlines. Font family, size, weight, hover/click behavior and keyboard focus outlines remain unchanged. The separate info@philipdifiore.com email link stays underlined and upright, centered in its own paragraph beneath the bio.

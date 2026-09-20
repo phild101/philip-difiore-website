@@ -48,6 +48,7 @@
 .info-bio p { text-wrap: pretty; }
 .info-bio p + p { margin-top: 28px; }
 .info-bio em { font-style: italic; }
+.info-bio p:has(> .info-email) { text-align: center; }
 .info-email { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .info-email:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 .info-project-link {
