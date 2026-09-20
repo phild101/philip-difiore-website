@@ -19,6 +19,7 @@ import {
 } from '../overprint/projects';
 import { Screening } from '../../studies/screening';
 import { PressArticle, PressFilmstrip } from './press';
+import { BuffaloHuntGallery } from './project-gallery';
 import { pressItems, projectLinks, type PressItem, type PressFilm } from './press-data';
 import {
   chromaticProperties,
@@ -154,6 +155,8 @@ export function DarkroomFeatured({
   const [previous, setPrevious] = useState<number | null>(null);
   const [film, setFilm] = useState<Artwork | null>(null);
   const [article, setArticle] = useState<PressItem | null>(null);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const galleryButton = useRef<HTMLButtonElement>(null);
   const [turn, setTurn] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   function projectCategory(slug: string) {
@@ -163,6 +166,7 @@ export function DarkroomFeatured({
   }
   const currentCategory = projectCategory(projects[index].slug);
   const currentWork = projects[index].work;
+  const hasGallery = centered && projects[index].slug === 'buffalo-hunt';
   const projectReferences = centered ? projectLinks.filter(item => item.projectSlug === projects[index].slug) : [];
   const projectPress = centered ? pressItems.filter(item =>
     'articleSlug' in currentWork
@@ -220,6 +224,7 @@ export function DarkroomFeatured({
         nextView = 'about';
       }
       setView(nextView);
+      setGalleryOpen(false);
       if (treatment === 'overprint' && nextView === 'featured') {
         const [section, slug] = window.location.hash.slice(1).split('/');
         const selected = projects.findIndex((project) => project.slug === slug);
@@ -698,13 +703,15 @@ export function DarkroomFeatured({
                   <aside className="cf-project-press" aria-label={'Project links for ' + currentWork.title}
                     data-solo={navigationIndices.length < 2 ? 'true' : undefined}>
                     <h2>{projectPress.length > 0 ? (projectReferences.length > 0 ? 'Press & links' : 'Press') : 'Links'}</h2>
-                    <div className={'cf-press-logos' + (projectPress.length === 0 && projectReferences.every(item => item.icon) ? ' cf-app-links' : '')}>
+                    <div className={'cf-press-logos' + (hasGallery ? ' cf-with-gallery' : '') + (projectPress.length === 0 && projectReferences.every(item => item.icon) ? ' cf-app-links' : '')}>
                       {projectPress.map(item => (
                         <button key={item.slug} className="cf-press-logo" onClick={() => setArticle(item)}
                           aria-label={'Read ' + item.outlet + ': ' + item.project} title={item.outlet}>
                           <img src={'/press-logos/' + item.logo} alt={item.outlet} />
                         </button>
                       ))}
+                      {hasGallery && <button ref={galleryButton} className="cf-press-logo cf-gallery-link" onClick={() => setGalleryOpen(true)}
+                        aria-label="Open The Buffalo Hunt photo gallery" aria-haspopup="dialog">Photo gallery</button>}
                       {projectReferences.map(item => (
                         <a key={item.href} className={'cf-press-logo cf-reference-logo' + (item.icon ? ' cf-app-icon' : '')} href={item.href}
                           target="_blank" rel="noopener noreferrer"
@@ -849,6 +856,7 @@ export function DarkroomFeatured({
             close={() => setArticle(null)}
             watch={watchPressFilm}
           />
+          <BuffaloHuntGallery open={galleryOpen} close={() => setGalleryOpen(false)} returnFocus={galleryButton} />
         </>
       )}
     </div>
