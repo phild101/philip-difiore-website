@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useEffect, useState, type RefObject } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import './project-gallery.css';
@@ -13,7 +13,6 @@ function GalleryPhotographs({ photos }: { photos: Photo[] }) {
     breakpoints: { '(prefers-reduced-motion: reduce)': { duration: 0 } },
   });
   const [selected, setSelected] = useState(0);
-  const thumbnails = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!api) return;
@@ -22,10 +21,6 @@ function GalleryPhotographs({ photos }: { photos: Photo[] }) {
     api.on('select', select);
     return () => { api.off('select', select); };
   }, [api]);
-
-  useEffect(() => {
-    thumbnails.current?.children[selected]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  }, [selected]);
 
   useEffect(() => {
     if (!api) return;
@@ -58,12 +53,6 @@ function GalleryPhotographs({ photos }: { photos: Photo[] }) {
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
       </button>
     </div>
-    <div className="pg-thumbnails" ref={thumbnails} role="group" aria-label="Choose a photograph">
-      {photos.map((photo, i) => <button key={photo.src} type="button" aria-label={`Photograph ${i + 1}`}
-        aria-pressed={i === selected} onClick={() => api?.scrollTo(i)}>
-        <img src={photo.thumbnail} alt="" width={96} height={64} loading="lazy" draggable={false} />
-      </button>)}
-    </div>
   </div>;
 }
 
@@ -89,13 +78,11 @@ export function BuffaloHuntGallery({ open, close, returnFocus }: { open: boolean
 
   return <Dialog open={open} onOpenChange={value => { if (!value) close(); }}>
     <DialogContent fullscreen showCloseButton={false} className="pg-dialog" finalFocus={returnFocus}>
-      <header className="pg-header">
-        <div><DialogTitle className="pg-title">The Buffalo Hunt</DialogTitle>
-          <DialogDescription className="pg-description">Photo gallery</DialogDescription></div>
-        <DialogClose className="pg-close" aria-label="Close photo gallery">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
-        </DialogClose>
-      </header>
+      <DialogTitle className="sr-only">The Buffalo Hunt</DialogTitle>
+      <DialogDescription className="sr-only">Photo gallery. Use the arrows or swipe to browse photographs.</DialogDescription>
+      <DialogClose className="pg-close" aria-label="Close photo gallery">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+      </DialogClose>
       {photos ? <GalleryPhotographs photos={photos} /> : <div className="pg-status" role="status">
         {error ? <><p>The photographs couldn’t load.</p><button onClick={() => setAttempt(value => value + 1)}>Try again</button></> : 'Loading photographs…'}
       </div>}
