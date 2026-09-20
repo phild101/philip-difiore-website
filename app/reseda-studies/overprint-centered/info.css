@@ -54,18 +54,15 @@
   display: inline;
   cursor: pointer;
   font: inherit;
+  font-style: italic;
   letter-spacing: inherit;
   color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: #777;
+  text-decoration: none;
   border: 0;
   border-radius: 0;
   background: none;
   padding: 0;
 }
-.info-project-link:hover, .info-project-link[data-popup-open] { text-decoration-color: #000; }
 .info-project-link:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 .info-preview[data-slot='popover-content'] {
   width: 246px;

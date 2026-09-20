@@ -1,6 +1,6 @@
 # INFO image previews — September 16, 2026
 
-The approved magazine bio, portrait, copy and margins remain in place. Underlined phrases open square, white image panels on hover (180 ms) or click/tap. Images link into the project pages, keeping the visitor within the site; Academy opens its supplied collection record in a new tab. Panels support keyboard activation, Escape, outside dismissal and a close control. No hover enlargement, shadows or decorative animation.
+The approved magazine bio, portrait, copy and margins remain in place. Italic phrases open square, white image panels on hover (180 ms) or click/tap. Images link into the project pages, keeping the visitor within the site; Academy opens its supplied collection record in a new tab. Panels support keyboard activation, Escape, outside dismissal and a close control. No hover enlargement, shadows or decorative animation.
 
 - cinematic storytelling: In the City, The Buffalo Hunt, I Learned the Hard Way
 - mind-bending narratives: Old Friend
@@ -29,3 +29,7 @@ Philip replaced the first artwork treatments with his desktop cover images. Earl
 - Improvisczario now uses `public/images/music/improvisczario-cover-v2.webp`, a square, text-free edit of `/Users/PD/Desktop/improvisczario1.jpeg`. Built-in imagegen prompt: “Remove only the top-right Improvisczario lettering and bottom-left BERNIE WORRELL lettering; reconstruct the pale gray painted background; preserve the original abstract shapes, color, painting and square crop, with no redesign or added patterns.” Result master: `artwork-originals/images/music/improvisczario-cover-v2.png`, 1254 × 1254. The website’s separate title cutout is retained.
 - Buffalo Hunt now uses `public/images/music/buffalo-hunt-soundtrack-cover-v2.webp`, matching `/Users/PD/Desktop/buffhuntsound1.jpeg`. A larger identical 640 × 640 official cover was obtained from Spotify: `https://i.scdn.co/image/ab67616d0000b273a74aa50156b36533be10349d`. The original album title remains in the cover; the website cutout reads SOUNDTRACK to avoid duplicating it. Preserved master: `artwork-originals/images/music/buffalo-hunt-soundtrack-cover-v2.jpg`.
 - Both keep the full square cover uncropped. Surrounding frames and lettering pick up their red/cream colors. These two square music frames center their category and navigation against the square artwork. INFO previews update from the same project records. Spotify destinations are unchanged.
+
+## Italic bio links — September 20, 2026
+
+Design preview: bio preview triggers use italics instead of underlines. Font family, size, weight, hover/click behavior and keyboard focus outlines remain unchanged. The separate info@philipdifiore.com email link stays underlined and upright.
