@@ -4,7 +4,7 @@ September 20, 2026: shared main-site navigation is INFO, FILM, MUSIC, INDEX. The
 
 The source mockup remains in `../mockups/project-index`. The hosted copy contains only index.html, app.js, style.css, data.json, fonts, favicon, and the 33 referenced project images. Research, build overlays, prior versions, validation reports and screenshots are not included. When revising Index, refresh this copy from the mockup and replace live-site project/header links with same-host root links.
 
-People/Artists remains the default category. The initial Index was approved and published to Netlify on September 20, 2026.
+People/Groups is the default category (renamed from People/Artists). The internal data key and existing `#people-artists` links are preserved. The initial Index was approved and published to Netlify on September 20, 2026.
 
 ## Mobile verification and corrections
 

@@ -5,6 +5,7 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 const projectCategories = ['Film','Music','Live'];
 const tagCategories = ['People/Artists','Places','Equipment','Techniques','Formats','Genres','Organizations','Press','Awards'];
 const categories = [tagCategories[0],...projectCategories,...tagCategories.slice(1),'All'];
+const categoryLabel = category => category==='People/Artists'?'People/Groups':category;
 const categorySlug = category => category.toLowerCase().replace(/[\s/]+/g,'-');
 const categoryLink = category => '#'+categorySlug(category);
 const legacyCategories = {'people':'People/Artists','artists':'People/Artists','artists-and-individuals':'People/Artists','music-video':'Film','music-videos':'Film','all-tags':'All','projects':'All'};
@@ -54,7 +55,7 @@ function projectCard(p,credit,showProjectTitle=true){
 }
 function renderIndex(category,query){
   const q=query.toLowerCase();
-  const items=sorted(entriesFor(query?'All':category).filter(item=>!q||(isProject(item)?[item.title,item.artist]:[item.label,item.category,...item.associations.map(a=>a.role)]).join(' ').toLowerCase().includes(q)));
+  const items=sorted(entriesFor(query?'All':category).filter(item=>!q||(isProject(item)?[item.title,item.artist]:[item.label,item.category,categoryLabel(item.category),...item.associations.map(a=>a.role)]).join(' ').toLowerCase().includes(q)));
   if(!items.length)return indexControls()+`<div class="empty">${query?`No matches for “${esc(query)}”.`:'No entries yet.'}${query?'<p>Try another category or search term.</p>':''}</div>`;
   return indexControls()+`<div class="term-grid ${categorySlug(category)}">${items.map(item=>isProject(item)?projectLink(item):entityLink(item)).join('')}</div>`;
 }
@@ -82,7 +83,7 @@ function render(shouldFocus=false){
   content.innerHTML=missing?`<div class="empty">This entry is no longer in the Index.<p><a class="return-link" href="#all">Browse all entries</a></p></div>`:entity?renderEntity(entity):project?renderProject(project):renderIndex(currentCategory,query);
   content.setAttribute('aria-busy','false');content.classList.remove('content-in');void content.offsetWidth;content.classList.add('content-in');
   document.title=(entity?.label||project?.title||'Index')+' — Philip Di Fiore';
-  $('announcement').textContent=missing?'Entry unavailable':selected?(entity?.label||project?.title):query?'Search results for '+query:currentCategory+', '+categoryCount(currentCategory)+' entries';
+  $('announcement').textContent=missing?'Entry unavailable':selected?(entity?.label||project?.title):query?'Search results for '+query:categoryLabel(currentCategory)+', '+categoryCount(currentCategory)+' entries';
   if(shouldFocus){window.scrollTo({top:0,behavior:'instant'});(content.querySelector('.detail-title')||$('main')).focus({preventScroll:true})}
 }
 document.addEventListener('click',event=>{
@@ -101,6 +102,6 @@ window.addEventListener('popstate',restoreHistory);window.addEventListener('hash
 window.addEventListener('pagehide',rememberScroll);window.addEventListener('pageshow',event=>{if(event.persisted)restoreHistory()});
 fetch('data.json').then(r=>{if(!r.ok)throw new Error('Content unavailable');return r.json()}).then(result=>{
   data=result;entities=Object.fromEntries(data.entities.map(e=>[e.id,e]));projects=Object.fromEntries(data.projects.map(p=>[p.id,p]));
-  document.querySelector('.categories').innerHTML=categories.map(c=>`<a href="${categoryLink(c)}" data-category="${esc(c)}">${esc(c)} <span class="nav-count">${categoryCount(c)}</span></a>`).join('');
+  document.querySelector('.categories').innerHTML=categories.map(c=>`<a href="${categoryLink(c)}" data-category="${esc(c)}">${esc(categoryLabel(c))} <span class="nav-count">${categoryCount(c)}</span></a>`).join('');
   restoreHistory();
 }).catch(()=>{content.setAttribute('aria-busy','false');content.innerHTML='<div class="empty"><p>The index couldn’t load.</p><button onclick="location.reload()">Try again</button></div>'});
