@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Index — Philip Di Fiore</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preload" href="assets/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="site-frame">
+    <header class="site-header">
+      <a class="wordmark" href="/#info">Philip Di Fiore</a>
+      <nav aria-label="Main navigation">
+        <a href="/#info">Info</a>
+        <a href="/#film/in-the-city">Film</a>
+        <a href="/#music/recording-parties">Music</a>
+        <a href="#people-artists" aria-current="page">Index</a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <h1 class="sr-only">Index</h1>
+      <div class="index-toolbar">
+        <nav class="categories" aria-label="Browse index"></nav>
+        <form id="search-form" role="search">
+          <label for="search" class="sr-only">Search</label>
+          <div class="search-field"><input id="search" type="search" autocomplete="off" placeholder="Search..." aria-label="Search"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div>
+        </form>
+      </div>
+      <div id="content" aria-busy="true"><p class="loading">Opening the index…</p></div>
+      <p id="announcement" class="sr-only" aria-live="polite"></p>
+    </main>
+  </div>
+  <dialog id="image-preview" aria-label="Project photograph">
+    <button type="button" data-close-image aria-label="Close photograph">×</button>
+    <img alt="">
+  </dialog>
+  <script src="app.js" defer></script>
+</body>
+</html>
