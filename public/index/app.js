@@ -26,7 +26,11 @@ function sorted(items){return [...items].sort((a,b)=>sortMode()==='tags'?(countF
 function indexControls(){return `<div class="sort-controls" role="group" aria-label="Sort entries"><span>Sort:</span><button type="button" data-sort="alpha" aria-pressed="${sortMode()==='alpha'}">Alphabetical</button><button type="button" data-sort="tags" aria-pressed="${sortMode()==='tags'}">Tag count</button></div>`}
 const entityLink = e => `<a class="term-link${e.category==='Awards'?' award-term':''}" href="${link('entity',e.id)}"><span class="term-label">${e.festival?`<span class="award-festival">${esc(e.festival)}</span><span class="award-distinction">${esc(e.distinction)}</span>`:esc(e.label)}</span></a>`;
 function projectLink(p){return `<a class="term-link project-term" href="${link('project',p.id)}"><span class="term-label">${esc(p.title)}${p.artist&&p.artist!=='Philip Di Fiore'?`<span class="project-artist">${esc(p.artist)}</span>`:''}</span></a>`}
-function goto(hash){history.pushState({index:true},'',location.pathname+(sortMode()==='tags'?'?sort=tags':'')+hash);render(true)}
+history.scrollRestoration='manual';
+function rememberScroll(){history.replaceState({...history.state,index:true,scrollY:window.scrollY},'',location.href)}
+function goto(hash){rememberScroll();history.pushState({index:true,scrollY:0},'',location.pathname+(sortMode()==='tags'?'?sort=tags':'')+hash);render(true)}
+let historyFrame;
+function restoreHistory(){cancelAnimationFrame(historyFrame);historyFrame=requestAnimationFrame(()=>{render();window.scrollTo({top:history.state?.scrollY||0,behavior:'instant'})})}
 const directAssociation = a => ['documented','philip-provided'].includes(a.status)&&!(/affiliat|prior artist|reference|influence|comparison/i.test(a.role));
 function relatedToProjects(ids,excludedId){
   // Lead with the featured cast when In the City is a shared connection.
@@ -45,7 +49,7 @@ function conciseCredit(associations){
 }
 function projectCard(p,credit,showProjectTitle=true){
   const href=p.href||'';
-  const internal=href.startsWith('#');
+  const internal=href&&new URL(href,location.href).origin===location.origin;
   return `<figure class="project-card">${p.image?`<img class="project-image" src="${esc(p.image)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}<figcaption><p class="project-credit">${showProjectTitle?`<span class="credit-project">${esc(p.title)}</span>`:''}<span>${esc(credit)}</span></p>${href?`<a class="open-project" href="${esc(href)}"${internal?'':' target="_blank" rel="noopener"'} aria-label="Open ${esc(p.title)}">OPEN</a>`:p.image?`<button class="open-project" type="button" data-open-image="${esc(p.id)}" aria-label="Open ${esc(p.title)} photograph">OPEN</button>`:''}</figcaption></figure>`;
 }
 function renderIndex(category,query){
@@ -93,9 +97,10 @@ document.addEventListener('click',event=>{
 $('search-form').addEventListener('submit',e=>e.preventDefault());
 $('search').addEventListener('input',()=>{const value=$('search').value,params=new URLSearchParams(location.search);if(value)params.set('q',value);else params.delete('q');history.replaceState(history.state,'',location.pathname+(params.size?'?'+params.toString():'')+categoryLink(currentCategory));render()});
 $('clear-search').addEventListener('click',()=>{const params=new URLSearchParams(location.search);params.delete('q');history.replaceState(history.state,'',location.pathname+(params.size?'?'+params.toString():'')+categoryLink(currentCategory));render();$('search').focus()});
-window.addEventListener('popstate',()=>render(true));window.addEventListener('hashchange',()=>render(true));
+window.addEventListener('popstate',restoreHistory);window.addEventListener('hashchange',restoreHistory);
+window.addEventListener('pagehide',rememberScroll);window.addEventListener('pageshow',event=>{if(event.persisted)restoreHistory()});
 fetch('data.json').then(r=>{if(!r.ok)throw new Error('Content unavailable');return r.json()}).then(result=>{
   data=result;entities=Object.fromEntries(data.entities.map(e=>[e.id,e]));projects=Object.fromEntries(data.projects.map(p=>[p.id,p]));
   document.querySelector('.categories').innerHTML=categories.map(c=>`<a href="${categoryLink(c)}" data-category="${esc(c)}">${esc(c)} <span class="nav-count">${categoryCount(c)}</span></a>`).join('');
-  render();
+  restoreHistory();
 }).catch(()=>{content.setAttribute('aria-busy','false');content.innerHTML='<div class="empty"><p>The index couldn’t load.</p><button onclick="location.reload()">Try again</button></div>'});

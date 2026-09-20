@@ -120,5 +120,20 @@ button.open-project{background:var(--paper);color:var(--ink);font-family:inherit
 button.open-project:hover,button.open-project:focus-visible{background:var(--ink);color:var(--paper)}
 #image-preview{padding:32px;border:1px solid var(--ink);max-width:92vw;max-height:92svh;background:var(--paper)}
 #image-preview::backdrop{background:rgb(0 0 0 / .7)}
-#image-preview img{display:block;max-width:82vw;max-height:78svh;object-fit:contain}
+#image-preview img{display:block;max-width:100%;max-height:78svh;object-fit:contain}
 #image-preview button{position:absolute;right:3px;top:0;border:0;background:transparent;min-width:32px;min-height:32px;font-size:25px;line-height:1}
+
+/* Touch-sized secondary controls without changing the desktop layout. */
+@media(max-width:650px){
+  .site-header nav a{min-width:44px;min-height:44px;justify-content:center}
+  .index-toolbar form{flex-basis:190px;width:190px;max-width:100%}
+  .index-toolbar .search-field{height:46px;padding-right:4px}
+  .search-field input{font-size:16px}
+  .search-field button{width:44px;min-width:44px;height:44px}
+  .open-project{min-height:44px}
+  .detail-view .related-list{gap:4px 18px}
+  .detail-view .related-list a{display:inline-flex;align-items:center;min-height:44px}
+  #image-preview{padding:48px 16px 16px}
+  #image-preview button{right:4px;top:2px;min-width:44px;min-height:44px}
+}
+body:has(#image-preview[open]){overflow:hidden}
