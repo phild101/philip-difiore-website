@@ -4,6 +4,8 @@ Production target: Netlify project `philipdifiore-redesign` (`45c7e4db-695d-4ca8
 
 Design previews: the existing Sites project `appgprj_6aa167c7b3848191b862ad31b8d92ef6` at `https://philip-difiore-design-directions.phild101.chatgpt.site`. Austere remains an unlisted/noindex preview edition at `/editions/austere#index`; it is not an authenticated private site.
 
+Approved homepage, September 21: yellow/blue Masthead. Info is now entered via `#info`; header name links return to `#home`. See `info-landing.md` for route and mobile behavior.
+
 ## One source, two builds
 
 Edit this `design-concepts` checkout for both hosts. Do not modify the archived `../Phil Website` build. Netlify production uses the same source, not a separately maintained design copy.

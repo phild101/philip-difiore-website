@@ -193,11 +193,12 @@ export function RecordingPlaybackProvider({ children }: { children: ReactNode })
     const observer = new MutationObserver(update);
     function update() {
       const page = document.querySelector('.op-site');
+      const landing = document.querySelector('.mh-landing');
       const room = page?.querySelector('.dr-room');
       const header = page?.querySelector('.df-nav');
       const next = {
-        background: room ? getComputedStyle(room).backgroundColor : '#fff',
-        ink: header ? getComputedStyle(header).color : '#1b1b1b',
+        background: landing ? getComputedStyle(landing).backgroundColor : room ? getComputedStyle(room).backgroundColor : '#fff',
+        ink: landing ? getComputedStyle(landing).color : header ? getComputedStyle(header).color : '#1b1b1b',
       };
       setSurface(old => old.background === next.background && old.ink === next.ink ? old : next);
       observer.disconnect();

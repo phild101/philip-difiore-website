@@ -1,8 +1,10 @@
-# Info landing page
+# Landing page and home navigation
 
-September 16, 2026: Philip selected Info as the main site landing page.
+September 21, 2026: Philip selected the yellow/blue Masthead, superseding the September 16 Info landing selection.
 
-The root URL with no fragment opens Info. Name/Home links return to Info. Explicit Film, Music, Info and Recording Parties links still open their selected content. Saved design-study routes keep their previous defaults.
+The root URL with no fragment (or `#home`) opens Masthead. Its name is plain, non-clickable text. Only INFO / FILM / MUSIC / INDEX are links. On the main site, header Name/Home links return to `#home`; the standalone Index returns to `/#home`. Explicit Film, Music, Info and Recording Parties links still open their selected content. Saved editions retain their own defaults.
+
+The landing has no header. Desktop uses a two-line name and one navigation row; phones use the same two-line name plus four large links in a two-by-two grid. Short landscape windows have a compact layout. A persistent recording continues through hash navigation; the landing reserves space for its dock and matches its yellow/blue colors.
 
 The root experience uses the approved bold header and Info typography without requiring query parameters. Explicit typography queries still override the root default; saved studies retain their prior defaults.
 

@@ -1,6 +1,7 @@
 'use client';
 
 import './studies.css';
+import { Masthead } from '../../landing/masthead';
 
 export const identities = [
   { id: 'oxblood', name: 'Oxblood title page', note: 'A name, two disciplines, and a single field of color.', number: 11 },
@@ -27,6 +28,7 @@ function Header() {
 function Roles() { return <p className="lt-roles">Filmmaker.<br />Music producer.</p>; }
 
 export function ThirdSurface({ direction }: { direction: string }) {
+  if (direction === 'type-entry') return <Masthead sectionPrefix="/" />;
   if (direction.startsWith('type-')) return <YellowSurface direction={direction} />;
   return <div className={`lt-canvas lt-${direction}`}><div className="lt-frame"><Header />
     {direction === 'oxblood' && <main className="lt-title-page"><h1>PHILIP<br />DI FIORE</h1><Roles /></main>}

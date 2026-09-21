@@ -149,7 +149,7 @@ export function DarkroomFeatured({
       ? overprintArchive
       : darkroomArchive;
   const [view, setView] = useState<View>(!preview && centered ? landingView : 'featured');
-  const homeHref = landingView === 'info' ? '#info' : '#film/if-you-call';
+  const homeHref = landingView === 'info' ? '#home' : '#film/if-you-call';
   const [index, setIndex] = useState(0);
   const [filmSlug, setFilmSlug] = useState(projects[0].slug);
   const [previous, setPrevious] = useState<number | null>(null);
