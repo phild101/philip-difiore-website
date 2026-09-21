@@ -2,12 +2,13 @@
 
 import { directions, Surface as FirstSurface } from '../studies';
 import { openings, Surface as SecondSurface } from '../round-two/studies';
-import { identities, ThirdSurface } from '../round-three/studies';
+import { identities, yellowEntries, ThirdSurface } from '../round-three/studies';
 import './comparison.css';
 
 export function AllLandingStudies() {
   return <div className="la-review"><header className="la-header"><a href="/#info">Philip Di Fiore</a><a href="/#info">Current site</a></header><main>
-    <div className="la-intro"><h1>Landing pages</h1><p>All fifteen studies. Open any design to see it full size.</p><nav aria-label="Study rounds"><a href="#new">New · 11–15</a><a href="#first">First set · 01–05</a><a href="#second">Second set · 06–10</a></nav></div>
+    <div className="la-intro"><h1>Landing pages</h1><p>Five yellow entrances, followed by all fifteen earlier studies.</p><nav aria-label="Study rounds"><a href="#latest">Yellow · 16–20</a><a href="#new">11–15</a><a href="#first">First set · 01–05</a><a href="#second">Second set · 06–10</a></nav></div>
+    <section id="latest" aria-labelledby="latest-title"><div className="la-section-title"><h2 id="latest-title">Five yellow entrances</h2><span>16–20 · New</span></div><div className="la-grid">{yellowEntries.map(item => <article className="la-card" key={item.id}><div className="la-mini"><div className="la-mini-inner" inert aria-hidden="true"><ThirdSurface direction={item.id} /></div></div><div className="la-caption"><span>{item.number}</span><h3>{item.name}</h3><span aria-hidden="true">↗</span></div><p>{item.note}</p><a className="la-open" href={`/landing-studies/round-three/${item.id}`} aria-label={`Preview ${item.number}: ${item.name}`} /></article>)}</div></section>
     <section id="new" aria-labelledby="new-title"><div className="la-section-title"><h2 id="new-title">New studies</h2><span>11–15</span></div><div className="la-grid">{identities.map(item => <article className="la-card" key={item.id}>
       <div className="la-mini"><div className="la-mini-inner" inert aria-hidden="true"><ThirdSurface direction={item.id} /></div></div>
       <div className="la-caption"><span>{item.number}</span><h3>{item.name}</h3><span aria-hidden="true">↗</span></div><p>{item.note}</p><a className="la-open" href={`/landing-studies/round-three/${item.id}`} aria-label={`Preview ${item.number}: ${item.name}`} />

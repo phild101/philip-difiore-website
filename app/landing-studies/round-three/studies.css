@@ -43,3 +43,39 @@
 @container(max-width:760px){.lt-header{font-size:10px;letter-spacing:0;gap:12px}.lt-header nav{gap:clamp(10px,3cqw,16px)}.lt-header nav a{min-width:40px;justify-content:center}.lt-title-page{padding:50px 8px;gap:30px}.lt-canvas p{font-size:12px;line-height:1.9}.lt-portrait-page{gap:26px;padding:40px 5%;grid-template-columns:1fr}.lt-portrait-page figure{width:62%;max-width:280px;justify-self:center}.lt-portrait-page>div{text-align:center}.lt-portrait-page h1{font-size:clamp(42px,8.2cqw,62px);margin-bottom:20px}.lt-portrait-page p{margin:auto;max-width:300px}.lt-masthead-page{padding:35px 2% 50px;gap:100px}.lt-masthead-name h1{font-size:16.5cqw}.lt-blue-page{flex-direction:column;justify-content:center;align-items:stretch;padding:70px 9%;gap:40px}.lt-blue-identity{flex:0}.lt-blue-copy{width:100%;max-width:290px;border-left:0;border-top:1px solid;padding:28px 0 0}.lt-coral-page{padding:45px 4%}.lt-coral-panel{padding:10%;gap:30px}.lt-coral-panel h1{font-size:10.8cqw}}
 @container(max-width:360px){.lt-header{height:88px;flex-direction:column;justify-content:center;gap:0}.lt-header nav{width:100%;justify-content:space-between}.lt-canvas main{min-height:calc(var(--lt-height,100svh - 44px) - 106px)}}
 @media(max-width:1150px){.lt-switch-name{display:none}.lt-switcher>div{gap:18px}}
+/* 16: the identity and navigation are the entire page; no header or study bar. */
+.lt-entry{--lt-ground:#f1d53f;--lt-ink:#132f65;min-height:var(--lt-height,100svh)}
+.lt-entry .lt-entry-page{min-height:calc(var(--lt-height,100svh) - 16px);border:1px solid;padding:clamp(24px,4.2cqw,70px);display:flex;flex-direction:column;justify-content:space-between;gap:50px}
+.lt-entry h1{font-size:clamp(72px,16.6cqw,255px);line-height:.88;margin:auto 0;letter-spacing:-.055em}
+.lt-entry h1 a{display:inline-block;padding:12px 0}
+.lt-entry h1 a span{display:block}
+.lt-entry nav{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid;padding-top:22px}
+.lt-entry nav a{font-family:'Archivo Black',Arial,sans-serif;font-weight:400;font-size:clamp(22px,4.2cqw,60px);line-height:1.2;letter-spacing:-.04em;min-height:44px;display:flex;align-items:center;padding:8px 0}
+.lt-entry a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.14em}
+@container(max-width:600px){.lt-entry .lt-entry-page{padding:28px 22px;gap:38px}.lt-entry h1{font-size:17cqw}.lt-entry nav{display:grid;grid-template-columns:1fr 1fr;gap:12px 32px;padding-top:24px}.lt-entry nav a{font-size:8cqw;min-height:56px}}
+/* 17: two equal, upright blocks of type. */
+.lt-type-split .lt-entry-page{display:grid;grid-template-columns:1.35fr 1fr;align-items:center;gap:7%;padding:5%}
+.lt-type-split h1{font-size:9.6cqw;line-height:.97;margin:0}
+.lt-type-split nav{display:flex;flex-direction:column;align-items:flex-start;border-top:0;border-left:1px solid;padding:20px 0 20px 12%;gap:10px}
+.lt-type-split nav a{font-size:7cqw;line-height:1.1}
+/* 18: a centered, one-line signature and a small navigation line. */
+.lt-type-center .lt-entry-page{justify-content:center;align-items:center;gap:36px;padding:4%}
+.lt-type-center h1{font-size:8.5cqw;margin:0;text-align:center;line-height:1.15}
+.lt-type-center h1 a span{display:inline}
+.lt-type-center nav{justify-content:center;border:0;padding:0;gap:46px}
+.lt-type-center nav a{font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:.03em}
+/* 19: a small identity and four large, ruled rows. */
+.lt-type-ledger .lt-entry-page{padding:5% 8%;justify-content:center;gap:40px}
+.lt-type-ledger h1{font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:24px;line-height:1.1;letter-spacing:-.015em;margin:0}
+.lt-type-ledger h1 a span{display:inline}
+.lt-type-ledger nav{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0}
+.lt-type-ledger nav a{border-bottom:1px solid;font-size:clamp(40px,6.9cqw,104px);padding:17px 0 22px;line-height:1}
+/* 20: the four destinations sit at the corners of the name. */
+.lt-type-corners .lt-entry-page{position:relative;justify-content:center;align-items:center;padding:110px 5%}
+.lt-type-corners h1{text-align:center;font-size:11.7cqw;margin:0;position:relative;z-index:1;pointer-events:none}
+.lt-type-corners h1 a{pointer-events:auto}
+.lt-type-corners nav{position:absolute;inset:4%;border:0;padding:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;align-items:start;pointer-events:none}
+.lt-type-corners nav a{width:max-content;pointer-events:auto;font-size:clamp(24px,3.6cqw,52px)}
+.lt-type-corners nav a:nth-child(even){justify-self:end}
+.lt-type-corners nav a:nth-child(n+3){align-self:end}
+@container(max-width:600px){.lt-type-split .lt-entry-page{grid-template-columns:1fr;align-content:center;gap:48px;padding:8%}.lt-type-split h1{font-size:14cqw}.lt-type-split nav{border-left:0;border-top:1px solid;padding:24px 0 0;gap:8px}.lt-type-split nav a{font-size:10cqw;min-height:50px}.lt-type-center .lt-entry-page{gap:28px}.lt-type-center h1{font-size:15cqw;line-height:.95}.lt-type-center h1 a span{display:block}.lt-type-center nav{display:flex;flex-wrap:wrap;gap:8px 22px}.lt-type-center nav a{font-size:14px;min-height:44px}.lt-type-ledger .lt-entry-page{padding:8%;gap:46px}.lt-type-ledger h1{font-size:18px}.lt-type-ledger nav a{font-size:14cqw;padding:22px 0}.lt-type-corners .lt-entry-page{padding:120px 5%}.lt-type-corners h1{font-size:16.5cqw}.lt-type-corners nav{inset:28px 22px;gap:24px}.lt-type-corners nav a{font-size:7.5cqw;min-height:48px}}
