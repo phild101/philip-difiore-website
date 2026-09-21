@@ -81,7 +81,7 @@ function LivingIndex() {
     </main><footer className="ls-index-footer"><span>Philip Di Fiore</span><a href="/index/index.html#people-artists">Explore the complete Index <span aria-hidden="true">↗</span></a></footer>
   </div>;
 }
-function Surface({direction}:{direction:string}) {
+export function Surface({direction}:{direction:string}) {
   if(direction==='cinema')return <Cinema/>;
   if(direction==='duet')return <Duet/>;
   if(direction==='editorial')return <Editorial/>;
@@ -89,7 +89,7 @@ function Surface({direction}:{direction:string}) {
   return <Poster/>;
 }
 export function LandingStudy({direction}:{direction:string}) {
-  return <div className="ls-study"><nav className="ls-switcher" aria-label="Landing page studies"><a href="/landing-studies">All five</a><div>{directions.map((item,i)=><a href={'/landing-studies/'+item.id} key={item.id} aria-label={'Preview '+item.name} aria-current={direction===item.id?'page':undefined}><span>{String(i+1).padStart(2,'0')}</span><span className="ls-switch-name"> {item.name}</span></a>)}</div></nav><Surface direction={direction}/></div>;
+  return <div className="ls-study"><nav className="ls-switcher" aria-label="Landing page studies"><a href="/landing-studies/all">All 15</a><div>{directions.map((item,i)=><a href={'/landing-studies/'+item.id} key={item.id} aria-label={'Preview '+item.name} aria-current={direction===item.id?'page':undefined}><span>{String(i+1).padStart(2,'0')}</span><span className="ls-switch-name"> {item.name}</span></a>)}</div></nav><Surface direction={direction}/></div>;
 }
 export function LandingComparison() {
   return <div className="ls-review"><header><a href="/#info">Philip Di Fiore</a><a href="/landing-studies/round-two">Five new openings ↗</a></header><main><div className="ls-review-intro"><h1>Five ways in.</h1><p>Landing page studies<br/>Choose a direction to explore.</p></div><div className="ls-review-grid">{directions.map((item,i)=><article className="ls-review-card" key={item.id}>

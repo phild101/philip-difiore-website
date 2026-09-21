@@ -168,7 +168,7 @@ function Story() {
   </main></section>;
 }
 
-function Surface({ direction, miniature = false }: { direction: string; miniature?: boolean }) {
+export function Surface({ direction, miniature = false }: { direction: string; miniature?: boolean }) {
   if (direction === 'room') return <Room miniature={miniature} />;
   if (direction === 'titles') return <Titles miniature={miniature} />;
   if (direction === 'compose') return <Compose />;
@@ -176,7 +176,7 @@ function Surface({ direction, miniature = false }: { direction: string; miniatur
   return <Reveal />;
 }
 export function RoundTwoStudy({ direction }: { direction: string }) {
-  return <div className="lr-study"><nav className="lr-switcher" aria-label="Second set of landing page studies"><a href={base}>All five</a><div>{openings.map((item, i) => <a key={item.id} href={`${base}/${item.id}`} aria-label={`Preview ${item.name}`} aria-current={direction === item.id ? 'page' : undefined}><span>0{i + 1}</span><span className="lr-switch-name">{item.name}</span></a>)}</div></nav><Surface direction={direction} /></div>;
+  return <div className="lr-study"><nav className="lr-switcher" aria-label="Second set of landing page studies"><a href="/landing-studies/all">All 15</a><div>{openings.map((item, i) => <a key={item.id} href={`${base}/${item.id}`} aria-label={`Preview ${item.name}`} aria-current={direction === item.id ? 'page' : undefined}><span>{String(i + 6).padStart(2, '0')}</span><span className="lr-switch-name">{item.name}</span></a>)}</div></nav><Surface direction={direction} /></div>;
 }
 export function RoundTwoComparison() {
   return <div className="lr-review"><header><a href="/#info">Philip Di Fiore</a><a href="/landing-studies">Saved first five</a></header><main><div className="lr-review-heading"><div><p>Landing studies / Round 02</p><h1>Something<br /><em>happens here.</em></h1></div><p>Five new openings.<br />The header takes you places.<br />The page gives you an experience.</p></div><div className="lr-review-grid">{openings.map((item, i) => <article className={`lr-review-card lr-card-${item.id}`} key={item.id}><div className="lr-mini"><div className="lr-mini-inner" inert aria-hidden="true"><Surface direction={item.id} miniature /></div></div><div className="lr-card-caption"><span style={{ color: item.color }}>0{i + 1} / {item.verb}</span><h2>{item.name}</h2><p>{item.note}</p></div><a href={`${base}/${item.id}`} aria-label={`Preview ${item.name}`} /></article>)}</div><footer><a href="/landing-studies">All five original directions are saved here.</a></footer></main></div>;
