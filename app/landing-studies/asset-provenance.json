@@ -1,0 +1,77 @@
+{
+  "processing": "Faithful aspect-preserving resize to a maximum 1100px long edge, WebP quality 80. No crops, stylistic edits, or color adjustments.",
+  "assets": [
+    {
+      "sourcePath": "public/images/overprint/old-friend.webp",
+      "outputPath": "public/images/landing-studies/old-friend.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 373880
+    },
+    {
+      "sourcePath": "public/images/overprint/if-you-call.webp",
+      "outputPath": "public/images/landing-studies/if-you-call.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 282518
+    },
+    {
+      "sourcePath": "public/images/sequence/in-the-city-vertigo-v2.webp",
+      "outputPath": "public/images/landing-studies/in-the-city.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 177816
+    },
+    {
+      "sourcePath": "public/images/sequence/antibalas-anti-3-amber-room-rhythm.webp",
+      "outputPath": "public/images/landing-studies/antibalas.webp",
+      "sourceWidth": 1072,
+      "sourceHeight": 1467,
+      "width": 804,
+      "height": 1100,
+      "bytes": 209740
+    },
+    {
+      "sourcePath": "public/images/overprint/buffalo-hunt.webp",
+      "outputPath": "public/images/landing-studies/buffalo-hunt.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 310708
+    },
+    {
+      "sourcePath": "public/images/music/improvisczario-rumpus-painted-improvisation.webp",
+      "outputPath": "public/images/landing-studies/improvisczario.webp",
+      "sourceWidth": 1254,
+      "sourceHeight": 1254,
+      "width": 1100,
+      "height": 1100,
+      "bytes": 336166
+    },
+    {
+      "sourcePath": "public/images/sequence/recording-parties-turquoise.webp",
+      "outputPath": "public/images/landing-studies/recording-parties.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 274266
+    },
+    {
+      "sourcePath": "public/images/info/philip-modern-noir.png",
+      "outputPath": "public/images/landing-studies/philip.webp",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "width": 880,
+      "height": 1100,
+      "bytes": 34262
+    }
+  ]
+}
