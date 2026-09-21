@@ -1,0 +1,82 @@
+{
+  "processing": "Faithful resizing only;max1500px,no upscaling,no cropping,no restyling;WebP quality85.",
+  "assets": [
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/in-the-city.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/in-the-city-original.webp",
+      "width": 1380,
+      "height": 1260,
+      "originalDimensions": [
+        1380,
+        1260
+      ],
+      "bytes": 32242
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/artwork-originals/images/sequence/antibalas-anti-3-source.png",
+      "outputPath": "/private/tmp/landing-round-two-assets/antibalas-original.webp",
+      "width": 1500,
+      "height": 842,
+      "originalDimensions": [
+        1864,
+        1046
+      ],
+      "bytes": 81256
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/ifyoucallnew.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/if-you-call-original.webp",
+      "width": 640,
+      "height": 800,
+      "originalDimensions": [
+        640,
+        800
+      ],
+      "bytes": 28406
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/recording-parties.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/room-trumpet-original.webp",
+      "width": 835,
+      "height": 1024,
+      "originalDimensions": [
+        835,
+        1024
+      ],
+      "bytes": 47090
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/music/recording-parties/originals/party-2/01.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/room-philip-mc.webp",
+      "width": 1000,
+      "height": 563,
+      "originalDimensions": [
+        1000,
+        563
+      ],
+      "bytes": 46030
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/music/recording-parties/originals/party-2/18.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/room-ensemble.webp",
+      "width": 520,
+      "height": 271,
+      "originalDimensions": [
+        520,
+        271
+      ],
+      "bytes": 9958
+    },
+    {
+      "sourcePath": "/Users/PD/Desktop/Phil LLM/Phils Website/design-concepts/public/images/music/recording-parties/originals/party-2/17.jpg",
+      "outputPath": "/private/tmp/landing-round-two-assets/room-piano-duet.webp",
+      "width": 520,
+      "height": 766,
+      "originalDimensions": [
+        520,
+        766
+      ],
+      "bytes": 20986
+    }
+  ]
+}

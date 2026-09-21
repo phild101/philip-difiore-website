@@ -92,7 +92,7 @@ export function LandingStudy({direction}:{direction:string}) {
   return <div className="ls-study"><nav className="ls-switcher" aria-label="Landing page studies"><a href="/landing-studies">All five</a><div>{directions.map((item,i)=><a href={'/landing-studies/'+item.id} key={item.id} aria-label={'Preview '+item.name} aria-current={direction===item.id?'page':undefined}><span>{String(i+1).padStart(2,'0')}</span><span className="ls-switch-name"> {item.name}</span></a>)}</div></nav><Surface direction={direction}/></div>;
 }
 export function LandingComparison() {
-  return <div className="ls-review"><header><a href="/#info">Philip Di Fiore</a><a href="https://philipdifiore.com/">Current site ↗</a></header><main><div className="ls-review-intro"><h1>Five ways in.</h1><p>Landing page studies<br/>Choose a direction to explore.</p></div><div className="ls-review-grid">{directions.map((item,i)=><article className="ls-review-card" key={item.id}>
+  return <div className="ls-review"><header><a href="/#info">Philip Di Fiore</a><a href="/landing-studies/round-two">Five new openings ↗</a></header><main><div className="ls-review-intro"><h1>Five ways in.</h1><p>Landing page studies<br/>Choose a direction to explore.</p></div><div className="ls-review-grid">{directions.map((item,i)=><article className="ls-review-card" key={item.id}>
     <div className="ls-mini"><div className="ls-mini-inner" inert aria-hidden="true"><Surface direction={item.id}/></div></div>
     <div className="ls-review-caption"><span style={{color:item.color}}>{String(i+1).padStart(2,'0')}</span><h2>{item.name}</h2><span aria-hidden="true">↗</span></div><p>{item.note}</p>
     <a className="ls-card-open" href={'/landing-studies/'+item.id} aria-label={'Preview '+item.name}/>
