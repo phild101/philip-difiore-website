@@ -17,7 +17,7 @@ export function InfoPage({ filmSlug, projects, homeHref = '#film/if-you-call', p
     return {
       title: item.work.title,
       image: projectImage ? projectImage(item) : featuredPoster(item, 'sequence'),
-      aspectRatio: item.slug === 'improvisczario' ? item.aspectRatio : undefined,
+      aspectRatio: item.slug === 'improvisczario' || item.slug === 'buffalo-hunt-soundtrack' ? item.aspectRatio : undefined,
       href: '#' + (isMusicProject(slug) ? 'music/' : 'film/') + slug,
     };
   }

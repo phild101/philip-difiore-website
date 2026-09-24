@@ -94,22 +94,26 @@
 }
 /* The approved album cover keeps its complete square inside the stable artwork
    frame on desktop and in every mobile carousel slide. Its title is in the art. */
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print,
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-buffalo-buffsoundtrack1 .df-slide.op-film-buffalo-hunt-soundtrack .df-print {
   position: absolute;
   inset: 50% 0 auto;
   height: auto;
   aspect-ratio: 1;
   transform: translateY(-50%);
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .dr-print-image {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .dr-print-image,
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-buffalo-buffsoundtrack1 .df-slide.op-film-buffalo-hunt-soundtrack .dr-print-image {
   height: auto;
   aspect-ratio: 1;
   flex: 0 0 auto;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print img {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-print img,
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-buffalo-buffsoundtrack1 .df-slide.op-film-buffalo-hunt-soundtrack .df-print img {
   object-fit: contain;
 }
-.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-project-name {
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-improv-rumpus-painted-improvisation .df-slide.op-film-improvisczario .df-project-name,
+.op-site.op-sequence.op-poster.op-centered.op-featured.op-buffalo-buffsoundtrack1 .df-slide.op-film-buffalo-hunt-soundtrack .df-project-name {
   display: none;
 }
 .op-site.op-sequence.op-poster.op-centered .sq-control-rail {
@@ -228,7 +232,8 @@
     }
     /* Keep the square sleeve's top spacing, but reclaim the empty lower
        eighth of its width so listening links sit just below the artwork. */
-    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .cf-project-press {
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-improvisczario.op-improv-rumpus-painted-improvisation .cf-project-press,
+    .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork.op-project-buffalo-hunt-soundtrack.op-buffalo-buffsoundtrack1 .cf-project-press {
       margin-top: -12.5%;
     }
     .op-site.op-sequence.op-poster.op-centered.op-featured.op-uniform-artwork .cf-project-press h2 {

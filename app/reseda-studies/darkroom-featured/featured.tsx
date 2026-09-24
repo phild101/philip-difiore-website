@@ -45,7 +45,7 @@ import {
 } from '../overprint-centered/projects';
 import { RecordingParties } from '../../music/recording-parties/listening';
 import { defaultImprovisczarioOption, isMusicProject, parseImprovisczarioOption, withImprovisczarioOption, type ImprovisczarioOption } from '../../music/projects';
-import { parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type BuffaloSoundtrackOption } from '../../music/projects';
+import { defaultBuffaloSoundtrackOption, parseBuffaloSoundtrackOption, withBuffaloSoundtrackOption, type BuffaloSoundtrackOption } from '../../music/projects';
 import { parseBuffaloFilmOption, withBuffaloFilmOption, type BuffaloFilmOption } from '../overprint-centered/buffalo-film-studies';
 import { InfoPage } from '../overprint-centered/info';
 import { SectionNavigation } from '../overprint-centered/navigation';
@@ -124,7 +124,7 @@ export function DarkroomFeatured({
   const [trilogyOption, setTrilogyOption] = useState<TrilogyOption>('double-exposure');
   const [antibalasOption, setAntibalasOption] = useState<AntibalasOption>('3-amber-room-rhythm');
   const [improvisczarioOption, setImprovisczarioOption] = useState<ImprovisczarioOption>(defaultImprovisczarioOption);
-  const [buffaloSoundtrackOption, setBuffaloSoundtrackOption] = useState<BuffaloSoundtrackOption>('current');
+  const [buffaloSoundtrackOption, setBuffaloSoundtrackOption] = useState<BuffaloSoundtrackOption>(defaultBuffaloSoundtrackOption);
   const [buffaloFilmOption, setBuffaloFilmOption] = useState<BuffaloFilmOption>('current');
   const baseProjects = sequence
     ? (centered ? centeredCityProjects[cityOption] : sequencePaletteProjects)[

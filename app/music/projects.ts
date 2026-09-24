@@ -1,6 +1,7 @@
 import type { FeaturedProject } from '../reseda-studies/overprint/projects';
 
 export const defaultImprovisczarioOption = 'rumpus-painted-improvisation';
+export const defaultBuffaloSoundtrackOption = 'buffsoundtrack1';
 
 export const musicProjects: FeaturedProject[] = [
   {
@@ -22,11 +23,11 @@ export const musicProjects: FeaturedProject[] = [
     work: {
       title: 'The Buffalo Hunt Soundtrack',
       artist: 'Jason Hill',
-      image: 'music/buffalo-hunt-soundtrack-overprint.webp',
+      image: 'music/buffalo-hunt-soundtrack-buffsoundtrack1.png',
       externalUrl: 'https://open.spotify.com/album/2Oq3TjoyVG34DzLTqJboHY?si=ab-fTyeAQT6Y2ufNJ41ncw',
     },
-    poster: '/images/music/buffalo-hunt-soundtrack-overprint.webp',
-    aspectRatio: 1122 / 1402,
+    poster: '/images/music/buffalo-hunt-soundtrack-buffsoundtrack1.png',
+    aspectRatio: 1,
     heading: ['THE BUFFALO HUNT', 'SOUNDTRACK'],
     palette: 'ink',
     composition: 'right',
@@ -86,7 +87,7 @@ export function withImprovisczarioOption(projects: FeaturedProject[], option: Im
 }
 
 export const buffaloSoundtrackStudies = [
-  {option: 'current', title: 'Original', subject: 'Selected', image: 'buffalo-hunt-soundtrack-overprint.webp', ground: '#102c34'},
+  {option: 'current', title: 'Original', subject: 'Saved', image: 'buffalo-hunt-soundtrack-overprint.webp', ground: '#102c34'},
   {option: 'fifth-face', title: 'The Fifth Face', subject: 'Option 1', image: 'buffalo-hunt-soundtrack-fifth-face.webp', ground: '#173f46'},
   {option: 'monument', title: 'Buffalo Monument', subject: 'Option 2', image: 'buffalo-hunt-soundtrack-monument.webp', ground: '#7a3427'},
   {option: 'mountain-ghost', title: 'Mountain Ghost', subject: 'Option 3', image: 'buffalo-hunt-soundtrack-mountain-ghost.webp', ground: '#183347'},
@@ -96,16 +97,19 @@ export const buffaloFifthFaceStudies = [
   {option: 'fifth-face-rupture', title: 'Rupture', subject: 'New 1', image: 'buffalo-hunt-soundtrack-fifth-face-rupture.webp', ground: '#172d64'},
   {option: 'fifth-face-fault-line', title: 'Fault Line', subject: 'New 2', image: 'buffalo-hunt-soundtrack-fifth-face-fault-line.webp', ground: '#302337'},
 ] as const;
-const allBuffaloSoundtrackStudies = [...buffaloSoundtrackStudies, ...buffaloFifthFaceStudies];
+export const buffaloAlbumCoverStudies = [
+  {option: 'buffsoundtrack1', title: 'Buffsoundtrack1', subject: 'Selected', image: 'buffalo-hunt-soundtrack-buffsoundtrack1.png', ground: '#102c34'},
+] as const;
+const allBuffaloSoundtrackStudies = [...buffaloSoundtrackStudies, ...buffaloFifthFaceStudies, ...buffaloAlbumCoverStudies];
 export type BuffaloSoundtrackOption = typeof allBuffaloSoundtrackStudies[number]['option'];
 
 export function parseBuffaloSoundtrackOption(value: string | null): BuffaloSoundtrackOption {
-  return allBuffaloSoundtrackStudies.find(study => study.option === value)?.option ?? 'current';
+  return allBuffaloSoundtrackStudies.find(study => study.option === value)?.option ?? defaultBuffaloSoundtrackOption;
 }
 
 export function withBuffaloSoundtrackOption(projects: FeaturedProject[], option: BuffaloSoundtrackOption) {
   const study = allBuffaloSoundtrackStudies.find(study => study.option === option)!;
   return projects.map(project => project.slug === 'buffalo-hunt-soundtrack'
-    ? {...project, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
+    ? {...project, aspectRatio: option === 'buffsoundtrack1' ? 1 : 1122 / 1402, poster: '/images/music/' + study.image, work: {...project.work, image: 'music/' + study.image}}
     : project);
 }
