@@ -4,39 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Index — Philip Di Fiore</title>
+  <title>Index · Philip Di Fiore</title>
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="preload" href="assets/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css">
+  <!-- The Index in the Library's style (2026-11-05): the same data file and rules as before (data.json, people.js), in the look of the Film and Music stand (/library/). -->
+  <link rel="stylesheet" href="https://use.typekit.net/iof8yta.css" media="print" onload="this.media='all'">
+  <style>@font-face{font-family:'DM Sans';src:url('assets/dm-sans-latin.woff2') format('woff2');font-weight:100 1000;font-display:swap}</style>
+  <link rel="stylesheet" href="/library/ag.css">
+  <link rel="stylesheet" href="/library/site.css">
+  <link rel="stylesheet" href="/library/library.css">
 </head>
-<body>
-  <div class="site-frame">
-    <header class="site-header">
-      <a class="wordmark" href="/#home">Philip Di Fiore</a>
-      <nav aria-label="Main navigation">
-        <a href="/#info">Info</a>
-        <a href="/#film/in-the-city">Film</a>
-        <a href="/#music/recording-parties">Music</a>
-        <a href="#people-artists" aria-current="page">Index</a>
-      </nav>
-    </header>
-    <main id="main" tabindex="-1">
-      <h1 class="sr-only">Index</h1>
-      <div class="index-toolbar">
-        <nav class="categories" aria-label="Browse index"></nav>
-        <form id="search-form" role="search">
-          <label for="search" class="sr-only">Search</label>
-          <div class="search-field"><input id="search" type="search" autocomplete="off" placeholder="Search..." aria-label="Search"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div>
-        </form>
-      </div>
-      <div id="content" aria-busy="true"><p class="loading">Opening the index…</p></div>
-      <p id="announcement" class="sr-only" aria-live="polite"></p>
-    </main>
-  </div>
-  <dialog id="image-preview" aria-label="Project photograph">
-    <button type="button" data-close-image aria-label="Close photograph">×</button>
-    <img alt="">
-  </dialog>
-  <script src="app.js" defer></script>
+<body data-area="library" data-page="index">
+<main id="main"></main>
+<script src="/library/ag.js"></script>
+<script src="people.js"></script>
 </body>
 </html>

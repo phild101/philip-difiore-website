@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { SectionNavigation } from './navigation';
 import './ag-info.css';
 
 // The Info page, merged 2026-11-03 from Phils Website/redesign/info.html: the mockup AG5 inverted, Phil's choice of 2026-11-02
 // with his revision of 2026-11-03. The five phrases in ITC Avant Garde Gothic Bold, red; the other words as light tracked
 // capitals; on rollover a phrase's whole band goes red and its words white. The header is the site's, locked at the top.
-export function AgInfo({ filmSlug = 'in-the-city' }: { filmSlug?: string }) {
+// The page loads Phil's Adobe Fonts kit (app/library/adobe-kit.tsx). 2026-11-05: Film and Music open the stand of Library covers.
+export function AgInfo() {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = 'Info — Philip Di Fiore';
@@ -15,10 +15,14 @@ export function AgInfo({ filmSlug = 'in-the-city' }: { filmSlug?: string }) {
   }, []);
   return (
     <div className="ag-info">
-      <link rel="stylesheet" href="https://use.typekit.net/iof8yta.css" precedence="default" />
       <header className="ag-info-header">
         <a href="#home" aria-label="Philip Di Fiore — Home">Philip Di Fiore</a>
-        <SectionNavigation active="info" filmSlug={filmSlug} />
+        <nav aria-label="Main navigation">
+          <a href="#info" aria-current="page">Info</a>
+          <a href="#film">Film</a>
+          <a href="#music">Music</a>
+          <a href="/index/index.html#people-artists">Index</a>
+        </nav>
       </header>
       <main className="ag-info-col" aria-label="Info about Philip Di Fiore">
         <h1 className="ag-info-sr-only">Philip Di Fiore</h1>

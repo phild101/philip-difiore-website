@@ -9,6 +9,11 @@
 .ag-landing-menu a{font:700 min(19.5vh,15vw)/.86 var(--ag);letter-spacing:-.07em;text-transform:uppercase;transition:color .15s}
 .ag-landing-menu a:hover{color:var(--red)}
 .ag-landing a:focus-visible{outline:2px solid currentColor;outline-offset:6px}
+/* The kit loads without blocking the page (adobe-kit.tsx). The four words wait for the face, 2 seconds at most, so that they do
+   not show first in a fallback face. */
+@keyframes ag-kit-late{to{visibility:visible}}
+.ag-landing-menu{visibility:hidden;animation:ag-kit-late 0s 2s forwards}
+.kit-ready .ag-landing-menu{visibility:visible;animation:none}
 /* Leave room for the Recording Parties player when it is open, as the old landing did. */
 body:has(.rp-persistent) .ag-landing{--ag-height:calc(100svh - 48px - env(safe-area-inset-bottom))}
 @media(max-width:850px){body:has(.rp-persistent) .ag-landing{--ag-height:calc(100svh - 89px - env(safe-area-inset-bottom))}}

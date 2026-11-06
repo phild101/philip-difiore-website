@@ -1,0 +1,62 @@
+// The site's Film and Music works for the Library stand (2026-11-05). Each work holds what its page showed on the live site that day, in the live order: its title, its artist, its film,
+// its press and its links, and no more. s is the poster's width over its height. g and t are the work's ground and type colours. c sets its cover: a layout from the Avant Garde guide; w, the
+// share of the cover's width that the title fills; bg, ink, nb and nt, the cover's ground, type, number square and number. A cover with no bg stays in the Library's own cream or black. Some
+// covers use a colour of the work other than its g and t, where the two together do not read or where neighbours on the page would be the same.
+// The addresses are the live site's: a press entry is the slug of its article (/press/<slug>), "#gallery" opens The Buffalo Hunt's photo gallery, and Recording Parties opens its listening page.
+window.LS = {
+  film: [
+    { id: 'in-the-city', title: 'In the City', by: 'Caveman', s: 1122 / 1402, g: '#b90b05', t: '#9ce5c2', vimeo: '99170468', press: [['Spin', 'spin-in-the-city'], ['Consequence of Sound', 'consequence-in-the-city']],
+      c: { layout: 'night', w: .8 } },
+    { id: 'buffalo-hunt', title: 'The Buffalo Hunt', by: 'Philip Di Fiore', s: 1122 / 1402, g: '#f1d53f', t: '#d0341a', vimeo: '290307313', press: [['The New York Times', 'nyt-buffalo-hunt'], ['Associated Press', 'ap-buffalo-hunt']],
+      links: [['Photo gallery', '#gallery'], ['Letterboxd', 'https://letterboxd.com/film/the-buffalo-hunt/']],
+      c: { w: .9, bg: '#f1d53f', ink: '#d0341a', nb: '#091e20', nt: '#f1d53f' } },
+    { id: 'i-learned-the-hard-way', title: 'I Learned the Hard Way', by: 'Sharon Jones & The Dap-Kings', s: 1072 / 1467, g: '#3a1833', t: '#c3b306', vimeo: '36354563', press: [['IFC', 'sharon-jones-ifc']],
+      c: { w: .92, bg: '#3a1833', ink: '#c3b306', nb: '#c3b306', nt: '#3a1833' } },
+    { id: 'old-friend', title: 'Old Friend', by: 'Caveman', s: 1122 / 1402, g: '#f0d927', t: '#091e20', vimeo: '43743411', press: [['IFC', 'ifc-old-friend'], ['Paste', 'paste-old-friend'], ['Stereogum', 'stereogum-old-friend']],
+      c: { w: .86, bg: '#edd727' } },
+    { id: 'stranger', title: 'Stranger', by: 'Bernie Worrell on Earth', s: 1122 / 1402, g: '#014fa8', t: '#f6dcb7', vimeo: '183874049',
+      links: [['Academy Collection', 'https://www.academycollection.org/search/#/entity/academy/W081740/stranger%3A-bernie-worrell-on-earth?q=stranger+bernie+worrell&isFuzzy=true&source=academy'], ['Letterboxd', 'https://letterboxd.com/film/stranger-bernie-worrell-on-earth/cast/']],
+      c: { w: .7, bg: '#014fa8', ink: '#f6dcb7', nb: '#ef3823', nt: '#fff' } },
+    { id: 'game-gets-old', title: 'Game Gets Old', by: 'Sharon Jones & The Dap-Kings', s: 1072 / 1467, g: '#fc5a39', t: '#072518', vimeo: '36317057', press: [['IFC', 'sharon-jones-ifc']],
+      c: { w: .88, bg: '#fc5a39', ink: '#072518', nb: '#072518', nt: '#fc5a39' } },
+    { id: 'runnin', title: 'Runnin’', by: 'Sinkane', s: 1122 / 1402, g: '#091e20', t: '#e9dbbc', vimeo: '102372771', press: [['Pitchfork', 'pitchfork-runnin']],
+      c: { w: .6, bg: '#091e20', ink: '#e9dbbc', nb: '#ed795d', nt: '#0a1713' } },
+    { id: 'if-you-call', title: 'If You Call', by: 'Sharon Jones & The Dap-Kings', s: 1122 / 1402, g: '#ef3823', t: '#e9dbbc', vimeo: '36319087', press: [['IFC', 'sharon-jones-ifc']],
+      c: { w: .8 } },
+    { id: 'miko-dtb', title: 'Miko D.T.B.', by: 'Spacecamp', s: 1122 / 1402, g: '#f0d927', t: '#091e20', vimeo: '39061407', press: [['IFC', 'ifc-spacecamp']],
+      c: { w: .8, bg: '#f0d927', ink: '#091e20', nb: '#1d4ea8', nt: '#f0d927' } },
+    { id: 'warm-spell', title: 'Warm Spell', by: 'Sinkane', s: 1122 / 1402, g: '#ef3823', t: '#e9dbbc', vimeo: '64088414', press: [['Stereogum', 'stereogum-warm-spell'], ['Dummy', 'dummy-warm-spell']],
+      c: { w: .84, bg: '#ef3823', ink: '#f3e7cf', nb: '#091e20', nt: '#f3e7cf' } },
+    { id: 'the-trilogy', title: 'The Trilogy', by: 'Sharon Jones & The Dap-Kings', s: 1122 / 1402, g: '#ee929c', t: '#181512', vimeo: '36364375', press: [['IFC', 'sharon-jones-ifc']],
+      c: { w: .8, bg: '#ee929c', ink: '#181512', nb: '#181512', nt: '#ee929c' } },
+    { id: 'young-trouble', title: 'Young Trouble', by: 'Sinkane', s: 1122 / 1402, g: '#f92f02', t: '#fef0c9', vimeo: '120972341', press: [['The Fader', 'fader-young-trouble']],
+      c: { layout: 'night', w: .88, ink: '#f92f02', line: '#fef0c9' } },
+    { id: 'naomi-shelton', title: 'What Have You Done', by: 'Naomi Shelton & The Gospel Queens', s: 1122 / 1402, g: '#101724', t: '#f7e5c2', vimeo: '39072847',
+      c: { w: .9, bg: '#101724', ink: '#f7e5c2', nb: '#ef3823', nt: '#f7e5c2' } },
+    { id: 'rival-schools', title: 'Shot After Shot', by: 'Rival Schools', s: 1122 / 1402, g: '#f6d32d', t: '#191616', vimeo: '36565732',
+      c: { w: .9, bg: '#f6d32d', ink: '#191616', nb: '#c92228', nt: '#ffdf32' } },
+    { id: 'rdgldgrn', title: 'Power Ups', by: 'RDGLDGRN', s: 1073 / 1466, g: '#066746', t: '#f0d927', vimeo: '77447226',
+      c: { w: .78, bg: '#066746', ink: '#f0d927', nb: '#ef4327', nt: '#102b25' } },
+    { id: 'man-man', title: 'Man Man', by: 'Live at the Brooklyn Bowl', s: 1122 / 1402, g: '#091e20', t: '#d591a6', vimeo: '104872340',
+      c: { w: .62, bg: '#d591a6', ink: '#091e20', nb: '#091e20', nt: '#d591a6' } },
+    { id: 'diiv', title: 'DIIV', by: 'Live at the Brooklyn Bowl', s: 1058 / 1487, g: '#07555a', t: '#eee951', vimeo: '107213700',
+      c: { w: .36, bg: '#07555a', ink: '#eee951', nb: '#eee951', nt: '#09292e' } },
+    { id: 'antibalas', title: 'Antibalas', by: 'Live at the House of Soul', s: 1072 / 1467, g: '#6b1d25', t: '#ffb442', vimeo: '50027534', press: [['Rolling Stone', 'rollingstone-antibalas']],
+      c: { w: .78, bg: '#6b1d25', ink: '#ffb442', nb: '#ffb442', nt: '#47191b' } },
+    { id: 'save-my-life', title: 'Save My Life', by: 'Har Mar Superstar & Friends', s: 1122 / 1402, g: '#382044', t: '#eee96e', vimeo: '71923847', press: [['Baeble Music', 'baeble-save-my-life']],
+      c: { w: .84, bg: '#382044', ink: '#eee96e', nb: '#c7e929', nt: '#382044' } },
+    { id: 'class-actress', title: 'Class Actress', by: 'Live at the Brooklyn Bowl', s: 1122 / 1402, g: '#d60661', t: '#3e28be', vimeo: '104872335',
+      c: { w: .88, bg: '#d60661', ink: '#f5e4c9', nb: '#141c56', nt: '#f5e4c9' } }
+  ],
+  music: [
+    { id: 'recording-parties', title: 'Recording Parties', by: 'The Rumpus Room', s: 1122 / 1402, g: '#02a09e', t: '#f74213', press: [['Bedford + Bowery', 'bedford-bowery-recording-parties']],
+      open: '#music/recording-parties/listen', parties: ['/?party=1#music/recording-parties/listen', '/?party=2#music/recording-parties/listen', '/?party=3#music/recording-parties/listen'],
+      c: { w: .9, bg: '#02a09e', ink: '#0a1713', nb: '#f74213', nt: '#fff' } },
+    { id: 'improvisczario', title: 'Improvisczario', by: 'Bernie Worrell', s: 1254 / 957, g: '#102b3e', t: '#f3dfad',
+      links: [['Apple Music', 'https://music.apple.com/us/album/improvisczario/261077376'], ['Spotify', 'https://open.spotify.com/album/6ZJ1Wj5dyy9NsEUpslzPhx?si=3etBpv6ISTConQvexkw04w']],
+      c: { layout: 'field', w: .9, free: true, lineStyle: 'left:4.5cqw;right:auto;top:14.5cqw;' } },
+    { id: 'buffalo-hunt-soundtrack', title: 'The Buffalo Hunt Soundtrack', by: 'Jason Hill', s: 1524 / 1092, g: '#102c34', t: '#c67d78',
+      links: [['Apple Music', 'https://music.apple.com/us/album/the-buffalo-hunt-original-motion-picture-soundtrack/1469994635'], ['Spotify', 'https://open.spotify.com/album/2Oq3TjoyVG34DzLTqJboHY?si=ab-fTyeAQT6Y2ufNJ41ncw']],
+      c: { w: .9, br: ['The Buffalo Hunt', 'Soundtrack'], lg: ['Soundtrack', 'Soundt<span class="lg">ra</span>ck'], plate: [76, 28] } }
+  ]
+};

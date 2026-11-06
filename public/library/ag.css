@@ -1,0 +1,266 @@
+/* Studio 101 · the Library in the Avant Garde design (2026-11-03). Reads nothing and saves nothing.
+   Phil, 2026-11-03: "mockup some redesigns of my studio 101 LIBRARY pages with the old AVANT GARDE MAGAZINE style as your
+   creative brief", then "focus more on the cover styles that's the main visual driver"; of the nine covers: "I'm loving
+   what I'm seeing so far in the thumbnails"; then "redesign the entire LIBRARY with this AVANT GARDE design aesthetic.
+   And deploy." Every rule of the design is on its page, Projects/Apps/Studio 101/Studio 101 Avant Garde design.md; the
+   mockups Phil liked are public/mockups/2026-11-03-avant-garde/ (covers.html, home.html), ported here.
+   Type: ITC Avant Garde Gothic Pro from Phil's Adobe Fonts kit (iof8yta, loaded in index.html before this file): 100
+   Extra Light, 300 Book, 500 Medium, 600 Demi, 700 Bold. Only Book and Bold carry the face's ligatures ("dlig"), and
+   only a logotype takes them (LIBRARY and the collections' names, in Bold): never a headline, a cover line or text
+   (2026-11-03: they made "COMES FROM" and "THE" hard to read in a headline). No "salt": it turns I and N into lower-case
+   forms. Headlines keep sentence case (Phil, 2026-10-13: "sentence case"); capitals come only from text-transform.
+   Running text stays DM Sans 16 px in the 640 px column (Phil, 2026-10-14: "Let's do it go 16.").
+   Every photograph shows whole, at its own shape (Phil, 2026-10-07): a cover gives its photograph a box of the
+   photograph's shape (ag.js), and the ground or a band fills the rest.
+   Every rule sits under body[data-area="library"] (the shell sets it on #library, #article, #brief, #finding and
+   #research), so Home, Projects, Agenda and LLM keep their designs, and the top bar, the slides, the Ask window and
+   For Phil keep their look. The tokens are --ag-*, because system.css already names --paper, --ink and --rule.
+   This file holds the shared parts; each page lays itself out in its own file.
+   Layout of this file:
+     1. tokens and the ground   2. the cover   3. the nine layouts   4. shared parts: the issue-number square, fitted
+     lines and logotypes, the cover caption, the newsstand, the spread and its contents page, contents entries, the
+     masthead index, section headings, the date bar   5. the Library's base type (the shell's and the Library's parts,
+     set in Avant Garde)   6. tablet and phone */
+
+/* ================= 1. tokens and the ground ================= */
+/* 2026-11-03 (the review): the face's stand-in while Adobe's kit is late or does not come, and for a letter the kit does
+   not hold (Ū, ō, ć, Š), on a Mac without Century Gothic: Avenir Next, weight by weight. Avenir Next has no 300, so the
+   browser had drawn every Book line (contents, kinds, credits, cover lines, the index) in its Ultra Light, a hairline
+   that the mute grey at 10.5 to 11 px made nearly invisible; Book now stands in Avenir Next Regular. */
+@font-face { font-family: 'ag-fallback'; font-weight: 100 200; src: local('Avenir Next Ultra Light'), local('AvenirNext-UltraLight'); }
+@font-face { font-family: 'ag-fallback'; font-weight: 300 400; src: local('Avenir Next Regular'), local('AvenirNext-Regular'); }
+@font-face { font-family: 'ag-fallback'; font-weight: 500; src: local('Avenir Next Medium'), local('AvenirNext-Medium'); }
+@font-face { font-family: 'ag-fallback'; font-weight: 600; src: local('Avenir Next Demi Bold'), local('AvenirNext-DemiBold'); }
+@font-face { font-family: 'ag-fallback'; font-weight: 700 900; src: local('Avenir Next Bold'), local('AvenirNext-Bold'); }
+body[data-area="library"] {
+  --ag: 'itc-avant-garde-gothic-pro', 'Century Gothic', 'ag-fallback', Arial, sans-serif;
+  --ag-page: #f6f2e9;   /* the ground of a Library page */
+  --ag-paper: #ece3cf;  /* a cream cover and a contents page */
+  --ag-ink: #171512; --ag-mute: #6f675b; --ag-hair: #cfc5b1;
+  --ag-red: #e2402a; --ag-blue: #1d4ea8; --ag-green: #3d7b33; --ag-kraft: #c8a46c; --ag-yellow: #f2c23a;
+  --ag-field: #ec4a2a; --ag-teal: #1f5c6b; --ag-night: #13110f;
+  --ag-orange: #ff8c00; /* Studio 101's own orange: the issue-number square */
+  background: var(--ag-page);
+}
+/* the top bar keeps its look on the page's ground (index.html tints the margins outside the frame the same) */
+body[data-area="library"] .top { background: var(--ag-page); }
+
+/* ================= 2. the cover =================
+   A square that scales with its width: every size inside is in cqw, so one cover's markup serves a 150 px strip, a
+   380 px tile and a 600 px page. The whole cover is one link, to the collection's front. ag.js D4AG.cover writes it. */
+body[data-area="library"] .cv { display: block; position: relative; aspect-ratio: 1 / 1; container-type: inline-size; overflow: hidden; background: var(--ag-paper); color: var(--ag-ink); font-family: var(--ag); box-shadow: 0 0 0 1px rgba(23, 21, 18, .08); }
+body[data-area="library"] .cv-logo { position: absolute; z-index: 2; }
+body[data-area="library"] .cv-ph { position: absolute; margin: 0; }
+body[data-area="library"] .cv-ph img { display: block; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+/* the cover line: the cover story's headline, word for word, in Book capitals; a long one sets smaller (--cv-k, ag.js)
+   so its block keeps about the height of a 64-character line */
+body[data-area="library"] .cv-line { position: absolute; z-index: 2; margin: 0; font: 300 calc(var(--cv-k, 1) * 3.5cqw)/1.04 var(--ag); letter-spacing: -.005em; text-transform: uppercase; }
+/* a cover in type: the headline in Bold capitals, each line fitted to the width (ag.js D4AG.fit). The letter-spacing is
+   set on each line: an em set on the block would pass down as a fixed length and not scale with the line's own size.
+   2026-11-03 (the design chat): -.015em, the spacing of the mockup Phil liked ("I'm loving what I'm seeing so far in
+   the thumbnails"). The mockup set -.05em on the block, which its lines took as about -.015 of their own size; the
+   build's -.05em on each line set the letters closer than the covers Phil saw. */
+body[data-area="library"] .cv-hl { position: absolute; left: 5cqw; right: 5cqw; font-weight: 700; text-transform: uppercase; }
+body[data-area="library"] .cv-hl .ag-fit { margin-bottom: .06em; letter-spacing: -.015em; }
+/* a small photograph set in a line of the headline, at the height of the capitals */
+body[data-area="library"] .cv-hl .cv-inset { display: inline-block; height: .74em; width: auto; max-width: none; vertical-align: baseline; margin: 0 .05em; }
+/* justified on both sides, its last line flush left (2026-11-03: a paragraph the cover reads from its story ended in a
+   line of three words spread across the cover) */
+body[data-area="library"] .cv-par { position: absolute; margin: 0; font: 300 3cqw/1.12 var(--ag); letter-spacing: .005em; text-transform: uppercase; text-align: justify; text-align-last: left; }
+
+/* ================= 3. the nine layouts (the design page, "The nine layouts") ================= */
+/* type (issue 13): a small logo centred at the top; the headline in two inks; a photograph inset in one line */
+body[data-area="library"] .cv-type .cv-logo { top: 5cqw; left: 0; right: 0; display: flex; justify-content: center; color: #3a2a20; }
+body[data-area="library"] .cv-type .cv-no { font-size: .34em; }
+body[data-area="library"] .cv-type .cv-hl { bottom: 4cqw; }
+body[data-area="library"] .cv-type .cv-b { color: var(--ag-blue); }
+body[data-area="library"] .cv-type .cv-r { color: var(--ag-red); }
+/* field (issue 5): a flat yellow band across the top holds the logo and the line; the photograph fills the width under it */
+body[data-area="library"] .cv-field { background: var(--ag-yellow); }
+body[data-area="library"] .cv-field .cv-logo { top: 3.2cqw; left: 4.5cqw; }
+body[data-area="library"] .cv-field .cv-no { background: var(--ag-red); color: #fff; }
+body[data-area="library"] .cv-field .cv-line { top: 5cqw; left: 52cqw; right: 4.5cqw; font-size: calc(var(--cv-k, 1) * 3.1cqw); }
+body[data-area="library"] .cv-field .cv-ph { left: 0; bottom: 0; }
+/* bleed (issues 4, 7): the logo at the top; the photograph edge to edge across the cover; the line at the foot */
+body[data-area="library"] .cv-bleed .cv-logo { top: 6cqw; left: 5cqw; }
+body[data-area="library"] .cv-bleed .cv-ph { left: 0; }
+body[data-area="library"] .cv-bleed .cv-line { left: 5cqw; right: 30cqw; bottom: 5cqw; }
+/* plate (issue 1): the logo large and centred at the top; the photograph as a plate under it; the line centred at the foot */
+body[data-area="library"] .cv-plate .cv-logo { top: 5.5cqw; left: 0; right: 0; display: flex; justify-content: center; }
+body[data-area="library"] .cv-plate .cv-ph { left: 50%; transform: translateX(-50%); }
+body[data-area="library"] .cv-plate .cv-line { left: 7cqw; right: 7cqw; bottom: 4.2cqw; text-align: center; font-size: calc(var(--cv-k, 1) * 2.9cqw); }
+body[data-area="library"] .cv-plate .cv-no { background: var(--ag-red); color: #fff; }
+/* field2 (issue 10): a red-orange field; the logo and the line at the left; the photograph low at the right, keylined */
+body[data-area="library"] .cv-field2 { background: var(--ag-field); }
+body[data-area="library"] .cv-field2 .cv-logo { top: 5cqw; left: 5cqw; }
+body[data-area="library"] .cv-field2 .cv-no { background: var(--ag-ink); color: var(--ag-paper); }
+body[data-area="library"] .cv-field2 .cv-line { left: 5cqw; width: 40cqw; top: 31cqw; }
+body[data-area="library"] .cv-field2 .cv-ph { right: 4cqw; bottom: 4cqw; box-shadow: 0 0 0 .5cqw var(--ag-ink); }
+/* kraft (issue 8): type only, on kraft paper: the logo in green, the headline in black, a paragraph justified both sides */
+body[data-area="library"] .cv-kraft { background: var(--ag-kraft); }
+body[data-area="library"] .cv-kraft .cv-logo { top: 5cqw; left: 5cqw; right: 5cqw; color: var(--ag-green); }
+body[data-area="library"] .cv-kraft .cv-hl { top: 24cqw; }
+body[data-area="library"] .cv-kraft .cv-par { left: 5cqw; right: 5cqw; bottom: 5cqw; }
+body[data-area="library"] .cv-kraft .cv-no { background: var(--ag-green); color: var(--ag-kraft); }
+/* corner (issue 14): an upright photograph bleeds off the right edge and the foot; the type takes the corner at the left */
+body[data-area="library"] .cv-corner .cv-logo { top: 5cqw; left: 5cqw; }
+body[data-area="library"] .cv-corner .cv-ph { right: 0; bottom: 0; }
+body[data-area="library"] .cv-corner .cv-line { left: 5cqw; bottom: 5cqw; }
+/* band (issue 5, turned over): the photograph fills the top; a teal band under it holds the logo and the line */
+body[data-area="library"] .cv-band { background: var(--ag-teal); color: var(--ag-paper); }
+body[data-area="library"] .cv-band .cv-ph { left: 0; top: 0; }
+body[data-area="library"] .cv-band .cv-logo { left: 5cqw; bottom: 13cqw; }
+body[data-area="library"] .cv-band .cv-line { left: 5cqw; right: 5cqw; bottom: 4.5cqw; font-size: calc(var(--cv-k, 1) * 2.9cqw); }
+/* night (issue 11): a black ground; the logo centred; a plate; the line centred in Extra Light capitals */
+body[data-area="library"] .cv-night { background: var(--ag-night); color: var(--ag-paper); }
+body[data-area="library"] .cv-night .cv-logo { top: 6cqw; left: 0; right: 0; display: flex; justify-content: center; }
+body[data-area="library"] .cv-night .cv-ph { left: 50%; transform: translateX(-50%); }
+body[data-area="library"] .cv-night .cv-line { left: 10cqw; right: 10cqw; bottom: 6cqw; text-align: center; font-weight: 100; font-size: calc(var(--cv-k, 1) * 5.6cqw); line-height: .98; letter-spacing: -.02em; }
+
+/* ================= 4. shared parts ================= */
+/* the issue-number square: Studio 101's orange with black numerals on every page, as in the mockups Phil liked (the
+   design page, "The collections as issues"): after a cover's logotype (a layout whose ground calls for other inks sets
+   them above, as the mockup did), in a kicker and in the masthead index. The accent colours only a kicker's name and
+   the drop cap (2026-11-03; until then a kicker's and the index's squares took the accent). */
+body[data-area="library"] :is(.cv-no, .ag-no) { display: inline-block; font-weight: 700; line-height: 1; letter-spacing: -.02em; text-transform: none; font-feature-settings: normal; padding: .12em .1em .06em; background: var(--ag-orange); color: var(--ag-ink); }
+body[data-area="library"] .cv-no { font-size: .22em; margin-left: .1em; vertical-align: baseline; }
+body[data-area="library"] .ag-no { margin-right: .45em; vertical-align: .08em; }
+
+/* a fitted line: ag.js D4AG.fit sets its size so that it fills its share (data-w) of its box (the design page, "Fitted
+   lines"). A logotype (a fitted line on a cover's logo, or a masthead's) is Bold capitals with the face's ligatures; a
+   page's masthead (LIBRARY) sets its letters touching, at -.055em, and a cover's logotype keeps -.015em, the spacing
+   of the mockup Phil liked (2026-11-03, the design chat; the mockup's -.055em on the logo's box came to about -.015 of
+   the logotype's own size). The fit measures each line with its own spacing, so it still fills its share. */
+body[data-area="library"] .ag-fit { display: block; white-space: nowrap; width: max-content; line-height: .8; }
+body[data-area="library"] .ag-logo { font-family: var(--ag); font-weight: 700; letter-spacing: -.055em; line-height: .8; text-transform: uppercase; font-feature-settings: "dlig" 1; }
+body[data-area="library"] .cv .ag-logo { letter-spacing: -.015em; }
+
+/* the caption under a cover: the number and the collection in Bold, then the photograph (ag.js D4AG.credit) */
+body[data-area="library"] .ag-cap { margin-top: 10px; font: 300 11.5px/1.35 var(--ag); letter-spacing: .04em; text-transform: uppercase; color: var(--ag-mute); }
+body[data-area="library"] .ag-cap b { font-weight: 700; letter-spacing: .02em; color: var(--ag-ink); margin-right: .8em; }
+
+/* the newsstand: the covers three across, two on a tablet, one on a phone (section 6) */
+body[data-area="library"] .ag-stand { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 30px; }
+body[data-area="library"] .ag-stand > figure { margin: 0; min-width: 0; }
+
+/* the spread: a cover at the left and its contents page at the right, as the magazine opens (ag.js D4AG.spread); on a
+   phone the cover first and the contents under it. The contents page is a square of paper as high as its cover, whose
+   type scales with it, never under a size that reads. 2026-11-03 (the design chat): a long list no longer makes it
+   taller (between 761 and 1100 px it did, and the page's ground showed under the cover). The page clips what runs past
+   its square, so it stays one (an element with an aspect ratio that clips takes no height from its content), and ag.js
+   (D4AG.fit, pages()) takes the entries that do not fit off its end. */
+body[data-area="library"] .ag-spread { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; box-shadow: 0 0 0 1px rgba(23, 21, 18, .08); }
+body[data-area="library"] .ag-spread > .cv { box-shadow: none; }
+body[data-area="library"] .ag-pg { container-type: inline-size; display: flex; flex-direction: column; aspect-ratio: 1 / 1; overflow: hidden; padding: 7%; background: var(--ag-paper); color: var(--ag-ink); border-left: 1px solid rgba(23, 21, 18, .1); }
+body[data-area="library"] .ag-pg-h { margin: 0 0 3.5cqw; font: 700 max(12px, 2.3cqw)/1 var(--ag); letter-spacing: .07em; text-transform: uppercase; }
+body[data-area="library"] .ag-pg .ag-toc li > * { padding-bottom: 1.55cqw; }
+body[data-area="library"] .ag-pg .ag-toc-t { font-size: max(12px, 2.15cqw); line-height: 1.12; }
+body[data-area="library"] .ag-pg .ag-toc-by { font-size: max(10.5px, 1.6cqw); }
+body[data-area="library"] .ag-pg-cred { margin: auto 0 0; padding-top: 3cqw; font: 300 max(10.5px, 1.6cqw)/1.3 var(--ag); letter-spacing: .05em; text-transform: uppercase; color: var(--ag-mute); }
+/* a page too short for its list (ag.js pages()): the kinds go first; then the entries from the end, which its last line
+   counts, as a kind is set */
+body[data-area="library"] .ag-pg.is-short .ag-toc-by { display: none; }
+body[data-area="library"] .ag-pg .ag-toc-more { font: 300 max(10.5px, 1.6cqw)/1.3 var(--ag); letter-spacing: .07em; text-transform: uppercase; color: var(--ag-mute); }
+body[data-area="library"] .ag-toc-more::before { content: attr(data-n) " more"; }
+
+/* a contents entry: the title in Book capitals with its number or count in Bold after it, then the collection or the
+   kind in Book capitals, in mute (ag.js D4AG.contents) */
+body[data-area="library"] .ag-toc { list-style: none; margin: 0; padding: 0; }
+body[data-area="library"] .ag-toc li > * { display: block; padding-bottom: 12px; }
+body[data-area="library"] .ag-toc-t { display: block; font: 300 14px/1.15 var(--ag); letter-spacing: .005em; text-transform: uppercase; }
+body[data-area="library"] .ag-toc-t b { font-weight: 700; margin-left: .5em; }
+body[data-area="library"] .ag-toc-by { display: block; margin-top: .25em; font: 300 11px/1.3 var(--ag); letter-spacing: .07em; text-transform: uppercase; color: var(--ag-mute); }
+body[data-area="library"] .ag-toc a:hover .ag-toc-t { color: var(--ag-red); }
+
+/* the masthead index: each collection as a masthead (its number square and its name in Bold), then each kind
+   right-aligned against its count in Bold, on one axis (ag.js D4AG.index) */
+body[data-area="library"] .ag-ix { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px 30px; }
+body[data-area="library"] .ag-ix-h { margin: 0 0 12px; font: 700 15px/1 var(--ag); letter-spacing: -.02em; text-transform: uppercase; font-feature-settings: "dlig" 1; }
+body[data-area="library"] .ag-ix-h .ag-no { font-size: .78em; margin-right: .4em; }
+body[data-area="library"] .ag-ix ul { list-style: none; margin: 0; padding: 0; }
+body[data-area="library"] .ag-ix li > * { display: grid; grid-template-columns: minmax(0, 1fr) 54px; gap: 12px; padding: 3px 0; font: 300 11.5px/1.3 var(--ag); letter-spacing: .06em; text-transform: uppercase; }
+body[data-area="library"] .ag-ix li > * > span { text-align: right; }
+body[data-area="library"] .ag-ix li b { font-weight: 700; letter-spacing: .02em; }
+body[data-area="library"] .ag-ix a:hover { color: var(--ag-red); }
+
+/* a section heading: Bold capitals at 13 px over a 2 px rule; and the date bar: Medium capitals between a 2 px rule and
+   a 1 px rule. Their type is shared with the shell's parts in section 5. */
+body[data-area="library"] .ag-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; border-top: 2px solid var(--ag-ink); padding-top: 9px; margin-bottom: 24px; }
+body[data-area="library"] .ag-sec-h h2 { margin: 0; }
+body[data-area="library"] .ag-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; border-top: 2px solid var(--ag-ink); border-bottom: 1px solid var(--ag-ink); padding: 7px 0 6px; }
+
+/* ================= 5. the Library's base type =================
+   The shell's parts (D4.mag, magazine.css) and the Library's own (library.css, library-home.css, contents.css) in
+   Avant Garde; the sizes stay theirs unless the design sets one. Running text (.mg-body, .prose, the standfirsts' long
+   lines under a portrait or a map) stays DM Sans. The fold "More information about <name>" keeps its one style
+   (more.css), and the slides keep theirs (a slide copies the page's kicker: .sl). */
+/* headlines: Bold, sentence case as written, tight. (An :is() list weighs as its weightiest member, so each list here
+   holds only light selectors, and a page's own rule overrides these with one class more.) */
+body[data-area="library"] main :is(.mg-cover-title, .mg-art-title, .mg-feat-title, .mg-body h2, .mg-body h3, .mg-body h4, .display, .lx-t, .lb-pt-name, .lb-mp-t, .lb-guide-tx b, .lb-nw-t) { font-family: var(--ag); font-weight: 700; font-stretch: normal; letter-spacing: -.035em; }
+/* a card or a portrait with no photograph sets its title in type in the photograph's place */
+body[data-area="library"] main :is(.lx-card.is-type .lx-ph b, .lb-pt-ph.none b) { font-family: var(--ag); font-weight: 700; font-stretch: normal; letter-spacing: -.035em; }
+/* the large headlines' lines keep apart: Avant Garde's ascenders stand .74em high and its g descends .25em, so at Mona
+   Sans's line height of .92 the g of "Hemingway:" ran into the t of "the" (2026-11-03, the check), and at 1 they still
+   touched. !important, because opening.css sets each opening's size and line height in rules that name its layout */
+body[data-area="library"] main :is(.mg-cover-title, .mg-art-title, .mg-feat-title.is-l, .display) { line-height: 1.04 !important; }
+/* a numbered guide's numbers */
+body[data-area="library"] main .lb-guide-n { font-family: var(--ag); font-weight: 700; font-stretch: normal; letter-spacing: -.03em; }
+/* mastheads: a front's name as a logotype */
+body[data-area="library"] main .mg-mast-title { font-family: var(--ag); font-weight: 700; font-stretch: normal; letter-spacing: -.055em; line-height: .8; text-transform: uppercase; font-feature-settings: "dlig" 1; }
+/* standfirsts: Book */
+body[data-area="library"] main :is(.mg-art-deck, .mg-cover-deck, .mg-feat-deck, .mg-mast-deck) { font-family: var(--ag); font-weight: 300; font-stretch: normal; letter-spacing: 0; }
+/* a pull quote: a sentence from the article, large, in Book */
+body[data-area="library"] main .mg-pull p { font-family: var(--ag); font-weight: 300; font-stretch: normal; letter-spacing: -.015em; }
+/* the first letter of an article: a drop cap in Bold, in the collection's accent */
+body[data-area="library"] main .mg-body > p.mg-lede:not(.no-cap)::first-letter { font-family: var(--ag); font-weight: 700; font-stretch: normal; color: var(--ag-acc, var(--ag-ink)); }
+/* kickers, and an opening's "Continue reading": Bold capitals in the collection's accent (red when the page sets none) */
+body[data-area="library"] main :is(.kicker, .op-go):not(.sl *) { font: 700 11.5px/1.3 var(--ag); letter-spacing: .08em; text-transform: uppercase; color: var(--ag-acc, var(--ag-red)); }
+body[data-area="library"] main .kicker .ag-no { font-size: 1em; margin-right: .5em; }
+/* the slideshow card (gallery.css .gl-open), the page's way into its slides: its kicker in Bold capitals, as a kicker
+   (in the slides' orange), and its title in Bold, as a headline (2026-11-03, the review: it was the Library's last
+   line in Mona Sans). The slides keep their own look. */
+body[data-area="library"] main .gl-open-k { font: 700 11px/1.3 var(--ag); letter-spacing: .08em; }
+body[data-area="library"] main .gl-open-t { font-family: var(--ag); font-weight: 700; font-stretch: normal; letter-spacing: -.035em; }
+/* section headings: Bold capitals at 13 px over the 2 px rule their heads already draw */
+body[data-area="library"] main :is(.mg-sec-title, .mg-dept-title, .pj-ix-h, .ag-sec-h h2) { font: 700 13px/1.2 var(--ag); font-stretch: normal; letter-spacing: .08em; text-transform: uppercase; }
+/* the date bar, a dated line and the crumbs: Medium and Book capitals */
+body[data-area="library"] main :is(.mg-mast-bar, .ag-bar) { font: 500 11px/1.25 var(--ag); letter-spacing: .09em; text-transform: uppercase; color: var(--ag-ink); }
+body[data-area="library"] main .mg-dateline { font: 500 11px/1.5 var(--ag); letter-spacing: .09em; color: var(--ag-mute); }
+body[data-area="library"] main .crumbs { font: 300 11.5px/1.4 var(--ag); letter-spacing: .06em; text-transform: uppercase; color: var(--ag-mute); }
+/* labels and counts beside a heading, and a finding's "Source" (library.css .lb-nw-src) */
+body[data-area="library"] main :is(.mg-sec-note, .mg-dept-note, .lb-facts dt, .lb-file-l, .lb-nw-src small) { font: 300 11.5px/1.3 var(--ag); letter-spacing: .06em; text-transform: uppercase; color: var(--ag-mute); }
+/* captions and credits: Book capitals at 11.5 px */
+body[data-area="library"] main :is(.mg-cap, .mg-credit, .mg-by, .mg-credit-list li, .lb-guide-cap) { font-family: var(--ag); font-weight: 300; font-size: 11.5px; line-height: 1.4; letter-spacing: .04em; text-transform: uppercase; }
+body[data-area="library"] main :is(.mg-pcap .mg-cap, .mg-body .mg-fig figcaption .mg-cap) { font-size: 11.5px; }
+body[data-area="library"] main .mg-credit-list b { font-weight: 700; }
+body[data-area="library"] main .mg-credits summary { font: 500 12px/1.4 var(--ag); letter-spacing: .08em; text-transform: uppercase; }
+/* contents lists: a department's rows and an index, in Book capitals; their counts and numbers in Bold */
+body[data-area="library"] main .mg-dept-tx > b { font: 300 14px/1.18 var(--ag); letter-spacing: .01em; text-transform: uppercase; }
+body[data-area="library"] main .mg-dept-ln { font: 300 11px/1.35 var(--ag); letter-spacing: .06em; text-transform: uppercase; color: var(--ag-mute); }
+body[data-area="library"] main .mg-dept-dt { font: 500 11px/1.6 var(--ag); letter-spacing: .08em; text-transform: uppercase; color: var(--ag-mute); }
+body[data-area="library"] main .pj-ix-list li { font: 300 11.5px/1.35 var(--ag); letter-spacing: .05em; text-transform: uppercase; }
+body[data-area="library"] main :is(.lx-c, .lb-rx-c) { font-family: var(--ag); font-weight: 700; letter-spacing: .02em; }
+/* the numbered strip of the collections (contents.css): the numbers in Bold, the names in Book capitals */
+body[data-area="library"] .mg-circles .sc::before { font: 700 26px/1 var(--ag); letter-spacing: -.03em; }
+body[data-area="library"] .mg-circles .sc-n { font: 300 11.5px/1.25 var(--ag); letter-spacing: .06em; text-transform: uppercase; }
+
+/* ================= 6. tablet and phone ================= */
+@media (max-width: 900px) {
+  body[data-area="library"] .ag-stand { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 20px; }
+  body[data-area="library"] .ag-ix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  body[data-area="library"] .mg-circles .sc::before { font-size: 22px; }
+}
+@media (max-width: 760px) {
+  body[data-area="library"] .ag-spread { grid-template-columns: minmax(0, 1fr); }
+  body[data-area="library"] .ag-pg { aspect-ratio: auto; padding: 28px 20px 24px; border-left: 0; border-top: 1px solid rgba(23, 21, 18, .1); }
+  body[data-area="library"] .ag-pg-h { font-size: 12px; margin-bottom: 18px; }
+  body[data-area="library"] .ag-pg .ag-toc li > * { padding-bottom: 12px; }
+  body[data-area="library"] .ag-pg .ag-toc-t { font-size: 14px; }
+  body[data-area="library"] .ag-pg .ag-toc-by, body[data-area="library"] .ag-pg-cred { font-size: 11px; }
+  body[data-area="library"] .ag-pg-cred { padding-top: 14px; }
+}
+@media (max-width: 560px) {
+  body[data-area="library"] .ag-stand, body[data-area="library"] .ag-ix { grid-template-columns: minmax(0, 1fr); }
+}

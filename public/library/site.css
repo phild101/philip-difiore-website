@@ -1,0 +1,28 @@
+/* The one mockup in the Library's own style (Phil, 2026-11-05, with screenshots of its AI, Photography and PhilBrain covers: "I'd
+   like to see one mockup with the style you created for the Library"). ag.css and ag.js are Studio 101's own files, copied as they
+   are; this file adds the live site's header, the page's logotype and the three covers across. */
+body{margin:0;-webkit-text-size-adjust:100%;overflow-x:hidden;color:var(--ag-ink)}
+html{background:#f6f2e9}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+:root{--pad:40px;--hd:52px}
+/* the live site's header: DM Sans Bold 12px, tracked capitals, a 52px bar with a rule beneath, locked at the top */
+.hd{position:sticky;top:0;z-index:10;height:var(--hd);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 var(--pad);background:#f6f2e9;font:700 12px/normal 'DM Sans',Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#111}
+.hd::after{content:"";position:absolute;left:var(--pad);right:var(--pad);bottom:0;border-top:1px solid #111}
+.hd nav{display:flex;gap:32px}
+.hd a{padding:12px 0;white-space:nowrap}
+.hd a:hover,.hd a[aria-current]{color:#666}
+.pg{padding:0 var(--pad) 56px}
+.mast{margin:0;padding:24px 0 18px;border-bottom:2px solid var(--ag-ink)}
+.mast .ag-logo{margin-left:-.055em}
+.stand{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:26px}
+.stand figure{margin:0;min-width:0}
+/* the logotype is the work's own title; ligatures only where they read: the RA of the Library's PHOTOGRAPHY in SOUNDTRACK */
+body[data-area="library"] .ag-logo.nolig{font-feature-settings:normal}
+body[data-area="library"] .ag-logo .lg{font-feature-settings:"dlig" 1}
+.ag-cap .pr{display:block;margin-top:3px}
+.ag-cap a{color:var(--ag-ink);font-weight:700;border-bottom:1px solid currentColor;margin-right:1em}
+.ag-cap a:hover{color:var(--ag-red)}
+.stand figure:hover .ag-cap b{color:var(--ag-red)}
+@media (max-width:900px){.stand{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 20px}}
+@media (max-width:767px){:root{--pad:20px}.hd{font-size:11px;gap:8px}.hd nav{gap:12px}.mast{padding:16px 0 14px}.stand{grid-template-columns:minmax(0,1fr);gap:26px;margin-top:20px}}
